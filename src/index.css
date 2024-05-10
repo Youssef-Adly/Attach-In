@@ -1,13 +1,24 @@
+@font-face {
+  font-family: "Arial Rounded MT"; /* Replace with your font name */
+  src: url("./fonts/ARLRDBD.TTF") format("truetype"); /* Adjust file name and format */
+  /*font-weight: normal;*/ /* Optional: specify font weight */
+}
+
+* {
+  transition: all 0.5s;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Arial Rounded MT" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root,
+[data-bs-them="light"] {
+  --main-color: #363b56;
+  --sec-color: #97add9;
+  --pink-color: #f2969c;
+  --offWhite-color: #e2e1db;
+  --gray-color: #e3e2dc;
 }

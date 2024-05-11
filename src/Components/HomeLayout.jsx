@@ -20,7 +20,7 @@ const HomeLayout = ({ children }) => {
     <main className="container-fluid bg-light" style={{ minHeight: "100vh" }}>
       <nav className="d-flex justify-content-around border-bottom">
         <div className="col-7 col-md-3 d-flex justify-content-center h-70">
-          <img src="Logowithout.svg" className="img-fluid w-75" alt="logo" />
+          <img src="LogowithoutLG.svg" className="img-fluid w-75" alt="logo" />
         </div>
         <div className="col-5 col-md-9 p-4 py-2">
           <ul className="nav justify-content-md-around justify-content-end ">

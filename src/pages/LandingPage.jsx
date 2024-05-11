@@ -310,9 +310,10 @@ const LandingPage = () => {
               alt="smallpurplething"
               style={{
                 position: "absolute",
-                top: "-17vh",
+                top: "-76px",
                 right: "10vw",
                 zIndex: "999",
+                width:"310px"
               }}
               className="seperator"
             />

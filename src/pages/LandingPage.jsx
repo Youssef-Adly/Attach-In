@@ -16,6 +16,37 @@ const LandingPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (event) => {
+      // Prevent the default mini-infobar
+      event.preventDefault();
+      setDeferredPrompt(event);
+    });
+
+    return () => {
+      // Cleanup function to remove the event listener on unmount
+      window.removeEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        setDeferredPrompt(event);
+      });
+    };
+  }, []);
+
+  const handleClick = async () => {
+    if (deferredPrompt) {
+      // Trigger the native installation prompt
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      setDeferredPrompt(null); // Reset for future prompts
+
+      console.log(`User response to install prompt: ${outcome}`);
+    } else {
+      console.log("App installation prompt not available.");
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -131,7 +162,11 @@ const LandingPage = () => {
                     zIndex: "999",
                   }}
                 >
-                  <Link className="nav-link fs-5 fw-bold col-12" to="/login">
+                  <Link
+                    onClick={handleClick}
+                    className="nav-link fs-5 fw-bold col-12"
+                    to=""
+                  >
                     Download The App
                     <FontAwesomeIcon icon={faGooglePlay} className="ms-3" />
                   </Link>
@@ -248,7 +283,8 @@ const LandingPage = () => {
           {/* Section 2 */}
           <section
             style={{
-              background: "linear-gradient(0deg, #97ADD9, transparent)",
+              background:
+                "linear-gradient(0deg, var(--sec-color), transparent)",
               color: "var(--main-color)",
               minHeight: "400px",
             }}
@@ -285,7 +321,8 @@ const LandingPage = () => {
           {/* Section 4 */}
           <section
             style={{
-              background: "linear-gradient(0deg, #97ADD9, transparent)",
+              background:
+                "linear-gradient(0deg, var(--sec-color), transparent)",
               minHeight: "400px",
               color: "var(--main-color)",
             }}
@@ -314,7 +351,7 @@ const LandingPage = () => {
                 top: "-76px",
                 right: "10vw",
                 zIndex: "999",
-                width:"310px"
+                width: "310px",
               }}
               className="seperator"
             />

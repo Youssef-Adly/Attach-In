@@ -37,7 +37,7 @@
   }
 }
 @media only screen and (max-width: 360px) {
-  .seperator {
+  .smallbluething .seperator {
     /* position: "absolute" !important; */
     top: -26px !important;
     left: 6vw !important;

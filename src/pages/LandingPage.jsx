@@ -173,6 +173,7 @@ const LandingPage = () => {
                 position: "relative",
                 // overflow:"clip"
               }}
+              className="smallbluething"
             >
               <img
                 src="smallbluething.png"

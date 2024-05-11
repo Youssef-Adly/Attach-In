@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faBookBookmark,
   faBookmark,
-  faCalendar,
   faEllipsis,
   faEnvelope,
   faFaceSmile,
@@ -22,9 +20,9 @@ const HomeLayout = ({ children }) => {
     <main className="container-fluid bg-light" style={{ minHeight: "100vh" }}>
       <nav className="d-flex justify-content-around border-bottom">
         <div className="col-7 col-md-3 d-flex justify-content-center h-70">
-          <img src="Logowithout.svg" className="img-fluid" alt="logo" />
+          <img src="Logowithout.svg" className="img-fluid w-75" alt="logo" />
         </div>
-        <div className="col-5 col-md-9 p-4">
+        <div className="col-5 col-md-9 p-4 py-2">
           <ul className="nav justify-content-md-around justify-content-end ">
             <li
               className="nav-item d-none d-md-block"
@@ -33,33 +31,38 @@ const HomeLayout = ({ children }) => {
               }}
             >
               <Link className="nav-link active" aria-current="page" to="/home">
-                <img src="icon1.svg" alt="icon4" />
+                <img src="icon1.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="">
-                <img src="icon2.svg" alt="icon4" />
+                <img src="icon2.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="">
-                <img src="icon3.svg" alt="icon4" />
+                <img src="icon3.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="">
-                <img src="icon4.svg" alt="icon4" />
+                <img src="icon4.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li className="nav-item d-block d-lg-none align-self-end ">
               <button
-                className="btn"
+                className="btn d-flex align-items-center justify-content-center "
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight"
               >
-                <FontAwesomeIcon icon={faBars} fontSize={60} color="#363b56" />
+                <FontAwesomeIcon
+                  icon={faBars}
+                  fontSize={40}
+                  className="mb-md-2 pb-md-1"
+                  color="#363b56"
+                />
               </button>
             </li>
           </ul>

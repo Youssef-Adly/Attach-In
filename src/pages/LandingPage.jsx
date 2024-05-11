@@ -96,7 +96,7 @@ const LandingPage = () => {
               style={{ minHeight: "390px", overflowX: "clip" }}
             >
               <div className="col-12 col-lg-5 ps-4 mb-0 mb-lg-5 d-flex gap-4 flex-column justify-content-center ">
-                <div>
+                <div className="mb-0">
                   <h1 style={{ color: "var(--main-color)" }}>
                     Welcome <br />
                   </h1>
@@ -137,17 +137,29 @@ const LandingPage = () => {
                   </Link>
                 </div>
               </div>
-              <div className="col-12 col-lg-7 d-flex justify-content-end align-items-center position-relative ">
+              <div className="pencil-container col-12 col-lg-7 d-flex justify-content-end align-items-center position-relative ">
                 <img
                   src="Group 100.svg"
-                  className="img-fluid pencil"
+                  className="img-fluid pencil d-none d-sm-block"
                   style={{
-                    /* width: 500px; */
                     height: "500px",
                     position: "absolute",
                     zIndex: "111",
                     right: "0",
                     bottom: "-100px",
+                  }}
+                  alt=""
+                />
+                <img
+                  src="Group 100 pink.svg"
+                  className="img-fluid pencil d-block d-sm-none"
+                  style={{
+                    height: "500px",
+                    position: "absolute",
+                    zIndex: "111",
+                    right: "0",
+                    bottom: "-100px",
+                    // height: "350px",
                   }}
                   alt=""
                 />
@@ -167,7 +179,7 @@ const LandingPage = () => {
                 alt="smallbluething"
                 style={{
                   position: "absolute",
-                  top: "-14vh",
+                  top: "-94px",
                   left: "10vw",
                   zIndex: "999",
                 }}
@@ -389,6 +401,9 @@ const LandingPage = () => {
                 type="button"
                 data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="prev"
+                style={{
+                  left: "-15px",
+                }}
               >
                 <span
                   className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
@@ -401,6 +416,9 @@ const LandingPage = () => {
                 type="button"
                 data-bs-target="#carouselExampleIndicators"
                 data-bs-slide="next"
+                style={{
+                  right: "-15px",
+                }}
               >
                 <span
                   className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
@@ -508,6 +526,9 @@ const LandingPage = () => {
                 type="button"
                 data-bs-target="#carouselExampleIndicators2"
                 data-bs-slide="prev"
+                style={{
+                  left: "-15px",
+                }}
               >
                 <span
                   className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
@@ -520,6 +541,9 @@ const LandingPage = () => {
                 type="button"
                 data-bs-target="#carouselExampleIndicators2"
                 data-bs-slide="next"
+                style={{
+                  right: "-15px",
+                }}
               >
                 <span
                   className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"

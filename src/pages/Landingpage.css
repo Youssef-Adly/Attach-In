@@ -18,22 +18,28 @@
 @media only screen and (max-width: 992px) {
   .pencil {
     bottom: unset !important;
+    margin-top: 5px;
   }
 }
 
 @media only screen and (max-width: 600px) {
   .seperator {
     position: absolute !important;
-    top: -7vh !important;
+    top: -46px !important;
     left: 10vw !important;
     width: 280px;
   }
 }
 
+@media only screen and (max-width: 560px) {
+  .pencil-container {
+    height: 350px;
+  }
+}
 @media only screen and (max-width: 360px) {
   .seperator {
     /* position: "absolute" !important; */
-    top: -4vh !important;
+    top: -26px !important;
     left: 6vw !important;
     width: 240px;
   }

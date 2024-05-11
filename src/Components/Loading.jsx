@@ -6,7 +6,7 @@ const Loading = () => {
       className="col-12 d-flex justify-content-center align-items-center position-relative "
       style={{ backgroundColor: "#E2E1DB", height: "100vh" }}
     >
-      <img src="AttachInLogo.png" className="img-fluid" alt="logo" />
+      <img src="AttachInLogo.svg" className="img-fluid p-3" alt="logo" />
       <div
         className="spinner-grow position-absolute"
         style={{

@@ -85,6 +85,18 @@
 }
 .linkList:hover {
   /* color: var(--main-color) !important; */
-  opacity: .8;
+  opacity: 0.8;
   margin-left: 5px;
+}
+
+/*  */
+
+.accordion-button:not(.collapsed) {
+  background-color: var(--gray-color);
+  color: var();
+}
+
+.accordion-item {
+  background-color: unset !important;
+  margin-block: 20px;
 }

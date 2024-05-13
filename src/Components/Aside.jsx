@@ -93,13 +93,13 @@ const Aside = () => {
         <hr />
         {/*  */}
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/about" className="nav-link link-body-emphasis">
             <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
             About
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/FAQ" className="nav-link link-body-emphasis">
             <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
             FAQ
           </Link>
@@ -111,13 +111,13 @@ const Aside = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/partners" className="nav-link link-body-emphasis">
             <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
             Our Partners
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/terms" className="nav-link link-body-emphasis">
             <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
             Terms & Conditions
           </Link>

@@ -105,7 +105,7 @@ const AsideRight = () => {
         <hr />
         {/*  */}
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/about" className="nav-link listItem text-white">
             <FontAwesomeIcon
               icon={faPeopleGroup}
               className="me-2 pe-0"
@@ -115,7 +115,7 @@ const AsideRight = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/FAQ" className="nav-link listItem text-white">
             <FontAwesomeIcon
               icon={faCircleQuestion}
               className="me-2 pe-0"
@@ -135,7 +135,7 @@ const AsideRight = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/partners" className="nav-link listItem text-white">
             <FontAwesomeIcon
               icon={faHandshakeSimple}
               className="me-2 pe-0"
@@ -145,7 +145,7 @@ const AsideRight = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/terms" className="nav-link listItem text-white">
             <FontAwesomeIcon
               icon={faQuestionCircle}
               className="me-2 pe-0"

@@ -60,37 +60,37 @@ const Post = () => {
               aria-labelledby="cardFeedAction"
             >
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="">
                   <i className="bi bi-bookmark fa-fw pe-2" />
                   Save post
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="">
                   <i className="bi bi-person-x fa-fw pe-2" />
                   Unfollow lori ferguson
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="">
                   <i className="bi bi-x-circle fa-fw pe-2" />
                   Hide post
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="">
                   <i className="bi bi-slash-circle fa-fw pe-2" />
                   Block
-                </a>
+                </Link>
               </li>
               <li>
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="">
                   <i className="bi bi-flag fa-fw pe-2" />
                   Report post
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

@@ -10,7 +10,12 @@ const HomeLayout = ({ children }) => {
   return (
     // Navbar #1
     <main className="container-fluid bg-light" style={{ minHeight: "100vh" }}>
-      <nav className="d-flex justify-content-around border-bottom">
+      <nav
+        className="d-flex justify-content-around border-bottom"
+        style={{
+          borderColor: "#878787",
+        }}
+      >
         <div className="col-7 col-md-3 d-flex justify-content-center h-70">
           <img src="LogowithoutLG.svg" className="img-fluid w-75" alt="logo" />
         </div>
@@ -22,7 +27,7 @@ const HomeLayout = ({ children }) => {
                 borderBottom: "5px solid var(--main-color)",
               }}
             >
-              <Link className="nav-link active" aria-current="page" to="/home">
+              <Link className="nav-link active" aria-current="page" to="/">
                 <img src="icon1.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
@@ -62,14 +67,14 @@ const HomeLayout = ({ children }) => {
       </nav>
       {/* Navbar #2 */}
       <nav
-        className="d-flex d-md-none z-3 col-12 border-top position-fixed bottom-0"
+        className="d-flex d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
         style={{
           backgroundColor: "#eee",
         }}
       >
         <ul className="nav justify-content-around col-12 ">
           <li className="nav-item">
-            <Link className="nav-link px-0 active" to="/home">
+            <Link className="nav-link px-0 active" to="/">
               <img src="icon1.svg" className="w-75" alt="icon1" />
             </Link>
           </li>
@@ -127,15 +132,20 @@ const HomeLayout = ({ children }) => {
       </div>
       {/* Container For Posts And Aside */}
       <div className="d-flex">
-        <aside className="col-3 d-none d-lg-block">
+        <aside
+          className="col-3 d-none d-lg-block border-end border-4"
+          style={{
+            borderColor: "#878787",
+          }}
+        >
           <Aside />
         </aside>
         {/* Posts */}
         <div
           className="col-12 col-lg-9 p-1 p-sm-2 p-md-4 d-flex flex-column gap-3"
-          style={{
-            backgroundColor: "#eee",
-          }}
+          // style={{
+          //   backgroundColor: "#eee",
+          // }}
         >
           {/* Posts */}
           {children}

@@ -37,7 +37,7 @@ const AddPost = () => {
         </form>
       </div>
       {/* Share feed toolbar START */}
-      <ul className="nav nav-pills nav-stack small fw-normal">
+      <ul className="nav nav-pills nav-stack small justify-content-end fw-normal">
         <li className="nav-item">
           <Link
             className="nav-link bg-light py-1 px-2 mb-0"
@@ -100,7 +100,7 @@ const AddPost = () => {
           {/* Dropdown menu */}
           {/* added justify-content-end for lake of other btns */}
           <ul
-            className="dropdown-menu dropdown-menu-end justify-content-end"
+            className="dropdown-menu dropdown-menu-end"
             aria-labelledby="feedActionShare"
           >
             <li>

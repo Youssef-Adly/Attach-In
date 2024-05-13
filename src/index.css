@@ -14,7 +14,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root,
 [data-bs-them="light"] {
   --main-color: #363b56;
   --sec-color: #97add9;
@@ -22,6 +21,7 @@ body {
   --offWhite-color: #e2e1db;
   --gray-color: #e3e2dc;
 }
+/* --bs-body-bg */
 
 /* width */
 /* ::-webkit-scrollbar {

@@ -6,9 +6,9 @@ import AddPost from "../Components/AddPost";
 const HomePage = () => {
   return (
     <HomeLayout>
-      {/* ========================== */}
       {/* Add Post */}
       <AddPost />
+      {/* ============== */}
       <Post />
       <Post />
       <Post />

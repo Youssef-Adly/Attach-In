@@ -14,7 +14,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-bs-them="light"] {
+[data-bs-theme="light"] {
   --main-color: #363b56;
   --sec-color: #97add9;
   --pink-color: #f2969c;
@@ -22,6 +22,14 @@ body {
   --gray-color: #e3e2dc;
 }
 /* --bs-body-bg */
+
+[data-bs-theme="dark"] {
+  --main-color: #20242d; /* Darkened version of #363b56 */
+  --sec-color: #4c566a; /* Darkened version of #97add9 */
+  --pink-color: #9a4e54; /* Darkened version of #f2969c */
+  --offWhite-color: #393836; /* Darkened version of #e2e1db */
+  --gray-color: #292826; /* Darkened version of #e3e2dc */
+}
 
 /* width */
 /* ::-webkit-scrollbar {

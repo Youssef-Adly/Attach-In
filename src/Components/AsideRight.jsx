@@ -15,11 +15,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Aside = () => {
+const AsideRight = () => {
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary"
-      // style={{ width: 280 }}
+      className="d-flex flex-column flex-shrink-0 pb-1 px-2 px-lg-3 position-relative "
+      style={{ backgroundColor: "#363b56 !important", color: "white" }}
     >
       <Link
         to=""
@@ -35,7 +35,7 @@ const Aside = () => {
         </div>
       </Link>
       <span className="fs-4">Christina Waguih</span>
-      <Link to="" className="linkList text-decoration-none ">
+      <Link to="" className="text-decoration-none text-light listItem">
         View Profile
       </Link>
       <form className="d-flex my-3 position-relative" role="search">
@@ -54,38 +54,50 @@ const Aside = () => {
             top: "3px",
           }}
         >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <FontAwesomeIcon icon={faMagnifyingGlass} color="var(--sec-white)" />
         </button>
       </form>
       <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item">
+        <li className="">
           <Link
             to=""
-            className="nav-link link-body-emphasis"
+            className="nav-link  listItem text-white"
             aria-current="page"
           >
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
             </svg> */}
-            <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
+            <FontAwesomeIcon
+              icon={faGear}
+              className="me-2 pe-0 "
+              color="var(--bs-white)"
+            />
             Setting
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="" className="nav-link listItem text-white">
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
               className="me-2 pe-0"
               width={25}
             /> */}
-            <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faPlay}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Courses
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faComment}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Messages
           </Link>
         </li>
@@ -93,44 +105,72 @@ const Aside = () => {
         <hr />
         {/*  */}
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             About
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faCircleQuestion}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             FAQ
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faMoneyBill}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Subscription
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faHandshakeSimple}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Our Partners
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Terms & Conditions
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faAddressCard}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Contact Us
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
-            <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
+          <Link to="" className="nav-link listItem text-white">
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="me-2 pe-0"
+              color="var(--bs-white)"
+            />
             Log Out
           </Link>
         </li>
@@ -139,7 +179,7 @@ const Aside = () => {
       {/* <div className="dropdown">
         <a
           href="#"
-          className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+          className="d-flex align-items-center listItem text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
@@ -186,4 +226,4 @@ const Aside = () => {
   );
 };
 
-export default Aside;
+export default AsideRight;

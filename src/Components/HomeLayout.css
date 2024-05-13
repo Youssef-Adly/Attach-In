@@ -77,3 +77,14 @@
 }
 
 /* ================================== */
+
+/* Aside Canvis */
+
+.listItem:hover {
+  color: var(--sec-color) !important;
+}
+.linkList:hover {
+  /* color: var(--main-color) !important; */
+  opacity: .8;
+  margin-left: 5px;
+}

@@ -1,17 +1,9 @@
 import React from "react";
 import Aside from "./Aside";
+import AsideRight from "./AsideRight";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faBookmark,
-  faEllipsis,
-  faEnvelope,
-  faFaceSmile,
-  faImage,
-  faPenToSquare,
-  faVideoCamera,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 import "./HomeLayout.css";
 
 const HomeLayout = ({ children }) => {
@@ -106,11 +98,12 @@ const HomeLayout = ({ children }) => {
 
       {/* offcanvas */}
       <div
-        className="offcanvas offcanvas-end bg-light "
+        className="offcanvas offcanvas-end"
+        // className="offcanvas offcanvas-end bg-light "
         tabIndex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
-        style={{ width: 320 }}
+        style={{ width: 320, backgroundColor: "var(--main-color)" }}
       >
         <div className="offcanvas-header">
           {/* <h5 className="offcanvas-title" id="offcanvasRightLabel">
@@ -118,14 +111,19 @@ const HomeLayout = ({ children }) => {
           </h5> */}
           <button
             type="button"
-            className="btn-close"
+            className="btn-close btn-close-white"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
         <div className="offcanvas-body">
-          <Aside />
+          <AsideRight />
         </div>
+        <img
+          src="asideFrame.svg"
+          alt=""
+          className="img-fluid position-absolute bottom-0 end-0 col-3"
+        />
       </div>
       {/* Container For Posts And Aside */}
       <div className="d-flex">
@@ -139,132 +137,6 @@ const HomeLayout = ({ children }) => {
             backgroundColor: "#eee",
           }}
         >
-          {/* ========================== */}
-          {/* Add Post */}
-          <div className="card card-body rounded-5">
-            <div className="d-flex mb-3">
-              {/* Avatar */}
-              <div className="avatar avatar-xs me-2">
-                <Link to="">
-                  <img
-                    className="avatar-img rounded-circle"
-                    src="https://github.com/mdo.png"
-                    alt=""
-                  />
-                </Link>
-              </div>
-              {/* Post input */}
-              <form className="w-100">
-                <textarea
-                  className="form-control pe-4 border-0"
-                  rows={2}
-                  data-autoresize
-                  placeholder="Share your thoughts..."
-                  defaultValue={""}
-                />
-              </form>
-            </div>
-            {/* Share feed toolbar START */}
-            <ul className="nav nav-pills nav-stack small fw-normal">
-              <li className="nav-item">
-                <Link
-                  className="nav-link bg-light py-1 px-2 mb-0"
-                  to=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#feedActionPhoto"
-                >
-                  <FontAwesomeIcon
-                    icon={faImage}
-                    className="text-success pe-2"
-                  />
-                  Photo
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link bg-light py-1 px-2 mb-0"
-                  to=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#feedActionVideo"
-                >
-                  <FontAwesomeIcon
-                    icon={faVideoCamera}
-                    className="text-info pe-2"
-                  />
-                  Video
-                </Link>
-              </li>
-              {/* <li className="nav-item">
-                <Link
-                  to=""
-                  className="nav-link bg-light py-1 px-2 mb-0"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalCreateEvents"
-                >
-                  <FontAwesomeIcon
-                    icon={faCalendar}
-                    className="text-danger pe-2"
-                  />
-                  Event
-                </Link>
-              </li> */}
-              <li className="nav-item">
-                <Link
-                  className="nav-link bg-light py-1 px-2 mb-0"
-                  to=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalCreateFeed"
-                >
-                  <i className="bi bi-emoji-smile-fill text-warning pe-2" />
-                  <FontAwesomeIcon
-                    icon={faFaceSmile}
-                    className="text-warning pe-2"
-                  />
-                  Feeling /Activity
-                </Link>
-              </li>
-              <li className="nav-item dropdown ms-lg-auto">
-                <Link
-                  className="nav-link bg-light py-1 px-2 mb-0"
-                  to=""
-                  id="feedActionShare"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <FontAwesomeIcon icon={faEllipsis} />
-                </Link>
-                {/* Dropdown menu */}
-                <ul
-                  className="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="feedActionShare"
-                >
-                  <li>
-                    <Link className="dropdown-item" to="">
-                      <FontAwesomeIcon icon={faEnvelope} className="pe-2" />
-                      Create a poll
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="">
-                      <FontAwesomeIcon icon={faBookmark} className="pe-2" />
-                      Ask a question
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="">
-                      <FontAwesomeIcon icon={faPenToSquare} className="pe-2" />
-                      Help
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            {/* Share feed toolbar END */}
-          </div>
-
           {/* Posts */}
           {children}
         </div>

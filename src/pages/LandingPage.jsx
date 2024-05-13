@@ -186,7 +186,8 @@ const LandingPage = () => {
                   alt=""
                 />
                 <img
-                  src="Group 100 pink.svg"
+                  src="Group 100.svg"
+                  // src="Group 100 pink.svg"
                   className="img-fluid pencil d-block d-sm-none"
                   style={{
                     height: "500px",

@@ -1,12 +1,15 @@
 import React from "react";
 import Aside from "./Aside";
 import AsideRight from "./AsideRight";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 import "./HomeLayout.css";
 
 const HomeLayout = ({ children }) => {
+  const { pathname } = useLocation();
+  // let { pathname } = location;
+  // console.log(pathname);
   return (
     // Navbar #1
     <main className="container-fluid bg-light" style={{ minHeight: "100vh" }}>
@@ -24,25 +27,50 @@ const HomeLayout = ({ children }) => {
             <li
               className="nav-item d-none d-md-block"
               style={{
-                borderBottom: "5px solid var(--main-color)",
+                borderBottom:
+                  pathname === "/home" ? "5px solid var(--main-color)" : "none",
               }}
             >
-              <Link className="nav-link active" aria-current="page" to="/">
+              <Link className="nav-link active" aria-current="page" to="/home">
                 <img src="icon1.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
-            <li className="nav-item d-none d-md-block">
-              <Link className="nav-link" to="">
+            <li
+              className="nav-item d-none d-md-block"
+              style={{
+                borderBottom:
+                  pathname === "/network"
+                    ? "5px solid var(--main-color)"
+                    : "none",
+              }}
+            >
+              <Link className="nav-link" to="/network">
                 <img src="icon2.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
-            <li className="nav-item d-none d-md-block">
-              <Link className="nav-link" to="">
+            <li
+              className="nav-item d-none d-md-block"
+              style={{
+                borderBottom:
+                  pathname === "/notifications"
+                    ? "5px solid var(--main-color)"
+                    : "none",
+              }}
+            >
+              <Link className="nav-link" to="/notifications">
                 <img src="icon3.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
-            <li className="nav-item d-none d-md-block">
-              <Link className="nav-link" to="">
+            <li
+              className="nav-item d-none d-md-block"
+              style={{
+                borderBottom:
+                  pathname === "/internships"
+                    ? "5px solid var(--main-color)"
+                    : "none",
+              }}
+            >
+              <Link className="nav-link" to="/internships">
                 <img src="icon4.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
@@ -70,31 +98,33 @@ const HomeLayout = ({ children }) => {
         className="d-flex d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
         style={{
           backgroundColor: "#eee",
+          right: "0",
+          width: "100%",
         }}
       >
-        <ul className="nav justify-content-around col-12 ">
+        <ul className="nav justify-content-evenly col-12 ms-2">
           <li className="nav-item">
-            <Link className="nav-link px-0 active" to="/">
+            <Link className="nav-link px-0 active" to="/home">
               <img src="icon1.svg" className="w-75" alt="icon1" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="">
+            <Link className="nav-link px-0" to="/network">
               <img src="icon2.svg" className="w-75" alt="icon2" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="">
+            <Link className="nav-link px-0" to="/">
               <img src="icon5.svg" className="w-75" alt="icon5" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="">
+            <Link className="nav-link px-0" to="/notifications">
               <img src="icon3.svg" className="w-75" alt="icon3" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="">
+            <Link className="nav-link px-0" to="/internships">
               <img src="icon4.svg" className="w-75" alt="icon4" />
             </Link>
           </li>

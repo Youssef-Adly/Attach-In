@@ -100,3 +100,13 @@
   background-color: unset !important;
   margin-block: 20px;
 }
+/*  */
+
+.notifications .nav-pills .nav-link.active,
+.nav-pills .show > .notifications .nav-link {
+  background-color: var(--main-color) !important;
+}
+
+.notifications .nav-link {
+  color: var(--main-color);
+}

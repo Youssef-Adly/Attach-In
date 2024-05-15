@@ -1,5 +1,5 @@
 import React from "react";
-import LoadingSuspese from "./LoadingSuspese";
+import LoadingSuspese from "./LoadingSuspense";
 
 const Loading = () => {
   return (

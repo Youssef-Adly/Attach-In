@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import LoadingSuspese from "./LoadingSuspese";
+import LoadingSuspese from "./LoadingSuspense";
 
 const FAQ = () => {
   const [FAQ, setFAQ] = useState(null);

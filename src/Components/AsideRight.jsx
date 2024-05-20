@@ -60,7 +60,7 @@ const AsideRight = () => {
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="">
           <Link
-            to=""
+            to="/setting"
             className="nav-link  listItem text-white"
             aria-current="page"
           >
@@ -76,7 +76,7 @@ const AsideRight = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/courses" className="nav-link listItem text-white">
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
@@ -92,7 +92,7 @@ const AsideRight = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
+          <Link to="/messages" className="nav-link listItem text-white">
             <FontAwesomeIcon
               icon={faComment}
               className="me-2 pe-0"

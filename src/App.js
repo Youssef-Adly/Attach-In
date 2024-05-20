@@ -14,6 +14,11 @@ import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
 import OurPartnersPage from "./pages/OurPartnersPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
+import SettingPage from "./pages/SettingPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import CoursesPage from "./pages/CoursesPage";
+import CoursePage from "./pages/CourseDetailsPage";
+import CourseDetailsPage from "./pages/CourseDetailsPage";
 
 function App() {
   return (
@@ -31,6 +36,10 @@ function App() {
         <Route path="/terms" element={<TermsAndConditionsPage />} />
         <Route path="/partners" element={<OurPartnersPage />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
+        <Route path="/setting" element={<SettingPage />} />
+        <Route path="/reset" element={<ResetPasswordPage />} />
+        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="courses/:id" element={<CourseDetailsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

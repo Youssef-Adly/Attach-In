@@ -20,7 +20,7 @@ const HomeLayout = ({ children }) => {
         }}
       >
         <div className="col-7 col-md-3 d-flex justify-content-center h-70">
-          <img src="LogowithoutLG.svg" className="img-fluid w-75" alt="logo" />
+          <img src="/LogowithoutLG.svg" className="img-fluid w-75" alt="logo" />
         </div>
         <div className="col-5 col-md-9 p-4 py-2">
           <ul className="nav justify-content-md-around justify-content-end ">
@@ -32,7 +32,7 @@ const HomeLayout = ({ children }) => {
               }}
             >
               <Link className="nav-link active" aria-current="page" to="/home">
-                <img src="icon1.svg" alt="icon4" style={{ width: "50px" }} />
+                <img src="/icon1.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li
@@ -45,7 +45,7 @@ const HomeLayout = ({ children }) => {
               }}
             >
               <Link className="nav-link" to="/network">
-                <img src="icon2.svg" alt="icon4" style={{ width: "50px" }} />
+                <img src="/icon2.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li
@@ -58,7 +58,7 @@ const HomeLayout = ({ children }) => {
               }}
             >
               <Link className="nav-link" to="/notifications">
-                <img src="icon3.svg" alt="icon4" style={{ width: "50px" }} />
+                <img src="/icon3.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li
@@ -71,7 +71,7 @@ const HomeLayout = ({ children }) => {
               }}
             >
               <Link className="nav-link" to="/internships">
-                <img src="icon4.svg" alt="icon4" style={{ width: "50px" }} />
+                <img src="/icon4.svg" alt="icon4" style={{ width: "50px" }} />
               </Link>
             </li>
             <li className="nav-item d-block d-lg-none align-self-end ">
@@ -105,27 +105,27 @@ const HomeLayout = ({ children }) => {
         <ul className="nav justify-content-evenly col-12 ms-2">
           <li className="nav-item">
             <Link className="nav-link px-0 active" to="/home">
-              <img src="icon1.svg" className="w-75" alt="icon1" />
+              <img src="/icon1.svg" className="w-75" alt="icon1" />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/network">
-              <img src="icon2.svg" className="w-75" alt="icon2" />
+              <img src="/icon2.svg" className="w-75" alt="icon2" />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/">
-              <img src="icon5.svg" className="w-75" alt="icon5" />
+              <img src="/icon5.svg" className="w-75" alt="icon5" />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/notifications">
-              <img src="icon3.svg" className="w-75" alt="icon3" />
+              <img src="/icon3.svg" className="w-75" alt="icon3" />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/internships">
-              <img src="icon4.svg" className="w-75" alt="icon4" />
+              <img src="/icon4.svg" className="w-75" alt="icon4" />
             </Link>
           </li>
         </ul>

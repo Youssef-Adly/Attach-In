@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -29,21 +30,21 @@ const Footer = () => {
           </div>
         </div>
         <div className="col-lg-6 col-12 p-3" role="group">
-          <button type="button" className="btn">
+          <Link to={"/about"} className="btn">
             About Us
-          </button>
-          <button type="button" className="btn">
+          </Link>
+          <Link to={"/FAQ"} className="btn">
             FAQ
-          </button>
-          <button type="button" className="btn">
+          </Link>
+          <Link to={"/terms"} className="btn">
             Terms &amp; Conditions
-          </button>
-          <button type="button" className="btn">
+          </Link>
+          <Link to={"/contact"} className="btn">
             Contact US
-          </button>
-          <button type="button" className="btn">
+          </Link>
+          <Link to={"/partners"} className="btn">
             Our Partners
-          </button>
+          </Link>
         </div>
       </div>
       {/*  */}

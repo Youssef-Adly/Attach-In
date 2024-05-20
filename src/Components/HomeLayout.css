@@ -110,3 +110,19 @@
 .notifications .nav-link {
   color: var(--main-color);
 }
+
+/*  */
+
+.courses.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: var(--main-color);
+}
+
+.courses .nav-link {
+  color: white;
+  /* width: 150px; */
+}
+
+.courses .nav-item:hover {
+  transform: translate(0, -1px);
+}

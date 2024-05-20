@@ -60,7 +60,7 @@ const Aside = () => {
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
           <Link
-            to=""
+            to="/setting"
             className="nav-link link-body-emphasis"
             aria-current="page"
           >
@@ -72,7 +72,7 @@ const Aside = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/courses" className="nav-link link-body-emphasis">
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
@@ -84,7 +84,7 @@ const Aside = () => {
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <Link to="/messages" className="nav-link link-body-emphasis">
             <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
             Messages
           </Link>

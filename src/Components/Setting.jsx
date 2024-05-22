@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Setting = () => {
   const switchMode = (e) => {
-    console.log(e);
+    // console.log(e);
     let root = document.documentElement;
     e.target.checked
       ? (root.dataset.bsTheme = "dark")
@@ -72,7 +72,9 @@ const Setting = () => {
       {/* Terms & Conditions */}
       <Link to={"/terms"} className="nav-link d-flex gap-3 align-items-center ">
         <img src="terms.svg" alt="terms" />
-        <div style={{ color: "var(--text-main-color)" }}>Terms & Conditions</div>
+        <div style={{ color: "var(--text-main-color)" }}>
+          Terms & Conditions
+        </div>
       </Link>
       <hr />
       {/*  */}

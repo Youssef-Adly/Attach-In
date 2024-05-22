@@ -90,7 +90,7 @@ const HomeLayout = ({ children }) => {
                 <FontAwesomeIcon
                   icon={faBars}
                   fontSize={40}
-                  className="mb-md-2 pb-md-1"
+                  className="mb-md-1 pb-md-1"
                   // color="#363b56"
                   style={{ color: "var(--text-main-color)" }}
                 />

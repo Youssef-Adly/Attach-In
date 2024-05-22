@@ -45,14 +45,14 @@ const Register = () => {
               id="floatingInput"
               placeholder="john Doe"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="firstName"
               onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingInput"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               First Name
             </label>
@@ -64,14 +64,14 @@ const Register = () => {
               id="floatingInput2"
               placeholder="john Doe"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="lastName"
               onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingInput2"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               Last Name
             </label>
@@ -83,14 +83,14 @@ const Register = () => {
               id="floatingInput3"
               placeholder="0123456879"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="mobileNum"
               onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingInput3"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               Mobile Number
             </label>
@@ -102,14 +102,14 @@ const Register = () => {
               id="floatingInput4"
               placeholder="Cairo"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="university"
               onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingInput4"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               University
             </label>
@@ -121,14 +121,14 @@ const Register = () => {
               id="floatingInput5"
               placeholder="example@email.com"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="email"
               onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingInput5"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               Email
             </label>
@@ -140,7 +140,7 @@ const Register = () => {
               id="floatingPassword"
               placeholder="Password"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="password"
               onChange={(e) => handleChange(e)}
@@ -148,7 +148,7 @@ const Register = () => {
             <label
               htmlFor="floatingPassword"
               style={{
-                color: "var(--main-color)",
+                color: "var(--text-main-color)",
               }}
             >
               Password
@@ -161,7 +161,7 @@ const Register = () => {
               id="floatingPassword2"
               placeholder="Confirm Password"
               style={{
-                borderColor: "var(--main-color)",
+                bordercolor: "var(--text-main-color)",
               }}
               name="confirmPassword"
               onChange={(e) => handleChange(e)}
@@ -169,7 +169,7 @@ const Register = () => {
             <label
               htmlFor="floatingPassword2"
               style={{
-                color: "var(--main-color)",
+                color: "var(--text-main-color)",
               }}
             >
               Confirm Password
@@ -182,7 +182,7 @@ const Register = () => {
             handleSubmit(e);
           }}
           style={{
-            backgroundColor: "var(--main-color)",
+            backgroundcolor: "var(--text-main-color)",
             height: "100px",
             width: "100px",
           }}

@@ -35,7 +35,7 @@ const FriendCard = () => {
         </div>
       </div>
       {/* Info */}
-      <div className="p-5 mt-4" style={{ color: "var(--main-color)" }}>
+      <div className="p-5 mt-4" style={{ color: "var(--text-main-color)" }}>
         {/* <div className="nav nav-divider"> */}
         <h4 className="card-title mb-0">Lori Ferguson</h4>
         {/* </div> */}

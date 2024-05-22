@@ -20,7 +20,7 @@ const ResetPassword = () => {
 
   return (
     <div className="col-10 mx-auto d-flex flex-column gap-4 mt-4 justify-content-center">
-      <h1 style={{ color: "var(--main-color)" }}>Reset Password</h1>
+      <h1 style={{ color: "var(--text-main-color)" }}>Reset Password</h1>
       <hr />
       <div className="form-floating">
         <input
@@ -29,12 +29,12 @@ const ResetPassword = () => {
           id="floatingInput"
           placeholder="name@example.com"
           style={{
-            borderColor: "var(--main-color)",
+            bordercolor: "var(--text-main-color)",
           }}
           name="CurrentPassword"
           onChange={(e) => handleChange(e)}
         />
-        <label htmlFor="floatingInput" style={{ color: "var(--main-color)" }}>
+        <label htmlFor="floatingInput" style={{ color: "var(--text-main-color)" }}>
           Current Password
         </label>
       </div>
@@ -45,7 +45,7 @@ const ResetPassword = () => {
           id="floatingPassword"
           placeholder="Password"
           style={{
-            borderColor: "var(--main-color)",
+            bordercolor: "var(--text-main-color)",
           }}
           name="NewPassword"
           onChange={(e) => handleChange(e)}
@@ -53,7 +53,7 @@ const ResetPassword = () => {
         <label
           htmlFor="floatingPassword"
           style={{
-            color: "var(--main-color)",
+            color: "var(--text-main-color)",
           }}
         >
           New Password
@@ -66,7 +66,7 @@ const ResetPassword = () => {
           id="floatingPassword"
           placeholder="Password"
           style={{
-            borderColor: "var(--main-color)",
+            bordercolor: "var(--text-main-color)",
           }}
           name="ConfirmPassword"
           onChange={(e) => handleChange(e)}
@@ -74,7 +74,7 @@ const ResetPassword = () => {
         <label
           htmlFor="floatingPassword"
           style={{
-            color: "var(--main-color)",
+            color: "var(--text-main-color)",
           }}
         >
           ConfirmPassword
@@ -86,7 +86,7 @@ const ResetPassword = () => {
           handleSubmit(e);
         }}
         style={{
-          backgroundColor: "var(--main-color)",
+          backgroundcolor: "var(--text-main-color)",
           height: "100px",
           width: "100px",
         }}

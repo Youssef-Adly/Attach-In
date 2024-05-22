@@ -6,7 +6,7 @@ const InternshipsPage = () => {
   return (
     <HomeLayout>
       {/* Header Title */}
-      <h1 className="mt-3 mt-md-0 mb-0" style={{ color: "var(--main-color)" }}>Internships</h1>
+      <h1 className="mt-3 mt-md-0 mb-0" style={{ color: "var(--text-main-color)" }}>Internships</h1>
       <hr />
       {/* Internships Posts */}
       <Internships />

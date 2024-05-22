@@ -16,7 +16,7 @@ const FAQ = () => {
   return (
     <section className="min-vh-100 mb-5">
       {/* Header Title */}
-      <h1 style={{ color: "var(--main-color)" }}>FAQ</h1>
+      <h1 style={{ color: "var(--text-main-color)" }}>FAQ</h1>
       <hr />
 
       {/* Custom Accordion */}

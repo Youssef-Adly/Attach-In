@@ -209,7 +209,7 @@ const Post = () => {
           <form className="nav nav-item w-100 position-relative">
             <textarea
               data-autoresize
-              className="form-control pe-5 bg-light"
+              className="form-control pe-5"
               rows={1}
               placeholder="Add a comment..."
               defaultValue={""}
@@ -239,7 +239,7 @@ const Post = () => {
               </div>
               <div className="ms-2">
                 {/* Comment by */}
-                <div className="bg-light rounded-start-top-0 p-3 rounded">
+                <div className="rounded-start-top-0 p-3 rounded">
                   <div className="d-flex justify-content-between">
                     <h6 className="mb-1">
                       <Link to=""> Frances Guerrero </Link>
@@ -340,7 +340,7 @@ const Post = () => {
                   </div>
                   {/* Comment by */}
                   <div className="ms-2">
-                    <div className="bg-light p-3 rounded">
+                    <div className="p-3 rounded">
                       <div className="d-flex justify-content-between">
                         <h6 className="mb-1">
                           <Link to=""> Lori Stevens </Link>
@@ -384,7 +384,7 @@ const Post = () => {
                   </div>
                   {/* Comment by */}
                   <div className="ms-2">
-                    <div className="bg-light p-3 rounded">
+                    <div className="p-3 rounded">
                       <div className="d-flex justify-content-between">
                         <h6 className="mb-1">
                           <Link to=""> Billy Vasquez </Link>
@@ -442,7 +442,7 @@ const Post = () => {
               </div>
               {/* Comment by */}
               <div className="ms-2">
-                <div className="bg-light p-3 rounded">
+                <div className="p-3 rounded">
                   <div className="d-flex justify-content-between">
                     <h6 className="mb-1">
                       <Link to=""> Frances Guerrero </Link>

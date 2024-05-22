@@ -19,6 +19,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import CoursesPage from "./pages/CoursesPage";
 import CoursePage from "./pages/CourseDetailsPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
+import MessagesPage from "./pages/MessagesPage";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/reset" element={<ResetPasswordPage />} />
         <Route path="/courses" element={<CoursesPage />} />
         <Route path="courses/:id" element={<CourseDetailsPage />} />
+        <Route path="/messages" element={<MessagesPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

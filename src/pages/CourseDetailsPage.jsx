@@ -36,13 +36,13 @@ const CourseDetailsPage = () => {
 
   return (
     <HomeLayout>
-      <h1 style={{ color: "var(--main-color)" }}>Courses</h1>
+      <h1 style={{ color: "var(--text-main-color)" }}>Courses</h1>
       <hr />
       {/* <!-- Nav tabs --> */}
       <ul
-        className="nav nav-tabs row-cols-auto pt-2 rounded-top-4 courses"
+        className="nav nav-tabs row-cols-auto pt-2 mb-5 rounded-top-4 courses"
         style={{
-          backgroundColor: "var(--main-color)",
+          backgroundcolor: "var(--main-color)",
           color: "var(--bs-gray-100)",
           // gap: "50px",
           justifyContent: "space-around",
@@ -108,12 +108,12 @@ const CourseDetailsPage = () => {
                 icon={faCircleArrowLeft}
                 fontSize={27}
                 style={{
-                  color: "var(--main-color)",
+                  color: "var(--text-main-color)",
                   marginBottom: "5px",
                 }}
               />
             </Link>
-            <h4 style={{ color: "var(--main-color)" }}>{Course.name_en}</h4>
+            <h4 style={{ color: "var(--text-main-color)" }}>{Course.name_en}</h4>
           </div>
           <hr />
           {/* About */}
@@ -125,7 +125,7 @@ const CourseDetailsPage = () => {
           >
             <p
               className="px-2 px-sm-5 mb-5"
-              style={{ color: "var(--main-color)" }}
+              style={{ color: "var(--text-main-color)" }}
             >
               {Course.description_en}
             </p>
@@ -209,7 +209,7 @@ const CourseDetailsPage = () => {
                 <p
                   className="px-3"
                   style={{
-                    color: "var(--main-color)",
+                    color: "var(--text-main-color)",
                   }}
                 >
                   <svg
@@ -245,7 +245,7 @@ const CourseDetailsPage = () => {
                 <p
                   className="px-3"
                   style={{
-                    color: "var(--main-color)",
+                    color: "var(--text-main-color)",
                   }}
                 >
                   <svg
@@ -281,7 +281,7 @@ const CourseDetailsPage = () => {
                 <p
                   className="px-3"
                   style={{
-                    color: "var(--main-color)",
+                    color: "var(--text-main-color)",
                   }}
                 >
                   <svg
@@ -317,7 +317,7 @@ const CourseDetailsPage = () => {
                 <p
                   className="px-3"
                   style={{
-                    color: "var(--main-color)",
+                    color: "var(--text-main-color)",
                   }}
                 >
                   <svg
@@ -347,7 +347,7 @@ const CourseDetailsPage = () => {
                 // handleSubmit(e);
               }}
               style={{
-                backgroundColor: "var(--main-color)",
+                backgroundcolor: "var(--text-main-color)",
                 height: "100px",
                 width: "100px",
               }}

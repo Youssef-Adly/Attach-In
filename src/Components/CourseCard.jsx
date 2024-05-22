@@ -22,7 +22,7 @@ const CourseCard = ({
         alt="CourseCard"
         className="img-fluid"
       />
-      <h6 className="text-center" style={{ color: "var(--main-color)" }}>
+      <h6 className="text-center" style={{ color: "var(--text-main-color)" }}>
         {name_en}
       </h6>
     </Link>

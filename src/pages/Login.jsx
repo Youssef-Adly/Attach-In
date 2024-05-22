@@ -60,7 +60,7 @@ const Login = () => {
           <Link
             to={"/register"}
             style={{
-              backgroundColor: "var(--main-color)",
+              backgroundcolor: "var(--text-main-color)",
               height: "100px",
               width: "100px",
             }}
@@ -75,7 +75,7 @@ const Login = () => {
               setLogin(true);
             }}
             style={{
-              backgroundColor: "var(--main-color)",
+              backgroundcolor: "var(--text-main-color)",
               height: "100px",
               width: "100px",
             }}
@@ -98,14 +98,14 @@ const Login = () => {
                 id="floatingInput"
                 placeholder="name@example.com"
                 style={{
-                  borderColor: "var(--main-color)",
+                  bordercolor: "var(--text-main-color)",
                 }}
                 name="userName"
                 onChange={(e) => handleChange(e)}
               />
               <label
                 htmlFor="floatingInput"
-                style={{ color: "var(--main-color)" }}
+                style={{ color: "var(--text-main-color)" }}
               >
                 User Name
               </label>
@@ -117,7 +117,7 @@ const Login = () => {
                 id="floatingPassword"
                 placeholder="Password"
                 style={{
-                  borderColor: "var(--main-color)",
+                  bordercolor: "var(--text-main-color)",
                 }}
                 name="password"
                 onChange={(e) => handleChange(e)}
@@ -125,7 +125,7 @@ const Login = () => {
               <label
                 htmlFor="floatingPassword"
                 style={{
-                  color: "var(--main-color)",
+                  color: "var(--text-main-color)",
                 }}
               >
                 Password
@@ -138,7 +138,7 @@ const Login = () => {
               handleSubmit(e);
             }}
             style={{
-              backgroundColor: "var(--main-color)",
+              backgroundcolor: "var(--text-main-color)",
               height: "100px",
               width: "100px",
             }}

@@ -19,11 +19,14 @@ const AsideRight = () => {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 pb-1 px-2 px-lg-3 position-relative "
-      style={{ backgroundColor: "#363b56 !important", color: "white" }}
+      style={{
+        backgroundColor: "#var(--main-color)",
+        color: "var(--text-main-color)",
+      }}
     >
       <Link
         to=""
-        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none"
       >
         {/* Avatar */}
         <div className="avatar avatar-story me-2">
@@ -34,7 +37,7 @@ const AsideRight = () => {
           />
         </div>
       </Link>
-      <span className="fs-4">Christina Waguih</span>
+      <span className="fs-4 text-light">Christina Waguih</span>
       <Link to="" className="text-decoration-none text-light listItem">
         View Profile
       </Link>
@@ -61,43 +64,31 @@ const AsideRight = () => {
         <li className="">
           <Link
             to="/setting"
-            className="nav-link  listItem text-white"
+            className="nav-link  listItem text-light"
             aria-current="page"
           >
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
             </svg> */}
-            <FontAwesomeIcon
-              icon={faGear}
-              className="me-2 pe-0 "
-              color="var(--bs-white)"
-            />
+            <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
             Setting
           </Link>
         </li>
         <li>
-          <Link to="/courses" className="nav-link listItem text-white">
+          <Link to="/courses" className="nav-link listItem text-light">
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
               className="me-2 pe-0"
               width={25}
             /> */}
-            <FontAwesomeIcon
-              icon={faPlay}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+            <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
             Courses
           </Link>
         </li>
         <li>
-          <Link to="/messages" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faComment}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="/messages" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
             Messages
           </Link>
         </li>
@@ -105,72 +96,44 @@ const AsideRight = () => {
         <hr />
         {/*  */}
         <li>
-          <Link to="/about" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faPeopleGroup}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="/about" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
             About
           </Link>
         </li>
         <li>
-          <Link to="/FAQ" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faCircleQuestion}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="/FAQ" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
             FAQ
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faMoneyBill}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
             Subscription
           </Link>
         </li>
         <li>
-          <Link to="/partners" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faHandshakeSimple}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="/partners" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
             Our Partners
           </Link>
         </li>
         <li>
-          <Link to="/terms" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="/terms" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
             Terms & Conditions
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faAddressCard}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
             Contact Us
           </Link>
         </li>
         <li>
-          <Link to="" className="nav-link listItem text-white">
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              className="me-2 pe-0"
-              color="var(--bs-white)"
-            />
+          <Link to="" className="nav-link listItem text-light">
+            <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
             Log Out
           </Link>
         </li>

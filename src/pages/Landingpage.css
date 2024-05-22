@@ -64,3 +64,49 @@
     height: 70px !important;
   }
 }
+
+/* Header Dark Mode */
+
+[data-bs-theme="light"] .landingHeader {
+  background-color: var(--offWhite-color);
+}
+[data-bs-theme="dark"] .landingHeader {
+  background-color: #20242d;
+}
+
+[data-bs-theme="dark"] .logoBrand {
+  background: #eee;
+  border-radius: 30px 20px;
+  padding: 5px 20px;
+  box-sizing: content-box;
+}
+
+[data-bs-theme="light"] .smallbluething {
+  background-color: var(--main-color);
+}
+
+[data-bs-theme="dark"] .smallbluething {
+  background-color: #363b56;
+}
+
+[data-bs-theme="light"] .smallpurplething {
+  background-color: var(--main-color);
+}
+
+[data-bs-theme="dark"] .smallpurplething {
+  background-color: #363b56;
+}
+
+[data-bs-theme="light"] .bgGradiant {
+  background: linear-gradient(0deg, var(--sec-color), transparent);
+}
+[data-bs-theme="dark"] .bgGradiant {
+  background: linear-gradient(180deg, var(--main-color), var(--sec-color));
+}
+
+[data-bs-theme="dark"] .bgGradiant2 {
+  background: linear-gradient(0deg, #363b56, transparent) !important;
+}
+[data-bs-theme="dark"] .bgGradiant3 {
+  background: linear-gradient(180deg, #363b56, transparent) !important;
+}

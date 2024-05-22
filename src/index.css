@@ -5,7 +5,7 @@
 }
 
 * {
-  transition: all 0.5s;
+  transition: all 0.5s !important;
 }
 
 body {
@@ -16,15 +16,18 @@ body {
 
 [data-bs-theme="light"] {
   --main-color: #363b56;
+  --text-main-color: #363b56;
   --sec-color: #97add9;
   --pink-color: #f2969c;
   --offWhite-color: #e2e1db;
   --gray-color: #e3e2dc;
 }
 /* --bs-body-bg */
+/* bg-body-tertiary */
 
 [data-bs-theme="dark"] {
   --main-color: #20242d; /* Darkened version of #363b56 */
+  --text-main-color: #ffffff; /* Darkened version of #363b56 */
   --sec-color: #4c566a; /* Darkened version of #97add9 */
   --pink-color: #9a4e54; /* Darkened version of #f2969c */
   --offWhite-color: #393836; /* Darkened version of #e2e1db */

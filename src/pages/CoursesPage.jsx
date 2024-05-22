@@ -24,7 +24,7 @@ const CoursesPage = () => {
 
   return (
     <HomeLayout>
-      <h1 style={{ color: "var(--main-color)" }}>Courses</h1>
+      <h1 style={{ color: "var(--text-main-color)" }}>Courses</h1>
       <hr />
       <div className="row gy-4 justify-content-around align-items-center ">
         {AllCourses ? (

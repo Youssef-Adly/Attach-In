@@ -1,3 +1,10 @@
+/* Navbar Dark logo */
+
+[data-bs-theme="dark"] .logo {
+  background-color: #eee;
+  border-radius: 20px 50px;
+}
+
 /* Post Style */
 
 /* .card {
@@ -81,7 +88,7 @@
 /* Aside Canvis */
 
 .listItem:hover {
-  color: var(--sec-color) !important;
+  color: var(--pink-color) !important;
 }
 .linkList:hover {
   /* color: var(--main-color) !important; */
@@ -104,22 +111,22 @@
 
 .notifications .nav-pills .nav-link.active,
 .nav-pills .show > .notifications .nav-link {
-  background-color: var(--main-color) !important;
+  background-color: #363b56 !important;
 }
 
 .notifications .nav-link {
-  color: var(--main-color);
+  color: var(--text-main-color);
 }
 
 /*  */
 
 .courses.nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
-  color: var(--main-color);
+  color: var(--text-main-color);
 }
 
 .courses .nav-link {
-  color: white;
+  color: var(--sec-color);
   /* width: 150px; */
 }
 

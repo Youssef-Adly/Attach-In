@@ -54,10 +54,10 @@ const LandingPage = () => {
       ) : (
         <>
           <header
-            // className="container-fluid"
+            className="landingHeader bgGradiant3"
             style={{
               minHeight: "80vh",
-              backgroundColor: "var(--offWhite-color)",
+              // backgroundColor: "var(--offWhite-color)",
             }}
           >
             <nav className="p-4 d-flex flex-column-reverse flex-lg-row justify-content-between align-items-center ">
@@ -71,39 +71,43 @@ const LandingPage = () => {
               <div className="d-none d-md-flex align-items-center ">
                 <div className="navbar-collapse" id="navbarSupportedContent">
                   <ul className="navbar-nav align-items-center flex-row gap-5 me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                      <Link
-                        className="nav-link fs-5 border-top border-5  border-black"
-                        // style={{ borderColor: "var(--main-color) !important" }}
-                        to="/community"
-                      >
+                    <li
+                      className="nav-item"
+                      style={{
+                        borderTop: "5px solid var(--text-main-color)",
+                      }}
+                    >
+                      <Link className="nav-link fs-5" to="/home">
                         Community
                       </Link>
                     </li>
-                    <li className="nav-item">
-                      <Link
-                        className="nav-link fs-5  border-top border-5  border-black"
-                        // style={{ borderColor: "var(--main-color) !important" }}
-                        to="/learning"
-                      >
+                    <li
+                      className="nav-item"
+                      style={{
+                        borderTop: "5px solid var(--text-main-color)",
+                      }}
+                    >
+                      <Link className="nav-link fs-5" to="/courses">
                         Learning
                       </Link>
                     </li>
-                    <li className="nav-item">
-                      <Link
-                        className="nav-link fs-5  border-top border-5  border-black"
-                        // style={{ borderColor: "var(--main-color) !important" }}
-                        to="/internships"
-                      >
+                    <li
+                      className="nav-item"
+                      style={{
+                        borderTop: "5px solid var(--text-main-color)",
+                      }}
+                    >
+                      <Link className="nav-link fs-5" to="/internships">
                         Internships
                       </Link>
                     </li>
-                    <li className="nav-item">
-                      <Link
-                        className="nav-link fs-5  border-top border-5 border-black"
-                        // style={{ borderColor: "var(--main-color) !important" }}
-                        to="/aboutus"
-                      >
+                    <li
+                      className="nav-item"
+                      style={{
+                        borderTop: "5px solid var(--text-main-color)",
+                      }}
+                    >
+                      <Link className="nav-link fs-5" to="/about">
                         About us
                       </Link>
                     </li>
@@ -111,7 +115,7 @@ const LandingPage = () => {
                       className="nav-item px-4 border rounded"
                       style={{
                         backgroundColor: "var(--pink-color)",
-                        color: "var(--gray-color)",
+                        color: "var(--text-main-color)",
                       }}
                     >
                       <Link className="nav-link fs-5 col-12" to="/login">
@@ -128,10 +132,10 @@ const LandingPage = () => {
             >
               <div className="col-12 col-lg-5 ps-4 mb-0 mb-lg-5 d-flex gap-4 flex-column justify-content-center ">
                 <div className="mb-0">
-                  <h1 style={{ color: "var(--main-color)" }}>
+                  <h1 style={{ color: "var(--text-main-color)" }}>
                     Welcome <br />
                   </h1>
-                  <h4 style={{ color: "var(--main-color)" }}>
+                  <h4 style={{ color: "var(--text-main-color)" }}>
                     to your professional gate
                   </h4>
                 </div>
@@ -145,19 +149,21 @@ const LandingPage = () => {
                     zIndex: "999",
                   }}
                 >
-                  <Link className="nav-link fs-5 fw-bold col-12" to="/home">
+                  <Link
+                    className="nav-link fs-5 fw-bold col-12 text-light"
+                    to="/home"
+                  >
                     Get Started
                     <FontAwesomeIcon
-                      className="ms-3"
+                      className="ms-3 text-light"
                       icon={faCircleArrowRight}
                     />
                   </Link>
                 </div>
                 <div
-                  className="nav-item p-2 border rounded"
+                  className="nav-item p-2 text-light border rounded"
                   style={{
                     backgroundColor: "var(--main-color)",
-                    color: "var(--gray-color)",
                     width: "250px",
                     zIndex: "999",
                   }}
@@ -203,7 +209,7 @@ const LandingPage = () => {
             </div>
             <div
               style={{
-                backgroundColor: "var(--main-color)",
+                // backgroundColor: "var(--main-color)",
                 minHeight: "100px",
                 width: "100%",
                 position: "relative",
@@ -231,39 +237,43 @@ const LandingPage = () => {
               id="navbarSupportedContent"
             >
               <ul className="col-12 navbar-nav align-items-center justify-content-around flex-row mb-2 mb-lg-0">
-                <li className="nav-item">
-                  <Link
-                    className="nav-link fs-6 border-top border-5  border-black"
-                    // style={{ borderColor: "var(--main-color) !important" }}
-                    to="/community"
-                  >
+                <li
+                  className="nav-item"
+                  style={{
+                    borderTop: "5px solid var(--text-main-color)",
+                  }}
+                >
+                  <Link className="nav-link fs-6" to="/community">
                     Community
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link fs-6 border-top border-5  border-black"
-                    // style={{ borderColor: "var(--main-color) !important" }}
-                    to="/learning"
-                  >
+                <li
+                  className="nav-item"
+                  style={{
+                    borderTop: "5px solid var(--text-main-color)",
+                  }}
+                >
+                  <Link className="nav-link fs-6" to="/learning">
                     Learning
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link fs-6 border-top border-5  border-black"
-                    // style={{ borderColor: "var(--main-color) !important" }}
-                    to="/internships"
-                  >
+                <li
+                  className="nav-item"
+                  style={{
+                    borderTop: "5px solid var(--text-main-color)",
+                  }}
+                >
+                  <Link className="nav-link fs-6" to="/internships">
                     Internships
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link fs-6 border-top border-5 border-black"
-                    // style={{ borderColor: "var(--main-color) !important" }}
-                    to="/aboutus"
-                  >
+                <li
+                  className="nav-item"
+                  style={{
+                    borderTop: "5px solid var(--text-main-color)",
+                  }}
+                >
+                  <Link className="nav-link fs-6" to="/aboutus">
                     About us
                   </Link>
                 </li>
@@ -272,7 +282,7 @@ const LandingPage = () => {
                 className="nav-item px-4 py-2 border rounded"
                 style={{
                   backgroundColor: "var(--pink-color)",
-                  color: "var(--gray-color)",
+                  color: "var(--text-main-color)",
                 }}
               >
                 <Link className="nav-link fs-6 col-12" to="/login">
@@ -286,7 +296,7 @@ const LandingPage = () => {
             style={{
               background:
                 "linear-gradient(0deg, var(--sec-color), transparent)",
-              color: "var(--main-color)",
+              color: "var(--text-main-color)",
               minHeight: "400px",
             }}
             className="d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
@@ -296,8 +306,11 @@ const LandingPage = () => {
             <h4>
               Find The Right Job Or Internship
               <FontAwesomeIcon
-                className="ms-3 text-dark"
+                className="ms-3"
                 icon={faCircleArrowRight}
+                style={{
+                  color: "var(--text-main-color)",
+                }}
               />
             </h4>
           </section>
@@ -306,9 +319,9 @@ const LandingPage = () => {
             style={{
               background: "var(--main-color)",
               minHeight: "400px",
-              color: "var(--offWhite-color)",
+              // color: "var(--text-main-color)",
             }}
-            className="d-none d-sm-flex flex-column justify-content-center align-items-center gap-2 position-relative"
+            className="d-none link-light d-sm-flex flex-column justify-content-center align-items-center gap-2 position-relative"
           >
             <img src="cheerIcon.svg" alt="" className="img-fluid" style={{}} />
             <h1>Get Motivated!</h1>
@@ -322,12 +335,10 @@ const LandingPage = () => {
           {/* Section 4 */}
           <section
             style={{
-              background:
-                "linear-gradient(0deg, var(--sec-color), transparent)",
               minHeight: "400px",
-              color: "var(--main-color)",
+              color: "var(--text-main-color)",
             }}
-            className="d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
+            className="bgGradiant d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
           >
             <img src="cheerIcon.svg" alt="" className="img-fluid" style={{}} />
             <h1>Learn The Skills</h1>
@@ -335,9 +346,9 @@ const LandingPage = () => {
           </section>
           {/*  */}
           <div
-            className="d-none d-sm-block"
+            className="d-none d-sm-block smallpurplething"
             style={{
-              backgroundColor: "var(--main-color)",
+              // backgroundColor: "var(--main-color)",
               minHeight: "100px",
               width: "100%",
               position: "relative",
@@ -358,14 +369,21 @@ const LandingPage = () => {
             />
           </div>
           {/*  */}
-          <section className="container p-5">
+          <section
+            className="container p-5"
+            style={
+              {
+                // backgroundColor: "var(--main-color)",
+              }
+            }
+          >
             <div className="d-flex flex-column p-3 gap-3 justify-content-center align-items-center">
               <img
                 src="partners.svg"
                 alt="partners.svg"
                 className="img-fluid"
               />
-              <h1 style={{ color: "var(--main-color)" }}>Our Partners</h1>
+              <h1 style={{ color: "var(--text-main-color)" }}>Our Partners</h1>
             </div>
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide">
@@ -470,9 +488,9 @@ const LandingPage = () => {
           </section>
           {/* sep */}
           <div
-            className="d-none d-sm-block"
+            className="d-none d-sm-block smallpurplething"
             style={{
-              backgroundColor: "var(--main-color)",
+              // backgroundColor: "var(--main-color)",
               minHeight: "70px",
               width: "100%",
             }}
@@ -487,7 +505,7 @@ const LandingPage = () => {
               />
               <h1
                 className="text-center"
-                style={{ color: "var(--main-color)" }}
+                style={{ color: "var(--text-main-color)" }}
               >
                 Universities and Colleges
               </h1>
@@ -595,16 +613,16 @@ const LandingPage = () => {
           </section>
           {/* sep */}
           <div
-            className="d-none d-sm-block"
+            className="d-none d-sm-block smallpurplething"
             style={{
-              backgroundColor: "var(--main-color)",
+              // backgroundColor: "var(--main-color)",
               minHeight: "70px",
               width: "100%",
             }}
           ></div>
           {/* Section */}
           <section
-            className="position-relative p-3 p-sm-5"
+            className="position-relative p-3 p-sm-5 bgGradiant2"
             style={{
               background:
                 "linear-gradient(0deg, rgb(151, 173, 217), transparent)",
@@ -633,7 +651,7 @@ const LandingPage = () => {
             <div
               className="d-flex flex-column gap-3 mt-5"
               style={{
-                color: "var(--main-color)",
+                color: "var(--text-main-color)",
               }}
             >
               <h2>

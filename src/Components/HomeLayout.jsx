@@ -12,14 +12,17 @@ const HomeLayout = ({ children }) => {
   // console.log(pathname);
   return (
     // Navbar #1
-    <main className="container-fluid bg-light" style={{ minHeight: "100vh" }}>
+    <main
+      className="container-fluid bg-body-tertiary"
+      style={{ minHeight: "100vh" }}
+    >
       <nav
         className="d-flex justify-content-around border-bottom"
         style={{
           borderColor: "#878787",
         }}
       >
-        <div className="col-7 col-md-3 d-flex justify-content-center h-70">
+        <div className="col-7 col-md-3 d-flex justify-content-center h-70 logo">
           <img src="/LogowithoutLG.svg" className="img-fluid w-75" alt="logo" />
         </div>
         <div className="col-5 col-md-9 p-4 py-2">
@@ -28,7 +31,9 @@ const HomeLayout = ({ children }) => {
               className="nav-item d-none d-md-block"
               style={{
                 borderBottom:
-                  pathname === "/home" ? "5px solid var(--main-color)" : "none",
+                  pathname === "/home"
+                    ? "5px solid var(--text-main-color)"
+                    : "none",
               }}
             >
               <Link className="nav-link active" aria-current="page" to="/home">
@@ -40,7 +45,7 @@ const HomeLayout = ({ children }) => {
               style={{
                 borderBottom:
                   pathname === "/network"
-                    ? "5px solid var(--main-color)"
+                    ? "5px solid var(--text-main-color)"
                     : "none",
               }}
             >
@@ -53,7 +58,7 @@ const HomeLayout = ({ children }) => {
               style={{
                 borderBottom:
                   pathname === "/notifications"
-                    ? "5px solid var(--main-color)"
+                    ? "5px solid var(--text-main-color)"
                     : "none",
               }}
             >
@@ -66,7 +71,7 @@ const HomeLayout = ({ children }) => {
               style={{
                 borderBottom:
                   pathname === "/internships"
-                    ? "5px solid var(--main-color)"
+                    ? "5px solid var(--text-main-color)"
                     : "none",
               }}
             >
@@ -76,7 +81,7 @@ const HomeLayout = ({ children }) => {
             </li>
             <li className="nav-item d-block d-lg-none align-self-end ">
               <button
-                className="btn d-flex align-items-center justify-content-center "
+                className="btn d-flex align-items-center justify-content-center"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#offcanvasRight"
@@ -86,7 +91,8 @@ const HomeLayout = ({ children }) => {
                   icon={faBars}
                   fontSize={40}
                   className="mb-md-2 pb-md-1"
-                  color="#363b56"
+                  // color="#363b56"
+                  style={{ color: "var(--text-main-color)" }}
                 />
               </button>
             </li>
@@ -95,11 +101,11 @@ const HomeLayout = ({ children }) => {
       </nav>
       {/* Navbar #2 */}
       <nav
-        className="d-flex d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
+        className="bg-body-tertiary d-flex d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
         style={{
           backgroundColor: "#eee",
           right: "0",
-          width: "100%",
+          // width: "100%",
         }}
       >
         <ul className="nav justify-content-evenly col-12 ms-2">
@@ -151,7 +157,10 @@ const HomeLayout = ({ children }) => {
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body">
+        <div
+          className="offcanvas-body"
+          style={{ backgroundColor: "var(--main-color)" }}
+        >
           <AsideRight />
         </div>
         <img
@@ -172,7 +181,7 @@ const HomeLayout = ({ children }) => {
         </aside>
         {/* Posts */}
         <div
-          className="col-12 col-lg-9 p-1 p-sm-2 p-md-4 d-flex flex-column gap-3"
+          className="col-12 col-lg-9 p-1 p-sm-2 p-md-4 d-flex flex-column gap-0"
           // style={{
           //   backgroundColor: "#eee",
           // }}

@@ -13,15 +13,15 @@ const Footer = () => {
   return (
     <footer>
       <div className="d-flex flex-column-reverse flex-lg-row p-3 text-center">
-        <div className="col-lg-6 col-12 d-flex flex-column flex-sm-row justify-content-center justify-content-lg-around">
+        <div className="gap-3 col-lg-6 col-12 d-flex flex-column flex-sm-row justify-content-center justify-content-lg-around">
           <img
             src="logowithmaincolor.svg"
             alt="logowithmaincolor.svg"
-            className="col-lg-5 img-fluid"
+            className="col-lg-5 img-fluid logoBrand"
           />
           <div
             className="col-12 col-sm-6 d-flex justify-content-around align-items-center"
-            style={{ color: "var(--main-color)" }}
+            style={{ color: "var(--text-main-color)" }}
           >
             <FontAwesomeIcon icon={faSquareInstagram} fontSize={30} />
             <FontAwesomeIcon icon={faFacebook} fontSize={30} />

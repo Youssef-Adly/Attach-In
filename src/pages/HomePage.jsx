@@ -6,12 +6,14 @@ import AddPost from "../Components/AddPost";
 const HomePage = () => {
   return (
     <HomeLayout>
-      {/* Add Post */}
-      <AddPost />
-      {/* ============== */}
-      <Post />
-      <Post />
-      <Post />
+      <div className="d-flex flex-column gap-3">
+        {/* Add Post */}
+        <AddPost />
+        {/* ============== */}
+        <Post />
+        <Post />
+        <Post />
+      </div>
     </HomeLayout>
   );
 };

@@ -215,7 +215,7 @@ const Internships = () => {
             <form className="nav nav-item w-100 position-relative">
               <textarea
                 data-autoresize
-                className="form-control pe-5 bg-light"
+                className="form-control pe-5 "
                 rows={1}
                 placeholder="Add a comment..."
                 defaultValue={""}
@@ -243,7 +243,7 @@ const Internships = () => {
                   </Link>
                 </div>
                 <div className="ms-2">
-                  <div className="bg-light rounded-start-top-0 p-3 rounded">
+                  <div className=" rounded-start-top-0 p-3 rounded">
                     <div className="d-flex justify-content-between">
                       <h6 className="mb-1">
                         <Link to=""> Frances Guerrero </Link>

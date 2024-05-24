@@ -1,14 +1,21 @@
 import React from "react";
 import "./Setting.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../Redux/slices/themeSlice";
 
 const Setting = () => {
+  const theme = useSelector((state) => state.theme.value);
+  const dispatch = useDispatch();
+
   const switchMode = (e) => {
     // console.log(e);
-    let root = document.documentElement;
-    e.target.checked
-      ? (root.dataset.bsTheme = "dark")
-      : (root.dataset.bsTheme = "light");
+    // let root = document.documentElement;
+    // e.target.checked
+    //   ? (root.dataset.bsTheme = "dark")
+    //   : (root.dataset.bsTheme = "light");
+    dispatch(toggleTheme());
+    // console.log(theme);
   };
 
   return (
@@ -38,6 +45,7 @@ const Setting = () => {
             <input
               id="check-5"
               type="checkbox"
+              checked={theme}
               onChange={(e) => switchMode(e)}
             />
             <label htmlFor="check-5" />

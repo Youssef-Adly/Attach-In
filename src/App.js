@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
@@ -17,11 +17,23 @@ import NetworkPage from "./pages/NetworkPage";
 import SettingPage from "./pages/SettingPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import CoursesPage from "./pages/CoursesPage";
-import CoursePage from "./pages/CourseDetailsPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import MessagesPage from "./pages/MessagesPage";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+  const theme = useSelector((state) => state.theme.value);
+  // const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(theme);
+    if (theme) {
+      document.documentElement.dataset.bsTheme = "dark";
+    } else {
+      document.documentElement.dataset.bsTheme = "light";
+    }
+  }, [theme]);
+
   return (
     <div className="App">
       <Routes>

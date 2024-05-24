@@ -5,14 +5,21 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle";
+import { Provider } from "react-redux";
+import { persistor, store } from "./Redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <PersistGate persistor={persistor}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </PersistGate>
   // {/* </React.StrictMode> */}
 );
 

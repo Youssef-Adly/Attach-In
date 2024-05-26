@@ -6,10 +6,12 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const [t] = useTranslation();
+
   return (
     <footer>
       <div className="d-flex flex-column-reverse flex-lg-row p-3 text-center">
@@ -31,19 +33,19 @@ const Footer = () => {
         </div>
         <div className="col-lg-6 col-12 p-3" role="group">
           <Link to={"/about"} className="btn">
-            About Us
+            {t("About")}
           </Link>
           <Link to={"/FAQ"} className="btn">
-            FAQ
+            {t("FAQ")}
           </Link>
           <Link to={"/terms"} className="btn">
-            Terms &amp; Conditions
+            {t("Terms & Conditions")}
           </Link>
           <Link to={"/contact"} className="btn">
-            Contact US
+            {t("Contact Us")}
           </Link>
           <Link to={"/partners"} className="btn">
-            Our Partners
+            {t("Our Partners")}
           </Link>
         </div>
       </div>

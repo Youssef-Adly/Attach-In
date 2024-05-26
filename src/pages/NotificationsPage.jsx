@@ -1,10 +1,12 @@
 import React from "react";
 import HomeLayout from "../Components/HomeLayout";
-// import { Link } from "react-router-dom";
 import Notification from "../Components/Notification";
 import AddFriendCard from "../Components/AddFriendCard";
+import { useTranslation } from "react-i18next";
 
 const NotificationsPage = () => {
+  const [t] = useTranslation();
+
   const notificationData = {
     avatar: "https://github.com/mdo.png",
     name: "Lori Ferguson",
@@ -12,11 +14,12 @@ const NotificationsPage = () => {
     notification:
       "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia assumenda laborum vel quidem.",
   };
+
   return (
     <HomeLayout>
       <div className="notifications">
         <ul
-          className="nav nav-pills gap-sm-3 my-3"
+          className="nav nav-pills gap-sm-3 my-3 dir"
           id="pills-tab"
           role="tablist"
         >
@@ -31,7 +34,7 @@ const NotificationsPage = () => {
               aria-controls="pills-All"
               aria-selected="true"
             >
-              All
+              {t("All")}
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -45,7 +48,7 @@ const NotificationsPage = () => {
               aria-controls="pills-Posts"
               aria-selected="false"
             >
-              My Posts
+              {t("My Posts")}
             </button>
           </li>
           <li className="nav-item" role="presentation">
@@ -59,7 +62,7 @@ const NotificationsPage = () => {
               aria-controls="pills-Requests"
               aria-selected="false"
             >
-              Friend Requests
+              {t("Friend Requests")}
             </button>
           </li>
         </ul>
@@ -79,7 +82,7 @@ const NotificationsPage = () => {
             <Notification {...notificationData} />
             <Notification {...notificationData} />
             <Notification {...notificationData} />
-            {/* F Requests */}
+            {/* Friend Requests */}
             <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
               <AddFriendCard />
               <AddFriendCard />

@@ -7,15 +7,21 @@ import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../Components/Footer";
+import { useTranslation } from "react-i18next";
 
 const LandingPage = () => {
+  const [t] = useTranslation();
+
+  //#region [Loading Screen Timer]
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
+  //#endregion
 
+  //#region [PWA Install Button]
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
@@ -46,6 +52,7 @@ const LandingPage = () => {
       console.log("App installation prompt not available.");
     }
   };
+  //#endregion
 
   return (
     <>
@@ -78,7 +85,7 @@ const LandingPage = () => {
                       }}
                     >
                       <Link className="nav-link fs-5" to="/home">
-                        Community
+                        {t("Community")}
                       </Link>
                     </li>
                     <li
@@ -88,7 +95,7 @@ const LandingPage = () => {
                       }}
                     >
                       <Link className="nav-link fs-5" to="/courses">
-                        Learning
+                        {t("Learning")}
                       </Link>
                     </li>
                     <li
@@ -98,7 +105,7 @@ const LandingPage = () => {
                       }}
                     >
                       <Link className="nav-link fs-5" to="/internships">
-                        Internships
+                        {t("Internships")}
                       </Link>
                     </li>
                     <li
@@ -108,7 +115,7 @@ const LandingPage = () => {
                       }}
                     >
                       <Link className="nav-link fs-5" to="/about">
-                        About us
+                        {t("About")}
                       </Link>
                     </li>
                     <li
@@ -119,7 +126,7 @@ const LandingPage = () => {
                       }}
                     >
                       <Link className="nav-link fs-5 col-12" to="/login">
-                        Sign in
+                        {t("Sign in")}
                       </Link>
                     </li>
                   </ul>
@@ -127,16 +134,26 @@ const LandingPage = () => {
               </div>
             </nav>
             <div
-              className="d-flex flex-column flex-lg-row "
+              className="d-flex flex-column flex-lg-row"
               style={{ minHeight: "390px", overflowX: "clip" }}
             >
               <div className="col-12 col-lg-5 ps-4 mb-0 mb-lg-5 d-flex gap-4 flex-column justify-content-center ">
                 <div className="mb-0">
-                  <h1 style={{ color: "var(--text-main-color)" }}>
-                    Welcome <br />
+                  <h1
+                    style={{
+                      color: "var(--text-main-color)",
+                      fontWeight: "800",
+                    }}
+                  >
+                    {t("Welcome")} <br />
                   </h1>
-                  <h4 style={{ color: "var(--text-main-color)" }}>
-                    to your professional gate
+                  <h4
+                    style={{
+                      color: "var(--text-main-color)",
+                      fontWeight: "800",
+                    }}
+                  >
+                    {t("to your professional gate")}
                   </h4>
                 </div>
 
@@ -153,7 +170,7 @@ const LandingPage = () => {
                     className="nav-link fs-5 fw-bold col-12 text-light"
                     to="/home"
                   >
-                    Get Started
+                    {t("Get Started")}
                     <FontAwesomeIcon
                       className="ms-3 text-light"
                       icon={faCircleArrowRight}
@@ -161,10 +178,10 @@ const LandingPage = () => {
                   </Link>
                 </div>
                 <div
-                  className="nav-item p-2 text-light border rounded"
+                  className="nav-item pwaBtn p-2 text-light border rounded"
                   style={{
                     backgroundColor: "var(--main-color)",
-                    width: "250px",
+                    // width: "250px",
                     zIndex: "999",
                   }}
                 >
@@ -173,7 +190,7 @@ const LandingPage = () => {
                     className="nav-link fs-5 fw-bold col-12"
                     to=""
                   >
-                    Download The App
+                    {t("Download The App")}
                     <FontAwesomeIcon icon={faGooglePlay} className="ms-3" />
                   </Link>
                 </div>
@@ -244,7 +261,7 @@ const LandingPage = () => {
                   }}
                 >
                   <Link className="nav-link fs-6" to="/community">
-                    Community
+                    {t("Community")}
                   </Link>
                 </li>
                 <li
@@ -254,7 +271,7 @@ const LandingPage = () => {
                   }}
                 >
                   <Link className="nav-link fs-6" to="/learning">
-                    Learning
+                    {t("Learning")}
                   </Link>
                 </li>
                 <li
@@ -264,7 +281,7 @@ const LandingPage = () => {
                   }}
                 >
                   <Link className="nav-link fs-6" to="/internships">
-                    Internships
+                    {t("Internships")}
                   </Link>
                 </li>
                 <li
@@ -274,7 +291,7 @@ const LandingPage = () => {
                   }}
                 >
                   <Link className="nav-link fs-6" to="/aboutus">
-                    About us
+                    {t("About")}
                   </Link>
                 </li>
               </ul>
@@ -286,7 +303,7 @@ const LandingPage = () => {
                 }}
               >
                 <Link className="nav-link fs-6 col-12" to="/login">
-                  Sign in
+                  {t("Sign in")}
                 </Link>
               </button>
             </div>
@@ -302,9 +319,9 @@ const LandingPage = () => {
             className="d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
           >
             <img src="cheerIcon.svg" alt="" className="img-fluid" />
-            <h1>First Step In Your Carrer</h1>
+            <h1>{t("Step")}</h1>
             <h4>
-              Find The Right Job Or Internship
+              {t("Step2")}
               <FontAwesomeIcon
                 className="ms-3"
                 icon={faCircleArrowRight}
@@ -323,9 +340,9 @@ const LandingPage = () => {
             }}
             className="d-none link-light d-sm-flex flex-column justify-content-center align-items-center gap-2 position-relative"
           >
-            <img src="cheerIcon.svg" alt="" className="img-fluid" style={{}} />
-            <h1>Get Motivated!</h1>
-            <h4>You Can Find Supportive Community With Us</h4>
+            <img src="cheerIcon.svg" alt="" className="img-fluid" />
+            <h1>{t("Motivated")}</h1>
+            <h4>{t("Motivated2")}</h4>
             <img
               src="glasses.svg"
               alt=""
@@ -340,9 +357,9 @@ const LandingPage = () => {
             }}
             className="bgGradiant d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
           >
-            <img src="cheerIcon.svg" alt="" className="img-fluid" style={{}} />
-            <h1>Learn The Skills</h1>
-            <h1>You Need To Succeed</h1>
+            <img src="cheerIcon.svg" alt="" className="img-fluid" />
+            <h1>{t("Learn")}</h1>
+            <h1>{t("Learn2")}</h1>
           </section>
           {/*  */}
           <div
@@ -383,7 +400,9 @@ const LandingPage = () => {
                 alt="partners.svg"
                 className="img-fluid"
               />
-              <h1 style={{ color: "var(--text-main-color)" }}>Our Partners</h1>
+              <h1 style={{ color: "var(--text-main-color)" }}>
+                {t("Our Partners")}
+              </h1>
             </div>
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide">
@@ -507,7 +526,7 @@ const LandingPage = () => {
                 className="text-center"
                 style={{ color: "var(--text-main-color)" }}
               >
-                Universities and Colleges
+                {t("uc")}
               </h1>
             </div>
             {/* carousel2 */}
@@ -656,19 +675,19 @@ const LandingPage = () => {
             >
               <h2>
                 <FontAwesomeIcon icon={faUser} className="px-3" />
-                Students
+                {t("Students")}
               </h2>
               <h2>
                 <FontAwesomeIcon icon={faUser} className="px-3" />
-                Undergraduates
+                {t("Undergraduates")}
               </h2>
               <h2>
                 <FontAwesomeIcon icon={faUser} className="px-3" />
-                Institutions
+                {t("Institutions")}
               </h2>
               <h2>
                 <FontAwesomeIcon icon={faUser} className="px-3" />
-                Companies
+                {t("Companies")}
               </h2>
             </div>
           </section>
@@ -681,7 +700,7 @@ const LandingPage = () => {
               // color:"white"
             }}
           >
-            <h1>Not your first time here?</h1>
+            <h1>{t("firstTime")}</h1>
             <form
               className="d-flex flex-column flex-sm-row m-3 mt-5 gap-3 gap-md-5 align-items-center"
               onSubmit={(e) => {
@@ -690,7 +709,7 @@ const LandingPage = () => {
             >
               <div className="mb-3 col-12 col-sm-4">
                 <label htmlFor="exampleInputEmail1" className="form-label">
-                  Email address
+                  {t("Email")}
                 </label>
                 <input
                   type="email"
@@ -707,7 +726,7 @@ const LandingPage = () => {
               </div>
               <div className="mb-3 col-12 col-sm-4">
                 <label htmlFor="exampleInputPassword1" className="form-label">
-                  Password
+                  {t("Password")}
                 </label>
                 <input
                   type="password"

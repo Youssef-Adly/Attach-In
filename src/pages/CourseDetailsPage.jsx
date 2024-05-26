@@ -5,11 +5,13 @@ import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 
 const CourseDetailsPage = () => {
   const [Course, setCourse] = useState(null);
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
+  const [t, i18n] = useTranslation();
 
   const token =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTQwNzEwMTYsImV4cCI6MTcxNjY2MzAxNiwibmJmIjoxNzE0MDcxMDE2LCJqdGkiOiJwbE1xdXdmNUtzV01vMmRmIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.aynzXgU1RDbbHiO-jeLs3kiXLYid-p0WzEuw-Bgs08w";
@@ -36,7 +38,7 @@ const CourseDetailsPage = () => {
 
   return (
     <HomeLayout>
-      <h1 style={{ color: "var(--text-main-color)" }}>Courses</h1>
+      <h1 style={{ color: "var(--text-main-color)" }}>{t("Courses")}</h1>
       <hr />
       {/* <!-- Nav tabs --> */}
       <ul
@@ -61,7 +63,7 @@ const CourseDetailsPage = () => {
             aria-controls="home"
             aria-selected="true"
           >
-            <h4>About</h4>
+            <h4>{t("About")}</h4>
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -75,7 +77,7 @@ const CourseDetailsPage = () => {
             aria-controls="profile"
             aria-selected="false"
           >
-            <h4>Lessons</h4>
+            <h4>{t("Lessons")}</h4>
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -89,7 +91,7 @@ const CourseDetailsPage = () => {
             aria-controls="messages"
             aria-selected="false"
           >
-            <h4 className="">Exams</h4>
+            <h4 className="">{t("Exams")}</h4>
           </button>
         </li>
       </ul>
@@ -113,7 +115,9 @@ const CourseDetailsPage = () => {
                 }}
               />
             </Link>
-            <h4 style={{ color: "var(--text-main-color)" }}>{Course.name_en}</h4>
+            <h4 style={{ color: "var(--text-main-color)" }}>
+              {i18n.language === "ar" ? Course.name_ar : Course.name_en}
+            </h4>
           </div>
           <hr />
           {/* About */}
@@ -127,7 +131,9 @@ const CourseDetailsPage = () => {
               className="px-2 px-sm-5 mb-5"
               style={{ color: "var(--text-main-color)" }}
             >
-              {Course.description_en}
+              {i18n.language === "ar"
+                ? Course.description_ar
+                : Course.description_en}
             </p>
           </div>
           {/* Lessons */}

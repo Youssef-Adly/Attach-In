@@ -35,6 +35,11 @@ const Register = () => {
           src="Logowithout.svg"
           alt="Logowithout.svg"
           className="img-fluid mb-3"
+          style={{
+            backgroundColor: "#eee",
+            padding: "25px",
+            borderRadius: "10px 40px",
+          }}
         />
         {/*  */}
         <div className="col-9 col-md-7 col-lg-5 col-xxl-3">
@@ -182,7 +187,7 @@ const Register = () => {
             handleSubmit(e);
           }}
           style={{
-            backgroundcolor: "var(--text-main-color)",
+            backgroundColor: "var(--main-color)",
             height: "100px",
             width: "100px",
           }}

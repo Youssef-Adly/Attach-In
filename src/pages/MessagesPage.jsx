@@ -1,11 +1,16 @@
 import React from "react";
 import HomeLayout from "../Components/HomeLayout";
+import { useTranslation } from "react-i18next";
 
 const MessagesPage = () => {
+  const [t] = useTranslation();
+
   return (
     <HomeLayout>
       {/* Header Title */}
-      <h1 style={{ color: "var(--text-main-color)" }}>My Messages</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Messages")}
+      </h1>
       <hr />
       {/* #1 */}
       <div

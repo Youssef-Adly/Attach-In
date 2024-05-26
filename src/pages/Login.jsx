@@ -3,8 +3,10 @@ import Footer from "../Components/Footer";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const [t] = useTranslation();
   const [login, setLogin] = useState(false);
   const [userLogin, setUserLogin] = useState({ userName: "", password: "" });
 
@@ -25,7 +27,7 @@ const Login = () => {
         backgroundColor: "var(--sec-color)",
         minHeight: "100vh",
       }}
-      className="d-flex flex-column align-items-end position-relative "
+      className="d-flex flex-column align-items-end position-relative"
     >
       {/* <img src="graything.svg" alt="graything" className="img-fluid" /> */}
       <Link to={"/"} className="text-dark">
@@ -41,14 +43,14 @@ const Login = () => {
           // minHeight: "1200px",
           width: "100vw",
         }}
-        className="d-flex flex-column justify-content-lg-end justify-content-center align-items-center px-3"
+        className="d-flex flex-column justify-content-lg-end justify-content-center align-items-center"
       >
         <img
           src="AttachInLogo.svg"
           alt=""
           className="img-fluid"
           style={{
-            marginTop: "800px",
+            marginTop: "880px",
           }}
         />
         {/*  */}
@@ -60,7 +62,7 @@ const Login = () => {
           <Link
             to={"/register"}
             style={{
-              backgroundcolor: "var(--text-main-color)",
+              backgroundColor: "var(--main-color)",
               height: "100px",
               width: "100px",
             }}
@@ -75,13 +77,13 @@ const Login = () => {
               setLogin(true);
             }}
             style={{
-              backgroundcolor: "var(--text-main-color)",
+              backgroundColor: "var(--main-color)",
               height: "100px",
               width: "100px",
             }}
             className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
           >
-            Login
+            {t("Login")}
           </Link>
         </div>
         {/*  */}
@@ -138,7 +140,7 @@ const Login = () => {
               handleSubmit(e);
             }}
             style={{
-              backgroundcolor: "var(--text-main-color)",
+              backgroundColor: "var(--main-color)",
               height: "100px",
               width: "100px",
             }}
@@ -147,7 +149,10 @@ const Login = () => {
             Login
           </Link>
         </div>
-        <div className="col-12 d-none d-lg-block g-0">
+        <div
+          className="col-12 d-none d-lg-block g-0 mt-5 rounded-2 "
+          style={{ backgroundColor: "var(--sec-color)" }}
+        >
           <Footer />
         </div>
       </div>

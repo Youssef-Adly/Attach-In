@@ -13,9 +13,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const AsideRight = () => {
+  const [t] = useTranslation();
+
   return (
     <div
       className="d-flex flex-column flex-shrink-0 pb-1 px-2 px-lg-3 position-relative "
@@ -39,13 +42,13 @@ const AsideRight = () => {
       </Link>
       <span className="fs-4 text-light">Christina Waguih</span>
       <Link to="" className="text-decoration-none text-light listItem">
-        View Profile
+        {t("View Profile")}
       </Link>
       <form className="d-flex my-3 position-relative" role="search">
         <input
           className="form-control me-1 rounded-5 "
           type="search"
-          placeholder="Search Attach-In"
+          placeholder={t("Search Attach-In")}
           aria-label="Search"
         />
         <button
@@ -64,14 +67,14 @@ const AsideRight = () => {
         <li className="">
           <Link
             to="/setting"
-            className="nav-link  listItem text-light"
+            className="nav-link listItem text-light"
             aria-current="page"
           >
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
             </svg> */}
             <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
-            Setting
+            {t("Setting")}
           </Link>
         </li>
         <li>
@@ -83,13 +86,13 @@ const AsideRight = () => {
               width={25}
             /> */}
             <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
-            Courses
+            {t("Courses")}
           </Link>
         </li>
         <li>
           <Link to="/messages" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
-            Messages
+            {t("Messages")}
           </Link>
         </li>
         {/*  */}
@@ -98,43 +101,43 @@ const AsideRight = () => {
         <li>
           <Link to="/about" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
-            About
+            {t("About")}
           </Link>
         </li>
         <li>
           <Link to="/FAQ" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
-            FAQ
+            {t("FAQ")}
           </Link>
         </li>
         <li>
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
-            Subscription
+            {t("Subscription")}
           </Link>
         </li>
         <li>
           <Link to="/partners" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
-            Our Partners
+            {t("Our Partners")}
           </Link>
         </li>
         <li>
           <Link to="/terms" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
-            Terms & Conditions
+            {t("Terms & Conditions")}
           </Link>
         </li>
         <li>
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
-            Contact Us
+            {t("Contact Us")}
           </Link>
         </li>
         <li>
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
-            Log Out
+            {t("Log Out")}
           </Link>
         </li>
       </ul>

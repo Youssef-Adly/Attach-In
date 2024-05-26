@@ -110,3 +110,10 @@
 [data-bs-theme="dark"] .bgGradiant3 {
   background: linear-gradient(180deg, #363b56, transparent) !important;
 }
+
+[lang="en"] .pwaBtn {
+  width: 250px;
+}
+[lang="ar"] .pwaBtn {
+  width: 200px;
+}

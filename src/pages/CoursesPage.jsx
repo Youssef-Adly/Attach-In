@@ -4,9 +4,11 @@ import CourseCard from "../Components/CourseCard";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const CoursesPage = () => {
   const [AllCourses, setCourses] = useState(null);
+  const [t] = useTranslation();
 
   const token =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTQwNzEwMTYsImV4cCI6MTcxNjY2MzAxNiwibmJmIjoxNzE0MDcxMDE2LCJqdGkiOiJwbE1xdXdmNUtzV01vMmRmIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.aynzXgU1RDbbHiO-jeLs3kiXLYid-p0WzEuw-Bgs08w";
@@ -24,7 +26,9 @@ const CoursesPage = () => {
 
   return (
     <HomeLayout>
-      <h1 style={{ color: "var(--text-main-color)" }}>Courses</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Courses")}
+      </h1>
       <hr />
       <div className="row gy-4 justify-content-around align-items-center ">
         {AllCourses ? (

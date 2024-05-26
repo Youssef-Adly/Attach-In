@@ -19,20 +19,26 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import CoursesPage from "./pages/CoursesPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import MessagesPage from "./pages/MessagesPage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import "./i18n";
 
 function App() {
+  const root = document.documentElement;
   const theme = useSelector((state) => state.theme.value);
-  // const dispatch = useDispatch();
+  const lang = useSelector((state) => state.lang.value);
+
+  const x = useTranslation();
 
   useEffect(() => {
-    console.log(theme);
-    if (theme) {
-      document.documentElement.dataset.bsTheme = "dark";
-    } else {
-      document.documentElement.dataset.bsTheme = "light";
-    }
-  }, [theme]);
+    // Set Theme on site init
+    theme ? (root.dataset.bsTheme = "dark") : (root.dataset.bsTheme = "light");
+    // Set Language on site init
+    lang === "ar" ? x.i18n.changeLanguage("ar") : x.i18n.changeLanguage("en");
+    lang === "ar" ? (root.lang = "ar") : (root.lang = "en");
+    // console.log("lang=> ", lang);
+    // console.log("i18nlang=> ", x.i18n.language);
+  }, [lang, root, theme, x.i18n]);
 
   return (
     <div className="App">

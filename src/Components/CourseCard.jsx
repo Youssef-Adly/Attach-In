@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 // const CourseCard = ( {course_id, description_ar, description_en, id, link, name_ar, name_en} ) => {
@@ -10,6 +11,8 @@ const CourseCard = ({
   name_ar,
   name_en,
 }) => {
+  const [t, i18n] = useTranslation();
+
   // console.log(id, image, description_ar, description_en, name_ar, name_en);
   return (
     <Link
@@ -23,7 +26,7 @@ const CourseCard = ({
         className="img-fluid"
       />
       <h6 className="text-center" style={{ color: "var(--text-main-color)" }}>
-        {name_en}
+        {i18n.language === "ar" ? name_ar : name_en}
       </h6>
     </Link>
   );

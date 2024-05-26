@@ -2,8 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "./LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const TermsAndConditions = () => {
+  const [t, i18n] = useTranslation();
+
   const [TermsAndConditions, setTermsAndConditions] = useState(null);
 
   useEffect(() => {
@@ -16,7 +19,9 @@ const TermsAndConditions = () => {
   return (
     <section className="min-vh-100 mb-5">
       {/* Header Title */}
-      <h1 style={{ color: "var(--text-main-color)" }}>Terms & Conditions</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Terms & Conditions")}
+      </h1>
       <hr />
 
       {/* Custom Accordion */}
@@ -41,7 +46,7 @@ const TermsAndConditions = () => {
                     aria-expanded="false"
                     aria-controls={`#section-${section.id}`}
                   >
-                    {section.name_en}
+                    {i18n.language === "ar" ? section.name_ar : section.name_en}
                   </button>
                 </h2>
                 <div
@@ -49,7 +54,11 @@ const TermsAndConditions = () => {
                   className="accordion-collapse collapse"
                   // data-bs-parent="#accordionFlushExample"
                 >
-                  <div className="accordion-body">{section.content_en}</div>
+                  <div className="accordion-body dir">
+                    {i18n.language === "ar"
+                      ? section.content_ar
+                      : section.content_en}
+                  </div>
                 </div>
               </div>
             ))}

@@ -1,6 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Notification = ({ avatar, name, job, notification }) => {
+  const [t, i18n] = useTranslation();
+
   return (
     <>
       <div className="col-11 mx-auto">

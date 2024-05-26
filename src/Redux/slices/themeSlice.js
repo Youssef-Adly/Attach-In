@@ -10,11 +10,7 @@ export const themeSlice = createSlice({
   reducers: {
     toggleTheme: (state) => {
       state.value = !state.value;
-      console.log("theme: ", state.value);
     },
-    // incrementByAmount: (state, action) => {
-    //   state.value += action.payload;
-    // },
   },
 });
 

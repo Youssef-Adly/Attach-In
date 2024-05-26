@@ -2,13 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "./LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const FAQ = () => {
+  const [t, i18n] = useTranslation();
   const [FAQ, setFAQ] = useState(null);
 
   useEffect(() => {
     axios.get("https://attachin.com/api/FAQ").then((res) => {
-      console.log(res.data.data.FAQ);
+      // console.log(res.data.data.FAQ);
       setFAQ(res.data.data.FAQ);
     });
   }, []);
@@ -16,7 +18,9 @@ const FAQ = () => {
   return (
     <section className="min-vh-100 mb-5">
       {/* Header Title */}
-      <h1 style={{ color: "var(--text-main-color)" }}>FAQ</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("FAQ")}
+      </h1>
       <hr />
 
       {/* Custom Accordion */}
@@ -41,7 +45,9 @@ const FAQ = () => {
                     aria-expanded="false"
                     aria-controls={`#section-${idx}`}
                   >
-                    {section.question_en}
+                    {i18n.language === "ar"
+                      ? section.question_ar
+                      : section.question_en}
                   </button>
                 </h2>
                 <div
@@ -49,7 +55,11 @@ const FAQ = () => {
                   className="accordion-collapse collapse"
                   // data-bs-parent="#accordionFlushExample"
                 >
-                  <div className="accordion-body">{section.answer_en}</div>
+                  <div className="accordion-body dir">
+                    {i18n.language === "ar"
+                      ? section.answer_ar
+                      : section.answer_en}
+                  </div>
                 </div>
               </div>
             ))}

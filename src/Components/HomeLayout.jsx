@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Aside from "./Aside";
 import AsideRight from "./AsideRight";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 import "./HomeLayout.css";
@@ -10,6 +10,11 @@ const HomeLayout = ({ children }) => {
   const { pathname } = useLocation();
   // let { pathname } = location;
   // console.log(pathname);
+  useEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     // Navbar #1
     <main
@@ -101,7 +106,7 @@ const HomeLayout = ({ children }) => {
       </nav>
       {/* Navbar #2 */}
       <nav
-        className="bg-body-tertiary d-flex d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
+        className="bg-body-tertiary d-block d-md-none z-3 col-12 border-top border-3 position-fixed bottom-0"
         style={{
           backgroundColor: "#eee",
           right: "0",
@@ -111,27 +116,83 @@ const HomeLayout = ({ children }) => {
         <ul className="nav justify-content-evenly col-12 ms-2">
           <li className="nav-item">
             <Link className="nav-link px-0 active" to="/home">
-              <img src="/icon1.svg" className="w-75" alt="icon1" />
+              <img
+                src="/icon1.svg"
+                style={{
+                  border:
+                    pathname === "/home"
+                      ? "3px solid var(--pink-color)"
+                      : "none",
+                  borderRadius: "50%",
+                }}
+                className="w-75"
+                alt="icon1"
+              />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/network">
-              <img src="/icon2.svg" className="w-75" alt="icon2" />
+              <img
+                src="/icon2.svg"
+                style={{
+                  border:
+                    pathname === "/network"
+                      ? "3px solid var(--pink-color)"
+                      : "none",
+                  borderRadius: "50%",
+                }}
+                className="w-75"
+                alt="icon2"
+              />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="/">
-              <img src="/icon5.svg" className="w-75" alt="icon5" />
+            <Link
+              className="nav-link px-0"
+              to=""
+              data-bs-toggle="modal"
+              data-bs-target="#feedActionPhoto"
+            >
+              <img
+                src="/icon5.svg"
+                className=""
+                style={{
+                  width: "80%",
+                }}
+                alt="icon5"
+              />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/notifications">
-              <img src="/icon3.svg" className="w-75" alt="icon3" />
+              <img
+                src="/icon3.svg"
+                style={{
+                  border:
+                    pathname === "/notifications"
+                      ? "3px solid var(--pink-color)"
+                      : "none",
+                  borderRadius: "50%",
+                }}
+                className="w-75"
+                alt="icon3"
+              />
             </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link px-0" to="/internships">
-              <img src="/icon4.svg" className="w-75" alt="icon4" />
+              <img
+                src="/icon4.svg"
+                style={{
+                  border:
+                    pathname === "/internships"
+                      ? "3px solid var(--pink-color)"
+                      : "none",
+                  borderRadius: "50%",
+                }}
+                className="w-75"
+                alt="icon4"
+              />
             </Link>
           </li>
         </ul>
@@ -141,6 +202,7 @@ const HomeLayout = ({ children }) => {
       <div
         className="offcanvas offcanvas-end"
         // className="offcanvas offcanvas-end bg-light "
+        // data-bs-scroll="true"
         tabIndex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
@@ -182,12 +244,14 @@ const HomeLayout = ({ children }) => {
         {/* Posts */}
         <div
           className="col-12 col-lg-9 p-1 p-sm-2 p-md-4 d-flex flex-column gap-0"
-          // style={{
-          //   backgroundColor: "#eee",
-          // }}
+          style={{
+            marginBottom: "100px",
+            marginTop: "10px",
+          }}
         >
           {/* Posts */}
-          {children}
+          {/* {children} */}
+          <Outlet />
         </div>
       </div>
       {/* Models */}

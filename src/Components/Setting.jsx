@@ -39,7 +39,7 @@ const Setting = () => {
       <hr />
       {/* Edit Profile */}
       <Link to={"/edit"} className="nav-link d-flex gap-3 align-items-center ">
-        <img src="edit.svg" alt="edit" />
+        <img src="/edit.svg" alt="edit" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Edit Profile")}
         </div>
@@ -47,7 +47,7 @@ const Setting = () => {
       <hr />
       {/* Terms & Conditions */}
       <Link to={"/reset"} className="nav-link d-flex gap-3 align-items-center ">
-        <img src="lock.svg" alt="lock" />
+        <img src="/lock.svg" alt="lock" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Change Password")}
         </div>
@@ -96,14 +96,14 @@ const Setting = () => {
         to={"/contact"}
         className="nav-link d-flex gap-3 align-items-center "
       >
-        <img src="contactUS.svg" alt="contact" />
+        <img src="/contacts.svg" alt="contact" />
         <div style={{ color: "var(--text-main-color)" }}>{t("Contact Us")}</div>
       </Link>
       <hr />
       {/*  */}
       {/* Terms & Conditions */}
       <Link to={"/terms"} className="nav-link d-flex gap-3 align-items-center ">
-        <img src="terms.svg" alt="terms" />
+        <img src="/terms.svg" alt="terms" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Terms & Conditions")}
         </div>

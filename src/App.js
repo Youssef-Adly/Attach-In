@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -19,6 +19,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import CoursesPage from "./pages/CoursesPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import MessagesPage from "./pages/MessagesPage";
+import HomeLayout from "./Components/HomeLayout";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "./i18n";
@@ -40,26 +41,38 @@ function App() {
     // console.log("i18nlang=> ", x.i18n.language);
   }, [lang, root, theme, x.i18n]);
 
+  const { pathname } = useLocation();
+  // let { pathname } = location;
+  // console.log(pathname);
+  useEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/network" element={<NetworkPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/internships" element={<InternshipsPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/FAQ" element={<FQAPage />} />
-        <Route path="/terms" element={<TermsAndConditionsPage />} />
-        <Route path="/partners" element={<OurPartnersPage />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
-        <Route path="/setting" element={<SettingPage />} />
-        <Route path="/reset" element={<ResetPasswordPage />} />
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="courses/:id" element={<CourseDetailsPage />} />
-        <Route path="/messages" element={<MessagesPage />} />
+        {/*  */}
+        <Route path="" element={<HomeLayout />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/network" element={<NetworkPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/internships" element={<InternshipsPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/FAQ" element={<FQAPage />} />
+          <Route path="/terms" element={<TermsAndConditionsPage />} />
+          <Route path="/partners" element={<OurPartnersPage />} />
+          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/setting" element={<SettingPage />} />
+          <Route path="/reset" element={<ResetPasswordPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="courses/:id" element={<CourseDetailsPage />} />
+          <Route path="/messages" element={<MessagesPage />} />
+        </Route>
+        {/*  */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -19,7 +19,7 @@ const Internships = () => {
   return (
     <main
       style={{
-        borderBottom: "7px solid var(--offWhite-color)",
+        // borderBottom: "1px solid var(--offWhite-color)",
         paddingBottom: "20px",
       }}
     >

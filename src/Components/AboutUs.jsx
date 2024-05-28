@@ -11,7 +11,7 @@ const AboutUs = () => {
 
   useEffect(() => {
     axios.get("https://attachin.com/api/staticPages").then((res) => {
-      console.log(res.data.data.static_pages);
+      // console.log(res.data.data.static_pages);
       setAboutUs(res.data.data.static_pages);
     });
   }, []);

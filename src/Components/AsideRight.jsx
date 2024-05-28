@@ -64,11 +64,12 @@ const AsideRight = () => {
         </button>
       </form>
       <ul className="nav nav-pills flex-column mb-auto">
-        <li className="">
+        <li className="" data-bs-dismiss="offcanvas">
           <Link
             to="/setting"
             className="nav-link listItem text-light"
             aria-current="page"
+            // onClick={}
           >
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
@@ -77,7 +78,7 @@ const AsideRight = () => {
             {t("Setting")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/courses" className="nav-link listItem text-light">
             {/* <img
               src="CoursesIcon.svg"
@@ -89,7 +90,7 @@ const AsideRight = () => {
             {t("Courses")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/messages" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
             {t("Messages")}
@@ -98,43 +99,43 @@ const AsideRight = () => {
         {/*  */}
         <hr />
         {/*  */}
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/about" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
             {t("About")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/FAQ" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
             {t("FAQ")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
             {t("Subscription")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/partners" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
             {t("Our Partners")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="/terms" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
             {t("Terms & Conditions")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
             {t("Contact Us")}
           </Link>
         </li>
-        <li>
+        <li data-bs-dismiss="offcanvas">
           <Link to="" className="nav-link listItem text-light">
             <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
             {t("Log Out")}

@@ -11,7 +11,7 @@ const TermsAndConditions = () => {
 
   useEffect(() => {
     axios.get("https://attachin.com/api/staticPages/1").then((res) => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setTermsAndConditions([res.data.data]);
     });
   }, []);

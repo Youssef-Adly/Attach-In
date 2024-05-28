@@ -12,7 +12,7 @@ const OurPartners = () => {
     axios.get("https://attachin.com/api/getOurPartners").then((res) => {
       // console.log(res.data.data.partners);
       setOurPartners(res.data.data.partners);
-      console.log("res.data.data.partners: ", res.data.data.partners);
+      // console.log("res.data.data.partners: ", res.data.data.partners);
     });
   }, []);
 

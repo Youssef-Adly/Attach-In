@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import HomeLayout from "../Components/HomeLayout";
+// import HomeLayout from "../Components/HomeLayout";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -37,7 +37,7 @@ const CourseDetailsPage = () => {
   }, [id]);
 
   return (
-    <HomeLayout>
+    <>
       <h1 style={{ color: "var(--text-main-color)" }}>{t("Courses")}</h1>
       <hr />
       {/* <!-- Nav tabs --> */}
@@ -366,7 +366,7 @@ const CourseDetailsPage = () => {
       ) : (
         <LoadingSuspese />
       )}
-    </HomeLayout>
+    </>
   );
 };
 

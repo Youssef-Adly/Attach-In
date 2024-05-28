@@ -8,6 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle";
 import { Provider } from "react-redux";
 import { persistor, store } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+// import ScrollToTop from "./Components/ScrollToTop";
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

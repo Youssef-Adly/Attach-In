@@ -1,5 +1,5 @@
 import React from "react";
-import HomeLayout from "../Components/HomeLayout";
+// import HomeLayout from "../Components/HomeLayout";
 import Notification from "../Components/Notification";
 import AddFriendCard from "../Components/AddFriendCard";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ const NotificationsPage = () => {
   };
 
   return (
-    <HomeLayout>
+    <>
       <div className="notifications">
         <ul
           className="nav nav-pills gap-sm-3 my-3 dir"
@@ -130,7 +130,7 @@ const NotificationsPage = () => {
           </div>
         </div>
       </div>
-    </HomeLayout>
+    </>
   );
 };
 

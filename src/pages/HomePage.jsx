@@ -1,11 +1,11 @@
 import React from "react";
-import HomeLayout from "../Components/HomeLayout";
+// import HomeLayout from "../Components/HomeLayout";
 import Post from "../Components/Post";
 import AddPost from "../Components/AddPost";
 
 const HomePage = () => {
   return (
-    <HomeLayout>
+    <>
       <div className="d-flex flex-column gap-3">
         {/* Add Post */}
         <AddPost />
@@ -14,7 +14,7 @@ const HomePage = () => {
         <Post />
         <Post />
       </div>
-    </HomeLayout>
+    </>
   );
 };
 

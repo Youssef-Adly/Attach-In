@@ -1,12 +1,12 @@
 import React from "react";
-import HomeLayout from "../Components/HomeLayout";
+// import HomeLayout from "../Components/HomeLayout";
 import { useTranslation } from "react-i18next";
 
 const MessagesPage = () => {
   const [t] = useTranslation();
 
   return (
-    <HomeLayout>
+    <>
       {/* Header Title */}
       <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
         {t("Messages")}
@@ -119,7 +119,7 @@ const MessagesPage = () => {
         {/* <p className="p-3">notification</p> */}
       </div>
       <hr className="col-12" />
-    </HomeLayout>
+    </>
   );
 };
 

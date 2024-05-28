@@ -13,7 +13,7 @@ const AddFriendCard = () => {
         style={{
           left: "20px",
           top: "25%",
-          zIndex: "999",
+          zIndex: "2",
           cursor: "pointer",
         }}
       />
@@ -24,7 +24,7 @@ const AddFriendCard = () => {
         style={{
           right: "20px",
           top: "25%",
-          zIndex: "999",
+          zIndex: "2",
           cursor: "pointer",
         }}
       />

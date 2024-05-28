@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HomeLayout from "../Components/HomeLayout";
+// import HomeLayout from "../Components/HomeLayout";
 import CourseCard from "../Components/CourseCard";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
@@ -25,7 +25,7 @@ const CoursesPage = () => {
   }, []);
 
   return (
-    <HomeLayout>
+    <>
       <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
         {t("Courses")}
       </h1>
@@ -37,7 +37,7 @@ const CoursesPage = () => {
           <LoadingSuspese />
         )}
       </div>
-    </HomeLayout>
+    </>
   );
 };
 

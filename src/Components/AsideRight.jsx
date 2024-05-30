@@ -41,9 +41,14 @@ const AsideRight = () => {
         </div>
       </Link>
       <span className="fs-4 text-light">Christina Waguih</span>
-      <Link to="" className="text-decoration-none text-light listItem">
-        {t("View Profile")}
-      </Link>
+      <div data-bs-dismiss="offcanvas">
+        <Link
+          to="/profile"
+          className="text-decoration-none text-light listItem"
+        >
+          {t("View Profile")}
+        </Link>
+      </div>
       <form className="d-flex my-3 position-relative" role="search">
         <input
           className="form-control me-1 rounded-5 "

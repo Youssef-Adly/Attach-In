@@ -11,7 +11,7 @@ const CourseCard = ({
   name_ar,
   name_en,
 }) => {
-  const [t, i18n] = useTranslation();
+  const [i18n] = useTranslation();
 
   // console.log(id, image, description_ar, description_en, name_ar, name_en);
   return (

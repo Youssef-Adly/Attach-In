@@ -38,7 +38,7 @@ const Aside = () => {
         </div>
       </Link>
       <span className="fs-4">Christina Waguih</span>
-      <Link to="" className="linkList text-decoration-none ">
+      <Link to="/profile" className="linkList text-decoration-none ">
         {t("View Profile")}
       </Link>
       <form className="d-flex my-3 position-relative" role="search">

@@ -113,16 +113,17 @@ const HomeLayout = ({ children }) => {
           // width: "100%",
         }}
       >
-        <ul className="nav justify-content-evenly col-12 ms-2">
+        <ul className="nav justify-content-evenly col-12">
           <li className="nav-item">
-            <Link className="nav-link px-0 active" to="/home">
+            <Link
+              className="nav-link px-0 active d-flex justify-content-center"
+              to="/home"
+            >
               <img
                 src="/icon1.svg"
                 style={{
-                  border:
-                    pathname === "/home"
-                      ? "3px solid var(--pink-color)"
-                      : "none",
+                  transform:
+                    pathname === "/home" ? "translate(0, -5px)" : "none",
                   borderRadius: "50%",
                 }}
                 className="w-75"
@@ -131,14 +132,15 @@ const HomeLayout = ({ children }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="/network">
+            <Link
+              className="nav-link px-0 d-flex justify-content-center"
+              to="/network"
+            >
               <img
                 src="/icon2.svg"
                 style={{
-                  border:
-                    pathname === "/network"
-                      ? "3px solid var(--pink-color)"
-                      : "none",
+                  transform:
+                    pathname === "/network" ? "translate(0, -5px)" : "none",
                   borderRadius: "50%",
                 }}
                 className="w-75"
@@ -146,9 +148,14 @@ const HomeLayout = ({ children }) => {
               />
             </Link>
           </li>
-          <li className="nav-item">
+          <li
+            className="nav-item"
+            style={{
+              width: "59px",
+            }}
+          >
             <Link
-              className="nav-link px-0"
+              className="nav-link px-0 d-flex justify-content-center"
               to=""
               data-bs-toggle="modal"
               data-bs-target="#feedActionPhoto"
@@ -157,20 +164,23 @@ const HomeLayout = ({ children }) => {
                 src="/icon5.svg"
                 className=""
                 style={{
-                  width: "80%",
+                  width: "44.25px",
                 }}
                 alt="icon5"
               />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="/notifications">
+            <Link
+              className="nav-link px-0 d-flex justify-content-center"
+              to="/notifications"
+            >
               <img
                 src="/icon3.svg"
                 style={{
-                  border:
+                  transform:
                     pathname === "/notifications"
-                      ? "3px solid var(--pink-color)"
+                      ? "translate(0, -5px)"
                       : "none",
                   borderRadius: "50%",
                 }}
@@ -180,14 +190,15 @@ const HomeLayout = ({ children }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link px-0" to="/internships">
+            <Link
+              className="nav-link px-0 d-flex justify-content-center"
+              to="/internships"
+            >
               <img
                 src="/icon4.svg"
                 style={{
-                  border:
-                    pathname === "/internships"
-                      ? "3px solid var(--pink-color)"
-                      : "none",
+                  transform:
+                    pathname === "/internships" ? "translate(0, -5px)" : "none",
                   borderRadius: "50%",
                 }}
                 className="w-75"
@@ -245,7 +256,7 @@ const HomeLayout = ({ children }) => {
         <div
           className="col-12 col-lg-9 p-1 p-sm-2 p-md-4 d-flex flex-column gap-0"
           style={{
-            marginBottom: "100px",
+            marginBottom: "65px",
             marginTop: "10px",
           }}
         >

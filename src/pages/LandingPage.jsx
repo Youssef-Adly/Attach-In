@@ -8,9 +8,12 @@ import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../Components/Footer";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const LandingPage = () => {
   const [t] = useTranslation();
+  const darkTheme = useSelector((state) => state.theme.value);
+  console.log("theme: ", darkTheme);
 
   //#region [Loading Screen Timer]
   const [isLoading, setIsLoading] = useState(true);
@@ -197,18 +200,20 @@ const LandingPage = () => {
               </div>
               <div className="pencil-container col-12 col-lg-7 d-flex justify-content-end align-items-center position-relative ">
                 <img
-                  src="Group 100.svg"
-                  className="img-fluid pencil d-none d-sm-block"
+                  src={darkTheme ? "Group 100 pink.svg" : "Group 100.svg"}
+                  // src="Group 100.svg"
+                  className="img-fluid pencil"
+                  // className="img-fluid pencil d-none d-sm-block"
                   style={{
                     height: "500px",
                     position: "absolute",
                     zIndex: "111",
                     right: "0",
-                    bottom: "-100px",
+                    bottom: "-91px",
                   }}
                   alt=""
                 />
-                <img
+                {/* <img
                   src="Group 100.svg"
                   // src="Group 100 pink.svg"
                   className="img-fluid pencil d-block d-sm-none"
@@ -221,7 +226,7 @@ const LandingPage = () => {
                     // height: "350px",
                   }}
                   alt=""
-                />
+                /> */}
               </div>
             </div>
             <div
@@ -318,7 +323,7 @@ const LandingPage = () => {
             }}
             className="d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
           >
-            <img src="cheerIcon.svg" alt="" className="img-fluid" />
+            <img src="cheerIcon.svg" alt="" className="img-fluid icons" />
             <h1>{t("Step")}</h1>
             <h4>
               {t("Step2")}
@@ -340,7 +345,7 @@ const LandingPage = () => {
             }}
             className="d-none link-light d-sm-flex flex-column justify-content-center align-items-center gap-2 position-relative"
           >
-            <img src="cheerIcon.svg" alt="" className="img-fluid" />
+            <img src="cheerIcon.svg" alt="" className="img-fluid icons" />
             <h1>{t("Motivated")}</h1>
             <h4>{t("Motivated2")}</h4>
             <img
@@ -357,7 +362,7 @@ const LandingPage = () => {
             }}
             className="bgGradiant d-none d-sm-flex flex-column justify-content-center align-items-center gap-2"
           >
-            <img src="cheerIcon.svg" alt="" className="img-fluid" />
+            <img src="cheerIcon.svg" alt="" className="img-fluid icons" />
             <h1>{t("Learn")}</h1>
             <h1>{t("Learn2")}</h1>
           </section>
@@ -375,6 +380,7 @@ const LandingPage = () => {
             <img
               src="smallpurplething.svg"
               alt="smallpurplething"
+              className=""
               style={{
                 position: "absolute",
                 top: "-76px",
@@ -382,12 +388,11 @@ const LandingPage = () => {
                 zIndex: "999",
                 width: "310px",
               }}
-              className="seperator"
             />
           </div>
           {/*  */}
           <section
-            className="container p-5"
+            className="p-5 bgGradiant2"
             style={
               {
                 // backgroundColor: "var(--main-color)",
@@ -398,7 +403,7 @@ const LandingPage = () => {
               <img
                 src="partners.svg"
                 alt="partners.svg"
-                className="img-fluid"
+                className="img-fluid icons"
               />
               <h1 style={{ color: "var(--text-main-color)" }}>
                 {t("Our Partners")}
@@ -515,12 +520,12 @@ const LandingPage = () => {
             }}
           ></div>
           {/*  */}
-          <section className="container p-5">
+          <section className="p-5 bgGradiant2">
             <div className="d-flex flex-column p-3 gap-3 justify-content-center align-items-center">
               <img
                 src="graduationCap.svg"
                 alt="graduationCap.svg"
-                className="img-fluid"
+                className="img-fluid icons"
               />
               <h1
                 className="text-center"
@@ -662,7 +667,7 @@ const LandingPage = () => {
             <img
               src="whofor.svg"
               alt="whofor.svg"
-              className="img-fluid"
+              className="img-fluid icons"
               style={{
                 height: "150px",
               }}

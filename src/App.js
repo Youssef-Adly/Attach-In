@@ -23,6 +23,7 @@ import HomeLayout from "./Components/HomeLayout";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "./i18n";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const root = document.documentElement;
@@ -71,6 +72,7 @@ function App() {
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="courses/:id" element={<CourseDetailsPage />} />
           <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
         {/*  */}
         <Route path="*" element={<NotFound />} />

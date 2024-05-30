@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { RouterProvider, useLocation } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -42,41 +43,45 @@ function App() {
     // console.log("i18nlang=> ", x.i18n.language);
   }, [lang, root, theme, x.i18n]);
 
-  const { pathname } = useLocation();
-  // let { pathname } = location;
+  // const { pathname } = useLocation();
+  // let { pathname } = 1;
   // console.log(pathname);
-  useEffect(() => {
-    document.documentElement.scrollTo(0, 0);
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  // useEffect(() => {
+  //   document.documentElement.scrollTo(0, 0);
+  //   window.scrollTo(0, 0);
+  // }, [pathname]);
+
+  const router = createBrowserRouter([
+    { path: "/", element: <LandingPage /> },
+    { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
+    {
+      path: "/",
+      element: <HomeLayout />,
+      children: [
+        { path: "home", element: <HomePage /> },
+        { path: "network", element: <NetworkPage /> },
+        { path: "notifications", element: <NotificationsPage /> },
+        { path: "internships", element: <InternshipsPage /> },
+        { path: "about", element: <About /> },
+        { path: "FAQ", element: <FQAPage /> },
+        { path: "about", element: <About /> },
+        { path: "terms", element: <TermsAndConditionsPage /> },
+        { path: "partners", element: <OurPartnersPage /> },
+        { path: "setting", element: <SettingPage /> },
+        { path: "reset", element: <ResetPasswordPage /> },
+        { path: "courses", element: <CoursesPage /> },
+        { path: "courses/:id", element: <CourseDetailsPage /> },
+        { path: "profile", element: <ProfilePage /> },
+        { path: "messages", element: <MessagesPage /> },
+      ],
+    },
+    { path: "*", element: <NotFound /> },
+  ]);
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/*  */}
-        <Route path="" element={<HomeLayout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/network" element={<NetworkPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/internships" element={<InternshipsPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/FAQ" element={<FQAPage />} />
-          <Route path="/terms" element={<TermsAndConditionsPage />} />
-          <Route path="/partners" element={<OurPartnersPage />} />
-          {/* <Route path="/contact" element={<Contact />} /> */}
-          <Route path="/setting" element={<SettingPage />} />
-          <Route path="/reset" element={<ResetPasswordPage />} />
-          <Route path="/courses" element={<CoursesPage />} />
-          <Route path="courses/:id" element={<CourseDetailsPage />} />
-          <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Route>
-        {/*  */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle";
 import { Provider } from "react-redux";
 import { persistor, store } from "./Redux/store";
@@ -16,9 +15,7 @@ root.render(
   // <React.StrictMode>
   <PersistGate persistor={persistor}>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
   </PersistGate>
   // {/* </React.StrictMode> */}

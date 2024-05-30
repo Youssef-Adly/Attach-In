@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const AsideRight = () => {
   const [t] = useTranslation();
@@ -70,21 +70,29 @@ const AsideRight = () => {
       </form>
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="" data-bs-dismiss="offcanvas">
-          <Link
+          <NavLink
             to="/setting"
             className="nav-link listItem text-light"
-            aria-current="page"
-            // onClick={}
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
           >
-            {/* <svg className="bi pe-none me-2" width={16} height={16}>
-              <use xlinkHref="#home" />
-            </svg> */}
             <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
             {t("Setting")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="/courses" className="nav-link listItem text-light">
+          <NavLink
+            to="/courses"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
@@ -93,58 +101,122 @@ const AsideRight = () => {
             /> */}
             <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
             {t("Courses")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="/messages" className="nav-link listItem text-light">
+          <NavLink
+            to="/messages"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
             {t("Messages")}
-          </Link>
+          </NavLink>
         </li>
         {/*  */}
         <hr />
         {/*  */}
         <li data-bs-dismiss="offcanvas">
-          <Link to="/about" className="nav-link listItem text-light">
+          <NavLink
+            to="/about"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
             {t("About")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="/FAQ" className="nav-link listItem text-light">
+          <NavLink
+            to="/FAQ"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
             {t("FAQ")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="" className="nav-link listItem text-light">
+          <NavLink
+            to=""
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
             {t("Subscription")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="/partners" className="nav-link listItem text-light">
+          <NavLink
+            to="/partners"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
             {t("Our Partners")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="/terms" className="nav-link listItem text-light">
+          <NavLink
+            to="/terms"
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
             {t("Terms & Conditions")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="" className="nav-link listItem text-light">
+          <NavLink
+            to=""
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
             {t("Contact Us")}
-          </Link>
+          </NavLink>
         </li>
         <li data-bs-dismiss="offcanvas">
-          <Link to="" className="nav-link listItem text-light">
+          <NavLink
+            to=""
+            className="nav-link listItem text-light"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
             {t("Log Out")}
-          </Link>
+          </NavLink>
         </li>
       </ul>
       <hr />
@@ -192,7 +264,8 @@ const AsideRight = () => {
       </div> */}
       <small>
         Attach in Copyright © 2024.
-        <br /> All rights reserved.
+        <br />
+        All rights reserved.
       </small>
     </div>
   );

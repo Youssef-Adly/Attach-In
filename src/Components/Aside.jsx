@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Aside = () => {
   const [t] = useTranslation();
@@ -62,20 +62,32 @@ const Aside = () => {
       </form>
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
-          <Link
+          <NavLink
             to="/setting"
             className="nav-link link-body-emphasis"
-            aria-current="page"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
           >
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
             </svg> */}
             <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
             {t("Setting")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/courses" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/courses"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             {/* <img
               src="CoursesIcon.svg"
               alt="CoursesIcon.svg"
@@ -84,58 +96,122 @@ const Aside = () => {
             /> */}
             <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
             {t("Courses")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/messages" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/messages"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
             {t("Messages")}
-          </Link>
+          </NavLink>
         </li>
         {/*  */}
         <hr />
         {/*  */}
         <li>
-          <Link to="/about" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/about"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
             {t("About")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/FAQ" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/FAQ"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
             {t("FAQ")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <NavLink
+            to=""
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
             {t("Subscription")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/partners" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/partners"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
             {t("Our Partners")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/terms" className="nav-link link-body-emphasis">
+          <NavLink
+            to="/terms"
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
             {t("Terms & Conditions")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <NavLink
+            to=""
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
             {t("Contact Us")}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="" className="nav-link link-body-emphasis">
+          <NavLink
+            to=""
+            className="nav-link link-body-emphasis"
+            style={({ isActive, isPending, isTransitioning }) => {
+              return {
+                backgroundColor: isActive ? "var(--sec-color)" : "unset",
+              };
+            }}
+          >
             <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
             {t("Log Out")}
-          </Link>
+          </NavLink>
         </li>
       </ul>
       <hr />

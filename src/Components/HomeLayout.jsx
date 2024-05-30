@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import Aside from "./Aside";
 import AsideRight from "./AsideRight";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 import "./HomeLayout.css";
@@ -34,55 +40,95 @@ const HomeLayout = ({ children }) => {
           <ul className="nav justify-content-md-around justify-content-end ">
             <li
               className="nav-item d-none d-md-block"
-              style={{
-                borderBottom:
-                  pathname === "/home"
-                    ? "5px solid var(--text-main-color)"
-                    : "none",
-              }}
+              // style={{
+              //   borderBottom:
+              //     pathname === "/home"
+              //       ? "5px solid var(--text-main-color)"
+              //       : "none",
+              // }}
             >
-              <Link className="nav-link active" aria-current="page" to="/home">
+              <NavLink
+                className="nav-link"
+                to="/home"
+                style={({ isActive, isPending, isTransitioning }) => {
+                  return {
+                    borderBottom: isActive
+                      ? "5px solid var(--text-main-color)"
+                      : "none",
+                  };
+                }}
+              >
                 <img src="/icon1.svg" alt="icon4" style={{ width: "50px" }} />
-              </Link>
+              </NavLink>
             </li>
             <li
               className="nav-item d-none d-md-block"
-              style={{
-                borderBottom:
-                  pathname === "/network"
-                    ? "5px solid var(--text-main-color)"
-                    : "none",
-              }}
+              // style={{
+              //   borderBottom:
+              //     pathname === "/network"
+              //       ? "5px solid var(--text-main-color)"
+              //       : "none",
+              // }}
             >
-              <Link className="nav-link" to="/network">
+              <NavLink
+                className="nav-link"
+                to="/network"
+                style={({ isActive, isPending, isTransitioning }) => {
+                  return {
+                    borderBottom: isActive
+                      ? "5px solid var(--text-main-color)"
+                      : "none",
+                  };
+                }}
+              >
                 <img src="/icon2.svg" alt="icon4" style={{ width: "50px" }} />
-              </Link>
+              </NavLink>
             </li>
             <li
               className="nav-item d-none d-md-block"
-              style={{
-                borderBottom:
-                  pathname === "/notifications"
-                    ? "5px solid var(--text-main-color)"
-                    : "none",
-              }}
+              // style={{
+              //   borderBottom:
+              //     pathname === "/notifications"
+              //       ? "5px solid var(--text-main-color)"
+              //       : "none",
+              // }}
             >
-              <Link className="nav-link" to="/notifications">
+              <NavLink
+                className="nav-link"
+                to="/notifications"
+                style={({ isActive, isPending, isTransitioning }) => {
+                  return {
+                    borderBottom: isActive
+                      ? "5px solid var(--text-main-color)"
+                      : "none",
+                  };
+                }}
+              >
                 <img src="/icon3.svg" alt="icon4" style={{ width: "50px" }} />
-              </Link>
+              </NavLink>
             </li>
             <li
               className="nav-item d-none d-md-block"
-              style={{
-                borderBottom:
-                  pathname === "/internships"
-                    ? "5px solid var(--text-main-color)"
-                    : "none",
-              }}
+              // style={{
+              //   borderBottom:
+              //     pathname === "/internships"
+              //       ? "5px solid var(--text-main-color)"
+              //       : "none",
+              // }}
             >
-              <Link className="nav-link" to="/internships">
+              <NavLink
+                className="nav-link"
+                to="/internships"
+                style={({ isActive, isPending, isTransitioning }) => {
+                  return {
+                    borderBottom: isActive
+                      ? "5px solid var(--text-main-color)"
+                      : "none",
+                  };
+                }}
+              >
                 <img src="/icon4.svg" alt="icon4" style={{ width: "50px" }} />
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item d-block d-lg-none align-self-end ">
               <button
@@ -115,38 +161,51 @@ const HomeLayout = ({ children }) => {
       >
         <ul className="nav justify-content-evenly col-12">
           <li className="nav-item">
-            <Link
+            <NavLink
               className="nav-link px-0 active d-flex justify-content-center"
               to="/home"
+              style={({ isActive, isPending, isTransitioning }) => {
+                return {
+                  transform: isActive ? "translate(0, -5px)" : "none",
+                  borderRadius: "50%",
+                  // viewTransitionName: isTransitioning ? "slide" : "",
+                };
+              }}
             >
               <img
                 src="/icon1.svg"
-                style={{
-                  transform:
-                    pathname === "/home" ? "translate(0, -5px)" : "none",
-                  borderRadius: "50%",
-                }}
+                // style={{
+                //   transform:
+                //     pathname === "/home" ? "translate(0, -5px)" : "none",
+                //   borderRadius: "50%",
+                // }}
                 className="w-75"
                 alt="icon1"
               />
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link
+            <NavLink
               className="nav-link px-0 d-flex justify-content-center"
               to="/network"
+              style={({ isActive, isPending, isTransitioning }) => {
+                return {
+                  transform: isActive ? "translate(0, -5px)" : "none",
+                  borderRadius: "50%",
+                };
+              }}
             >
               <img
                 src="/icon2.svg"
-                style={{
-                  transform:
-                    pathname === "/network" ? "translate(0, -5px)" : "none",
-                  borderRadius: "50%",
-                }}
+                // style={{
+                //   transform:
+                //     pathname === "/network" ? "translate(0, -5px)" : "none",
+                //   borderRadius: "50%",
+                // }}
                 className="w-75"
                 alt="icon2"
               />
-            </Link>
+            </NavLink>
           </li>
           <li
             className="nav-item"
@@ -154,7 +213,7 @@ const HomeLayout = ({ children }) => {
               width: "59px",
             }}
           >
-            <Link
+            <NavLink
               className="nav-link px-0 d-flex justify-content-center"
               to=""
               data-bs-toggle="modal"
@@ -168,43 +227,55 @@ const HomeLayout = ({ children }) => {
                 }}
                 alt="icon5"
               />
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link
+            <NavLink
               className="nav-link px-0 d-flex justify-content-center"
               to="/notifications"
+              style={({ isActive, isPending, isTransitioning }) => {
+                return {
+                  transform: isActive ? "translate(0, -5px)" : "none",
+                  borderRadius: "50%",
+                };
+              }}
             >
               <img
                 src="/icon3.svg"
-                style={{
-                  transform:
-                    pathname === "/notifications"
-                      ? "translate(0, -5px)"
-                      : "none",
-                  borderRadius: "50%",
-                }}
+                // style={{
+                //   transform:
+                //     pathname === "/notifications"
+                //       ? "translate(0, -5px)"
+                //       : "none",
+                //   borderRadius: "50%",
+                // }}
                 className="w-75"
                 alt="icon3"
               />
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link
+            <NavLink
               className="nav-link px-0 d-flex justify-content-center"
               to="/internships"
+              style={({ isActive, isPending, isTransitioning }) => {
+                return {
+                  transform: isActive ? "translate(0, -5px)" : "none",
+                  borderRadius: "50%",
+                };
+              }}
             >
               <img
                 src="/icon4.svg"
-                style={{
-                  transform:
-                    pathname === "/internships" ? "translate(0, -5px)" : "none",
-                  borderRadius: "50%",
-                }}
+                // style={{
+                //   transform:
+                //     pathname === "/internships" ? "translate(0, -5px)" : "none",
+                //   borderRadius: "50%",
+                // }}
                 className="w-75"
                 alt="icon4"
               />
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

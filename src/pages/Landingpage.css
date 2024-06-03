@@ -116,10 +116,12 @@
 [data-bs-theme="dark"] .bgGradiant3 {
   background: linear-gradient(180deg, #363b56, transparent) !important;
 }
-
+/* 
 [lang="en"] .pwaBtn {
-  width: 250px;
+  width: fit-content;
+  padding-right: 1rem !important;
 }
 [lang="ar"] .pwaBtn {
-  width: 200px;
-}
+  width: fit-content;
+  padding-right: 1rem !important;
+} */

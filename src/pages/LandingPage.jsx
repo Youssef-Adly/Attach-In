@@ -161,11 +161,13 @@ const LandingPage = () => {
                 </div>
 
                 <div
-                  className="nav-item p-2 border rounded"
+                  className="nav-item p-2 pe-3 border rounded"
                   style={{
                     backgroundColor: "var(--pink-color)",
                     color: "var(--gray-color)",
-                    width: "180px",
+                    // width: "180px",
+                    width: "fit-content",
+                    // paddingRight: "1rem",
                     zIndex: "999",
                   }}
                 >
@@ -181,10 +183,10 @@ const LandingPage = () => {
                   </Link>
                 </div>
                 <div
-                  className="nav-item pwaBtn p-2 text-light border rounded"
+                  className="nav-item pwaBtn p-2 pe-3 text-light border rounded"
                   style={{
                     backgroundColor: "var(--main-color)",
-                    // width: "250px",
+                    width: "fit-content",
                     zIndex: "999",
                   }}
                 >
@@ -670,6 +672,7 @@ const LandingPage = () => {
               className="img-fluid icons"
               style={{
                 height: "150px",
+                boxSizing: "border-box",
               }}
             />
             <div

@@ -192,7 +192,7 @@ const AsideRight = () => {
         </li>
         <li data-bs-dismiss="offcanvas">
           <NavLink
-            to=""
+            to="/contactus"
             className="nav-link listItem text-light"
             style={({ isActive, isPending, isTransitioning }) => {
               return {

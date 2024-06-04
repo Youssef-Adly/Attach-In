@@ -38,7 +38,10 @@ const Setting = () => {
       <h1 style={{ color: "var(--text-main-color)" }}>{t("Settings")}</h1>
       <hr />
       {/* Edit Profile */}
-      <Link to={"/edit"} className="nav-link d-flex gap-3 align-items-center ">
+      <Link
+        to={"/editprofile"}
+        className="nav-link d-flex gap-3 align-items-center "
+      >
         <img src="/edit.svg" alt="edit" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Edit Profile")}
@@ -93,7 +96,7 @@ const Setting = () => {
       <hr />
       {/* Contact Us */}
       <Link
-        to={"/contact"}
+        to={"/contactus"}
         className="nav-link d-flex gap-3 align-items-center "
       >
         <img src="/contacts.svg" alt="contact" />

@@ -25,6 +25,8 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import "./i18n";
 import ProfilePage from "./pages/ProfilePage";
+import ContactUs from "./pages/ContactUs";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const root = document.documentElement;
@@ -68,12 +70,14 @@ function App() {
         { path: "about", element: <About /> },
         { path: "terms", element: <TermsAndConditionsPage /> },
         { path: "partners", element: <OurPartnersPage /> },
+        { path: "messages", element: <MessagesPage /> },
+        { path: "contactus", element: <ContactUs /> },
         { path: "setting", element: <SettingPage /> },
         { path: "reset", element: <ResetPasswordPage /> },
         { path: "courses", element: <CoursesPage /> },
         { path: "courses/:id", element: <CourseDetailsPage /> },
         { path: "profile", element: <ProfilePage /> },
-        { path: "messages", element: <MessagesPage /> },
+        { path: "editprofile", element: <EditProfile /> },
       ],
     },
     { path: "*", element: <NotFound /> },

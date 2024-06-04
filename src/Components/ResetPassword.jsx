@@ -34,7 +34,10 @@ const ResetPassword = () => {
           name="CurrentPassword"
           onChange={(e) => handleChange(e)}
         />
-        <label htmlFor="floatingInput" style={{ color: "var(--text-main-color)" }}>
+        <label
+          htmlFor="floatingInput"
+          style={{ color: "var(--text-main-color)" }}
+        >
           Current Password
         </label>
       </div>
@@ -81,12 +84,11 @@ const ResetPassword = () => {
         </label>
       </div>
       <Link
-        // to={"/login"}
         onClick={(e) => {
           handleSubmit(e);
         }}
         style={{
-          backgroundcolor: "var(--text-main-color)",
+          backgroundColor: "var(--main-color)",
           height: "100px",
           width: "100px",
         }}

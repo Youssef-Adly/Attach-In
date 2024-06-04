@@ -769,20 +769,20 @@ const EditProfile = () => {
             <label htmlFor="university">Collage</label>
           </div>
         </div>
-        <Link
-          // to={"/login"}
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-          style={{
-            backgroundColor: "var(--main-color)",
-            height: "100px",
-            width: "100px",
-          }}
-          className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-        >
-          Confirm
-        </Link>
+          <Link
+            // to={"/login"}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+            style={{
+              backgroundColor: "var(--main-color)",
+              height: "100px",
+              width: "100px",
+            }}
+            className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+          >
+            Confirm
+          </Link>
       </div>
     </>
   );

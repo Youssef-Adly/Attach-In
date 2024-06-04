@@ -14,7 +14,7 @@ const CourseDetailsPage = () => {
   const [t, i18n] = useTranslation();
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTQwNzEwMTYsImV4cCI6MTcxNjY2MzAxNiwibmJmIjoxNzE0MDcxMDE2LCJqdGkiOiJwbE1xdXdmNUtzV01vMmRmIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.aynzXgU1RDbbHiO-jeLs3kiXLYid-p0WzEuw-Bgs08w";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTc1Mzk1NzUsImV4cCI6MTcyMDEzMTU3NSwibmJmIjoxNzE3NTM5NTc1LCJqdGkiOiJBYTJ3aWlCTEloSXVSWTB3Iiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.eoO7JxCg1_aVD1RVPM5BubWnU3r7Vr2bhi7bOj23YyI";
 
   useEffect(() => {
     axios

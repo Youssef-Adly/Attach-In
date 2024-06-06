@@ -125,3 +125,12 @@
   width: fit-content;
   padding-right: 1rem !important;
 } */
+
+/*  */
+
+/* Extra small devices (phones, 600px and down) */
+[data-bs-theme="dark"] .iconDark {
+  background: #eee;
+  padding: 5px;
+  border-radius: 10px 5px;
+}

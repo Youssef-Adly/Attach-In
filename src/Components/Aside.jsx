@@ -145,7 +145,7 @@ const Aside = () => {
         </li>
         <li>
           <NavLink
-            to=""
+            to="/Subscription"
             className="nav-link link-body-emphasis"
             style={({ isActive, isPending, isTransitioning }) => {
               return {

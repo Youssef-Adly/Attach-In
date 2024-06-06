@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { RouterProvider, useLocation } from "react-router-dom";
-import { createBrowserRouter } from "react-router-dom";
+import "./i18n";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  // useLocation,
+} from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
@@ -23,10 +27,15 @@ import MessagesPage from "./pages/MessagesPage";
 import HomeLayout from "./Components/HomeLayout";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import "./i18n";
 import ProfilePage from "./pages/ProfilePage";
 import ContactUs from "./pages/ContactUs";
 import EditProfile from "./pages/EditProfile";
+import InternshipDetails from "./pages/InternshipDetails";
+import UniversityPage from "./pages/UniversityPage";
+import UniversityNews from "./pages/UniversityNews";
+import UniversitySchedule from "./pages/UniversitySchedule";
+import CompanyPage from "./pages/CompanyPage";
+import PricingPage from "./pages/PricingPage";
 
 function App() {
   const root = document.documentElement;
@@ -51,7 +60,7 @@ function App() {
   // useEffect(() => {
   //   document.documentElement.scrollTo(0, 0);
   //   window.scrollTo(0, 0);
-  // }, [pathname]);
+  // }, [window.location.pathname]);
 
   const router = createBrowserRouter([
     { path: "/", element: <LandingPage /> },
@@ -65,6 +74,7 @@ function App() {
         { path: "network", element: <NetworkPage /> },
         { path: "notifications", element: <NotificationsPage /> },
         { path: "internships", element: <InternshipsPage /> },
+        { path: "internships/:id", element: <InternshipDetails /> },
         { path: "about", element: <About /> },
         { path: "FAQ", element: <FQAPage /> },
         { path: "about", element: <About /> },
@@ -78,6 +88,11 @@ function App() {
         { path: "courses/:id", element: <CourseDetailsPage /> },
         { path: "profile", element: <ProfilePage /> },
         { path: "editprofile", element: <EditProfile /> },
+        { path: "companyProfile", element: <CompanyPage /> },
+        { path: "universityProfile", element: <UniversityPage /> },
+        { path: "university/posts", element: <UniversityNews /> },
+        { path: "university/schedule", element: <UniversitySchedule /> },
+        { path: "Subscription", element: <PricingPage /> },
       ],
     },
     { path: "*", element: <NotFound /> },

@@ -23,7 +23,7 @@ const AsideRight = () => {
     <div
       className="d-flex flex-column flex-shrink-0 pb-1 px-2 px-lg-3 position-relative "
       style={{
-        backgroundColor: "#var(--main-color)",
+        backgroundColor: "var(--main-color)",
         color: "var(--text-main-color)",
       }}
     >
@@ -150,7 +150,7 @@ const AsideRight = () => {
         </li>
         <li data-bs-dismiss="offcanvas">
           <NavLink
-            to=""
+            to="/Subscription"
             className="nav-link listItem text-light"
             style={({ isActive, isPending, isTransitioning }) => {
               return {

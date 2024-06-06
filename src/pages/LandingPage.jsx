@@ -8,12 +8,13 @@ import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../Components/Footer";
 import { useTranslation } from "react-i18next";
+import PWAPrompt from "react-ios-pwa-prompt";
 import { useSelector } from "react-redux";
 
 const LandingPage = () => {
   const [t] = useTranslation();
   const darkTheme = useSelector((state) => state.theme.value);
-  console.log("theme: ", darkTheme);
+  // console.log("theme: ", darkTheme);
 
   //#region [Loading Screen Timer]
   const [isLoading, setIsLoading] = useState(true);
@@ -752,6 +753,12 @@ const LandingPage = () => {
           </section>
           {/* Footer */}
           <Footer />
+          <PWAPrompt
+            promptOnVisit={1}
+            timesToShow={3}
+            copyClosePrompt="Close"
+            permanentlyHideOnDismiss={false}
+          />
         </>
       )}
     </>

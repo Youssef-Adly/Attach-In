@@ -108,7 +108,8 @@ const Internships = () => {
         <div className="card-body">
           <p>
             I'm thrilled to share that I've completed a graduate certificate
-            course in project management with the president's honor roll.
+            course in project management with the president's honor roll...
+            <Link to={"74"}>see more</Link>
           </p>
           {/* Card img */}
           {/* <img

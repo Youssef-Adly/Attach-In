@@ -2,28 +2,37 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 
-const ProfilePage = () => {
+const CompanyPage = () => {
   return (
     <>
       <main>
         {/* banner Cover */}
-        <div className="col-12">
-          <img
-            src="https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
-            className="rounded-5 shadow-lg bannerCover"
+        <div
+          className="col-12 rounded-5 shadow-lg bannerCover"
+          style={{
+            background:
+              "url(https://maymt.com/images/uploaded/Eva-Cosmetics_banner-2.jpg_1000.webp) no-repeat right center / cover",
+          }}
+        >
+          {/* <img
+            src="https://maymt.com/images/uploaded/Eva-Cosmetics_banner-2.jpg_1000.webp"
+            className=""
             style={{ width: "100%" }}
             alt="cover"
-          />
+          /> */}
         </div>
 
         {/* Profile Picture With Name and Icons */}
-        <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
+        <div className="position-relative d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
             <img
-              src="https://github.com/mdo.png"
+              src="https://play-lh.googleusercontent.com/hsXfcN2lmhNvvWyIBfxLjrdtwo78Qfqskh4VTfS6UkDinlJ4AwPUpneF3c1qjJhi"
               alt="profile"
               className="col img-fluid rounded-circle shadow-lg profilePic"
-              style={{ transform: "translateY(-50%)" }}
+              style={{
+                transform: "translateY(-50%)",
+                backgroundColor: "var(--offWhite-color)",
+              }}
             />
           </div>
           {/*  */}
@@ -31,311 +40,66 @@ const ProfilePage = () => {
             className="mt-2 mt-sm-4 col-4 col-sm-2 col-md-4"
             style={{ color: "var(--text-main-color)" }}
           >
-            Christina Waguih
+            Eva Cosmatics
           </h3>
           {/*  */}
-          <div className="mt-4 col-4 ms-auto me-sm-3">
+          <div
+            className="position-absolute end-0 mt-4 col-4 ms-auto me-sm-3"
+            style={{
+              top: "50px",
+            }}
+          >
             <div className="d-flex justify-content-end gap-2">
-              <div className="dropdown">
-                <Link
-                  to={""}
-                  id="feedActionShare"
-                  className=""
-                  data-bs-toggle="dropdown"
-                >
-                  <img
-                    src="/threeDots.svg"
-                    className="img-fluid"
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      color: "var(--main-color)",
-                    }}
-                    alt=""
-                  />
-                </Link>
-                {/* Dropdown Menu */}
-                <ul
-                  className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
-                  aria-labelledby="feedActionShare"
-                  style={{ backgroundColor: "var(--offWhite-color)" }}
-                >
-                  <li className="mt-1">
-                    <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
-                      <img
-                        src="/reportIcon.svg"
-                        alt="report"
-                        className="pe-2"
-                      />
-                      Report this Profile
-                    </Link>
-                  </li>
-                  <li className="mt-2">
-                    <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
-                      <img src="/BlockIcon.svg" alt="block" className="pe-2" />
-                      Block This Person
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li className="mt-2">
-                    <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
-                      <img
-                        src="/deleteIcon.svg"
-                        alt="delete"
-                        className="pe-2"
-                      />
-                      Delete This Profile
-                    </Link>
-                  </li>
-                </ul>
-                {/* End of Dropdown Menu */}
-              </div>
-              <Link to={"/network"} className="">
+              <Link /* to={"/university/posts"} */ className="">
                 <img
-                  src="/peopleIcon.svg"
+                  src="/icon2.svg"
                   className="img-fluid"
-                  style={{ width: "40px", height: "40px" }}
+                  style={{ width: "50px", height: "50px" }}
                   alt=""
                 />
               </Link>
-              <Link to={"/editprofile"} className="">
+              <Link /* to={"/university/schedule"} */ className="">
                 <img
-                  src="/editPenIcon.svg"
+                  src="/icon4.svg"
                   className="img-fluid"
-                  style={{ width: "40px", height: "40px" }}
+                  style={{ width: "50px", height: "50px" }}
                   alt=""
                 />
-              </Link>
-            </div>
-            <div className="d-flex justify-content-end">
-              <Link
-                to={"/universityProfile"}
-                className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2"
-                style={{
-                  color: "var(--text-main-color)",
-                  backgroundColor: "#E3E2DC",
-                }}
-                title="University"
-              >
-                <img
-                  src="/graduationCap.svg"
-                  style={{ width: "18px", marginRight: "5px" }}
-                  alt="graduationCap"
-                />
-                <small style={{ color: "var(--main-color)" }}>University</small>
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Skills & certifications */}
+        {/* About Company */}
 
         <div className="d-flex justify-content-around gap-3 px-3">
           <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
-            Skills & certifications
+            About Company
           </p>
-          <Link to={""} className="nav-link col-4 col-sm-2">
+          <div
+            className="nav-link col-4 col-sm-2"
+            style={{ visibility: "hidden" }}
+          >
             <p
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
-            >
-              See All
-            </p>
-          </Link>
+            ></p>
+          </div>
         </div>
 
-        {/* Carosel #1 */}
-
-        <div id="carouselExampleIndicators" className="carousel slide mt-3">
-          <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div>
-          <div className="carousel-inner">
-            {/*  */}
-            <div className="carousel-item active">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <div
-                  className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#98AFDB",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <img
-                    src="/cheerIcon2.svg"
-                    alt="cheerIcon2.svg"
-                    className="w-75"
-                  />
-                  <h2 className="text-center mt-2">Comunication Skills</h2>
-                </div>
-                {/* Card #2 */}
-                <div
-                  className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#F2969C",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <div className="position-absolute bottom-0">
-                    <svg
-                      width={40}
-                      height={60}
-                      viewBox="0 0 46 58"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
-                        fill="#F9B74C"
-                      />
-                      <path
-                        d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
-                        fill="#FFD25F"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    className="bg-body-secondary d-flex align-items-center"
-                    style={{ borderRadius: "40%", width: "90%", height: "90%" }}
-                  >
-                    <h3 className="text-center">Photoshop Certification</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/*  */}
-            <div className="carousel-item">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <div
-                  className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#98AFDB",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <img
-                    src="cheerIcon2.svg"
-                    alt="cheerIcon2.svg"
-                    className="w-75"
-                  />
-                  <h2 className="text-center mt-2">Presentation Skills</h2>
-                </div>
-                {/* Card #2 */}
-                <div
-                  className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#F2969C",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <div className="position-absolute bottom-0">
-                    <svg
-                      width={40}
-                      height={60}
-                      viewBox="0 0 46 58"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
-                        fill="#F9B74C"
-                      />
-                      <path
-                        d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
-                        fill="#FFD25F"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    className="bg-body-secondary d-flex align-items-center"
-                    style={{ borderRadius: "40%", width: "90%", height: "90%" }}
-                  >
-                    <h3 className="text-center">After Effect Certification</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev"
-            style={
-              {
-                // left: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next"
-            style={
-              {
-                // right: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+        <h4
+          className="col-12 col-sm-10 mx-auto ps-4 pe-5 py-3 mt-4 rounded-5"
+          style={{
+            backgroundColor: "var(--sec-color)",
+          }}
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+          dolorum laboriosam quisquam soluta, qui, repellendus odit iure
+          cupiditate dicta error facilis incidunt officiis perspiciatis, sunt
+          accusantium dolorem praesentium vero sequi veniam maxime quas deleniti
+          facere ex omnis. Repellendus quas sit, quos similique distinctio
+          voluptatum deserunt, necessitatibus delectus provident enim dicta.
+        </h4>
 
         <hr className="mt-5 w-75 m-auto" />
 
@@ -599,4 +363,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default CompanyPage;

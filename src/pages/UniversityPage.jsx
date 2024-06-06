@@ -26,7 +26,7 @@ const UniversityPage = () => {
               style={{
                 transform: "translateY(-50%)",
                 backgroundColor: "#eee",
-                padding:"20px"
+                padding: "20px",
               }}
             />
           </div>

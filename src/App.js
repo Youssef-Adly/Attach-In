@@ -9,7 +9,9 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import LoadingSuspese from "./Components/LoadingSuspense";
+// import LoadingSuspese from "./Components/LoadingSuspense";
+// import Loading from "./Components/Loading";
+import Suspention from "./Components/Suspention";
 // Lazy Loadin Routes
 const CompanyPage = lazy(() => import("./pages/CompanyPage"));
 const UniversitySchedule = lazy(() => import("./pages/UniversitySchedule"));
@@ -104,7 +106,7 @@ function App() {
 
   return (
     <div className="App">
-      <Suspense fallback={<LoadingSuspese />}>
+      <Suspense fallback={<Suspention />}>
         <RouterProvider router={router}></RouterProvider>
       </Suspense>
     </div>

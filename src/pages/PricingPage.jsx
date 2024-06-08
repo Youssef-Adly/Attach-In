@@ -9,7 +9,7 @@ const PricingPage = () => {
         <div className="container">
           <div className="section-title text-center">
             <h1>Pricing Plan</h1>
-            <p>Comeing Soon</p>
+            <p>Coming Soon</p>
           </div>
           <div className="row text-center">
             <div

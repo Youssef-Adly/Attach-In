@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./i18n";
@@ -7,35 +7,39 @@ import {
   createBrowserRouter,
   // useLocation,
 } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import HomePage from "./pages/HomePage";
-import InternshipsPage from "./pages/InternshipsPage";
-import About from "./pages/About";
-import FQAPage from "./pages/FQAPage";
-import TermsAndConditionsPage from "./pages/TermsAndConditionsPage";
-import OurPartnersPage from "./pages/OurPartnersPage";
-import NotificationsPage from "./pages/NotificationsPage";
-import NetworkPage from "./pages/NetworkPage";
-import SettingPage from "./pages/SettingPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import CoursesPage from "./pages/CoursesPage";
-import CourseDetailsPage from "./pages/CourseDetailsPage";
-import MessagesPage from "./pages/MessagesPage";
-import HomeLayout from "./Components/HomeLayout";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import ProfilePage from "./pages/ProfilePage";
-import ContactUs from "./pages/ContactUs";
-import EditProfile from "./pages/EditProfile";
-import InternshipDetails from "./pages/InternshipDetails";
-import UniversityPage from "./pages/UniversityPage";
-import UniversityNews from "./pages/UniversityNews";
-import UniversitySchedule from "./pages/UniversitySchedule";
-import CompanyPage from "./pages/CompanyPage";
-import PricingPage from "./pages/PricingPage";
+import LoadingSuspese from "./Components/LoadingSuspense";
+// Lazy Loadin Routes
+const CompanyPage = lazy(() => import("./pages/CompanyPage"));
+const UniversitySchedule = lazy(() => import("./pages/UniversitySchedule"));
+const UniversityNews = lazy(() => import("./pages/UniversityNews"));
+const UniversityPage = lazy(() => import("./pages/UniversityPage"));
+const InternshipDetails = lazy(() => import("./pages/InternshipDetails"));
+const EditProfile = lazy(() => import("./pages/EditProfile"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const HomeLayout = lazy(() => import("./Components/HomeLayout"));
+const MessagesPage = lazy(() => import("./pages/MessagesPage"));
+const CourseDetailsPage = lazy(() => import("./pages/CourseDetailsPage"));
+const CoursesPage = lazy(() => import("./pages/CoursesPage"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
+const SettingPage = lazy(() => import("./pages/SettingPage"));
+const NetworkPage = lazy(() => import("./pages/NetworkPage"));
+const NotificationsPage = lazy(() => import("./pages/NotificationsPage"));
+const OurPartnersPage = lazy(() => import("./pages/OurPartnersPage"));
+const TermsAndConditionsPage = lazy(() =>
+  import("./pages/TermsAndConditionsPage")
+);
+const FQAPage = lazy(() => import("./pages/FQAPage"));
+const About = lazy(() => import("./pages/About"));
+const InternshipsPage = lazy(() => import("./pages/InternshipsPage"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const Register = lazy(() => import("./pages/Register"));
+const Login = lazy(() => import("./pages/Login"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const PricingPage = lazy(() => import("./pages/PricingPage"));
 
 function App() {
   const root = document.documentElement;
@@ -100,7 +104,9 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router}></RouterProvider>
+      <Suspense fallback={<LoadingSuspese />}>
+        <RouterProvider router={router}></RouterProvider>
+      </Suspense>
     </div>
   );
 }

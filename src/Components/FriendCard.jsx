@@ -26,9 +26,9 @@ const FriendCard = () => {
             <Link className="position-absolute bottom-0 end-0 hoverOne">
               <img
                 className=""
-                src="icon2.svg"
+                src="chatIcon.svg"
                 alt="icon4"
-                style={{ width: "40px" }}
+                style={{ width: "30px" }}
               />
             </Link>
           </div>

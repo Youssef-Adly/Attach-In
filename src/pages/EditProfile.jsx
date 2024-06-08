@@ -1,27 +1,75 @@
-import { faSquareMinus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleArrowLeft,
+  faSquareMinus,
+  faSquarePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
+  const navigate = useNavigate();
+
   const [userReg, setUserReg] = useState({
     certifications: [],
     skills: [],
-    interest: [],
-    computerExps: [],
-    langs: [],
+    interests: [],
+    experiences: [],
+    language: [],
   });
 
   const handleChange = (e) => {
-    setUserReg((old) => ({ ...old, [e.target.name]: e.target.value }));
+    if (
+      e.target.name === "profile_cover" ||
+      e.target.name === "profile_photo"
+    ) {
+      setUserReg((old) => ({ ...old, [e.target.name]: e.target.files[0] }));
+    } else {
+      setUserReg((old) => ({ ...old, [e.target.name]: e.target.value }));
+    }
   };
 
+  function hasNonEmptyValues(obj, ...keys) {
+    // Check if all keys exist in the object
+    if (!keys.every((key) => key in obj)) {
+      return false;
+    }
+
+    // Check if all values for existing keys are not empty
+    return keys.every((key) => {
+      const value = obj[key];
+      return (
+        Boolean(value) &&
+        (typeof value !== "object" ||
+          (Array.isArray(value) && value.length > 0))
+      );
+    });
+  }
+
   const handleSubmit = (e) => {
+    // Requird Inputs
+    // first_name . last_name . email . phone . /* password */ .
+    // language . governorate . collage . university
+    let valid = hasNonEmptyValues(
+      userReg,
+      "first_name",
+      "last_name",
+      "email",
+      "phone",
+      "language",
+      "governorate",
+      "collage",
+      "profile_university_id"
+    );
+    console.log("valid: ", valid);
     console.log(userReg);
   };
 
   // Adding Dynamic Inputs
+  //////////////////////////////////////////////////////////////////////////////
+  //#region
   //////////////////// userCert ////////////////////
+  //#region
   const [userCert, setUserCert] = useState("");
   const certInput = useRef();
 
@@ -45,9 +93,12 @@ const EditProfile = () => {
   const handleChangeCert = (event, index) => {
     let { value } = event.target;
     setUserCert(value);
-    console.log("value: ", value);
+    // console.log("value: ", value);
   };
+  //#endregion
+
   //////////////////// userSkill ////////////////////
+  //#region
   const [userSkill, setUserSkill] = useState("");
   const skillInput = useRef();
 
@@ -73,23 +124,26 @@ const EditProfile = () => {
     setUserSkill(value);
     // console.log("value: ", value);
   };
+  //#endregion
+
   /////////////////// userInterest /////////////////////
+  //#region
   const [userInterest, setUserInterest] = useState("");
   const interestInput = useRef();
 
   const handleDeleteInterest = (index) => {
-    const newArray = [...userReg.interest];
+    const newArray = [...userReg.interests];
     newArray.splice(index, 1);
     setUserReg((old) => ({
       ...old,
-      interest: newArray,
+      interests: newArray,
     }));
   };
 
   const handleAddInterest = (e) => {
     setUserReg((old) => ({
       ...old,
-      interest: [...userReg.interest, userInterest],
+      interests: [...userReg.interests, userInterest],
     }));
     interestInput.current.value = "";
   };
@@ -99,23 +153,26 @@ const EditProfile = () => {
     setUserInterest(value);
     // console.log("value: ", value);
   };
-  ////////////////////////////////////////
+  //#endregion
+
+  /////////////////UserLanguage///////////////////////
+  //#region
   const [userLang, setUserLang] = useState("");
   const LangInput = useRef();
 
   const handleDeleteLang = (index) => {
-    const newArray = [...userReg.langs];
+    const newArray = [...userReg.language];
     newArray.splice(index, 1);
     setUserReg((old) => ({
       ...old,
-      langs: newArray,
+      language: newArray,
     }));
   };
 
   const handleAddLang = (e) => {
     setUserReg((old) => ({
       ...old,
-      langs: [...userReg.langs, userLang],
+      language: [...userReg.language, userLang],
     }));
     LangInput.current.value = "";
   };
@@ -125,23 +182,26 @@ const EditProfile = () => {
     setUserLang(value);
     // console.log("value: ", value);
   };
-  ////////////////////////////////////////
+  //#endregion
+
+  ////////////////////UserComputerSkill////////////////////
+  //#region
   const [userComputerExp, setUserComputerExp] = useState("");
   const ComputerExpInput = useRef();
 
   const handleDeleteComputerExp = (index) => {
-    const newArray = [...userReg.computerExps];
+    const newArray = [...userReg.experiences];
     newArray.splice(index, 1);
     setUserReg((old) => ({
       ...old,
-      computerExps: newArray,
+      experiences: newArray,
     }));
   };
 
   const handleAddComputerExp = (e) => {
     setUserReg((old) => ({
       ...old,
-      computerExps: [...userReg.computerExps, userComputerExp],
+      experiences: [...userReg.experiences, userComputerExp],
     }));
     ComputerExpInput.current.value = "";
   };
@@ -151,47 +211,68 @@ const EditProfile = () => {
     setUserComputerExp(value);
     // console.log("value: ", value);
   };
-  ////////////////////////////////////////
+  //#endregion
+  //#endregion
+  //////////////////////////////////////////////////////////////////////////////
 
   return (
     <>
-      <h1 style={{ color: "var(--text-main-color)" }}>Edit Profile</h1>
+      {/* Header Title */}
+      <div className="d-flex align-items-center gap-4">
+        <Link
+          to={"/profile"}
+          onClick={(e) => {
+            navigate(-1);
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faCircleArrowLeft}
+            fontSize={27}
+            style={{
+              color: "var(--text-main-color)",
+              marginBottom: "7px",
+            }}
+          />
+        </Link>
+        <h1 style={{ color: "var(--text-main-color)" }}>Edit Profile</h1>
+      </div>
       <hr />
       <div className="d-flex flex-column justify-content-center align-items-center">
-        <div className="row gap-5">
+        {/* Pictures */}
+        <div className="row">
           <fieldset className="col">
-            <label htmlFor="profilePic">
+            <label htmlFor="profile_photo">
               <img
                 src="https://github.com/mdo.png"
-                alt="profile"
-                className="rounded-circle"
-                style={{ width: "200px", cursor: "pointer" }}
+                alt="profile_photo"
+                className="rounded-circle img-fluid"
+                style={{ maxHeight: "200px", cursor: "pointer" }}
               />
             </label>
             <input
               type="file"
               hidden
-              name="profilePic"
+              name="profile_photo"
               onChange={(e) => handleChange(e)}
-              id="profilePic"
+              id="profile_photo"
               accept=".png, .jpg, .jpeg"
             />
           </fieldset>
           <fieldset className="col">
-            <label htmlFor="coverPic" style={{ curser: "pointer" }}>
+            <label htmlFor="profile_cover" style={{ curser: "pointer" }}>
               <img
                 src="https://github.com/mdo.png"
                 alt="profile"
-                className="rounded-circle"
-                style={{ width: "200px", cursor: "pointer" }}
+                className="rounded-circle img-fluid"
+                style={{ maxHeight: "200px", cursor: "pointer" }}
               />
             </label>
             <input
               type="file"
               hidden
-              name="coverPic"
+              name="profile_cover"
               onChange={(e) => handleChange(e)}
-              id="coverPic"
+              id="profile_cover"
               accept=".png, .jpg, .jpeg"
             />
           </fieldset>
@@ -203,16 +284,17 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="FirstName"
+              id="first_name"
               placeholder="john Doe"
+              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="firstName"
+              name="first_name"
               onChange={(e) => handleChange(e)}
             />
             <label
-              htmlFor="FirstName"
+              htmlFor="first_name"
               style={{ color: "var(--text-main-color)" }}
             >
               First Name
@@ -223,16 +305,17 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="SecondName"
+              id="last_name"
               placeholder="john Doe"
+              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="lastName"
+              name="last_name"
               onChange={(e) => handleChange(e)}
             />
             <label
-              htmlFor="SecondName"
+              htmlFor="last_name"
               style={{ color: "var(--text-main-color)" }}
             >
               Second Name
@@ -243,33 +326,34 @@ const EditProfile = () => {
             <input
               type="number"
               className="form-control rounded-5"
-              id="Age"
-              placeholder="0123456879"
+              id="age"
+              placeholder="age"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="mobileNum"
+              name="age"
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="Age" style={{ color: "var(--text-main-color)" }}>
+            <label htmlFor="age" style={{ color: "var(--text-main-color)" }}>
               Age
             </label>
           </div>
-          {/* Mobile */}
+          {/* Phone Number */}
           <div className="form-floating my-3">
             <input
               type="number"
               className="form-control rounded-5"
-              id="Mobile"
+              id="phone"
+              required
               placeholder="0123456879"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="mobileNum"
+              name="phone"
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="Mobile" style={{ color: "var(--text-main-color)" }}>
-              Mobile Number
+            <label htmlFor="phone" style={{ color: "var(--text-main-color)" }}>
+              Phone Number
             </label>
           </div>
           {/* Email */}
@@ -277,7 +361,8 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="Email"
+              id="email"
+              required
               placeholder="example@email.com"
               style={{
                 bordercolor: "var(--text-main-color)",
@@ -285,7 +370,7 @@ const EditProfile = () => {
               name="email"
               onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="Email" style={{ color: "var(--text-main-color)" }}>
+            <label htmlFor="email" style={{ color: "var(--text-main-color)" }}>
               Email
             </label>
           </div>
@@ -312,6 +397,7 @@ const EditProfile = () => {
             <select
               className="form-select rounded-5"
               id="Governorate"
+              required
               aria-label="Floating label select example"
               style={{
                 bordercolor: "var(--text-main-color)",
@@ -347,7 +433,7 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="Address"
+              id="address"
               placeholder="Cairo"
               style={{
                 bordercolor: "var(--text-main-color)",
@@ -356,7 +442,7 @@ const EditProfile = () => {
               onChange={(e) => handleChange(e)}
             />
             <label
-              htmlFor="Address"
+              htmlFor="address"
               style={{ color: "var(--text-main-color)" }}
             >
               Home Address
@@ -398,23 +484,22 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* Cert Input */}
+          {/* Certifications Input */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
-              id="Certifications"
-              placeholder="Certifications"
+              id="certifications"
+              placeholder="certifications"
               ref={certInput}
               style={{
                 bordercolor: "var(--text-main-color)",
-                cursor: "pointer",
               }}
-              name="Certifications"
+              name="certifications"
               onChange={(event) => handleChangeCert(event)}
             />
             <label
-              htmlFor="Certifications"
+              htmlFor="certifications"
               style={{ color: "var(--text-main-color)" }}
             >
               Certifications
@@ -472,16 +557,16 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="skill"
-              placeholder="skill"
+              id="skills"
+              placeholder="skills"
               ref={skillInput}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="skill"
+              name="skills"
               onChange={(event) => handleChangeSkill(event)}
             />
-            <label htmlFor="skill" style={{ color: "var(--text-main-color)" }}>
+            <label htmlFor="skills" style={{ color: "var(--text-main-color)" }}>
               Skills
             </label>
             <div
@@ -499,8 +584,8 @@ const EditProfile = () => {
           {/*  */}
           {/* /////////////////////////// */}
           {/* /////////////////////////// */}
-          {/* interest */}
-          {userReg.interest.map((item, index) => (
+          {/* interests */}
+          {userReg.interests.map((item, index) => (
             <div className="form-floating my-3" key={index}>
               <input
                 type="text"
@@ -538,17 +623,17 @@ const EditProfile = () => {
             <input
               type="text"
               className="form-control rounded-5"
-              id="interest"
-              placeholder="interest"
+              id="interests"
+              placeholder="interests"
               ref={interestInput}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="interest"
+              name="interests"
               onChange={(event) => handleChangeInterest(event)}
             />
             <label
-              htmlFor="interest"
+              htmlFor="interests"
               style={{ color: "var(--text-main-color)" }}
             >
               Interests
@@ -568,8 +653,8 @@ const EditProfile = () => {
           {/*  */}
           {/* /////////////////////////// */}
           {/* /////////////////////////// */}
-          {/* Lang */}
-          {userReg.langs.map((item, index) => (
+          {/* Languages */}
+          {userReg.language.map((item, index) => (
             <div className="form-floating my-3" key={index}>
               <input
                 type="text"
@@ -599,13 +684,13 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* Lang Input */}
+          {/* Language Input */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
-              id="Lang"
-              placeholder="Lang"
+              id="language"
+              placeholder="language"
               ref={LangInput}
               style={{
                 bordercolor: "var(--text-main-color)",
@@ -614,7 +699,7 @@ const EditProfile = () => {
               onChange={(event) => handleChangeLang(event)}
             />
             <label htmlFor="Lang" style={{ color: "var(--text-main-color)" }}>
-              Langs
+              Language
             </label>
             <div
               className="position-absolute"
@@ -631,8 +716,8 @@ const EditProfile = () => {
           {/*  */}
           {/* /////////////////////////// */}
           {/* /////////////////////////// */}
-          {/* ComputerExp */}
-          {userReg.computerExps.map((item, index) => (
+          {/* Computer Experiences */}
+          {userReg.experiences.map((item, index) => (
             <div className="form-floating my-3" key={index}>
               <input
                 type="text"
@@ -665,22 +750,22 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* ComputerExp Input */}
+          {/* Computer Experience Input */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
-              id="ComputerExp"
-              placeholder="ComputerExp"
+              id="experiences"
+              placeholder="Computer Experience"
               ref={ComputerExpInput}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="ComputerExp"
+              name="experiences"
               onChange={(event) => handleChangeComputerExp(event)}
             />
             <label
-              htmlFor="ComputerExp"
+              htmlFor="experiences"
               style={{ color: "var(--text-main-color)" }}
             >
               ComputerExps
@@ -703,12 +788,12 @@ const EditProfile = () => {
             <select
               className="form-select rounded-5"
               id="university"
-              aria-label="Floating label select example"
+              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               defaultValue={""}
-              name="university"
+              name="profile_university_id"
               onChange={(e) => handleChange(e)}
             >
               <option
@@ -716,19 +801,22 @@ const EditProfile = () => {
                 disabled
                 style={{ color: "var(--text-main-color)" }}
               >
-                Choose a university
+                Choose a University
               </option>
-              <option
-                value={"Cairo"}
-                style={{ color: "var(--text-main-color)" }}
-              >
+              <option value={"5"} style={{ color: "var(--text-main-color)" }}>
                 Cairo
               </option>
-              <option
-                value={"Helwan"}
-                style={{ color: "var(--text-main-color)" }}
-              >
+              <option value={"6"} style={{ color: "var(--text-main-color)" }}>
                 Helwan
+              </option>
+              <option value={"7"} style={{ color: "var(--text-main-color)" }}>
+                Ain Shams
+              </option>
+              <option value={"8"} style={{ color: "var(--text-main-color)" }}>
+                AUC
+              </option>
+              <option value={"9"} style={{ color: "var(--text-main-color)" }}>
+                GUC
               </option>
             </select>
             <label htmlFor="university">University</label>
@@ -738,12 +826,12 @@ const EditProfile = () => {
             <select
               className="form-select rounded-5"
               id="Collage"
-              aria-label="Floating label select example"
+              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               defaultValue={""}
-              name="Collage"
+              name="collage"
               onChange={(e) => handleChange(e)}
             >
               <option
@@ -753,36 +841,39 @@ const EditProfile = () => {
               >
                 Choose a Collage
               </option>
-              <option
-                value={"Cairo"}
-                style={{ color: "var(--text-main-color)" }}
-              >
+              <option value={"5"} style={{ color: "var(--text-main-color)" }}>
                 Cairo
               </option>
-              <option
-                value={"Helwan"}
-                style={{ color: "var(--text-main-color)" }}
-              >
+              <option value={"6"} style={{ color: "var(--text-main-color)" }}>
                 Helwan
+              </option>
+              <option value={"7"} style={{ color: "var(--text-main-color)" }}>
+                Ain Shams
+              </option>
+              <option value={"8"} style={{ color: "var(--text-main-color)" }}>
+                AUC
+              </option>
+              <option value={"9"} style={{ color: "var(--text-main-color)" }}>
+                GUC
               </option>
             </select>
             <label htmlFor="university">Collage</label>
           </div>
         </div>
-          <Link
-            // to={"/login"}
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-            style={{
-              backgroundColor: "var(--main-color)",
-              height: "100px",
-              width: "100px",
-            }}
-            className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-          >
-            Confirm
-          </Link>
+        <Link
+          // to={"/login"}
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+          style={{
+            backgroundColor: "var(--main-color)",
+            height: "100px",
+            width: "100px",
+          }}
+          className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+        >
+          Confirm
+        </Link>
       </div>
     </>
   );

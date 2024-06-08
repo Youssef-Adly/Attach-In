@@ -11,7 +11,7 @@ const CoursesPage = () => {
   const [t] = useTranslation();
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTc1Mzk1NzUsImV4cCI6MTcyMDEzMTU3NSwibmJmIjoxNzE3NTM5NTc1LCJqdGkiOiJBYTJ3aWlCTEloSXVSWTB3Iiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.eoO7JxCg1_aVD1RVPM5BubWnU3r7Vr2bhi7bOj23YyI";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTc4NjM2MzksImV4cCI6MTcyMDQ1NTYzOSwibmJmIjoxNzE3ODYzNjM5LCJqdGkiOiJMNGxoZkVlbFlNcE1pZmtUIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.kiMVSehcTiVAoNXUSQNwl-R65DnxYjFyYpr0hDLV9bk";
 
   useEffect(() => {
     axios
@@ -20,7 +20,7 @@ const CoursesPage = () => {
       })
       .then((res) => {
         setCourses(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       });
   }, []);
 

@@ -18,6 +18,23 @@ export const registerAsStudent = createAsyncThunk(
   }
 );
 
+export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+  try {
+    const res = await axios.post(baseURL + "/login", {
+      ...user,
+      language: "en",
+      version: "231",
+      platform: "Ios",
+      device_id: "1231",
+    });
+    const data = await res.data;
+    return data;
+  } catch (err) {
+    // console.log("err: ", err);
+    return thunkAPI.rejectWithValue(err.response.data.errors);
+  }
+});
+
 // export const startLogoutTimer = () => (dispatch) => {
 //   setTimeout(() => {
 //     localStorage.removeItem("token");

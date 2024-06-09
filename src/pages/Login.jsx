@@ -86,8 +86,8 @@ const Login = () => {
             {t("Login")}
           </Link>
         </div>
-        {/*  */}
-        <div
+        {/* Login Form */}
+        <form
           className={`my-4 col-10 flex-column flex-lg-row justify-content-center align-items-center  gap-sm-5 gap-3 ${
             login ? "d-flex" : "d-none"
           }`}
@@ -148,7 +148,7 @@ const Login = () => {
           >
             Login
           </Link>
-        </div>
+        </form>
         <div
           className="col-12 d-none d-lg-block g-0 mt-5 rounded-2 "
           style={{ backgroundColor: "var(--sec-color)" }}

@@ -5,3 +5,6 @@
 .hoverTwo:hover {
   transform: translate(0, -5px);
 }
+.regbtn:disabled {
+  background-color: #20242d !important;
+}

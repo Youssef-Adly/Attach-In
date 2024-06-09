@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import Suspention from "./Components/Suspention";
 // import LoadingSuspese from "./Components/LoadingSuspense";
 // import Loading from "./Components/Loading";
-import Suspention from "./Components/Suspention";
 // Lazy Loadin Routes
 const CompanyPage = lazy(() => import("./pages/CompanyPage"));
 const UniversitySchedule = lazy(() => import("./pages/UniversitySchedule"));

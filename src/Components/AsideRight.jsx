@@ -41,7 +41,7 @@ const AsideRight = () => {
         </div>
       </Link>
       <span className="fs-4 text-light">Christina Waguih</span>
-      <div data-bs-dismiss="offcanvas">
+      <div data-bs-dismiss="offcanvas" style={{ width: "fit-content" }}>
         <Link
           to="/profile"
           className="text-decoration-none text-light listItem"

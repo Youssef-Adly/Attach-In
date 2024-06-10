@@ -4,7 +4,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--main-color);
+  /* background-color: var(--main-color); */
+  background-color: #eeeeee63;
+  opacity: 0.5;
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -16,7 +18,7 @@
   border-radius: 50%;
   border: 10px solid #ddd;
   border-top-color: var(--pink-color);
-  animation: loading .5s linear infinite;
+  animation: loading 0.5s linear infinite;
 }
 @keyframes loading {
   to {

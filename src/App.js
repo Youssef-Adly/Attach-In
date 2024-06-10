@@ -1,18 +1,16 @@
 import React, { Suspense, lazy, useEffect } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./i18n";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  // useLocation,
-} from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
 import Suspention from "./Components/Suspention";
 // import LoadingSuspese from "./Components/LoadingSuspense";
 // import Loading from "./Components/Loading";
+/////////////////////////////////
 // Lazy Loadin Routes
+//#region
 const CompanyPage = lazy(() => import("./pages/CompanyPage"));
 const UniversitySchedule = lazy(() => import("./pages/UniversitySchedule"));
 const UniversityNews = lazy(() => import("./pages/UniversityNews"));
@@ -42,6 +40,8 @@ const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
+//#endregion
+/////////////////////////////////
 
 function App() {
   const root = document.documentElement;

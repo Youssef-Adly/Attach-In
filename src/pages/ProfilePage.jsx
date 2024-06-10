@@ -1,26 +1,52 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
+  const user = useSelector((state) => state.Auth.user);
+  console.log("user: ", user);
+  console.log("skills: ", user.skills);
+  console.log("certification: ", user.certification);
+  const baseURL = "https://attachin.com/";
+
   return (
     <>
       <main>
         {/* banner Cover */}
-        <div className="col-12">
-          <img
-            src="https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
+        <div
+          className="col-12 rounded-5 shadow-lg bannerCover"
+          style={{
+            background: user.profile_cover
+              ? `url(${
+                  baseURL + user.profile_cover
+                }) no-repeat right center / cover`
+              : "url(/banner.jpg) no-repeat right center / cover",
+          }}
+        >
+          {/* <img
+            src={
+              user.profile_cover
+                ? `${baseURL + user.profile_cover}`
+                : "https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
+            }
+            // src="https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
             className="rounded-5 shadow-lg bannerCover"
             style={{ width: "100%" }}
             alt="cover"
-          />
+          /> */}
         </div>
 
         {/* Profile Picture With Name and Icons */}
         <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
             <img
-              src="https://github.com/mdo.png"
+              // src="https://github.com/mdo.png"
+              src={
+                user.profile_photo
+                  ? `${baseURL + user.profile_photo}`
+                  : "/profile.png"
+              }
               alt="profile"
               className="col img-fluid rounded-circle shadow-lg profilePic"
               style={{ transform: "translateY(-50%)" }}
@@ -31,7 +57,7 @@ const ProfilePage = () => {
             className="mt-2 mt-sm-4 col-4 col-sm-2 col-md-4"
             style={{ color: "var(--text-main-color)" }}
           >
-            Christina Waguih
+            {user.full_name || "Christina Waguih"}
           </h3>
           {/*  */}
           <div className="mt-4 col-4 ms-auto me-sm-3">

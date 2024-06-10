@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import HomeLayout from "../Components/HomeLayout";
 import Post from "../Components/Post";
 import AddPost from "../Components/AddPost";
@@ -14,9 +14,9 @@ const HomePage = () => {
 
   useEffect(() => {
     axios.get(baseURL + "getAllHomePosts?limit=" + limit).then((res) => {
-      // console.log(res.data.data);
+      console.log(res.data.data);
       setPosts(res.data.data);
-      // setFetching(false);
+      setFetching(false);
     });
   }, [limit]);
 
@@ -28,8 +28,8 @@ const HomePage = () => {
             {/* Add Post */}
             <AddPost />
             {/* ============== */}
-            {posts.map((post, idx) => (
-              <Post {...post} key={uuid()} />
+            {posts.map((post, postIndex) => (
+              <Post {...post} postState={[postIndex, setPosts]} key={uuid()} />
             ))}
             {!fetching ? (
               <button

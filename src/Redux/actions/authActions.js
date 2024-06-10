@@ -35,6 +35,20 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (user, thunkAPI) => {
+    try {
+      const res = await axios.post(baseURL + "/logout", user?.token);
+      const data = await res.data;
+      return data;
+    } catch (err) {
+      // console.log("err: ", err);
+      return thunkAPI.rejectWithValue(err.response.data.errors);
+    }
+  }
+);
+
 // export const startLogoutTimer = () => (dispatch) => {
 //   setTimeout(() => {
 //     localStorage.removeItem("token");

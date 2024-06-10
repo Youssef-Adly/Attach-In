@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, registerAsStudent } from "../actions/authActions";
+import { login, logout, registerAsStudent } from "../actions/authActions";
 
 const initialState = {
   user: null,
@@ -18,6 +18,8 @@ export const AuthSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    ////////////////////////////////////////////////
+    // Register
     builder
       .addCase(registerAsStudent.fulfilled, (state, action) => {
         let user = {
@@ -41,6 +43,8 @@ export const AuthSlice = createSlice({
         // console.log("action.payload: ", action);
         state.error = action.payload;
       });
+    ////////////////////////////////////////////////
+    // Login
     builder
       .addCase(login.fulfilled, (state, action) => {
         let user = {
@@ -52,7 +56,7 @@ export const AuthSlice = createSlice({
           token: action.payload.data.token,
           collage: action.payload.data.collage,
         };
-        console.log("user ", {
+        console.log("user Login : ", {
           ...user,
           token: action.payload.data.token,
           collage: action.payload.data.collage,
@@ -63,6 +67,19 @@ export const AuthSlice = createSlice({
         state.user = null;
         // console.log("action.payload: ", action);
         state.error = action.payload;
+      });
+    ////////////////////////////////////////////////
+    // Logout
+    builder
+      .addCase(logout.fulfilled, (state, action) => {
+        state.user = null;
+        state.error = null;
+        console.log("logout: ", action.payload);
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.user = null;
+        state.error = action.payload;
+        // console.log("action.payload: ", action);
       });
   },
 });

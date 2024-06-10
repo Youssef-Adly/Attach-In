@@ -11,7 +11,7 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAsStudent } from "../Redux/actions/authActions";
-import { setAuth } from "../Redux/slices/AuthSlice";
+// import { setAuth } from "../Redux/slices/AuthSlice";
 
 // yup Magic Here
 //#region

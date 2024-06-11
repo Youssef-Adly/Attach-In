@@ -14,10 +14,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 
 const Aside = () => {
+  const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
+  const user = useSelector((state) => state.Auth.user);
 
   return (
     <div
@@ -32,12 +35,15 @@ const Aside = () => {
         <div className="avatar avatar-story me-2">
           <img
             className="avatar-img rounded-circle"
-            src="https://github.com/mdo.png"
+            src={
+              user.profile_photo ? baseURL + user.profile_photo : "/profile.png"
+            }
+            // src="https://github.com/mdo.png"
             alt=""
           />
         </div>
       </Link>
-      <span className="fs-4">Christina Waguih</span>
+      <span className="fs-4">{user.full_name}</span>
       <Link
         to="/profile"
         className="linkList text-decoration-none"

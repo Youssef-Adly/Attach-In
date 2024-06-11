@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   faBookmark,
@@ -10,8 +10,43 @@ import {
   faPenToSquare,
   // faVideoCamera,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
-const AddPost = () => {
+const AddPost = ({ setPosts }) => {
+  const baseURL = "https://attachin.com/";
+  const user = useSelector((state) => state.Auth.user);
+  const postBox = useRef();
+
+  const addPostWithoutImage = async (e) => {
+    e.preventDefault();
+    const postValue = postBox.current.value;
+    if (postValue.trim().length > 0) {
+      await axios
+        .post(
+          "https://attachin.com/api/addUserPost",
+          { title: postValue },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data.data);
+          postBox.current.value = "";
+          postBox.current.rows = 2;
+          setPosts((old) => [
+            { user, comments: [], lovers: [], ...res.data.data },
+            ...old,
+          ]);
+        });
+    } else {
+      postBox.current.rows = postBox.current.value.split("\n").length;
+      return;
+    }
+  };
+
   return (
     <div className="card card-body rounded-5">
       <div className="d-flex mb-3">
@@ -20,8 +55,14 @@ const AddPost = () => {
           <Link to="">
             <img
               className="avatar-img rounded-circle"
-              src="https://github.com/mdo.png"
-              alt=""
+              src={
+                user.profile_photo
+                  ? baseURL + user.profile_photo
+                  : "/profile.png"
+              }
+              // src="https://github.com/mdo.png"
+              alt={user.full_name}
+              title={user.full_name}
             />
           </Link>
         </div>
@@ -33,8 +74,26 @@ const AddPost = () => {
             data-autoresize
             placeholder="Share your thoughts..."
             defaultValue={""}
+            ref={postBox}
+            onKeyUp={(e) => {
+              // console.log(postBox.current.value.split("\n").length);
+              postBox.current.rows =
+                postBox.current.value.split("\n").length + 1;
+              if (e.key === "Enter" && !e.shiftKey) {
+                addPostWithoutImage(e);
+              }
+            }}
           />
         </form>
+        <li className="nav-item list-unstyled mb-auto ms-3">
+          <button
+            onClick={(e) => addPostWithoutImage(e)}
+            type="button"
+            className="btn btn-outline-success"
+          >
+            Post
+          </button>
+        </li>
       </div>
       {/* Share feed toolbar START */}
       <ul className="nav nav-pills nav-stack small justify-content-end fw-normal">

@@ -14,14 +14,21 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { setAuth } from "../Redux/slices/AuthSlice";
 
 const Aside = () => {
   const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
   const user = useSelector((state) => state.Auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const logout = (e) => {
+    navigate("/");
+    dispatch(setAuth(null));
+  };
   return (
     <div
       className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary"
@@ -213,6 +220,7 @@ const Aside = () => {
           <NavLink
             to=""
             className="nav-link link-body-emphasis"
+            onClick={(e) => logout(e)}
             style={({ isActive, isPending, isTransitioning }) => {
               return {
                 backgroundColor: isActive ? "var(--sec-color)" : "unset",

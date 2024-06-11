@@ -8,8 +8,10 @@ import "./HomeLayout.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
+// Import React FilePond
+import { FilePond } from "react-filepond";
 
-const HomeLayout = ({ children }) => {
+const HomeLayout = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     document.documentElement.scrollTo(0, 0);
@@ -19,12 +21,13 @@ const HomeLayout = ({ children }) => {
   const baseURL = "https://attachin.com/";
   const postBox2 = useRef();
   const user = useSelector((state) => state.Auth.user);
-  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const getImage = (e) => {
-    // console.log(e.target.files[0]);
-    setImage(e.target.files[0]);
-  };
+
+  const [files, setFiles] = useState([]);
+  useEffect(() => {
+    // console.log("files: ", files);
+    console.log(files[0]?.file);
+  }, [files]);
 
   const addPostWithImage = async (e) => {
     e.preventDefault();
@@ -33,8 +36,8 @@ const HomeLayout = ({ children }) => {
       const formData = new FormData();
       formData.append("title", postValue); // Title data
 
-      if (image) {
-        formData.append("image", image); // Image data
+      if (files[0]) {
+        formData.append("image", files[0]?.file); // Image data
       }
       setLoading(true);
       await axios
@@ -50,6 +53,9 @@ const HomeLayout = ({ children }) => {
           //   postBox2.current.value = "";
           //   postBox2.current.rows = 2;
           // }
+          window.location.reload();
+        })
+        .catch((err) => {
           window.location.reload();
         });
       setTimeout(() => {
@@ -448,26 +454,19 @@ const HomeLayout = ({ children }) => {
                 </div>
                 {/* Dropzone photo START */}
                 <div>
-                  <label className="form-label">Upload attachment</label>
-                  {/* <div
-                  className="dropzone dropzone-default card shadow-none dz-clickable"
-                  data-dropzone='{"maxFiles":2}'
-                >
-                  <div className="dz-message">
-                    <i className="bi bi-images display-3" />
-                    <p>Drag here or click to upload photo.</p>
-                  </div>
-                </div> */}
-                  <div>
-                    <label htmlFor="formFileLg" className="form-label">
-                      Drag here or click to upload photo
-                    </label>
-                    <input
-                      className="form-control form-control-lg"
-                      id="formFileLg"
-                      type="file"
-                      accept="image/png, image/jpeg, image/gif"
-                      onChange={(e) => getImage(e)}
+                  <label className="form-label text-muted">
+                    Upload Picture...
+                  </label>
+                  <div className="rounded-5">
+                    <FilePond
+                      files={files}
+                      onupdatefiles={setFiles}
+                      acceptedFileTypes={["image/*"]}
+                      allowReorder={true}
+                      credits={false}
+                      allowMultiple={true}
+                      name="files" /* sets the file input name, it's filepond by default */
+                      labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                     />
                   </div>
                 </div>

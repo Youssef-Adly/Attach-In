@@ -371,8 +371,13 @@ const Post = ({
               className="form-control pe-5"
               ref={commentBox}
               rows={1}
-              placeholder="Add a comment..."
+              placeholder={
+                turn_of_comments !== "0"
+                  ? "Comments Turned Off By Auther"
+                  : "Add a comment..."
+              }
               defaultValue={""}
+              disabled={turn_of_comments !== "0"}
               onKeyUp={(e) => {
                 console.log(commentBox.current.value.split("\n").length);
                 commentBox.current.rows =

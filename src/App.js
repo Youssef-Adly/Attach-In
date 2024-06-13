@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import PrivateRouteLogged from "./utils/isNotLoggedGuard";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Suspention from "./Components/Suspention";
@@ -12,7 +13,9 @@ import { registerPlugin } from "react-filepond";
 
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
+// Import the plugin styles
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import "filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css";
 
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
@@ -22,16 +25,18 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImageEdit from "filepond-plugin-image-edit";
 
-// Import the plugin styles
-import "filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css";
+// Import the plugin code
 import PrivateRoute from "./utils/IsLoggedGuard";
-import PrivateRouteLogged from "./utils/isNotLoggedGuard";
+import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
+import FilePondPluginImageResize from "filepond-plugin-image-resize";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
   FilePondPluginImagePreview,
-  FilePondPluginImageEdit
+  FilePondPluginImageEdit,
+  FilePondPluginImageResize,
+  FilePondPluginImageCrop
 );
 // import LoadingSuspese from "./Components/LoadingSuspense";
 // import Loading from "./Components/Loading";

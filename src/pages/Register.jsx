@@ -73,10 +73,10 @@ const Register = () => {
   const dispatch = useDispatch();
   // const apiErrors = useSelector((state) => state.Auth.error);
   const lang = useSelector((state) => state.lang.value);
-  const user = useSelector((state) => state.Auth.user);
+  // const user = useSelector((state) => state.Auth.user);
 
   // Resets User For Debuging
-  console.log("user: ", user);
+  // console.log("user: ", user);
   // dispatch(setAuth(null));
 
   const {
@@ -148,7 +148,7 @@ const Register = () => {
         backgroundColor: "var(--offWhite-color)",
         minHeight: "100vh",
       }}
-      className="d-flex flex-column position-relative "
+      className="d-flex flex-column position-relative"
     >
       <Link to={"/"} className="text-dark">
         <FontAwesomeIcon
@@ -402,16 +402,6 @@ const Register = () => {
             </label>
             <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
           </div>
-          {/* Extra Validation Messages From Api */}
-          {/* <div className="d-flex flex-column gap-1 justify-content-center align-items-center">
-            {FormErrors
-              ? FormErrors.map((err, idx) => (
-                  <ErrorMessage key={idx}>
-                    {Object.entries(err)[0][1]?.message}
-                  </ErrorMessage>
-                ))
-              : ""}
-          </div> */}
           {/* Submit */}
           {!loading ? (
             <button

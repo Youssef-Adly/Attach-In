@@ -21,7 +21,7 @@ const ProfilePage = () => {
               ? `url(${
                   baseURL + user.profile_cover
                 }) no-repeat right center / cover`
-              : "url(/banner.jpg) no-repeat right center / cover",
+              : "url(/banner.jpg) no-repeat right top / cover",
           }}
         >
           {/* <img
@@ -49,7 +49,7 @@ const ProfilePage = () => {
               }
               alt="profile"
               className="col img-fluid rounded-circle shadow-lg profilePic"
-              style={{ transform: "translateY(-50%)" }}
+              style={{ transform: "translateY(-50%)", objectFit: "cover" }}
             />
           </div>
           {/*  */}

@@ -464,8 +464,8 @@ const HomeLayout = () => {
                       acceptedFileTypes={["image/*"]}
                       allowReorder={true}
                       credits={false}
-                      allowMultiple={true}
                       name="files" /* sets the file input name, it's filepond by default */
+                      // allowMultiple={true}
                       labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
                     />
                   </div>

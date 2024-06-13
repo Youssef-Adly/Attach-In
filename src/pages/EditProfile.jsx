@@ -90,7 +90,7 @@ const EditProfile = () => {
       address: user.address,
       bio: user.bio || "",
       birthday: user.birthday || "",
-      governorate: user.governorate.id || "",
+      governorate: user.governorate?.id || "",
       language: "en",
     },
     resolver: yupResolver(schema),

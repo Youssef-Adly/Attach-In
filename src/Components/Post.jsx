@@ -108,17 +108,17 @@ const Post = ({
           for (let i = 0; i < old[postIndex].lovers.length; i++) {
             const element = old[postIndex].lovers[i];
             if (+element.user_id === +love.user_id) {
-              console.log("unlike");
+              // console.log("unlike");
               let state = old[postIndex].lovers.filter(
                 (el) => +el.user_id !== +love.user_id
               );
-              console.log(state);
+              // console.log(state);
               posts[postIndex].lovers = [...state];
               return [...posts];
             }
           }
           posts[postIndex].lovers = [...posts[postIndex].lovers, love];
-          console.log("like", old[postIndex].lovers);
+          // console.log("like", old[postIndex].lovers);
           return [...posts];
         });
       });

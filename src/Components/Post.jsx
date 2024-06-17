@@ -169,7 +169,7 @@ const Post = ({
           <div className="d-flex align-items-center">
             {/* Avatar */}
             <div className="avatar avatar-story me-2">
-              <Link to="">
+              <Link to={`/profile/${user_id}`}>
                 <img
                   className="avatar-img rounded-circle"
                   src={
@@ -185,7 +185,7 @@ const Post = ({
             <div>
               <div className="nav nav-divider">
                 <h6 className="nav-item card-title mb-0">
-                  <Link to="">{user.full_name}</Link>
+                  <Link to={`/profile/${user_id}`}>{user.full_name}</Link>
                 </h6>
                 {/* <span className="nav-item small"> 2hr</span> */}
               </div>
@@ -370,7 +370,7 @@ const Post = ({
               data-autoresize
               className="form-control pe-5"
               ref={commentBox}
-              rows={1}
+              rows={turn_of_comments === "0" ? 1 : 2}
               placeholder={
                 turn_of_comments !== "0"
                   ? "Comments Turned Off By Auther"
@@ -404,7 +404,7 @@ const Post = ({
                 <div className="d-flex position-relative">
                   {/* Avatar */}
                   <div className="avatar avatar-xs">
-                    <Link to="">
+                    <Link to={`/profile/${comment.user_id}`}>
                       <img
                         className="avatar-img rounded-circle"
                         src={
@@ -422,7 +422,10 @@ const Post = ({
                     <div className="rounded-start-top-0 p-3 rounded pb-0">
                       <div className="d-flex justify-content-between">
                         <h6 className="mb-1">
-                          <Link to=""> {comment.user.full_name} </Link>
+                          <Link to={`/profile/${comment.user_id}`}>
+                            {" "}
+                            {comment.user.full_name}{" "}
+                          </Link>
                         </h6>
                         <small className="ms-2">
                           {formatDateForPost(comment.created_at)}

@@ -10,7 +10,19 @@ export const registerAsStudent = createAsyncThunk(
     try {
       const res = await axios.post(baseURL + "/registerAsStudent", user);
       const data = await res.data;
-      return data;
+      // User Info Data
+      const userInfo = await axios.post(
+        baseURL + "/userInfo",
+        {
+          for_user_id: data.data.user.id,
+        },
+        {
+          headers: { Authorization: `Bearer ${data.data.token}` },
+        }
+      );
+      const userInfoData = await userInfo.data;
+      return { ...data, ...userInfoData.data };
+      // return data;
     } catch (err) {
       // console.log("err: ", err);
       return thunkAPI.rejectWithValue(err.response.data.errors);
@@ -28,7 +40,19 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       device_id: "1231",
     });
     const data = await res.data;
-    return data;
+    // User Info Data
+    const userInfo = await axios.post(
+      baseURL + "/userInfo",
+      {
+        for_user_id: data.data.user.id,
+      },
+      {
+        headers: { Authorization: `Bearer ${data.data.token}` },
+      }
+    );
+    const userInfoData = await userInfo.data;
+    // combine user Data
+    return { ...data, ...userInfoData.data };
   } catch (err) {
     // console.log("err: ", err);
     return thunkAPI.rejectWithValue(err.response.data.errors);

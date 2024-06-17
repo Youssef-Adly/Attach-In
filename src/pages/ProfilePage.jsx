@@ -2,18 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.Auth.user);
-  console.log("user: ", user);
-  console.log("skills: ", user.skills);
-  console.log("certification: ", user.certification);
   const baseURL = "https://attachin.com/";
   const profile = useRef();
   let [width, setWidth] = useState(null);
+  let [posts, setposts] = useState(null);
 
   useEffect(() => {
-    console.log(profile);
+    // console.log(profile);
     setWidth(profile.current.width);
     // profile.current.height = profile.current.width;
     // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
@@ -21,6 +20,14 @@ const ProfilePage = () => {
     // console.log("profile.current.width: ", profile.current.width);
     // console.log("profile.current.height: ", profile.current.height);
   }, [profile]);
+
+  useEffect(() => {
+    axios
+      .get("https://attachin.com/api/getAllHomePosts?user_id=" + user.id)
+      .then((res) => {
+        setposts(res.data.data);
+      });
+  }, [user.id]);
 
   return (
     <>
@@ -52,7 +59,7 @@ const ProfilePage = () => {
         {/* Profile Picture With Name and Icons */}
         <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
-            {console.log(profile.current?.width)}
+            {/* {console.log(profile.current?.width)} */}
             <img
               // src="https://github.com/mdo.png"
               ref={profile}
@@ -66,6 +73,8 @@ const ProfilePage = () => {
               style={{
                 transform: "translateY(-50%)",
                 objectFit: "cover",
+                // height: "55%",
+                // width: "100%",
                 height: `${width}px`,
                 width: `${width}px`,
               }}
@@ -76,7 +85,7 @@ const ProfilePage = () => {
             className="mt-2 mt-sm-4 col-4 col-sm-2 col-md-4"
             style={{ color: "var(--text-main-color)" }}
           >
-            {user.full_name || "Christina Waguih"}
+            {user.full_name}
           </h3>
           {/*  */}
           <div className="mt-4 col-4 ms-auto me-sm-3">
@@ -181,7 +190,7 @@ const ProfilePage = () => {
           <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
             Skills & certifications
           </p>
-          <Link to={""} className="nav-link col-4 col-sm-2">
+          <Link to={"/userExp/" + user.id} className="nav-link col-4 col-sm-2">
             <p
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
@@ -192,9 +201,13 @@ const ProfilePage = () => {
         </div>
 
         {/* Carosel #1 */}
-
-        <div id="carouselExampleIndicators" className="carousel slide mt-3">
-          <div
+        {/* {console.log(user)} */}
+        {(user.skills.length > 0) |
+        (user.certifications.length > 0) |
+        (user.experiences.length > 0) |
+        (user.interests.length > 0) ? (
+          <div id="carouselExampleIndicators" className="carousel slide mt-3">
+            {/* <div
             className="carousel-indicators"
             style={{ marginBottom: "-40px" }}
           >
@@ -213,174 +226,207 @@ const ProfilePage = () => {
               aria-label="Slide 2"
               className=" bg-black"
             />
-          </div>
-          <div className="carousel-inner">
-            {/*  */}
-            <div className="carousel-item active">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <div
-                  className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#98AFDB",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <img
-                    src="/cheerIcon2.svg"
-                    alt="cheerIcon2.svg"
-                    className="w-75"
-                  />
-                  <h2 className="text-center mt-2">Comunication Skills</h2>
-                </div>
-                {/* Card #2 */}
-                <div
-                  className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#F2969C",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <div className="position-absolute bottom-0">
-                    <svg
-                      width={40}
-                      height={60}
-                      viewBox="0 0 46 58"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
-                        fill="#F9B74C"
-                      />
-                      <path
-                        d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
-                        fill="#FFD25F"
-                      />
-                    </svg>
+          </div> */}
+            <div className="carousel-inner">
+              {/*  */}
+              {(user.skills.length > 0) | (user.certifications.length > 0) ? (
+                <div className="carousel-item active">
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {user.skills.slice(0, 1).map((skill) => (
+                      <div
+                        key={skill.id}
+                        className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                        style={{
+                          backgroundColor: "#98AFDB",
+                          width: "270px",
+                          height: "200px",
+                          borderRadius: "40%",
+                        }}
+                      >
+                        <img
+                          src="/cheerIcon2.svg"
+                          alt="cheerIcon2.svg"
+                          className="w-75"
+                        />
+                        <h2 className="text-center mt-2">{skill.title}</h2>
+                      </div>
+                    ))}
+                    {user.certifications.slice(0, 1).map((cert) => (
+                      <div
+                        key={cert.id}
+                        className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                        style={{
+                          backgroundColor: "#F2969C",
+                          width: "270px",
+                          height: "200px",
+                          borderRadius: "40%",
+                        }}
+                      >
+                        <div className="position-absolute bottom-0">
+                          <svg
+                            width={40}
+                            height={60}
+                            viewBox="0 0 46 58"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
+                              fill="#EE6F5C"
+                            />
+                            <path
+                              d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
+                              fill="#EE6F5C"
+                            />
+                            <path
+                              d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
+                              fill="#F9B74C"
+                            />
+                            <path
+                              d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
+                              fill="#FFD25F"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          className="bg-body-secondary d-flex align-items-center justify-content-center"
+                          style={{
+                            borderRadius: "40%",
+                            width: "90%",
+                            height: "90%",
+                          }}
+                        >
+                          <h3 className="text-center">{cert.title}</h3>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div
-                    className="bg-body-secondary d-flex align-items-center"
-                    style={{ borderRadius: "40%", width: "90%", height: "90%" }}
-                  >
-                    <h3 className="text-center">Photoshop Certification</h3>
+                </div>
+              ) : (
+                ""
+              )}
+              {/*  */}
+              {(user.interests.length > 0) | (user.experiences.length > 0) ? (
+                <div
+                  className={`carousel-item ${
+                    (user.interests.length > 0) | (user.experiences.length > 0)
+                      ? "active"
+                      : ""
+                  }`}
+                >
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {user.interests.slice(0, 1).map((skill) => (
+                      <div
+                        key={skill.id}
+                        className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                        style={{
+                          backgroundColor: "#98AFDB",
+                          width: "270px",
+                          height: "200px",
+                          borderRadius: "40%",
+                        }}
+                      >
+                        <img
+                          src="/cheerIcon2.svg"
+                          alt="cheerIcon2.svg"
+                          className="w-75"
+                        />
+                        <h2 className="text-center mt-2">{skill.title}</h2>
+                      </div>
+                    ))}
+                    {user.experiences.slice(0, 1).map((cert) => (
+                      <div
+                        key={cert.id}
+                        className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                        style={{
+                          backgroundColor: "#F2969C",
+                          width: "270px",
+                          height: "200px",
+                          borderRadius: "40%",
+                        }}
+                      >
+                        <div className="position-absolute bottom-0">
+                          <svg
+                            width={40}
+                            height={60}
+                            viewBox="0 0 46 58"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
+                              fill="#EE6F5C"
+                            />
+                            <path
+                              d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
+                              fill="#EE6F5C"
+                            />
+                            <path
+                              d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
+                              fill="#F9B74C"
+                            />
+                            <path
+                              d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
+                              fill="#FFD25F"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          className="bg-body-secondary d-flex align-items-center justify-content-center"
+                          style={{
+                            borderRadius: "40%",
+                            width: "90%",
+                            height: "90%",
+                          }}
+                        >
+                          <h3 className="text-center">{cert.title}</h3>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
+              ) : (
+                ""
+              )}
             </div>
-            {/*  */}
-            <div className="carousel-item">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <div
-                  className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#98AFDB",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <img
-                    src="cheerIcon2.svg"
-                    alt="cheerIcon2.svg"
-                    className="w-75"
-                  />
-                  <h2 className="text-center mt-2">Presentation Skills</h2>
-                </div>
-                {/* Card #2 */}
-                <div
-                  className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                  style={{
-                    backgroundColor: "#F2969C",
-                    width: "270px",
-                    height: "200px",
-                    borderRadius: "40%",
-                  }}
-                >
-                  <div className="position-absolute bottom-0">
-                    <svg
-                      width={40}
-                      height={60}
-                      viewBox="0 0 46 58"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
-                        fill="#EE6F5C"
-                      />
-                      <path
-                        d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
-                        fill="#F9B74C"
-                      />
-                      <path
-                        d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
-                        fill="#FFD25F"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    className="bg-body-secondary d-flex align-items-center"
-                    style={{ borderRadius: "40%", width: "90%", height: "90%" }}
-                  >
-                    <h3 className="text-center">After Effect Certification</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev"
+              style={
+                {
+                  // left: "35px",
+                }
+              }
+            >
+              <span
+                className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next"
+              style={
+                {
+                  // right: "35px",
+                }
+              }
+            >
+              <span
+                className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Next</span>
+            </button>
           </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev"
-            style={
-              {
-                // left: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next"
-            style={
-              {
-                // right: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+        ) : (
+          <div className="text-center display-3 pt-5">No Skills Yet</div>
+        )}
 
         <hr className="mt-5 w-75 m-auto" />
 
@@ -392,7 +438,10 @@ const ProfilePage = () => {
           >
             Posts
           </p>
-          <Link to={""} className="nav-link me-sm5 col-4 col-sm-2">
+          <Link
+            to={"/userPosts/" + user.id}
+            className="nav-link me-sm5 col-4 col-sm-2"
+          >
             <p
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
@@ -404,8 +453,9 @@ const ProfilePage = () => {
 
         {/* Carosel #2 */}
 
-        <div id="carouselExampleIndicators2" className="carousel slide mt-3">
-          <div
+        {posts?.length > 0 ? (
+          <div id="carouselExampleIndicators2" className="carousel slide mt-3">
+            {/* <div
             className="carousel-indicators"
             style={{ marginBottom: "-40px" }}
           >
@@ -424,170 +474,185 @@ const ProfilePage = () => {
               aria-label="Slide 2"
               className=" bg-black"
             />
-          </div>
-          <div className="carousel-inner">
-            {/*  */}
-            <div className="carousel-item active">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-                {/* Card #2 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-              </div>
+          </div> */}
+            <div className="carousel-inner">
+              {/*  */}
+              {posts?.length > 0 ? (
+                <div className="carousel-item active">
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {/* Card #1 */}
+                    <Link
+                      to={""}
+                      className="nav-link d-flex flex-column justify-content-center align-items-center"
+                      style={{ width: "270px", height: "200px" }}
+                    >
+                      <svg
+                        width={301}
+                        height={223}
+                        viewBox="0 0 301 223"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                          fill="#E3E2DC"
+                        />
+                        <path
+                          d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                          fill="#878787"
+                        />
+                      </svg>
+                      <h6
+                        className="text-center"
+                        style={{ color: "var(--text-main-color)" }}
+                      >
+                        {posts[0]?.title}
+                      </h6>
+                    </Link>
+                    {/* Card #2 */}
+                    {posts[1] && (
+                      <Link
+                        to={""}
+                        className="nav-link d-flex flex-column justify-content-center align-items-center"
+                        style={{ width: "270px", height: "200px" }}
+                      >
+                        <svg
+                          width={301}
+                          height={223}
+                          viewBox="0 0 301 223"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                            fill="#E3E2DC"
+                          />
+                          <path
+                            d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                            fill="#878787"
+                          />
+                        </svg>
+                        <h6
+                          className="text-center"
+                          style={{ color: "var(--text-main-color)" }}
+                        >
+                          {posts[1]?.title}
+                        </h6>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {/*  */}
+              {posts?.length > 2 ? (
+                <div className={`carousel-item`}>
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {/* Card #1 */}
+                    <Link
+                      to={""}
+                      className="nav-link d-flex flex-column justify-content-center align-items-center"
+                      style={{ width: "270px", height: "200px" }}
+                    >
+                      <svg
+                        width={301}
+                        height={223}
+                        viewBox="0 0 301 223"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                          fill="#E3E2DC"
+                        />
+                        <path
+                          d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                          fill="#878787"
+                        />
+                      </svg>
+                      <h6
+                        className="text-center"
+                        style={{ color: "var(--text-main-color)" }}
+                      >
+                        {posts[2]?.title}
+                      </h6>
+                    </Link>
+                    {/* Card #2 */}
+                    {posts[3] && (
+                      <Link
+                        to={""}
+                        className="nav-link d-flex flex-column justify-content-center align-items-center"
+                        style={{ width: "270px", height: "200px" }}
+                      >
+                        <svg
+                          width={301}
+                          height={223}
+                          viewBox="0 0 301 223"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                            fill="#E3E2DC"
+                          />
+                          <path
+                            d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                            fill="#878787"
+                          />
+                        </svg>
+                        <h6
+                          className="text-center"
+                          style={{ color: "var(--text-main-color)" }}
+                        >
+                          {posts[3]?.title}
+                        </h6>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            {/*  */}
-            <div className="carousel-item">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-                {/* Card #2 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-              </div>
-            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleIndicators2"
+              data-bs-slide="prev"
+              style={
+                {
+                  // left: "35px",
+                }
+              }
+            >
+              <span
+                className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleIndicators2"
+              data-bs-slide="next"
+              style={
+                {
+                  // right: "35px",
+                }
+              }
+            >
+              <span
+                className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Next</span>
+            </button>
           </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators2"
-            data-bs-slide="prev"
-            style={
-              {
-                // left: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators2"
-            data-bs-slide="next"
-            style={
-              {
-                // right: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+        ) : (
+          <div className="text-center display-3 pt-5">No Posts Yet</div>
+        )}
 
         <hr className="mt-5 w-75 m-auto" />
 

@@ -30,6 +30,9 @@ import PrivateRoute from "./utils/IsLoggedGuard";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import UserSkills from "./pages/UserSkills";
+import UserPosts from "./pages/UserPosts";
+import UserProfile from "./pages/UserProfile";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -149,6 +152,9 @@ function App() {
         { path: "university/posts", element: <UniversityNews /> },
         { path: "university/schedule", element: <UniversitySchedule /> },
         { path: "Subscription", element: <PricingPage /> },
+        { path: "userExp/:id", element: <UserSkills /> },
+        { path: "userPosts/:id", element: <UserPosts /> },
+        { path: "profile/:id", element: <UserProfile /> },
       ],
     },
     { path: "*", element: <NotFound /> },

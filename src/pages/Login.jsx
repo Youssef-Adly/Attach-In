@@ -52,10 +52,10 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleChange = (e) => {
-    setUserLogin((old) => ({ ...old, [e.target.name]: e.target.value }));
-    // console.log(userLogin);
-  };
+  // const handleChange = (e) => {
+  //   setUserLogin((old) => ({ ...old, [e.target.name]: e.target.value }));
+  //   // console.log(userLogin);
+  // };
 
   const handleLogin = (data) => {
     console.log("data: ", data);

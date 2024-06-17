@@ -179,32 +179,11 @@ const EditProfile = () => {
   // Handle Form
   //#region
   const [userReg, setUserReg] = useState({
-    certifications: [],
-    skills: [],
-    interests: [],
-    experiences: [],
+    certifications: user.certifications,
+    skills: user.skills,
+    interests: user.interests,
+    experiences: user.experiences,
   });
-
-  // function hasNonEmptyValues(obj, ...keys) {
-  //   // Check if all keys exist in the object
-  //   if (!keys.every((key) => key in obj)) {
-  //     return false;
-  //   }
-
-  //   // Check if all values for existing keys are not empty
-  //   return keys.every((key) => {
-  //     const value = obj[key];
-  //     return (
-  //       Boolean(value) &&
-  //       (typeof value !== "object" ||
-  //         (Array.isArray(value) && value.length > 0))
-  //     );
-  //   });
-  // }
-
-  // const handleChange = (e) => {
-  //   setUserReg((old) => ({ ...old, [e.target.name]: e.target.value }));
-  // };
 
   const submitForm = async (data) => {
     setLoading(true);
@@ -259,28 +238,59 @@ const EditProfile = () => {
   const [userCert, setUserCert] = useState("");
   const certInput = useRef();
 
-  const handleDeleteCert = (index) => {
-    const newArray = [...userReg.certifications];
-    newArray.splice(index, 1);
-    setUserReg((old) => ({
-      ...old,
-      certifications: newArray,
-    }));
+  const handleDeleteCert = async (index, id) => {
+    await axios
+      .post(
+        baseURL + "api/deleteUserCertification",
+        {
+          id: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then(() => {
+        const newArray = [...userReg.certifications];
+        newArray.splice(index, 1);
+        setUserReg((old) => ({
+          ...old,
+          certifications: newArray,
+        }));
+      })
+      .finally(() => {
+        dispatch(updateUserInfo(user));
+      });
   };
 
-  const handleAddCert = (e) => {
+  const handleAddCert = async (e) => {
+    await axios
+      .post(
+        baseURL + "api/addUserCertification",
+        {
+          title: userCert,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        dispatch(updateUserInfo(user));
+      });
+  };
+
+  useEffect(() => {
     setUserReg((old) => ({
       ...old,
-      certifications: [...userReg.certifications, userCert],
+      certifications: user.certifications,
     }));
     certInput.current.value = "";
-  };
+  }, [user.certifications]);
 
   const handleChangeCert = (event, index) => {
     let { value } = event.target;
     setUserCert(value);
-    // console.log("value: ", value);
   };
+
   //#endregion
 
   //////////////////// userSkill ////////////////////
@@ -288,28 +298,59 @@ const EditProfile = () => {
   const [userSkill, setUserSkill] = useState("");
   const skillInput = useRef();
 
-  const handleDeleteSkill = (index) => {
-    const newArray = [...userReg.skills];
-    newArray.splice(index, 1);
-    setUserReg((old) => ({
-      ...old,
-      skills: newArray,
-    }));
+  const handleDeleteSkill = async (index, id) => {
+    await axios
+      .post(
+        baseURL + "api/deleteUserSkill",
+        {
+          id: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        const newArray = [...userReg.skills];
+        newArray.splice(index, 1);
+        setUserReg((old) => ({
+          ...old,
+          skills: newArray,
+        }));
+      })
+      .finally(() => {
+        dispatch(updateUserInfo(user));
+      });
   };
 
-  const handleAddSkill = (e) => {
+  const handleAddSkill = async (e) => {
+    await axios
+      .post(
+        baseURL + "api/addUserSkill",
+        {
+          title: userSkill,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        dispatch(updateUserInfo(user));
+      });
+  };
+
+  useEffect(() => {
     setUserReg((old) => ({
       ...old,
-      skills: [...userReg.skills, userSkill],
+      skills: [...user.skills],
     }));
     skillInput.current.value = "";
-  };
+  }, [user.skills]);
 
   const handleChangeSkill = (event) => {
     let { value } = event.target;
     setUserSkill(value);
-    // console.log("value: ", value);
   };
+
   //#endregion
 
   /////////////////// userInterest /////////////////////
@@ -317,27 +358,57 @@ const EditProfile = () => {
   const [userInterest, setUserInterest] = useState("");
   const interestInput = useRef();
 
-  const handleDeleteInterest = (index) => {
-    const newArray = [...userReg.interests];
-    newArray.splice(index, 1);
-    setUserReg((old) => ({
-      ...old,
-      interests: newArray,
-    }));
+  const handleDeleteInterest = async (index, id) => {
+    await axios
+      .post(
+        baseURL + "api/deleteUserInterest",
+        {
+          id: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        const newArray = [...userReg.interests];
+        newArray.splice(index, 1);
+        setUserReg((old) => ({
+          ...old,
+          interests: newArray,
+        }));
+      })
+      .finally(() => {
+        dispatch(updateUserInfo(user));
+      });
   };
 
-  const handleAddInterest = (e) => {
+  const handleAddInterest = async (e) => {
+    await axios
+      .post(
+        baseURL + "api/addUserInterest",
+        {
+          title: userInterest,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        dispatch(updateUserInfo(user));
+      });
+  };
+
+  useEffect(() => {
     setUserReg((old) => ({
       ...old,
-      interests: [...userReg.interests, userInterest],
+      interests: [...user.interests],
     }));
     interestInput.current.value = "";
-  };
+  }, [user.interests]);
 
   const handleChangeInterest = (event) => {
     let { value } = event.target;
     setUserInterest(value);
-    // console.log("value: ", value);
   };
   //#endregion
 
@@ -346,29 +417,59 @@ const EditProfile = () => {
   const [userComputerExp, setUserComputerExp] = useState("");
   const ComputerExpInput = useRef();
 
-  const handleDeleteComputerExp = (index) => {
-    const newArray = [...userReg.experiences];
-    newArray.splice(index, 1);
-    setUserReg((old) => ({
-      ...old,
-      experiences: newArray,
-    }));
+  const handleDeleteComputerExp = async (index, id) => {
+    await axios
+      .post(
+        baseURL + "api/deleteUserExperience",
+        {
+          id: id,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        const newArray = [...userReg.experiences];
+        newArray.splice(index, 1);
+        setUserReg((old) => ({
+          ...old,
+          experiences: newArray,
+        }));
+      })
+      .finally((res) => {
+        dispatch(updateUserInfo(user));
+      });
   };
 
-  const handleAddComputerExp = (e) => {
+  const handleAddComputerExp = async (e) => {
+    await axios
+      .post(
+        baseURL + "api/addUserExperience",
+        {
+          title: userComputerExp,
+        },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        dispatch(updateUserInfo(user));
+      });
+  };
+
+  useEffect(() => {
     setUserReg((old) => ({
       ...old,
-      experiences: [...userReg.experiences, userComputerExp],
+      experiences: [...user.experiences],
     }));
     ComputerExpInput.current.value = "";
-  };
+  }, [user.experiences]);
 
   const handleChangeComputerExp = (event) => {
     let { value } = event.target;
     setUserComputerExp(value);
-    // console.log("value: ", value);
   };
-  //#endregion
+
   //#endregion
   //////////////////////////////////////////////////////////////////////////////
 
@@ -634,7 +735,7 @@ const EditProfile = () => {
                 className="form-control rounded-5"
                 id="Certificate"
                 // placeholder="Cairo"
-                value={item}
+                value={item.title}
                 disabled
                 style={{
                   bordercolor: "var(--text-main-color)",
@@ -655,7 +756,7 @@ const EditProfile = () => {
                   transform: "translate(-25px, -43px)",
                   cursor: "pointer",
                 }}
-                onClick={() => handleDeleteCert(index)}
+                onClick={() => handleDeleteCert(index, item.id)}
               >
                 <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
               </div>
@@ -700,7 +801,7 @@ const EditProfile = () => {
                 className="form-control rounded-5"
                 id="skills"
                 // placeholder="Cairo"
-                value={item}
+                value={item.title}
                 disabled
                 style={{
                   bordercolor: "var(--text-main-color)",
@@ -720,7 +821,7 @@ const EditProfile = () => {
                   transform: "translate(-25px, -43px)",
                   cursor: "pointer",
                 }}
-                onClick={() => handleDeleteSkill(index)}
+                onClick={() => handleDeleteSkill(index, item.id)}
               >
                 <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
               </div>
@@ -769,7 +870,7 @@ const EditProfile = () => {
                 className="form-control rounded-5"
                 id="interest"
                 // placeholder="Cairo"
-                value={item}
+                value={item.title}
                 disabled
                 style={{
                   bordercolor: "var(--text-main-color)",
@@ -789,7 +890,7 @@ const EditProfile = () => {
                   transform: "translate(-25px, -43px)",
                   cursor: "pointer",
                 }}
-                onClick={() => handleDeleteInterest(index)}
+                onClick={() => handleDeleteInterest(index, item.id)}
               >
                 <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
               </div>
@@ -822,7 +923,7 @@ const EditProfile = () => {
           {/*  */}
           {/* /////////////////////////// */}
           {/* /////////////////////////// */}
-          {/* Computer Experience Input */}
+          {/* User Experience Input */}
           <div className="form-floating my-3">
             <input
               type="text"
@@ -840,7 +941,7 @@ const EditProfile = () => {
               htmlFor="experiences"
               style={{ color: "var(--text-main-color)" }}
             >
-              ComputerExps
+              User Experiences
             </label>
             <div
               className="position-absolute"
@@ -854,7 +955,7 @@ const EditProfile = () => {
               <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
             </div>
           </div>
-          {/* Computer Experiences */}
+          {/* User Experiences */}
           {userReg.experiences.map((item, index) => (
             <div className="form-floating my-3" key={index}>
               <input
@@ -862,7 +963,7 @@ const EditProfile = () => {
                 className="form-control rounded-5"
                 id="ComputerExp"
                 // placeholder="Cairo"
-                value={item}
+                value={item.title}
                 disabled
                 style={{
                   bordercolor: "var(--text-main-color)",
@@ -873,7 +974,7 @@ const EditProfile = () => {
                 htmlFor="ComputerExp"
                 style={{ color: "var(--text-main-color)" }}
               >
-                ComputerExp #{index + 1}
+                User Experience #{index + 1}
               </label>
               <div
                 className="position-absolute"
@@ -882,7 +983,7 @@ const EditProfile = () => {
                   transform: "translate(-25px, -43px)",
                   cursor: "pointer",
                 }}
-                onClick={() => handleDeleteComputerExp(index)}
+                onClick={() => handleDeleteComputerExp(index, item.id)}
               >
                 <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
               </div>

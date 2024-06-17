@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import { useSelector } from "react-redux";
@@ -9,6 +9,18 @@ const ProfilePage = () => {
   console.log("skills: ", user.skills);
   console.log("certification: ", user.certification);
   const baseURL = "https://attachin.com/";
+  const profile = useRef();
+  let [width, setWidth] = useState(null);
+
+  useEffect(() => {
+    console.log(profile);
+    setWidth(profile.current.width);
+    // profile.current.height = profile.current.width;
+    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+    // console.log("profile.current.width: ", profile.current.width);
+    // console.log("profile.current.height: ", profile.current.height);
+  }, [profile]);
 
   return (
     <>
@@ -21,7 +33,7 @@ const ProfilePage = () => {
               ? `url(${
                   baseURL + user.profile_cover
                 }) no-repeat right center / cover`
-              : "url(/banner.jpg) no-repeat right center / cover",
+              : "url(/banner.jpg) no-repeat right top / cover",
           }}
         >
           {/* <img
@@ -40,8 +52,10 @@ const ProfilePage = () => {
         {/* Profile Picture With Name and Icons */}
         <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
+            {console.log(profile.current?.width)}
             <img
               // src="https://github.com/mdo.png"
+              ref={profile}
               src={
                 user.profile_photo
                   ? `${baseURL + user.profile_photo}`
@@ -49,7 +63,12 @@ const ProfilePage = () => {
               }
               alt="profile"
               className="col img-fluid rounded-circle shadow-lg profilePic"
-              style={{ transform: "translateY(-50%)" }}
+              style={{
+                transform: "translateY(-50%)",
+                objectFit: "cover",
+                height: `${width}px`,
+                width: `${width}px`,
+              }}
             />
           </div>
           {/*  */}

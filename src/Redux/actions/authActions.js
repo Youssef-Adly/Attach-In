@@ -39,11 +39,31 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (user, thunkAPI) => {
     try {
-      const res = await axios.post(baseURL + "/logout", user?.token);
+      const res = await axios.post(baseURL + "/logOut", user?.token);
       const data = await res.data;
       return data;
     } catch (err) {
       // console.log("err: ", err);
+      return thunkAPI.rejectWithValue(err.response.data.errors);
+    }
+  }
+);
+export const updateUserInfo = createAsyncThunk(
+  "auth/updateUserInfo",
+  async (user, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        baseURL + "/userInfo",
+        { for_user_id: user.id },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      );
+      const data = await res.data;
+      console.log("data: ", data);
+      return data;
+    } catch (err) {
+      console.log("err: ", err);
       return thunkAPI.rejectWithValue(err.response.data.errors);
     }
   }

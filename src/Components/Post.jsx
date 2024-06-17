@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -85,13 +85,24 @@ const Post = ({
   postState: [postIndex, setPosts],
 }) => {
   const baseURL = "https://attachin.com/";
+  const commentBox = useRef();
   const authUser = useSelector((state) => state.Auth.user);
   // console.log("authUser: ", authUser);
 
-  // change post lovers States
-  let loveToggle = (id) => {
-    axios
-      .post(
+  const [likes, setLikes] = useState(lovers.slice()); // Copy the likes array to avoid mutation
+
+  const [isLiked, setIsLiked] = useState(() => {
+    // Check if any like object has a userId property matching yourUserId
+    return likes.some((like) => like.user_id === authUser.id);
+  });
+
+  // Like Button
+  const handleLikeClick = async (id) => {
+    const newIsLiked = !isLiked;
+    const newLikes = [...likes]; // Create a copy to avoid mutation
+
+    try {
+      const response = await axios.post(
         "https://attachin.com/api/addUserPostLove",
         { post_id: id },
         {
@@ -99,29 +110,55 @@ const Post = ({
             Authorization: `Bearer ${authUser.token}`,
           },
         }
-      )
-      .then((res) => {
-        const love = res.data.data;
-        // console.log("love: ", love);
-        setPosts((old) => {
-          let posts = old;
-          for (let i = 0; i < old[postIndex].lovers.length; i++) {
-            const element = old[postIndex].lovers[i];
-            if (+element.user_id === +love.user_id) {
-              // console.log("unlike");
-              let state = old[postIndex].lovers.filter(
-                (el) => +el.user_id !== +love.user_id
-              );
-              // console.log(state);
-              posts[postIndex].lovers = [...state];
-              return [...posts];
-            }
+      );
+
+      const love = response.data.data;
+
+      if (newIsLiked) {
+        newLikes.push(love); // Push like object from API response
+      } else {
+        const likeIndex = newLikes.findIndex(
+          (like) => like.user_id === love.user_id
+        );
+        newLikes.splice(likeIndex, 1); // Remove like object
+      }
+
+      setLikes(newLikes);
+      setIsLiked(newIsLiked);
+    } catch (error) {
+      console.error("Error liking post:", error);
+      // Handle errors appropriately (e.g., display error message to user)
+    }
+  };
+
+  // Comments Logic Here
+  const [allComments, setComments] = useState(comments);
+  // console.log("allComments: ", allComments);
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    const commentValue = commentBox.current.value;
+    if (commentValue.trim().length > 0) {
+      await axios
+        .post(
+          "https://attachin.com/api/addUserPostComment",
+          { post_id: id, comment: commentValue },
+          {
+            headers: {
+              Authorization: `Bearer ${authUser.token}`,
+            },
           }
-          posts[postIndex].lovers = [...posts[postIndex].lovers, love];
-          // console.log("like", old[postIndex].lovers);
-          return [...posts];
+        )
+        .then((res) => {
+          console.log(res.data.data);
+          setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
+          commentBox.current.value = "";
+          commentBox.current.rows = 1;
         });
-      });
+    } else {
+      commentBox.current.rows = commentBox.current.value.split("\n").length;
+      return;
+    }
   };
 
   return (
@@ -135,7 +172,6 @@ const Post = ({
               <Link to="">
                 <img
                   className="avatar-img rounded-circle"
-                  // src="https://github.com/mdo.png"
                   src={
                     user.profile_photo
                       ? `${baseURL + user.profile_photo}`
@@ -227,25 +263,29 @@ const Post = ({
         <ul className="nav nav-stack py-3 small">
           <li className="nav-item">
             <Link
-              className="nav-link liked"
+              className={isLiked ? "nav-link liked" : "nav-link"}
               to=""
-              onClick={() => loveToggle(id)}
-              data-bs-container="body"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              data-bs-html="true"
-              data-bs-custom-class="tooltip-text-start"
-              data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
+              onClick={() => handleLikeClick(id)}
+              // data-bs-container="body"
+              // data-bs-toggle="tooltip"
+              // data-bs-placement="top"
+              // data-bs-html="true"
+              // data-bs-custom-class="tooltip-text-start"
+              // data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
             >
               <FontAwesomeIcon icon={faHeart} className="pe-1" />
-              Liked ({lovers.length})
+              {isLiked ? "Unlike" : "Like"} ({likes.length})
             </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#!">
+            <Link
+              onClick={() => commentBox.current.focus()}
+              className="nav-link"
+            >
+              {/* {console.log('commentBox: ', commentBox)} */}
               <FontAwesomeIcon icon={faCommentDots} className="pe-1" />
-              Comments ({comments.length})
-            </a>
+              Comments ({allComments.length})
+            </Link>
           </li>
           {/* Card share action START */}
           <li className="nav-item dropdown ms-sm-auto">
@@ -325,27 +365,41 @@ const Post = ({
             </Link>
           </div>
           {/* Comment box  */}
-          <form className="nav nav-item w-100 position-relative">
+          <div className="nav nav-item w-100 position-relative">
             <textarea
               data-autoresize
               className="form-control pe-5"
+              ref={commentBox}
               rows={1}
-              placeholder="Add a comment..."
+              placeholder={
+                turn_of_comments !== "0"
+                  ? "Comments Turned Off By Auther"
+                  : "Add a comment..."
+              }
               defaultValue={""}
+              disabled={turn_of_comments !== "0"}
+              onKeyUp={(e) => {
+                console.log(commentBox.current.value.split("\n").length);
+                commentBox.current.rows =
+                  commentBox.current.value.split("\n").length;
+                if (e.key === "Enter" && !e.shiftKey) {
+                  addComment(e);
+                }
+              }}
             />
             <button
               className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
-              type="submit"
+              onClick={(e) => addComment(e)}
             >
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>
-          </form>
+          </div>
         </div>
         {/* Comments wrap START */}
         <ul className="comment-wrap list-unstyled">
           {/* Comments items START */}
-          {comments.length > 0 &&
-            comments.map((comment) => (
+          {allComments.length > 0 &&
+            allComments.map((comment) => (
               <li className="comment-item" key={uuid()}>
                 <div className="d-flex position-relative">
                   {/* Avatar */}
@@ -363,9 +417,9 @@ const Post = ({
                       />
                     </Link>
                   </div>
-                  <div className="ms-2">
+                  <div className="ms-2 col-sm">
                     {/* Comment by */}
-                    <div className="rounded-start-top-0 p-3 rounded">
+                    <div className="rounded-start-top-0 p-3 rounded pb-0">
                       <div className="d-flex justify-content-between">
                         <h6 className="mb-1">
                           <Link to=""> {comment.user.full_name} </Link>

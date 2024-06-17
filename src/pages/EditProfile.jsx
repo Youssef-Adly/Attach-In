@@ -4,66 +4,252 @@ import {
   faSquareMinus,
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import FilePondPicture from "../Components/FilePondPicture";
+import FilePondPictureCover from "../Components/FilePondPictureCover";
+import axios from "axios";
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ErrorMessage from "../Components/ErrorMessage";
+import LoadingSuspese from "../Components/LoadingSuspense";
+import { updateUserInfo } from "../Redux/actions/authActions";
+
+// yup Magic Here
+//#region
+// Add yup Phone Validation
+yup.addMethod(
+  yup.string,
+  "phoneLength",
+  function (errorMessage = "Phone number must be 11 digits") {
+    return this.test("phoneLength", errorMessage, function (value) {
+      return value && value.length === 11 && /^\d+$/.test(value);
+    });
+  }
+);
+
+// yup Schema
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email can't be empty"),
+    first_name: yup
+      .string()
+      .matches(/^[aA-zZ\s]+$/, "first name must be letters only")
+      .required("first name can't be empty"),
+    last_name: yup
+      .string()
+      .matches(/^[aA-zZ\s]+$/, "last name must be letters only")
+      .required("last name can't be empty"),
+    phone: yup
+      .string()
+      .phoneLength()
+      .required("You have to enter a valid phone number"),
+    university: yup
+      .number()
+      .typeError("select a university please")
+      .required("select a university please"),
+    governorate: yup.string().required("select a governorate please"),
+    collage: yup.string().required("select a collage please"),
+    bio: yup.string(),
+    language: yup.string().required("language can't be empty"),
+  })
+  .required();
+
+//#endregion
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const baseURL = "https://attachin.com/";
+  const user = useSelector((state) => state.Auth.user);
+  const [i18n] = useTranslation();
+  const [loading, setLoading] = useState(false);
+  const [FormErrors, setFormErrors] = useState(null);
+  const dispatch = useDispatch();
 
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting /* , isValid, isLoading, isValidating */,
+    },
+  } = useForm({
+    defaultValues: {
+      first_name: user.first_name || user.full_name.split(" ")[0],
+      last_name: user.last_name || user.full_name.split(" ")[1],
+      email: user.email,
+      phone: user.phone,
+      university: user.university?.id,
+      collage: user.collage?.id || "",
+      address: user.address,
+      bio: user.bio || "",
+      birthday: user.birthday || "",
+      governorate: user.governorate?.id || "",
+      language: "en",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  // To Show Api Errors In View
+  const getErrorsFromAPI = (err) => {
+    let errorsArr = [];
+    for (let i = 0; i < Object.entries(err).length; i++) {
+      if (Object.entries(err)[i][1].isError) {
+        // console.log({
+        //   [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        // });
+        errorsArr.push({
+          [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        });
+      }
+    }
+    console.log("errorsArr: ", errorsArr);
+    setFormErrors([...errorsArr]);
+  };
+
+  // setting universities, Colleges and governments on Component Init
+  //#region
+  const [colleges, setColleges] = useState(null);
+  const [universities, setUniversities] = useState(null);
+  const [governments, setGovernments] = useState(null);
+  useEffect(() => {
+    axios.get(baseURL + "api/getColleges").then((res) => {
+      // console.log("colleges", res.data.data.colleges);
+      setColleges(res.data.data.colleges);
+    });
+    axios.get(baseURL + "api/getUniversities").then((res) => {
+      // console.log("universities", res.data.data.universities);
+      setUniversities(res.data.data.universities);
+    });
+    axios.get(baseURL + "api/getGovernments").then((res) => {
+      // console.log("governments", res.data.data.governments);
+      setGovernments(res.data.data.governments);
+    });
+  }, []);
+
+  //#endregion
+
+  //Adds Images in FormSubmit Object
+  //#region
+
+  // All of My Images
+  const [images, setImages] = useState(null);
+
+  //  On Change profile_photo
+  const [profilePic, setProfilePic] = useState([
+    user.profile_photo ? baseURL + user.profile_photo : "/profile.png",
+  ]);
+  // console.log(profilePic);
+  useEffect(() => {
+    if (
+      profilePic[0]?.source !== "/profile.png" &&
+      profilePic[0]?.source !== baseURL + user.profile_photo &&
+      profilePic[0]?.filename
+    ) {
+      console.log(profilePic[0].filename);
+      // setUserReg((old) => ({ ...old, profile_photo: profilePic[0]?.file }));
+      setImages((old) => ({ ...old, profile_photo: profilePic[0]?.file }));
+    }
+  }, [profilePic, user.profile_photo]);
+
+  //  On Change profile_cover
+  const [profileCover, setProfileCover] = useState([
+    user.profile_cover ? baseURL + user.profile_cover : "/banner.jpg",
+  ]);
+  useEffect(() => {
+    if (
+      profileCover[0]?.source !== "/banner.jpg" &&
+      profileCover[0]?.source !== baseURL + user.profile_cover &&
+      profileCover[0]?.filename
+    ) {
+      console.log(profileCover[0]);
+      // setUserReg((old) => ({ ...old, profile_cover: profileCover[0]?.file }));
+      setImages((old) => ({ ...old, profile_cover: profileCover[0]?.file }));
+    }
+  }, [profileCover, user.profile_cover]);
+
+  //#endregion
+
+  // Handle Form
+  //#region
   const [userReg, setUserReg] = useState({
     certifications: [],
     skills: [],
     interests: [],
     experiences: [],
-    language: [],
   });
 
-  const handleChange = (e) => {
-    if (
-      e.target.name === "profile_cover" ||
-      e.target.name === "profile_photo"
-    ) {
-      setUserReg((old) => ({ ...old, [e.target.name]: e.target.files[0] }));
-    } else {
-      setUserReg((old) => ({ ...old, [e.target.name]: e.target.value }));
+  // function hasNonEmptyValues(obj, ...keys) {
+  //   // Check if all keys exist in the object
+  //   if (!keys.every((key) => key in obj)) {
+  //     return false;
+  //   }
+
+  //   // Check if all values for existing keys are not empty
+  //   return keys.every((key) => {
+  //     const value = obj[key];
+  //     return (
+  //       Boolean(value) &&
+  //       (typeof value !== "object" ||
+  //         (Array.isArray(value) && value.length > 0))
+  //     );
+  //   });
+  // }
+
+  // const handleChange = (e) => {
+  //   setUserReg((old) => ({ ...old, [e.target.name]: e.target.value }));
+  // };
+
+  const submitForm = async (data) => {
+    setLoading(true);
+    setFormErrors(null);
+    // console.log(userReg);
+    const form = { ...data, ...images };
+    console.log({ ...data, ...images });
+    const formData = new FormData();
+    for (const key in form) {
+      if (
+        Object.hasOwnProperty.call(form, key) &&
+        form[key].toString().trim() !== ""
+      ) {
+        const element = form[key];
+        // console.log("key: ", key, "element: ", element);
+        formData.append(key, element);
+      }
     }
+    // Logging Values
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + " ==> ", pair[1]);
+    }
+
+    // API CALL
+    await axios
+      .post(baseURL + "api/updateProfile", formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "multipart/form-data", // Important for image uploads
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        dispatch(updateUserInfo(user));
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/profile");
+        }, 1500);
+      })
+      .catch((err) => {
+        getErrorsFromAPI(err.errors);
+      });
   };
 
-  function hasNonEmptyValues(obj, ...keys) {
-    // Check if all keys exist in the object
-    if (!keys.every((key) => key in obj)) {
-      return false;
-    }
-
-    // Check if all values for existing keys are not empty
-    return keys.every((key) => {
-      const value = obj[key];
-      return (
-        Boolean(value) &&
-        (typeof value !== "object" ||
-          (Array.isArray(value) && value.length > 0))
-      );
-    });
-  }
-
-  const handleSubmit = (e) => {
-    // Requird Inputs
-    // first_name . last_name . email . phone . /* password */ .
-    // language . governorate . collage . university
-    let valid = hasNonEmptyValues(
-      userReg,
-      "first_name",
-      "last_name",
-      "email",
-      "phone",
-      "language",
-      "governorate",
-      "collage",
-      "profile_university_id"
-    );
-    console.log("valid: ", valid);
-    console.log(userReg);
-  };
+  //#endregion
 
   // Adding Dynamic Inputs
   //////////////////////////////////////////////////////////////////////////////
@@ -155,35 +341,6 @@ const EditProfile = () => {
   };
   //#endregion
 
-  /////////////////UserLanguage///////////////////////
-  //#region
-  const [userLang, setUserLang] = useState("");
-  const LangInput = useRef();
-
-  const handleDeleteLang = (index) => {
-    const newArray = [...userReg.language];
-    newArray.splice(index, 1);
-    setUserReg((old) => ({
-      ...old,
-      language: newArray,
-    }));
-  };
-
-  const handleAddLang = (e) => {
-    setUserReg((old) => ({
-      ...old,
-      language: [...userReg.language, userLang],
-    }));
-    LangInput.current.value = "";
-  };
-
-  const handleChangeLang = (event) => {
-    let { value } = event.target;
-    setUserLang(value);
-    // console.log("value: ", value);
-  };
-  //#endregion
-
   ////////////////////UserComputerSkill////////////////////
   //#region
   const [userComputerExp, setUserComputerExp] = useState("");
@@ -239,59 +396,33 @@ const EditProfile = () => {
       <hr />
       <div className="d-flex flex-column justify-content-center align-items-center">
         {/* Pictures */}
-        <div className="row">
-          <fieldset className="col">
-            <label htmlFor="profile_photo">
-              <img
-                src="https://github.com/mdo.png"
-                alt="profile_photo"
-                className="rounded-circle img-fluid"
-                style={{ maxHeight: "200px", cursor: "pointer" }}
-              />
-            </label>
-            <input
-              type="file"
-              hidden
-              name="profile_photo"
-              onChange={(e) => handleChange(e)}
-              id="profile_photo"
-              accept=".png, .jpg, .jpeg"
-            />
-          </fieldset>
-          <fieldset className="col">
-            <label htmlFor="profile_cover" style={{ curser: "pointer" }}>
-              <img
-                src="https://github.com/mdo.png"
-                alt="profile"
-                className="rounded-circle img-fluid"
-                style={{ maxHeight: "200px", cursor: "pointer" }}
-              />
-            </label>
-            <input
-              type="file"
-              hidden
-              name="profile_cover"
-              onChange={(e) => handleChange(e)}
-              id="profile_cover"
-              accept=".png, .jpg, .jpeg"
-            />
-          </fieldset>
+        <div className="d-flex flex-column-reverse flex-sm-row align-items-center justify-content-center gap-3">
+          <div className="" style={{ minWidth: "150px" }}>
+            <FilePondPicture {...{ profilePic, setProfilePic }} />
+          </div>
+          <div className="" style={{ minWidth: "300px" }}>
+            <FilePondPictureCover {...{ profileCover, setProfileCover }} />
+          </div>
         </div>
         {/*  */}
-        <div className="col-12 col-sm-10 col-md-9 col-lg-8 mx-auto">
+        <form
+          onSubmit={handleSubmit(submitForm)}
+          disabled={isSubmitting}
+          className="col-12 col-sm-10 col-md-9 col-lg-8 mx-auto"
+        >
           {/* First Name */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
               id="first_name"
+              {...register("first_name")}
               placeholder="john Doe"
-              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               name="first_name"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="first_name"
@@ -299,20 +430,21 @@ const EditProfile = () => {
             >
               First Name
             </label>
+            <ErrorMessage>{errors.first_name?.message}</ErrorMessage>
           </div>
           {/* Second Name */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
+              {...register("last_name")}
               id="last_name"
               placeholder="john Doe"
-              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               name="last_name"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="last_name"
@@ -320,23 +452,29 @@ const EditProfile = () => {
             >
               Second Name
             </label>
+            <ErrorMessage>{errors.last_name?.message}</ErrorMessage>
           </div>
-          {/* Age */}
+          {/* BirthDay */}
           <div className="form-floating my-3">
             <input
-              type="number"
+              type="date"
               className="form-control rounded-5"
-              id="age"
-              placeholder="age"
+              id="birthday"
+              placeholder="birthday"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="age"
-              onChange={(e) => handleChange(e)}
+              name="birthday"
+              {...register("birthday")}
+              // onChange={(e) => handleChange(e)}
             />
-            <label htmlFor="age" style={{ color: "var(--text-main-color)" }}>
-              Age
+            <label
+              htmlFor="birthday"
+              style={{ color: "var(--text-main-color)" }}
+            >
+              Birthday
             </label>
+            <ErrorMessage>{errors.phone?.message}</ErrorMessage>
           </div>
           {/* Phone Number */}
           <div className="form-floating my-3">
@@ -344,17 +482,18 @@ const EditProfile = () => {
               type="number"
               className="form-control rounded-5"
               id="phone"
-              required
               placeholder="0123456879"
+              {...register("phone")}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               name="phone"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
             <label htmlFor="phone" style={{ color: "var(--text-main-color)" }}>
               Phone Number
             </label>
+            <ErrorMessage>{errors.phone?.message}</ErrorMessage>
           </div>
           {/* Email */}
           <div className="form-floating my-3">
@@ -362,17 +501,18 @@ const EditProfile = () => {
               type="text"
               className="form-control rounded-5"
               id="email"
-              required
               placeholder="example@email.com"
+              {...register("email")}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               name="email"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
             <label htmlFor="email" style={{ color: "var(--text-main-color)" }}>
               Email
             </label>
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
           </div>
           {/* Bio */}
           <div className="form-floating my-3">
@@ -383,7 +523,8 @@ const EditProfile = () => {
               style={{ height: 100, bordercolor: "var(--text-main-color)" }}
               defaultValue={""}
               name="bio"
-              onChange={(e) => handleChange(e)}
+              {...register("bio")}
+              // onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="floatingTextarea2"
@@ -391,42 +532,44 @@ const EditProfile = () => {
             >
               Add Your Bio
             </label>
+            <ErrorMessage>{errors.bio?.message}</ErrorMessage>
           </div>
           {/* Governorate */}
           <div className="form-floating my-3">
             <select
               className="form-select rounded-5"
               id="Governorate"
-              required
+              {...register("governorate")}
               aria-label="Floating label select example"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               defaultValue={""}
               name="governorate"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             >
               <option
                 value={""}
                 disabled
                 style={{ color: "var(--text-main-color)" }}
               >
-                Choose a Governorate
+                {i18n.language === "ar"
+                  ? "اختار المحافظه"
+                  : "Choose a Governorate"}
               </option>
-              <option
-                value={"Cairo"}
-                style={{ color: "var(--text-main-color)" }}
-              >
-                Cairo
-              </option>
-              <option
-                value={"Helwan"}
-                style={{ color: "var(--text-main-color)" }}
-              >
-                Helwan
-              </option>
+              {governments &&
+                governments.map((g, idx) => (
+                  <option
+                    key={idx}
+                    value={g.id}
+                    style={{ color: "var(--text-main-color)" }}
+                  >
+                    {i18n.language === "ar" ? g.name_ar : g.name_en}
+                  </option>
+                ))}
             </select>
             <label htmlFor="Governorate">Governorate</label>
+            <ErrorMessage>{errors.governorate?.message}</ErrorMessage>
           </div>
           {/* Address */}
           <div className="form-floating my-3">
@@ -435,11 +578,12 @@ const EditProfile = () => {
               className="form-control rounded-5"
               id="address"
               placeholder="Cairo"
+              {...register("address")}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               name="address"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
             <label
               htmlFor="address"
@@ -447,8 +591,41 @@ const EditProfile = () => {
             >
               Home Address
             </label>
+            <ErrorMessage>{errors.address?.message}</ErrorMessage>
           </div>
           {/*  */}
+          {/* Certifications Input */}
+          <div className="form-floating my-3">
+            <input
+              type="text"
+              className="form-control rounded-5"
+              id="certifications"
+              placeholder="certifications"
+              ref={certInput}
+              style={{
+                bordercolor: "var(--text-main-color)",
+              }}
+              name="certifications"
+              onChange={(event) => handleChangeCert(event)}
+            />
+            <label
+              htmlFor="certifications"
+              style={{ color: "var(--text-main-color)" }}
+            >
+              Certifications
+            </label>
+            <div
+              className="position-absolute"
+              style={{
+                right: " 0",
+                transform: "translate(-25px, -43px)",
+                cursor: "pointer",
+              }}
+              onClick={(e) => handleAddCert(e)}
+            >
+              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
+            </div>
+          </div>
           {/* Certifications */}
           {userReg.certifications.map((item, index) => (
             <div className="form-floating my-3" key={index}>
@@ -484,25 +661,24 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* Certifications Input */}
+          {/* /////////////////////////// */}
+          {/* /////////////////////////// */}
+          {/* Skill Input */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
-              id="certifications"
-              placeholder="certifications"
-              ref={certInput}
+              id="skills"
+              placeholder="skills"
+              ref={skillInput}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="certifications"
-              onChange={(event) => handleChangeCert(event)}
+              name="skills"
+              onChange={(event) => handleChangeSkill(event)}
             />
-            <label
-              htmlFor="certifications"
-              style={{ color: "var(--text-main-color)" }}
-            >
-              Certifications
+            <label htmlFor="skills" style={{ color: "var(--text-main-color)" }}>
+              Skills
             </label>
             <div
               className="position-absolute"
@@ -511,13 +687,11 @@ const EditProfile = () => {
                 transform: "translate(-25px, -43px)",
                 cursor: "pointer",
               }}
-              onClick={(e) => handleAddCert(e)}
+              onClick={(e) => handleAddSkill(e)}
             >
               <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
             </div>
           </div>
-          {/* /////////////////////////// */}
-          {/* /////////////////////////// */}
           {/* Skills */}
           {userReg.skills.map((item, index) => (
             <div className="form-floating my-3" key={index}>
@@ -552,22 +726,28 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* Skill Input */}
+          {/*  */}
+          {/* /////////////////////////// */}
+          {/* /////////////////////////// */}
+          {/* interest Input */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
-              id="skills"
-              placeholder="skills"
-              ref={skillInput}
+              id="interests"
+              placeholder="interests"
+              ref={interestInput}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="skills"
-              onChange={(event) => handleChangeSkill(event)}
+              name="interests"
+              onChange={(event) => handleChangeInterest(event)}
             />
-            <label htmlFor="skills" style={{ color: "var(--text-main-color)" }}>
-              Skills
+            <label
+              htmlFor="interests"
+              style={{ color: "var(--text-main-color)" }}
+            >
+              Interests
             </label>
             <div
               className="position-absolute"
@@ -576,14 +756,11 @@ const EditProfile = () => {
                 transform: "translate(-25px, -43px)",
                 cursor: "pointer",
               }}
-              onClick={(e) => handleAddSkill(e)}
+              onClick={(e) => handleAddInterest(e)}
             >
               <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
             </div>
           </div>
-          {/*  */}
-          {/* /////////////////////////// */}
-          {/* /////////////////////////// */}
           {/* interests */}
           {userReg.interests.map((item, index) => (
             <div className="form-floating my-3" key={index}>
@@ -618,88 +795,52 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* interest Input */}
-          <div className="form-floating my-3">
-            <input
-              type="text"
-              className="form-control rounded-5"
-              id="interests"
-              placeholder="interests"
-              ref={interestInput}
-              style={{
-                bordercolor: "var(--text-main-color)",
-              }}
-              name="interests"
-              onChange={(event) => handleChangeInterest(event)}
-            />
-            <label
-              htmlFor="interests"
-              style={{ color: "var(--text-main-color)" }}
-            >
-              Interests
-            </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddInterest(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
-          </div>
           {/*  */}
           {/* /////////////////////////// */}
           {/* /////////////////////////// */}
-          {/* Languages */}
-          {userReg.language.map((item, index) => (
-            <div className="form-floating my-3" key={index}>
-              <input
-                type="text"
-                className="form-control rounded-5"
-                id="Lang"
-                // placeholder="Cairo"
-                value={item}
-                disabled
-                style={{
-                  bordercolor: "var(--text-main-color)",
-                }}
-                name="Lang"
-              />
-              <label htmlFor="Lang" style={{ color: "var(--text-main-color)" }}>
-                Lang #{index + 1}
-              </label>
-              <div
-                className="position-absolute"
-                style={{
-                  right: "0px",
-                  transform: "translate(-25px, -43px)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDeleteLang(index)}
-              >
-                <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
-              </div>
-            </div>
-          ))}
-          {/* Language Input */}
+          {/* Language */}
           <div className="form-floating my-3">
             <input
               type="text"
               className="form-control rounded-5"
               id="language"
               placeholder="language"
-              ref={LangInput}
+              {...register("language")}
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              name="Lang"
-              onChange={(event) => handleChangeLang(event)}
+              name="language"
             />
-            <label htmlFor="Lang" style={{ color: "var(--text-main-color)" }}>
+            <label
+              htmlFor="language"
+              style={{ color: "var(--text-main-color)" }}
+            >
               Language
+            </label>
+            <ErrorMessage>{errors.language?.message}</ErrorMessage>
+          </div>
+          {/*  */}
+          {/* /////////////////////////// */}
+          {/* /////////////////////////// */}
+          {/* Computer Experience Input */}
+          <div className="form-floating my-3">
+            <input
+              type="text"
+              className="form-control rounded-5"
+              id="experiences"
+              placeholder="Computer Experience"
+              ref={ComputerExpInput}
+              style={{
+                bordercolor: "var(--text-main-color)",
+              }}
+              name="experiences"
+              onChange={(event) => handleChangeComputerExp(event)}
+            />
+            <label
+              htmlFor="experiences"
+              style={{ color: "var(--text-main-color)" }}
+            >
+              ComputerExps
             </label>
             <div
               className="position-absolute"
@@ -708,14 +849,11 @@ const EditProfile = () => {
                 transform: "translate(-25px, -43px)",
                 cursor: "pointer",
               }}
-              onClick={(e) => handleAddLang(e)}
+              onClick={(e) => handleAddComputerExp(e)}
             >
               <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
             </div>
           </div>
-          {/*  */}
-          {/* /////////////////////////// */}
-          {/* /////////////////////////// */}
           {/* Computer Experiences */}
           {userReg.experiences.map((item, index) => (
             <div className="form-floating my-3" key={index}>
@@ -750,130 +888,105 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-          {/* Computer Experience Input */}
-          <div className="form-floating my-3">
-            <input
-              type="text"
-              className="form-control rounded-5"
-              id="experiences"
-              placeholder="Computer Experience"
-              ref={ComputerExpInput}
-              style={{
-                bordercolor: "var(--text-main-color)",
-              }}
-              name="experiences"
-              onChange={(event) => handleChangeComputerExp(event)}
-            />
-            <label
-              htmlFor="experiences"
-              style={{ color: "var(--text-main-color)" }}
-            >
-              ComputerExps
-            </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddComputerExp(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
-          </div>
           {/*  */}
           {/* University */}
           <div className="form-floating my-3">
             <select
               className="form-select rounded-5"
               id="university"
-              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
+              {...register("university")}
               defaultValue={""}
-              name="profile_university_id"
-              onChange={(e) => handleChange(e)}
+              name="university"
+              // onChange={(e) => handleChange(e)}
             >
               <option
                 value={""}
                 disabled
                 style={{ color: "var(--text-main-color)" }}
               >
-                Choose a University
+                {i18n.language === "ar" ? "اختار جامعه" : "Choose a University"}
               </option>
-              <option value={"5"} style={{ color: "var(--text-main-color)" }}>
-                Cairo
-              </option>
-              <option value={"6"} style={{ color: "var(--text-main-color)" }}>
-                Helwan
-              </option>
-              <option value={"7"} style={{ color: "var(--text-main-color)" }}>
-                Ain Shams
-              </option>
-              <option value={"8"} style={{ color: "var(--text-main-color)" }}>
-                AUC
-              </option>
-              <option value={"9"} style={{ color: "var(--text-main-color)" }}>
-                GUC
-              </option>
+              {universities &&
+                universities.map((u, idx) => (
+                  <option
+                    key={idx}
+                    value={u.id}
+                    style={{ color: "var(--text-main-color)" }}
+                  >
+                    {i18n.language === "ar" ? u.name_ar : u.name_en}
+                  </option>
+                ))}
             </select>
             <label htmlFor="university">University</label>
+            <ErrorMessage>{errors.university?.message}</ErrorMessage>
           </div>
           {/* Collage */}
           <div className="form-floating my-3">
             <select
               className="form-select rounded-5"
               id="Collage"
-              required
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
               defaultValue={""}
+              {...register("collage")}
               name="collage"
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             >
               <option
                 value={""}
                 disabled
                 style={{ color: "var(--text-main-color)" }}
               >
-                Choose a Collage
+                {i18n.language === "ar" ? "اختار الكليه" : "Choose a Collage"}
               </option>
-              <option value={"5"} style={{ color: "var(--text-main-color)" }}>
-                Cairo
-              </option>
-              <option value={"6"} style={{ color: "var(--text-main-color)" }}>
-                Helwan
-              </option>
-              <option value={"7"} style={{ color: "var(--text-main-color)" }}>
-                Ain Shams
-              </option>
-              <option value={"8"} style={{ color: "var(--text-main-color)" }}>
-                AUC
-              </option>
-              <option value={"9"} style={{ color: "var(--text-main-color)" }}>
-                GUC
-              </option>
+              {colleges &&
+                colleges.map((c, idx) => (
+                  <option
+                    key={idx}
+                    value={c.id}
+                    style={{ color: "var(--text-main-color)" }}
+                  >
+                    {i18n.language === "ar" ? c.name_ar : c.name_en}
+                  </option>
+                ))}
             </select>
-            <label htmlFor="university">Collage</label>
+            <label htmlFor="Collage">Collage</label>
+            <ErrorMessage>{errors.collage?.message}</ErrorMessage>
           </div>
-        </div>
-        <Link
-          // to={"/login"}
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-          style={{
-            backgroundColor: "var(--main-color)",
-            height: "100px",
-            width: "100px",
-          }}
-          className="text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-        >
-          Confirm
-        </Link>
+          {/* API Validations */}
+          {FormErrors
+            ? FormErrors.map((err, idx) => {
+                // console.log(Object.entries(err)[0][0]);
+                return (
+                  <ErrorMessage key={idx}>
+                    {Object.entries(err)[0][1]?.message}
+                  </ErrorMessage>
+                );
+              })
+            : ""}
+          {/* Submit */}
+          {!loading ? (
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: "var(--main-color)",
+                height: "100px",
+                width: "100px",
+                border: "none",
+              }}
+              className="regbtn mx-auto mb-5 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+            >
+              Confirm
+            </button>
+          ) : (
+            <LoadingSuspese />
+          )}
+        </form>
       </div>
     </>
   );

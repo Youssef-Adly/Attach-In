@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, registerAsStudent } from "../actions/authActions";
+import {
+  login,
+  logout,
+  registerAsStudent,
+  updateUserInfo,
+} from "../actions/authActions";
 
 const initialState = {
   user: null,
@@ -80,6 +85,19 @@ export const AuthSlice = createSlice({
         state.user = null;
         state.error = action.payload;
         // console.log("action.payload: ", action);
+      });
+    ////////////////////////////////////////////////
+    // updateUserInfo
+    builder
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.user = { ...state.user, ...action.payload.data };
+        state.error = null;
+        // console.log("action.payload: ", action.payload);
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        // state.user = null;
+        state.error = action.payload;
+        // console.log(" action.payload: ", action.payload);
       });
   },
 });

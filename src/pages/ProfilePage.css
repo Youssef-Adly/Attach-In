@@ -19,8 +19,19 @@
   height: 220px;
 }
 
+/* .profilePic {
+  width: 70px;
+  height: 70px;
+} */
+
 @media only screen and (max-width: 768px) {
   .bannerCover {
     height: 120px;
   }
 }
+/* 
+@media only screen and (max-width: 768px) {
+  .profilePic {
+    height: 120px;
+  }
+} */

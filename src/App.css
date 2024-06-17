@@ -8,3 +8,11 @@
 .regbtn:disabled {
   background-color: #20242d !important;
 }
+.mainColor {
+  background-color: var(--main-color) !important;
+  color: var(--offWhite-color) !important;
+}
+.mainColor:hover {
+  background-color: var(--pink-color) !important;
+  color: black !important;
+}

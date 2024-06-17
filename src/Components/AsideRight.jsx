@@ -14,10 +14,21 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { setAuth } from "../Redux/slices/AuthSlice";
 
 const AsideRight = () => {
+  const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
+  const user = useSelector((state) => state.Auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logout = (e) => {
+    navigate("/");
+    dispatch(setAuth(null));
+  };
 
   return (
     <div
@@ -35,12 +46,15 @@ const AsideRight = () => {
         <div className="avatar avatar-story me-2">
           <img
             className="avatar-img rounded-circle"
-            src="https://github.com/mdo.png"
+            src={
+              user.profile_photo ? baseURL + user.profile_photo : "/profile.png"
+            }
+            // src="https://github.com/mdo.png"
             alt=""
           />
         </div>
       </Link>
-      <span className="fs-4 text-light">Christina Waguih</span>
+      <span className="fs-4 text-light">{user.full_name}</span>
       <div data-bs-dismiss="offcanvas" style={{ width: "fit-content" }}>
         <Link
           to="/profile"
@@ -207,6 +221,7 @@ const AsideRight = () => {
         <li data-bs-dismiss="offcanvas">
           <NavLink
             to=""
+            onClick={(e) => logout(e)}
             className="nav-link listItem text-light"
             style={({ isActive, isPending, isTransitioning }) => {
               return {

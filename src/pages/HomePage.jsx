@@ -26,7 +26,7 @@ const HomePage = () => {
         {posts ? (
           <>
             {/* Add Post */}
-            <AddPost />
+            <AddPost setPosts={setPosts} />
             {/* ============== */}
             {posts.map((post, postIndex) => (
               <Post {...post} postState={[postIndex, setPosts]} key={uuid()} />

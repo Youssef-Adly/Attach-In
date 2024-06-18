@@ -1,11 +1,26 @@
-import React from "react";
-// import HomeLayout from "../Components/HomeLayout";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import Notification from "../Components/Notification";
 import AddFriendCard from "../Components/AddFriendCard";
 import { useTranslation } from "react-i18next";
+import LoadingSuspese from "../Components/LoadingSuspense";
 
 const NotificationsPage = () => {
   const [t] = useTranslation();
+  const baseURL = "https://attachin.com/api/";
+  const user = useSelector((state) => state.Auth.user);
+  const [friendRequests, setFriendRequests] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(baseURL + "getFriendshipRequestsToMe", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        setFriendRequests(res.data.data);
+      });
+  }, []);
 
   const notificationData = {
     avatar: "https://github.com/mdo.png",
@@ -83,16 +98,26 @@ const NotificationsPage = () => {
             <Notification {...notificationData} />
             <Notification {...notificationData} />
             {/* Friend Requests */}
-            <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-            </div>
+            {friendRequests ? (
+              <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
+                {friendRequests.length > 0 ? (
+                  friendRequests.map((req, idx) => (
+                    <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+                  ))
+                ) : (
+                  <p
+                    className="fs-3 text-center"
+                    style={{
+                      color: "var(--text-main-color)",
+                    }}
+                  >
+                    No New Friend Requests
+                  </p>
+                )}
+              </div>
+            ) : (
+              <LoadingSuspese />
+            )}
           </div>
 
           {/* My Posts */}
@@ -117,16 +142,26 @@ const NotificationsPage = () => {
             aria-labelledby="pills-Requests-tab"
             tabIndex={0}
           >
-            <div className="d-flex flex-wrap row-cols-2 justify-content-around gap-4 mb-5">
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-              <AddFriendCard />
-            </div>
+            {friendRequests ? (
+              <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
+                {friendRequests.length > 0 ? (
+                  friendRequests.map((req, idx) => (
+                    <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+                  ))
+                ) : (
+                  <p
+                    className="fs-3 text-center"
+                    style={{
+                      color: "var(--text-main-color)",
+                    }}
+                  >
+                    No New Friend Requests
+                  </p>
+                )}
+              </div>
+            ) : (
+              <LoadingSuspese />
+            )}
           </div>
         </div>
       </div>

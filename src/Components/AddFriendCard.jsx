@@ -1,6 +1,47 @@
+import axios from "axios";
 import React from "react";
+import { useSelector } from "react-redux";
 
-const AddFriendCard = () => {
+const AddFriendCard = ({
+  reqID,
+  id,
+  full_name,
+  bio,
+  profile_photo,
+  profile_cover,
+  user_type,
+}) => {
+  const baseURL = "https://attachin.com/api/";
+  const baseImgURL = "https://attachin.com/";
+  const user = useSelector((state) => state.Auth.user);
+
+  const aproveRequest = () => {
+    axios
+      .post(
+        baseURL + "responseOnFriendshipRequest",
+        { id: reqID, response: "approve" },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
+
+  const rejectRequest = () => {
+    axios
+      .post(
+        baseURL + "responseOnFriendshipRequest",
+        { id: reqID, response: "reject" },
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
   return (
     <div
       className="bg-dark-subtle position-relative"
@@ -9,6 +50,7 @@ const AddFriendCard = () => {
       <img
         src="deny.svg"
         alt="deny"
+        onClick={rejectRequest}
         className="position-absolute hoverTwo"
         style={{
           left: "20px",
@@ -20,6 +62,7 @@ const AddFriendCard = () => {
       <img
         src="accept.svg"
         alt="accept"
+        onClick={aproveRequest}
         className="position-absolute hoverTwo"
         style={{
           right: "20px",
@@ -42,16 +85,17 @@ const AddFriendCard = () => {
           <div className="h-100 d-block">
             <img
               className="avatar-img rounded-circle"
-              src="https://github.com/mdo.png"
-              alt=""
+              src={baseImgURL + profile_photo}
+              alt="profile_photo"
+              style={{ height: "100px" }}
             />
           </div>
         </div>
       </div>
       {/* Info */}
       <div className="p-5 mt-4" style={{ color: "var(--text-main-color)" }}>
-        <h4 className="card-title mb-0">Lori Ferguson</h4>
-        <p className="mb-0 small">Web Developer at Webestica</p>
+        <h4 className="card-title mb-0">{full_name}</h4>
+        <p className="mb-0 small">{bio}</p>
       </div>
     </div>
   );

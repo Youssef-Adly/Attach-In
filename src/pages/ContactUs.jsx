@@ -1,6 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import ErrorMessage from "../Components/ErrorMessage";
+import LoadingSuspese from "../Components/LoadingSuspense";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+// yup Schema
+const schema = yup
+  .object({
+    subject: yup.string().required("subject can't be empty"),
+    message: yup.string().required("message can't be empty"),
+  })
+  .required();
 
 const ContactUs = () => {
+  const baseURL = "https://attachin.com/api/";
+  const authUser = useSelector((state) => state.Auth.user);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting /* , isValid, isLoading, isValidating */,
+    },
+  } = useForm({
+    defaultValues: {
+      subject: "",
+      message: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const handleContactUs = (data) => {
+    setLoading(true);
+    axios
+      .post(baseURL + "sendContactUsMessageToEmail", data, {
+        headers: { Authorization: `Bearer ${authUser.token}` },
+      })
+      .then((res) => {
+        console.log("res: ", res);
+        window.location.reload();
+      });
+  };
+
   return (
     <>
       {/* Header Title */}
@@ -34,55 +80,64 @@ const ContactUs = () => {
             // data-bs-parent="#accordionFlushExample"
           >
             <div className="accordion-body dir">
-              Lorem ipsum dolor sit amet consectsit amet consect etur
-              adipisicing elit. Error, accusantium!
+              "Attach In-App" is a social media platform designed for college
+              students. It offers a semi-professional networking environment
+              where users can connect with peers, mentors, and industry
+              professionals, find internships and courses, and share
+              achievements.
             </div>
           </div>
         </div>
       </div>
-      <div className="col-10 mx-auto my-5">
-        <div className="mb-3">
-          {/* <label htmlFor="exampleFormControlInput1" className="form-label">
-            Subject
-          </label> */}
+      {!loading ? (
+        <form
+          className="col-10 mx-auto my-5"
+          onSubmit={handleSubmit(handleContactUs)}
+        >
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control rounded-5"
+              id="exampleFormControlInput1"
+              placeholder="Subject"
+              {...register("subject")}
+              style={{
+                bordercolor: "var(--text-main-color)",
+                backgroundColor: "#eee",
+              }}
+            />
+            <ErrorMessage>{errors.subject?.message}</ErrorMessage>
+          </div>
+          <div className="mb-3">
+            <textarea
+              className="form-control rounded-5"
+              id="exampleFormControlTextarea1"
+              rows={6}
+              placeholder="Write Your Request and will reply on you shortly"
+              defaultValue={""}
+              {...register("message")}
+              style={{
+                bordercolor: "var(--text-main-color)",
+                backgroundColor: "#eee",
+              }}
+            />
+            <ErrorMessage>{errors.message?.message}</ErrorMessage>
+          </div>
           <input
-            type="email"
-            className="form-control rounded-5"
-            id="exampleFormControlInput1"
-            placeholder="Subject"
+            type="submit"
+            disabled={isSubmitting}
+            className="mx-auto border-0 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
             style={{
-              bordercolor: "var(--text-main-color)",
-              backgroundColor: "#eee",
+              backgroundColor: "var(--main-color)",
+              height: "100px",
+              width: "100px",
             }}
+            value={"Send"}
           />
-        </div>
-        <div className="mb-3">
-          {/* <label htmlFor="exampleFormControlTextarea1" className="form-label">
-            Write Your Request and will reply on you shortly
-          </label> */}
-          <textarea
-            className="form-control rounded-5"
-            id="exampleFormControlTextarea1"
-            rows={6}
-            placeholder="Write Your Request and will reply on you shortly"
-            defaultValue={""}
-            style={{
-              bordercolor: "var(--text-main-color)",
-              backgroundColor: "#eee",
-            }}
-          />
-        </div>
-        <input
-          type="submit"
-          value={"Send"}
-          style={{
-            backgroundColor: "var(--main-color)",
-            height: "100px",
-            width: "100px",
-          }}
-          className="mx-auto border-0 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-        />
-      </div>
+        </form>
+      ) : (
+        <LoadingSuspese />
+      )}
     </>
   );
 };

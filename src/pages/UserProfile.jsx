@@ -15,7 +15,7 @@ const UserProfile = () => {
   let [posts, setposts] = useState(null);
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     // console.log(profile);
@@ -45,7 +45,44 @@ const UserProfile = () => {
       .then((res) => {
         setUser(res.data.data);
       });
-  }, [id, authUser.token]);
+  }, []);
+  // Add Friends
+  const addFriend = (e) => {
+    axios
+      .post(
+        baseURL + "api/addFriendshipRequest",
+        { user_id_2: user.id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
+  // deleteFriend
+  const deleteFriend = (e) => {
+    axios
+      .post(
+        baseURL + "api/deleteFriendshipRequest",
+        { user_id_2: user.id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
+
+  const blockRequest = () => {
+    axios
+      .post(
+        baseURL + "api/blockFriendshipRequest",
+        { user_id_2: user.id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        console.log("res: ", res);  
+        window.location.reload();
+      });
+  };
 
   return (
     <>
@@ -131,7 +168,10 @@ const UserProfile = () => {
                       </Link>
                     </li>
                     <li className="mt-2">
-                      <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                      <Link
+                        onClick={blockRequest}
+                        className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                      >
                         <img
                           src="/BlockIcon.svg"
                           alt="block"
@@ -140,10 +180,10 @@ const UserProfile = () => {
                         Block This Person
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <hr className="dropdown-divider" />
-                    </li>
-                    <li className="mt-2">
+                    </li> */}
+                    {/* <li className="mt-2">
                       <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
                         <img
                           src="/deleteIcon.svg"
@@ -152,26 +192,62 @@ const UserProfile = () => {
                         />
                         Delete This Profile
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                   {/* End of Dropdown Menu */}
                 </div>
-                <Link to={"/network"} className="">
+                <Link to={"/messages"} className="">
                   <img
-                    src="/peopleIcon.svg"
+                    src="/chatIcon.svg"
                     className="img-fluid"
                     style={{ width: "40px", height: "40px" }}
                     alt=""
                   />
                 </Link>
-                <Link to={"/editprofile"} className="">
-                  <img
-                    src="/editPenIcon.svg"
-                    className="img-fluid"
-                    style={{ width: "40px", height: "40px" }}
-                    alt=""
-                  />
-                </Link>
+                {user?.we_are_friend === "no" && (
+                  <Link onClick={(e) => addFriend(e)} className="">
+                    <img
+                      src="/icon2.svg"
+                      className="img-fluid"
+                      style={{ width: "40px", height: "40px" }}
+                      alt="Add Friend"
+                      title="Add Friend"
+                    />
+                  </Link>
+                )}
+                {user?.we_are_friend === "pending" && (
+                  <div /* onClick={(e) => addFriend(e)} */ className="">
+                    <img
+                      src="/pending.svg"
+                      className="img-fluid"
+                      style={{ width: "40px", height: "40px" }}
+                      alt="Request Pending"
+                      title="Request Pending"
+                    />
+                  </div>
+                )}
+                {user?.we_are_friend === "approve" && (
+                  <Link onClick={(e) => deleteFriend(e)} className="">
+                    <img
+                      src="/approve.svg"
+                      className="img-fluid"
+                      style={{ width: "40px", height: "40px" }}
+                      alt="Delete Friend"
+                      title="Delete Friend"
+                    />
+                  </Link>
+                )}
+                {user?.we_are_friend === "block" && (
+                  <div /* onClick={(e) => deleteFriend(e)} */ className="">
+                    <img
+                      src="/BlockIcon.svg"
+                      className="img-fluid"
+                      style={{ width: "40px", height: "40px" }}
+                      alt="Blocked"
+                      title="Blocked"
+                    />
+                  </div>
+                )}
               </div>
               <div className="d-flex justify-content-end">
                 <Link
@@ -222,26 +298,26 @@ const UserProfile = () => {
           (user?.experiences.length > 0) |
           (user?.interests.length > 0) ? (
             <div id="carouselExampleIndicators" className="carousel slide mt-3">
-              {/* <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div> */}
+              <div
+                className="carousel-indicators"
+                style={{ marginBottom: "-40px" }}
+              >
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to={0}
+                  className="active bg-black"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                />
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide-to={1}
+                  aria-label="Slide 2"
+                  className=" bg-black"
+                />
+              </div>
               <div className="carousel-inner">
                 {/*  */}
                 {(user?.skills.length > 0) |
@@ -476,26 +552,26 @@ const UserProfile = () => {
               id="carouselExampleIndicators2"
               className="carousel slide mt-3"
             >
-              {/* <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div> */}
+              <div
+                className="carousel-indicators"
+                style={{ marginBottom: "-40px" }}
+              >
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators2"
+                  data-bs-slide-to={0}
+                  className="active bg-black"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                />
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators2"
+                  data-bs-slide-to={1}
+                  aria-label="Slide 2"
+                  className=" bg-black"
+                />
+              </div>
               <div className="carousel-inner">
                 {/*  */}
                 {/* {console.log('posts: ', posts)} */}
@@ -681,8 +757,6 @@ const UserProfile = () => {
           {/*  */}
 
           <svg
-            // width={360}
-            // height={233}
             style={{ width: "100%", marginTop: "80px" }}
             viewBox="0 0 360 233"
             fill="none"

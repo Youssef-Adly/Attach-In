@@ -207,7 +207,7 @@ const ProfilePage = () => {
         (user.experiences?.length > 0) |
         (user.interests?.length > 0) ? (
           <div id="carouselExampleIndicators" className="carousel slide mt-3">
-            {/* <div
+            <div
             className="carousel-indicators"
             style={{ marginBottom: "-40px" }}
           >
@@ -226,7 +226,7 @@ const ProfilePage = () => {
               aria-label="Slide 2"
               className=" bg-black"
             />
-          </div> */}
+          </div>
             <div className="carousel-inner">
               {/*  */}
               {(user.skills.length > 0) | (user.certifications.length > 0) ? (
@@ -455,7 +455,7 @@ const ProfilePage = () => {
 
         {posts?.length > 0 ? (
           <div id="carouselExampleIndicators2" className="carousel slide mt-3">
-            {/* <div
+            <div
             className="carousel-indicators"
             style={{ marginBottom: "-40px" }}
           >
@@ -474,7 +474,7 @@ const ProfilePage = () => {
               aria-label="Slide 2"
               className=" bg-black"
             />
-          </div> */}
+          </div>
             <div className="carousel-inner">
               {/*  */}
               {posts?.length > 0 ? (
@@ -503,7 +503,7 @@ const ProfilePage = () => {
                         />
                       </svg>
                       <h6
-                        className="text-center"
+                        className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
                         {posts[0]?.title}
@@ -533,7 +533,7 @@ const ProfilePage = () => {
                           />
                         </svg>
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[1]?.title}
@@ -572,7 +572,7 @@ const ProfilePage = () => {
                         />
                       </svg>
                       <h6
-                        className="text-center"
+                        className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
                         {posts[2]?.title}
@@ -602,7 +602,7 @@ const ProfilePage = () => {
                           />
                         </svg>
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[3]?.title}

@@ -21,6 +21,7 @@ export const registerAsStudent = createAsyncThunk(
         }
       );
       const userInfoData = await userInfo.data;
+      console.log("combine user Data: ", { ...data, ...userInfoData.data });
       return { ...data, ...userInfoData.data };
       // return data;
     } catch (err) {
@@ -52,6 +53,7 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     );
     const userInfoData = await userInfo.data;
     // combine user Data
+    console.log("combine user Data: ", { ...data, ...userInfoData.data });
     return { ...data, ...userInfoData.data };
   } catch (err) {
     // console.log("err: ", err);
@@ -84,7 +86,7 @@ export const updateUserInfo = createAsyncThunk(
         }
       );
       const data = await res.data;
-      console.log("data: ", data);
+      // console.log("updateUserInfo: ", data);
       return data;
     } catch (err) {
       console.log("err: ", err);

@@ -202,10 +202,10 @@ const ProfilePage = () => {
 
         {/* Carosel #1 */}
         {/* {console.log(user)} */}
-        {(user.skills.length > 0) |
-        (user.certifications.length > 0) |
-        (user.experiences.length > 0) |
-        (user.interests.length > 0) ? (
+        {(user.skills?.length > 0) |
+        (user.certifications?.length > 0) |
+        (user.experiences?.length > 0) |
+        (user.interests?.length > 0) ? (
           <div id="carouselExampleIndicators" className="carousel slide mt-3">
             {/* <div
             className="carousel-indicators"

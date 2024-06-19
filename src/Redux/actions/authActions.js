@@ -10,6 +10,7 @@ export const registerAsStudent = createAsyncThunk(
     try {
       const res = await axios.post(baseURL + "/registerAsStudent", user);
       const data = await res.data;
+      console.log("1st data: ", data);
       // User Info Data
       const userInfo = await axios.post(
         baseURL + "/userInfo",
@@ -21,8 +22,12 @@ export const registerAsStudent = createAsyncThunk(
         }
       );
       const userInfoData = await userInfo.data;
-      console.log("combine user Data: ", { ...data, ...userInfoData.data });
-      return { ...data, ...userInfoData.data };
+      console.log("2st userInfoData: ", userInfoData);
+      return {
+        ...data.data.user,
+        token: data.data.token,
+        ...userInfoData.data,
+      };
       // return data;
     } catch (err) {
       // console.log("err: ", err);
@@ -41,6 +46,7 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       device_id: "1231",
     });
     const data = await res.data;
+    // console.log("1st data: ", data);
     // User Info Data
     const userInfo = await axios.post(
       baseURL + "/userInfo",
@@ -52,9 +58,9 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       }
     );
     const userInfoData = await userInfo.data;
+    // console.log("2st userInfoData: ", userInfoData);
     // combine user Data
-    console.log("combine user Data: ", { ...data, ...userInfoData.data });
-    return { ...data, ...userInfoData.data };
+    return { ...data.data.user, token: data.data.token, ...userInfoData.data };
   } catch (err) {
     // console.log("err: ", err);
     return thunkAPI.rejectWithValue(err.response.data.errors);
@@ -86,7 +92,7 @@ export const updateUserInfo = createAsyncThunk(
         }
       );
       const data = await res.data;
-      // console.log("updateUserInfo: ", data);
+      console.log("data: ", data);
       return data;
     } catch (err) {
       console.log("err: ", err);

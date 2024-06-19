@@ -37,50 +37,23 @@ export const AuthSlice = createSlice({
     // Register
     builder
       .addCase(registerAsStudent.fulfilled, (state, action) => {
-        let user = {
-          ...action.payload.data.user,
-          university: action.payload.data.university,
-        };
-        state.user = {
-          ...user,
-          token: action.payload.data.token,
-          collage: action.payload.data.collage,
-        };
-        console.log("user ", {
-          ...user,
-          token: action.payload.data.token,
-          collage: action.payload.data.collage,
-        });
+        console.log("action: ", action);
+        state.user = action.payload;
         state.error = null;
       })
       .addCase(registerAsStudent.rejected, (state, action) => {
         state.user = null;
-        // console.log("action.payload: ", action);
         state.error = action.payload;
       });
     ////////////////////////////////////////////////
     // Login
     builder
       .addCase(login.fulfilled, (state, action) => {
-        let user = {
-          ...action.payload.data.user,
-          university: action.payload.data.university,
-        };
-        state.user = {
-          ...user,
-          token: action.payload.data.token,
-          collage: action.payload.data.collage,
-        };
-        console.log("user Login : ", {
-          ...user,
-          token: action.payload.data.token,
-          collage: action.payload.data.collage,
-        });
+        state.user = action.payload;
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.user = null;
-        // console.log("action.payload: ", action);
         state.error = action.payload;
       });
     ////////////////////////////////////////////////
@@ -89,7 +62,7 @@ export const AuthSlice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
         state.error = null;
-        console.log("logout: ", action.payload);
+        // console.log("logout: ", action.payload);
       })
       .addCase(logout.rejected, (state, action) => {
         state.user = null;

@@ -30,7 +30,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const error = useSelector((state) => state.Auth.error);
-  console.log("error: ", error);
   const [t] = useTranslation();
   const [loginForm, setLoginForm] = useState(false);
   const [userLogin, setUserLogin] = useState({ email: "", password: "" });

@@ -190,7 +190,7 @@ const EditProfile = () => {
     setFormErrors(null);
     // console.log(userReg);
     const form = { ...data, ...images };
-    console.log({ ...data, ...images });
+    // console.log({ ...data, ...images });
     const formData = new FormData();
     for (const key in form) {
       if (
@@ -575,7 +575,7 @@ const EditProfile = () => {
             >
               Birthday
             </label>
-            <ErrorMessage>{errors.phone?.message}</ErrorMessage>
+            <ErrorMessage>{errors.birthday?.message}</ErrorMessage>
           </div>
           {/* Phone Number */}
           <div className="form-floating my-3">

@@ -9,7 +9,7 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
   let [posts, setPosts] = useState(null);
-  let [limit, setLimit] = useState(50);
+  let [limit, setLimit] = useState(10);
   let [fetching, setFetching] = useState(false);
 
   useEffect(() => {

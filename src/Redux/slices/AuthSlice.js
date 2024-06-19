@@ -22,10 +22,6 @@ export const AuthSlice = createSlice({
       state.user = { ...state.user, token: payload };
     },
     setCert: (state, { payload }) => {
-      // state.user = {
-      //   ...state.user,
-      //   certifications: [...state.user.certifications, payload],
-      // };
       state.user = {
         ...state.user,
         certifications: payload,
@@ -37,7 +33,6 @@ export const AuthSlice = createSlice({
     // Register
     builder
       .addCase(registerAsStudent.fulfilled, (state, action) => {
-        console.log("action: ", action);
         state.user = action.payload;
         state.error = null;
       })

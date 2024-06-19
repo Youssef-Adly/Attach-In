@@ -10,7 +10,6 @@ export const registerAsStudent = createAsyncThunk(
     try {
       const res = await axios.post(baseURL + "/registerAsStudent", user);
       const data = await res.data;
-      console.log("1st data: ", data);
       // User Info Data
       const userInfo = await axios.post(
         baseURL + "/userInfo",
@@ -22,7 +21,6 @@ export const registerAsStudent = createAsyncThunk(
         }
       );
       const userInfoData = await userInfo.data;
-      console.log("2st userInfoData: ", userInfoData);
       return {
         ...data.data.user,
         token: data.data.token,

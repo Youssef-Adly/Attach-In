@@ -21,14 +21,14 @@ const HomeLayout = () => {
   const baseURL = "https://attachin.com/";
   const postBox2 = useRef();
   const user = useSelector((state) => state.Auth.user);
-  console.log('user: ', user);
   const [loading, setLoading] = useState(false);
-
   const [files, setFiles] = useState([]);
-  useEffect(() => {
-    // console.log("files: ", files);
-    console.log(files[0]?.file);
-  }, [files]);
+
+
+  // useEffect(() => {
+  // console.log("files: ", files);
+  // console.log(files[0]?.file);
+  // }, [files]);
 
   const addPostWithImage = async (e) => {
     e.preventDefault();

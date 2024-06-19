@@ -169,7 +169,15 @@ const Post = ({
           <div className="d-flex align-items-center">
             {/* Avatar */}
             <div className="avatar avatar-story me-2">
-              <Link to={`/profile/${user_id}`}>
+              <Link
+                to={
+                  user.user_type === "student"
+                    ? `/profile/${user_id}`
+                    : user.user_type === "university"
+                    ? `/universityProfile/${user_id}`
+                    : `/companyProfile/${user_id}`
+                }
+              >
                 <img
                   className="avatar-img rounded-circle"
                   src={
@@ -185,7 +193,17 @@ const Post = ({
             <div>
               <div className="nav nav-divider">
                 <h6 className="nav-item card-title mb-0">
-                  <Link to={`/profile/${user_id}`}>{user.full_name}</Link>
+                  <Link
+                    to={
+                      user.user_type === "student"
+                        ? `/profile/${user_id}`
+                        : user.user_type === "university"
+                        ? `/universityProfile/${user_id}`
+                        : `/companyProfile/${user_id}`
+                    }
+                  >
+                    {user.full_name}
+                  </Link>
                 </h6>
                 {/* <span className="nav-item small"> 2hr</span> */}
               </div>
@@ -351,7 +369,15 @@ const Post = ({
         <div className="d-flex mb-3">
           {/* Avatar */}
           <div className="avatar avatar-xs me-2">
-            <Link to="">
+            <Link
+              to={
+                user.user_type === "student"
+                  ? `/profile/${user_id}`
+                  : user.user_type === "university"
+                  ? `/universityProfile/${user_id}`
+                  : `/companyProfile/${user_id}`
+              }
+            >
               <img
                 className="avatar-img rounded-circle"
                 src={
@@ -390,6 +416,10 @@ const Post = ({
             <button
               className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
               onClick={(e) => addComment(e)}
+              // disabled={turn_of_comments !== "0"}
+              style={{
+                cursor: turn_of_comments !== "0" ? "not-allowed" : "",
+              }}
             >
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>

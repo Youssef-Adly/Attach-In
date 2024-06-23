@@ -10,7 +10,7 @@ const UserProfile = () => {
   const profile = useRef();
   const baseURL = "https://attachin.com/";
   let [user, setUser] = useState(null);
-  console.log("user: ", user);
+  // console.log("user: ", user);
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
 
@@ -79,7 +79,7 @@ const UserProfile = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        console.log("res: ", res);  
+        console.log("res: ", res);
         window.location.reload();
       });
   };
@@ -251,7 +251,7 @@ const UserProfile = () => {
               </div>
               <div className="d-flex justify-content-end">
                 <Link
-                  to={"/universityProfile"}
+                  to={"/universityProfile/" + user.university.id}
                   className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2"
                   style={{
                     color: "var(--text-main-color)",

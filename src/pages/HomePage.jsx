@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import HomeLayout from "../Components/HomeLayout";
 import Post from "../Components/Post";
 import AddPost from "../Components/AddPost";
 import axios from "axios";
@@ -14,7 +13,6 @@ const HomePage = () => {
 
   useEffect(() => {
     axios.get(baseURL + "getAllHomePosts?limit=" + limit).then((res) => {
-      console.log(res.data.data);
       setPosts(res.data.data);
       setFetching(false);
     });
@@ -40,7 +38,7 @@ const HomePage = () => {
                 }}
                 onClick={() => {
                   setFetching(true);
-                  // window.scrollTo(0, document.body.scrollHeight);
+                  window.scrollTo(0, document.body.scrollHeight);
                   // bottomDiv.scrollIntoView();
                   setLimit((old) => old + 5);
                 }}

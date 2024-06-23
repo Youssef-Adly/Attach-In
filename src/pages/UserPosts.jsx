@@ -1,42 +1,23 @@
-import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import Post from "../Components/Post";
-import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const UserPosts = () => {
   const navigate = useNavigate();
-  const authUser = useSelector((state) => state.Auth.user);
   const baseURL = "https://attachin.com/";
-  let [user, setUser] = useState(null);
-  console.log("user: ", user);
-  let [posts, setposts] = useState(null);
-
+  let [posts, setPosts] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     axios.get(`${baseURL}api/getAllHomePosts?user_id=` + id).then((res) => {
-      setposts(res.data.data);
+      setPosts(res.data.data);
     });
-  }, [id]);
+  }, []);
 
-  useEffect(() => {
-    axios
-      .post(
-        baseURL + "api/userInfo",
-        { for_user_id: id },
-        {
-          headers: { Authorization: `Bearer ${authUser.token}` },
-        }
-      )
-      .then((res) => {
-        setUser(res.data.data);
-      });
-  }, [id, authUser.token]);
   return (
     <>
       <div className="d-flex align-items-center gap-4">
@@ -62,7 +43,11 @@ const UserPosts = () => {
         {posts ? (
           posts.length > 0 ? (
             posts.map((post, postIndex) => (
-              <Post {...post} postState={[postIndex, setposts]} key={uuid()} />
+              <Post
+                {...post}
+                postState={[postIndex, setPosts]}
+                key={postIndex}
+              />
             ))
           ) : (
             <div className="display-5">No Posts Yet</div>
@@ -75,4 +60,4 @@ const UserPosts = () => {
   );
 };
 
-export default UserPosts;
+export default memo(UserPosts);

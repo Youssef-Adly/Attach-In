@@ -30,9 +30,6 @@ import PrivateRoute from "./utils/IsLoggedGuard";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
-import UserSkills from "./pages/UserSkills";
-import UserPosts from "./pages/UserPosts";
-import UserProfile from "./pages/UserProfile";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -75,6 +72,9 @@ const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
+const UserSkills = lazy(() => import("./pages/UserSkills"));
+const UserPosts = lazy(() => import("./pages/UserPosts"));
+const UserProfile = lazy(() => import("./pages/UserProfile"));
 //#endregion
 /////////////////////////////////
 

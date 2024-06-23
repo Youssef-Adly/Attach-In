@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,56 +19,6 @@ import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-/* 
-{
-            "id": 99,
-            "user_id": 48,
-            "parent_id": 0,
-            "title": "keif 7alkom",
-            "image": "",
-            "turn_of_comments": "0",
-            "created_at": "2024-06-07T16:59:42.000000Z",
-            "love": 0,
-            "user": {
-                "id": 48,
-                "user_type": "student",
-                "full_name": "Fady Ezat",
-                "profile_photo": null,
-                "profile_cover": null,
-                "bio": null
-            },
-            "comments": [
-                {
-                    "id": 53,
-                    "post_id": 99,
-                    "user_id": 39,
-                    "comment": "b5ier",
-                    "created_at": "2024-06-07T17:00:05.000000Z",
-                    "updated_at": "2024-06-07T17:00:05.000000Z",
-                    "user": {
-                        "id": 39,
-                        "user_type": "student",
-                        "full_name": "Fady Ezat",
-                        "profile_photo": "images/users/1717177227701992.jpg",
-                        "profile_cover": "images/users/1717177227735184.jpg",
-                        "bio": "App"
-                    }
-                }
-            ],
-            "parent": null,
-            "lovers": [
-                {
-                    "id": 97,
-                    "post_id": 99,
-                    "user_id": 39,
-                    "created_at": "2024-06-07T17:00:00.000000Z",
-                    "updated_at": "2024-06-07T17:00:00.000000Z"
-                }
-            ]
-        },
-
-*/
-
 const Post = ({
   id,
   user_id,
@@ -87,9 +37,8 @@ const Post = ({
   const baseURL = "https://attachin.com/";
   const commentBox = useRef();
   const authUser = useSelector((state) => state.Auth.user);
-  // console.log("authUser: ", authUser);
 
-  const [likes, setLikes] = useState(lovers.slice()); // Copy the likes array to avoid mutation
+  const [likes, setLikes] = useState([...lovers]); // Copy the likes array to avoid mutation
 
   const [isLiked, setIsLiked] = useState(() => {
     // Check if any like object has a userId property matching yourUserId
@@ -101,6 +50,7 @@ const Post = ({
     const newIsLiked = !isLiked;
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
+    // API Call
     try {
       const response = await axios.post(
         "https://attachin.com/api/addUserPostLove",
@@ -111,7 +61,6 @@ const Post = ({
           },
         }
       );
-
       const love = response.data.data;
 
       if (newIsLiked) {
@@ -122,7 +71,6 @@ const Post = ({
         );
         newLikes.splice(likeIndex, 1); // Remove like object
       }
-
       setLikes(newLikes);
       setIsLiked(newIsLiked);
     } catch (error) {
@@ -565,4 +513,4 @@ const Post = ({
   );
 };
 
-export default Post;
+export default memo(Post);

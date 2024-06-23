@@ -17,7 +17,7 @@ const NetworkPage = () => {
       })
       .then((res) => {
         setFriends(res.data.data);
-        console.log("res.data.data: ", res.data.data);
+        // console.log("res.data.data: ", res.data.data);
       })
       .catch((err) => {
         console.log(err);

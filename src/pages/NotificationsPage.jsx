@@ -11,15 +11,39 @@ const NotificationsPage = () => {
   const baseURL = "https://attachin.com/api/";
   const user = useSelector((state) => state.Auth.user);
   const [friendRequests, setFriendRequests] = useState(null);
+  const [notifications, setNotifications] = useState(null);
+  console.log("notifications: ", notifications);
 
   useEffect(() => {
-    axios
-      .get(baseURL + "getFriendshipRequestsToMe", {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => {
-        setFriendRequests(res.data.data);
-      });
+    const geData = async () => {
+      // //friendRequests
+      await axios
+        .get(baseURL + "getFriendshipRequestsToMe", {
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
+        .then((res) => {
+          console.log("fr res: ", res);
+          setFriendRequests(res.data.data);
+        })
+        .catch((err) => {
+          console.log("error getting friends requests " + err);
+        });
+
+      //notifications
+      await axios
+        .post(
+          "https://attachin.com/api/getMyUserNotifications",
+          {},
+          {
+            headers: { Authorization: `${user.token}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setNotifications(res.data.data);
+        });
+    };
+    geData();
   }, []);
 
   const notificationData = {

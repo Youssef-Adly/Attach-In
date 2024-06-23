@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// import HomeLayout from "../Components/HomeLayout";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";

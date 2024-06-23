@@ -83,12 +83,21 @@ const AddFriendCard = ({
           }}
         >
           <div className="h-100 d-block">
-            <img
-              className="avatar-img rounded-circle"
-              src={baseImgURL + profile_photo}
-              alt="profile_photo"
-              style={{ height: "100px" }}
-            />
+            {profile_photo ? (
+              <img
+                className="avatar-img rounded-circle"
+                src={baseImgURL + profile_photo}
+                alt="profile_photo"
+                style={{ height: "100px" }}
+              />
+            ) : (
+              <img
+                className="avatar-img rounded-circle"
+                src="/profile.png"
+                alt="profile_photo"
+                style={{ height: "100px" }}
+              />
+            )}
           </div>
         </div>
       </div>

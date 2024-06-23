@@ -14,16 +14,8 @@ const SettingPage = () => {
 
   const [t] = useTranslation();
 
-  useEffect(() => {
-    // console.log("seting lang ", i18n.language);
-  }, []);
-
   const switchDarkMode = (e) => {
     dispatch(toggleTheme());
-    // let root = document.documentElement;
-    // e.target.checked
-    //   ? (root.dataset.bsTheme = "dark")
-    //   : (root.dataset.bsTheme = "light");
   };
 
   const switchLanguage = (e) => {

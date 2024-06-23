@@ -12,47 +12,36 @@ const NotificationsPage = () => {
   const user = useSelector((state) => state.Auth.user);
   const [friendRequests, setFriendRequests] = useState(null);
   const [notifications, setNotifications] = useState(null);
-  console.log("notifications: ", notifications);
 
   useEffect(() => {
-    const geData = async () => {
-      // //friendRequests
-      await axios
-        .get(baseURL + "getFriendshipRequestsToMe", {
+    //friendRequests
+    axios
+      .get(baseURL + "getFriendshipRequestsToMe", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        setFriendRequests(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error getting friends requests " + err);
+      });
+
+    //notifications
+    axios
+      .post(
+        "https://attachin.com/api/getMyUserNotifications",
+        {},
+        {
           headers: { Authorization: `Bearer ${user.token}` },
-        })
-        .then((res) => {
-          console.log("fr res: ", res);
-          setFriendRequests(res.data.data);
-        })
-        .catch((err) => {
-          console.log("error getting friends requests " + err);
-        });
-
-      //notifications
-      await axios
-        .post(
-          "https://attachin.com/api/getMyUserNotifications",
-          {},
-          {
-            headers: { Authorization: `${user.token}` },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          setNotifications(res.data.data);
-        });
-    };
-    geData();
+        }
+      )
+      .then((res) => {
+        setNotifications(res.data.data.filter((e) => e.from_user !== null));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  const notificationData = {
-    avatar: "https://github.com/mdo.png",
-    name: "Lori Ferguson",
-    job: "Web Developer at Webestica",
-    notification:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia assumenda laborum vel quidem.",
-  };
 
   return (
     <>
@@ -118,15 +107,11 @@ const NotificationsPage = () => {
             tabIndex={0}
           >
             {/* All notifications */}
-            <Notification {...notificationData} />
-            <Notification {...notificationData} />
-            <Notification {...notificationData} />
-            {/* Friend Requests */}
-            {friendRequests ? (
-              <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
-                {friendRequests.length > 0 ? (
-                  friendRequests.map((req, idx) => (
-                    <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+            {notifications && friendRequests ? (
+              <>
+                {notifications ? (
+                  notifications.map((n, idx) => (
+                    <Notification {...n} key={idx} />
                   ))
                 ) : (
                   <p
@@ -135,16 +120,38 @@ const NotificationsPage = () => {
                       color: "var(--text-main-color)",
                     }}
                   >
-                    No New Friend Requests
+                    No New Notifications
                   </p>
                 )}
-              </div>
+
+                {/* Friend Requests */}
+                {friendRequests ? (
+                  <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
+                    {friendRequests.length > 0 ? (
+                      friendRequests.map((req, idx) => (
+                        <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+                      ))
+                    ) : (
+                      <p
+                        className="fs-3 text-center"
+                        style={{
+                          color: "var(--text-main-color)",
+                        }}
+                      >
+                        No New Friend Requests
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <LoadingSuspese />
+                )}
+              </>
             ) : (
               <LoadingSuspese />
             )}
           </div>
 
-          {/* My Posts */}
+          {/* Notifications*/}
           <div
             className="tab-pane fade mb-5"
             id="pills-Posts"
@@ -152,10 +159,27 @@ const NotificationsPage = () => {
             aria-labelledby="pills-Posts-tab"
             tabIndex={0}
           >
-            {/* notifications */}
-            <Notification {...notificationData} />
-            <Notification {...notificationData} />
-            <Notification {...notificationData} />
+            {/* Notifications */}
+            {notifications ? (
+              <>
+                {notifications.length > 1 ? (
+                  notifications.map((n, idx) => (
+                    <Notification {...n} key={idx} />
+                  ))
+                ) : (
+                  <LoadingSuspese />
+                )}
+              </>
+            ) : (
+              <p
+                className="fs-3 text-center"
+                style={{
+                  color: "var(--text-main-color)",
+                }}
+              >
+                No New Notifications
+              </p>
+            )}
           </div>
 
           {/* Friends Requests */}

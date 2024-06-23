@@ -91,8 +91,6 @@ function App() {
     // Set Language on site init
     lang === "ar" ? x.i18n.changeLanguage("ar") : x.i18n.changeLanguage("en");
     lang === "ar" ? (root.lang = "ar") : (root.lang = "en");
-    // console.log("lang=> ", lang);
-    // console.log("i18nlang=> ", x.i18n.language);
   }, [lang, root, theme, x.i18n]);
 
   // const { pathname } = useLocation();

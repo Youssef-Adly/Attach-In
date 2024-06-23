@@ -126,10 +126,7 @@ const UniversityPage = () => {
               }}
             >
               <div className="d-flex justify-content-end gap-2">
-                <Link
-                  to={"/userPosts/" + university?.id}
-                  className="iconDark"
-                >
+                <Link to={"/userPosts/" + university?.id} className="iconDark">
                   <img
                     src="/news.svg"
                     className="img-fluid"
@@ -173,7 +170,7 @@ const UniversityPage = () => {
               minHeight: "150px",
             }}
           >
-            {university?.about}
+            {university?.about ? university?.about : "No About Yet"}
           </h4>
 
           <hr className="mt-5 w-75 m-auto" />

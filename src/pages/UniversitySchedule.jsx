@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 const UniversitySchedule = () => {
   const [t, i18n] = useTranslation();
+  const navigate = useNavigate();
   const { id } = useParams();
   const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
@@ -171,7 +172,7 @@ const UniversitySchedule = () => {
           }}
         >
           <div className="d-flex align-items-center gap-3 ms-4">
-            <Link to={"/universityProfile"}>
+            <Link to={"/universityProfile/" + id}>
               <FontAwesomeIcon
                 icon={faCircleArrowLeft}
                 fontSize={27}

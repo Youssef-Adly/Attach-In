@@ -32,7 +32,7 @@ const FriendCard = ({
             <img
               className="avatar-img rounded-circle"
               // src="https://github.com/mdo.png"
-              src={baseImgURL + profile_photo}
+              src={profile_photo ? baseImgURL + profile_photo : "/profile.png"}
               alt="profile_photo"
               style={{ height: "100px" }}
             />

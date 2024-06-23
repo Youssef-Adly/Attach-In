@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
-import { useSelector } from "react-redux";
 import axios from "axios";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.Auth.user);
+  console.log("user: ", user);
   const baseURL = "https://attachin.com/";
   const profile = useRef();
   let [width, setWidth] = useState(null);
@@ -165,7 +166,7 @@ const ProfilePage = () => {
             </div>
             <div className="d-flex justify-content-end">
               <Link
-                to={"/universityProfile"}
+                to={`/universityProfile/${user.university.id}`}
                 className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2"
                 style={{
                   color: "var(--text-main-color)",
@@ -208,25 +209,25 @@ const ProfilePage = () => {
         (user.interests?.length > 0) ? (
           <div id="carouselExampleIndicators" className="carousel slide mt-3">
             <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div>
+              className="carousel-indicators"
+              style={{ marginBottom: "-40px" }}
+            >
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to={0}
+                className="active bg-black"
+                aria-current="true"
+                aria-label="Slide 1"
+              />
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to={1}
+                aria-label="Slide 2"
+                className=" bg-black"
+              />
+            </div>
             <div className="carousel-inner">
               {/*  */}
               {(user.skills.length > 0) | (user.certifications.length > 0) ? (
@@ -456,25 +457,25 @@ const ProfilePage = () => {
         {posts?.length > 0 ? (
           <div id="carouselExampleIndicators2" className="carousel slide mt-3">
             <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
-            <button
-              type="button"
-              data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div>
+              className="carousel-indicators"
+              style={{ marginBottom: "-40px" }}
+            >
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators2"
+                data-bs-slide-to={0}
+                className="active bg-black"
+                aria-current="true"
+                aria-label="Slide 1"
+              />
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators2"
+                data-bs-slide-to={1}
+                aria-label="Slide 2"
+                className=" bg-black"
+              />
+            </div>
             <div className="carousel-inner">
               {/*  */}
               {posts?.length > 0 ? (

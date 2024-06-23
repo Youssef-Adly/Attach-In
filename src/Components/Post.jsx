@@ -36,7 +36,10 @@ const Post = ({
 }) => {
   const baseURL = "https://attachin.com/";
   const commentBox = useRef();
+  const report = useRef();
   const authUser = useSelector((state) => state.Auth.user);
+  const isMyPost = authUser.id === user_id;
+  let [turnOffComment, setTurnOffComment] = useState(turn_of_comments !== "0");
 
   const [likes, setLikes] = useState([...lovers]); // Copy the likes array to avoid mutation
 
@@ -109,6 +112,63 @@ const Post = ({
     }
   };
 
+  const deletePost = async (id) => {
+    await axios
+      .post(
+        baseURL + "api/deletePost",
+        { post_id: id },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        // console.log("res: ", res);
+        setPosts((old) => old.filter((o) => o.id !== id));
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
+  const turnOffComments = async (id) => {
+    await axios
+      .post(
+        baseURL + "api/changeUserPostTurnOffComments",
+        { post_id: id },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        // console.log("res: ", res);
+        setTurnOffComment((old) => !old);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
+
+  const reportSubmit = async () => {
+    let reportValue = report.current.value;
+    await axios
+      .post(
+        baseURL + "api/reportUserRequest",
+        {
+          user_id_2: user_id,
+          reason: reportValue,
+        },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        console.log(res);
+        report.current.value = "";
+      })
+      .catch((err) => {
+        console.log(err);
+        report.current.value = "";
+      });
+  };
+
   return (
     <div className="card rounded-4">
       {/* Card header START */}
@@ -119,11 +179,15 @@ const Post = ({
             <div className="avatar avatar-story me-2">
               <Link
                 to={
-                  user.user_type === "student"
+                  authUser.id === user_id
+                    ? `/profile`
+                    : user.user_type === "student"
                     ? `/profile/${user_id}`
                     : user.user_type === "university"
                     ? `/universityProfile/${user_id}`
-                    : `/companyProfile/${user_id}`
+                    : user.user_type === "company"
+                    ? `/companyProfile/${user_id}`
+                    : ""
                 }
               >
                 <img
@@ -143,11 +207,15 @@ const Post = ({
                 <h6 className="nav-item card-title mb-0">
                   <Link
                     to={
-                      user.user_type === "student"
+                      authUser.id === user_id
+                        ? `/profile`
+                        : user.user_type === "student"
                         ? `/profile/${user_id}`
                         : user.user_type === "university"
                         ? `/universityProfile/${user_id}`
-                        : `/companyProfile/${user_id}`
+                        : user.user_type === "company"
+                        ? `/companyProfile/${user_id}`
+                        : ""
                     }
                   >
                     {user.full_name}
@@ -170,26 +238,26 @@ const Post = ({
               <FontAwesomeIcon icon={faEllipsis} />
             </Link>
             {/* Card feed action dropdown menu */}
-            <ul
+            {/* <ul
               className="dropdown-menu dropdown-menu-end"
               aria-labelledby="cardFeedAction"
             >
               <li>
                 <Link className="dropdown-item" to="">
-                  <i className="bi bi-bookmark fa-fw pe-2" />
-                  Save post
+                  <img src="/editPenIcon.svg" alt="edit" style={{width:"20px"}} />
+                  Edit Post
                 </Link>
               </li>
               <li>
                 <Link className="dropdown-item" to="">
                   <i className="bi bi-person-x fa-fw pe-2" />
-                  Unfollow lori ferguson
+                  Delete Post
                 </Link>
               </li>
               <li>
                 <Link className="dropdown-item" to="">
                   <i className="bi bi-x-circle fa-fw pe-2" />
-                  Hide post
+                  Turn off Comments
                 </Link>
               </li>
               <li>
@@ -207,6 +275,72 @@ const Post = ({
                   Report post
                 </Link>
               </li>
+            </ul> */}
+            <ul
+              className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
+              aria-labelledby="feedActionShare"
+              style={{ backgroundColor: "var(--offWhite-color)" }}
+            >
+              {isMyPost && (
+                <li className="mt-1">
+                  <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                    <img
+                      src="/edit.svg"
+                      alt="Edit Post"
+                      className="pe-2"
+                      style={{ width: "35px" }}
+                    />
+                    Edit this Post
+                  </Link>
+                </li>
+              )}
+              {!isMyPost && (
+                <li className="mt-1">
+                  <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                    <img src="/reportIcon.svg" alt="report" className="pe-2" />
+                    Report this Profile
+                  </Link>
+                </li>
+              )}
+              {isMyPost && (
+                <li className="mt-2">
+                  <Link
+                    onClick={() => deletePost(id)}
+                    className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                  >
+                    <img src="/deleteIcon.svg" alt="delete" className="pe-2" />
+                    Delete Post
+                  </Link>
+                </li>
+              )}
+              {isMyPost && (
+                <li className="mt-2">
+                  <Link
+                    onClick={() => turnOffComments(id)}
+                    className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                  >
+                    <img src="/BlockIcon.svg" alt="block" className="pe-2" />
+                    {!turnOffComment ? "Turn off Comments" : "Turn on Comments"}
+                  </Link>
+                </li>
+              )}
+              {!isMyPost && (
+                <>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li className="mt-2">
+                    <Link
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
+                      className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                    >
+                      <img src="/BlockIcon.svg" alt="block" className="pe-2" />
+                      Report This Person
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           {/* Card feed action dropdown END */}
@@ -319,11 +453,15 @@ const Post = ({
           <div className="avatar avatar-xs me-2">
             <Link
               to={
-                user.user_type === "student"
+                authUser.id === user_id
+                  ? `/profile`
+                  : user.user_type === "student"
                   ? `/profile/${user_id}`
                   : user.user_type === "university"
                   ? `/universityProfile/${user_id}`
-                  : `/companyProfile/${user_id}`
+                  : user.user_type === "company"
+                  ? `/companyProfile/${user_id}`
+                  : ""
               }
             >
               <img
@@ -344,14 +482,14 @@ const Post = ({
               data-autoresize
               className="form-control pe-5"
               ref={commentBox}
-              rows={turn_of_comments === "0" ? 1 : 2}
+              rows={!turnOffComment ? 1 : 2}
               placeholder={
-                turn_of_comments !== "0"
+                turnOffComment
                   ? "Comments Turned Off By Auther"
                   : "Add a comment..."
               }
               defaultValue={""}
-              disabled={turn_of_comments !== "0"}
+              disabled={turnOffComment}
               onKeyUp={(e) => {
                 console.log(commentBox.current.value.split("\n").length);
                 commentBox.current.rows =
@@ -364,9 +502,9 @@ const Post = ({
             <button
               className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
               onClick={(e) => addComment(e)}
-              // disabled={turn_of_comments !== "0"}
+              // disabled={turnOffComment}
               style={{
-                cursor: turn_of_comments !== "0" ? "not-allowed" : "",
+                cursor: turnOffComment ? "not-allowed" : "",
               }}
             >
               <FontAwesomeIcon icon={faPaperPlane} />
@@ -376,13 +514,26 @@ const Post = ({
         {/* Comments wrap START */}
         <ul className="comment-wrap list-unstyled">
           {/* Comments items START */}
+          {console.log(allComments)}
           {allComments.length > 0 &&
             allComments.map((comment) => (
               <li className="comment-item" key={uuid()}>
                 <div className="d-flex position-relative">
                   {/* Avatar */}
                   <div className="avatar avatar-xs">
-                    <Link to={`/profile/${comment.user_id}`}>
+                    <Link
+                      to={
+                        authUser.id === comment.user.id
+                          ? `/profile`
+                          : comment.user.user_type === "student"
+                          ? `/profile/${comment.user.id}`
+                          : comment.user.user_type === "university"
+                          ? `/universityProfile/${comment.user.id}`
+                          : comment.user.user_type === "company"
+                          ? `/companyProfile/${comment.user.id}`
+                          : ""
+                      }
+                    >
                       <img
                         className="avatar-img rounded-circle"
                         src={
@@ -400,9 +551,20 @@ const Post = ({
                     <div className="rounded-start-top-0 p-3 rounded pb-0">
                       <div className="d-flex justify-content-between">
                         <h6 className="mb-1">
-                          <Link to={`/profile/${comment.user_id}`}>
-                            {" "}
-                            {comment.user.full_name}{" "}
+                          <Link
+                            to={
+                              authUser.id === comment.user.id
+                                ? `/profile`
+                                : comment.user.user_type === "student"
+                                ? `/profile/${comment.user.id}`
+                                : comment.user.user_type === "university"
+                                ? `/universityProfile/${comment.user.id}`
+                                : comment.user.user_type === "company"
+                                ? `/companyProfile/${comment.user.id}`
+                                : ""
+                            }
+                          >
+                            {comment.user.full_name}
                           </Link>
                         </h6>
                         <small className="ms-2">
@@ -460,12 +622,16 @@ const Post = ({
                             </Link>
                           </li>
                           <li>
-                            <Link className="dropdown-item" to="">
+                            <Link
+                              className="dropdown-item"
+                              data-bs-toggle="modal"
+                              data-bs-target="#staticBackdrop"
+                            >
                               <FontAwesomeIcon
                                 icon={faUserSlash}
                                 className="pe-1"
                               />
-                              Block this person
+                              Report this person
                             </Link>
                           </li>
                           <li>
@@ -493,6 +659,68 @@ const Post = ({
       </div>
       {/* Card body END */}
       {/* Card footer START */}
+
+      {/* Report Person Model */}
+      <div
+        className="modal fade "
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex={-1}
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                Report User Request
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <div className="modal-body">
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlTextarea1"
+                  className="form-label"
+                >
+                  Please Provide A Reason To Be Reviewed
+                </label>
+                <textarea
+                  className="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows={3}
+                  defaultValue={""}
+                  ref={report}
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                data-bs-dismiss="modal"
+                onClick={reportSubmit}
+                className="btn btn-danger"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Load more comments */}
       {false && (
         <div className="card-footer border-0 pt-0">

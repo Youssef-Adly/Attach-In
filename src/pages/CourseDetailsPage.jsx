@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const CourseDetailsPage = () => {
   const token = useSelector((state) => state.Auth.user.token);
-  const [Course, setCourse] = useState([]);
+  const [Course, setCourse] = useState(null);
   const [t, i18n] = useTranslation();
   const { id } = useParams();
 
@@ -22,7 +22,7 @@ const CourseDetailsPage = () => {
         setCourse(res.data.data);
         // console.log("res.data.data: ", res.data.data);
       });
-  }, []);
+  }, [id, token]);
 
   return (
     <>
@@ -131,7 +131,7 @@ const CourseDetailsPage = () => {
             role="tabpanel"
             aria-labelledby="profile-tab"
           >
-            <div className="d-flex gap- flex-wrap justify-content-around mb-5">
+            <div className="d-flex gap-4 flex-wrap justify-content-around mb-5">
               {Course?.Videos &&
                 Course?.Videos.map((vid, idx) => (
                   <Link

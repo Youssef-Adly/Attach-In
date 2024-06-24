@@ -1,16 +1,14 @@
-import React, { memo, useState, useRef, useEffect } from "react";
+import React, { memo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCommentDots,
   faCommentSlash,
-  faCopy,
   faEllipsis,
   faFlag,
   faHeart,
   faPaperPlane,
   faShare,
-  faShareNodes,
   faTrash,
   faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +16,7 @@ import { formatDateForPost } from "./formatDateForPost";
 import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import LoadingSuspese from "./LoadingSuspense";
 
 const Post = ({
   id,
@@ -37,7 +36,10 @@ const Post = ({
   const baseURL = "https://attachin.com/";
   const commentBox = useRef();
   const report = useRef();
+  const thoughts = useRef();
   const authUser = useSelector((state) => state.Auth.user);
+  let [loadingShare, setloadingShare] = useState(false);
+  let [loadingReport, setloadingReport] = useState(false);
   const isMyPost = authUser.id === user_id;
   let [turnOffComment, setTurnOffComment] = useState(turn_of_comments !== "0");
 
@@ -150,22 +152,71 @@ const Post = ({
 
   const reportSubmit = async () => {
     let reportValue = report.current.value;
+    // console.log("reportValue: ", reportValue);
+    // console.log("user_id: ", user.id);
+    setloadingReport(true);
     await axios
       .post(
         baseURL + "api/reportUserRequest",
         {
-          user_id_2: user_id,
+          user_id_2: user.id,
           reason: reportValue,
         },
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         report.current.value = "";
+        setloadingReport(false);
+      })
+      .catch((err) => {
+        setloadingReport(false);
+        console.log(err);
+        // report.current.value = "";
+      });
+  };
+
+  const instantShare = async () => {
+    console.log("id: ", id);
+    await axios
+      .post(
+        baseURL + "api/addUserRePost",
+        { parent_id: id },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        report.current.value = "";
+      });
+  };
+
+  const shareWithThoughts = async () => {
+    let title = thoughts.current.value;
+    // console.log("thoughts: ", title);
+    // console.log("id: ", id);
+    setloadingShare(true);
+    await axios
+      .post(
+        baseURL + "api/addUserRePost",
+        { parent_id: id, title: title },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        thoughts.current.value = "";
+        window.location.reload();
+        // setloadingShare(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setloadingShare(false);
       });
   };
 
@@ -238,44 +289,6 @@ const Post = ({
               <FontAwesomeIcon icon={faEllipsis} />
             </Link>
             {/* Card feed action dropdown menu */}
-            {/* <ul
-              className="dropdown-menu dropdown-menu-end"
-              aria-labelledby="cardFeedAction"
-            >
-              <li>
-                <Link className="dropdown-item" to="">
-                  <img src="/editPenIcon.svg" alt="edit" style={{width:"20px"}} />
-                  Edit Post
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <i className="bi bi-person-x fa-fw pe-2" />
-                  Delete Post
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <i className="bi bi-x-circle fa-fw pe-2" />
-                  Turn off Comments
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <i className="bi bi-slash-circle fa-fw pe-2" />
-                  Block
-                </Link>
-              </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <i className="bi bi-flag fa-fw pe-2" />
-                  Report post
-                </Link>
-              </li>
-            </ul> */}
             <ul
               className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
               aria-labelledby="feedActionShare"
@@ -332,7 +345,7 @@ const Post = ({
                   <li className="mt-2">
                     <Link
                       data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
+                      data-bs-target={"#Report" + id}
                       className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                     >
                       <img src="/BlockIcon.svg" alt="block" className="pe-2" />
@@ -438,6 +451,7 @@ const Post = ({
         {/* Parent Post End */}
         {/* Feed react START */}
         <ul className="nav nav-stack py-3 small">
+          {/* Like */}
           <li className="nav-item">
             <Link
               className={isLiked ? "nav-link liked" : "nav-link"}
@@ -454,6 +468,7 @@ const Post = ({
               {isLiked ? "Unlike" : "Like"} ({likes.length})
             </Link>
           </li>
+          {/* Comment */}
           <li className="nav-item">
             <Link
               onClick={() => commentBox.current.focus()}
@@ -464,59 +479,63 @@ const Post = ({
               Comments ({allComments.length})
             </Link>
           </li>
-          {/* Card share action START */}
+          {/* Share */}
           <li className="nav-item dropdown ms-sm-auto">
             <Link
               className="nav-link mb-0"
-              to=""
               id="cardShareAction"
               data-bs-toggle="dropdown"
-              aria-expanded="false"
             >
               <FontAwesomeIcon icon={faShare} className="pe-1" />
               Share {/* (3) */}
             </Link>
             {/* Card share action dropdown menu */}
             <ul
-              className="dropdown-menu dropdown-menu-end"
-              aria-labelledby="cardShareAction"
+              className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
+              aria-labelledby="feedActionShare"
+              style={{ backgroundColor: "var(--offWhite-color)" }}
             >
-              {/* <li>
-                <Link className="dropdown-item" to="">
-                  Send via Direct Message
-                </Link>
-              </li> */}
-              <li>
-                <Link className="dropdown-item" to="">
-                  <FontAwesomeIcon icon={faFlag} className="pe-2" />
-                  Report This Post
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <FontAwesomeIcon icon={faCopy} className="pe-2" />
-                  Copy link to post
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <FontAwesomeIcon icon={faShareNodes} className="pe-2" />
-                  Share post via …
-                </Link>
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <FontAwesomeIcon icon={faUserSlash} className="pe-1" />
-                  Block this person
+              {/* Share Your thoughts */}
+              <li className="mt-1">
+                <Link
+                  className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                  data-bs-toggle="modal"
+                  data-bs-target={"#shareModel" + id}
+                >
+                  <img
+                    src="/share.svg"
+                    alt="Edit Post"
+                    className="me-2"
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      backgroundColor: "#eee",
+                      padding: "5px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  Share Your thoughts
                 </Link>
               </li>
-              <li>
-                <hr className="dropdown-divider" />
-              </li>
-              <li>
-                <Link className="dropdown-item" to="">
-                  <FontAwesomeIcon icon={faShare} className="pe-2" />
-                  Share on Attach in
+              {/* Instant Share */}
+              <li className="mt-1">
+                <Link
+                  className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                  onClick={instantShare}
+                >
+                  <img
+                    src="/shareInstant.svg"
+                    alt="Edit Post"
+                    className="me-2"
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      backgroundColor: "#eee",
+                      padding: "5px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  Repost instantly
                 </Link>
               </li>
             </ul>
@@ -740,62 +759,124 @@ const Post = ({
       {/* Report Person Model */}
       <div
         className="modal fade "
-        id="staticBackdrop"
+        id={"Report" + id}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex={-1}
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                Report User Request
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body">
-              <div className="mb-3">
-                <label
-                  htmlFor="exampleFormControlTextarea1"
-                  className="form-label"
-                >
-                  Please Provide A Reason To Be Reviewed
-                </label>
-                <textarea
-                  className="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows={3}
-                  defaultValue={""}
-                  ref={report}
+        {!loadingReport ? (
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id={"Report" + id}>
+                  Report User Request
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
                 />
               </div>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                data-bs-dismiss="modal"
-                onClick={reportSubmit}
-                className="btn btn-danger"
-              >
-                Send
-              </button>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor={"Report" + id} className="form-label">
+                    Please Provide A Reason To Be Reviewed
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id={"Report" + id}
+                    rows={3}
+                    defaultValue={""}
+                    ref={report}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  onClick={reportSubmit}
+                >
+                  Send
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <LoadingSuspese />
+        )}
+      </div>
+
+      {/* Share With Thoughts Model */}
+      <div
+        className="modal fade "
+        id={"shareModel" + id}
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex={-1}
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        {!loadingShare ? (
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Share Post
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor={"share" + id} className="form-label">
+                    Share With Your Thoughts
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id={"share" + id}
+                    rows={2}
+                    defaultValue={""}
+                    ref={thoughts}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={shareWithThoughts}
+                  className="btn btn-danger"
+                >
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <LoadingSuspese />
+        )}
       </div>
 
       {/* Load more comments */}

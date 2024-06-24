@@ -8,14 +8,20 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
   let [posts, setPosts] = useState(null);
+  console.log("posts: ", posts);
   let [limit, setLimit] = useState(10);
   let [fetching, setFetching] = useState(false);
 
   useEffect(() => {
-    axios.get(baseURL + "getAllHomePosts?limit=" + limit).then((res) => {
-      setPosts(res.data.data);
-      setFetching(false);
-    });
+    axios
+      .get(baseURL + "getAllHomePosts?limit=" + limit)
+      .then((res) => {
+        setPosts(res.data.data);
+        setFetching(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [limit]);
 
   return (

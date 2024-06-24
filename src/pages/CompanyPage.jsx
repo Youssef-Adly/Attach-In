@@ -1,15 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const CompanyPage = () => {
+  const baseURL = "https://attachin.com/api/";
+  const baseImgURL = "https://attachin.com/";
+  const authUser = useSelector((state) => state.Auth.user);
+  const [company, setCompany] = useState(null);
+  let [posts, setPosts] = useState(null);
+  let [width, setWidth] = useState(null);
   const { id } = useParams();
 
-
   useEffect(() => {
-    // axios.get
-  }, []);
+    axios
+      .post(
+        baseURL + "userInfo",
+        { for_user_id: id },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        // console.log(res.data.data);
+        setCompany(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`${baseURL}getAllHomePosts?user_id=` + id)
+      .then((res) => {
+        res.data.data.length === 0 ? setPosts(null) : setPosts(res.data.data);
+        // console.log("post: ", res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [authUser.token, id]);
+
+  const profile = useRef();
+  useEffect(() => {
+    // console.log(profile);
+    setWidth(profile.current.width);
+    // profile.current.height = profile.current.width;
+    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+    // console.log("profile.current.width: ", profile.current.width);
+    // console.log("profile.current.height: ", profile.current.height);
+  }, [profile]);
 
   return (
     <>
@@ -18,8 +59,11 @@ const CompanyPage = () => {
         <div
           className="col-12 rounded-5 shadow-lg bannerCover"
           style={{
-            background:
-              "url(https://maymt.com/images/uploaded/Eva-Cosmetics_banner-2.jpg_1000.webp) no-repeat right center / cover",
+            background: company?.profile_cover
+              ? `url(${
+                  baseImgURL + company?.profile_cover
+                }) no-repeat center center / cover`
+              : "url(/banner.jpg) no-repeat right top / cover",
           }}
         >
           {/* <img
@@ -34,21 +78,32 @@ const CompanyPage = () => {
         <div className="position-relative d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
             <img
-              src="https://play-lh.googleusercontent.com/hsXfcN2lmhNvvWyIBfxLjrdtwo78Qfqskh4VTfS6UkDinlJ4AwPUpneF3c1qjJhi"
+              // src="https://play-lh.googleusercontent.com/hsXfcN2lmhNvvWyIBfxLjrdtwo78Qfqskh4VTfS6UkDinlJ4AwPUpneF3c1qjJhi"
+              ref={profile}
+              src={
+                company?.profile_photo
+                  ? `${baseImgURL + company?.profile_photo}`
+                  : "/profile.png"
+              }
               alt="profile"
               className="col img-fluid rounded-circle shadow-lg profilePic"
               style={{
                 transform: "translateY(-50%)",
                 backgroundColor: "var(--offWhite-color)",
+                objectFit: "cover",
+                // height: "55%",
+                // width: "100%",
+                height: `${width}px`,
+                width: `${width}px`,
               }}
             />
           </div>
-          {/*  */}
+          {/* full_name */}
           <h3
             className="mt-2 mt-sm-4 col-4 col-sm-2 col-md-4"
             style={{ color: "var(--text-main-color)" }}
           >
-            Eva Cosmatics
+            {company?.full_name}
           </h3>
           {/*  */}
           <div
@@ -101,12 +156,7 @@ const CompanyPage = () => {
             backgroundColor: "var(--sec-color)",
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-          dolorum laboriosam quisquam soluta, qui, repellendus odit iure
-          cupiditate dicta error facilis incidunt officiis perspiciatis, sunt
-          accusantium dolorem praesentium vero sequi veniam maxime quas deleniti
-          facere ex omnis. Repellendus quas sit, quos similique distinctio
-          voluptatum deserunt, necessitatibus delectus provident enim dicta.
+          {company?.about ? company?.about : "No Bio Yet"}
         </h4>
 
         <hr className="mt-5 w-75 m-auto" />
@@ -119,7 +169,10 @@ const CompanyPage = () => {
           >
             Posts
           </p>
-          <Link to={""} className="nav-link me-sm5 col-4 col-sm-2">
+          <Link
+            to={"/userPosts/" + company?.id}
+            className="nav-link me-sm5 col-4 col-sm-2"
+          >
             <p
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
@@ -131,190 +184,208 @@ const CompanyPage = () => {
 
         {/* Carosel #2 */}
 
-        <div id="carouselExampleIndicators2" className="carousel slide mt-3">
-          <div
-            className="carousel-indicators"
-            style={{ marginBottom: "-40px" }}
-          >
+        {posts?.length > 0 ? (
+          <div id="carouselExampleIndicators2" className="carousel slide mt-3">
+            <div
+              className="carousel-indicators"
+              style={{ marginBottom: "-40px" }}
+            >
+              <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators2"
+                data-bs-slide-to={0}
+                className="active bg-black"
+                aria-current="true"
+                aria-label="Slide 1"
+              />
+              {posts?.length > 2 && (
+                <button
+                  type="button"
+                  data-bs-target="#carouselExampleIndicators2"
+                  data-bs-slide-to={1}
+                  aria-label="Slide 2"
+                  className=" bg-black"
+                />
+              )}
+            </div>
+            <div className="carousel-inner">
+              {/*  */}
+              {posts?.length > 0 ? (
+                <div className="carousel-item active">
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {/* Card #1 */}
+                    <Link
+                      to={""}
+                      className="nav-link d-flex flex-column justify-content-center align-items-center"
+                      style={{ width: "270px", height: "200px" }}
+                    >
+                      <svg
+                        width={301}
+                        height={223}
+                        viewBox="0 0 301 223"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                          fill="#E3E2DC"
+                        />
+                        <path
+                          d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                          fill="#878787"
+                        />
+                      </svg>
+                      <h6
+                        className="text-center mt-3"
+                        style={{ color: "var(--text-main-color)" }}
+                      >
+                        {posts[0]?.title}
+                      </h6>
+                    </Link>
+                    {/* Card #2 */}
+                    {posts[1] && (
+                      <Link
+                        to={""}
+                        className="nav-link d-flex flex-column justify-content-center align-items-center"
+                        style={{ width: "270px", height: "200px" }}
+                      >
+                        <svg
+                          width={301}
+                          height={223}
+                          viewBox="0 0 301 223"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                            fill="#E3E2DC"
+                          />
+                          <path
+                            d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                            fill="#878787"
+                          />
+                        </svg>
+                        <h6
+                          className="text-center mt-3"
+                          style={{ color: "var(--text-main-color)" }}
+                        >
+                          {posts[1]?.title}
+                        </h6>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              {/*  */}
+              {posts?.length > 2 ? (
+                <div className={`carousel-item`}>
+                  <div className="d-flex flex-wrap gap-3 justify-content-center">
+                    {/* Card #1 */}
+                    <Link
+                      to={""}
+                      className="nav-link d-flex flex-column justify-content-center align-items-center"
+                      style={{ width: "270px", height: "200px" }}
+                    >
+                      <svg
+                        width={301}
+                        height={223}
+                        viewBox="0 0 301 223"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                          fill="#E3E2DC"
+                        />
+                        <path
+                          d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                          fill="#878787"
+                        />
+                      </svg>
+                      <h6
+                        className="text-center mt-3"
+                        style={{ color: "var(--text-main-color)" }}
+                      >
+                        {posts[2]?.title}
+                      </h6>
+                    </Link>
+                    {/* Card #2 */}
+                    {posts[3] && (
+                      <Link
+                        to={""}
+                        className="nav-link d-flex flex-column justify-content-center align-items-center"
+                        style={{ width: "270px", height: "200px" }}
+                      >
+                        <svg
+                          width={301}
+                          height={223}
+                          viewBox="0 0 301 223"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
+                            fill="#E3E2DC"
+                          />
+                          <path
+                            d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
+                            fill="#878787"
+                          />
+                        </svg>
+                        <h6
+                          className="text-center mt-3"
+                          style={{ color: "var(--text-main-color)" }}
+                        >
+                          {posts[3]?.title}
+                        </h6>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
             <button
+              className="carousel-control-prev"
               type="button"
               data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={0}
-              className="active bg-black"
-              aria-current="true"
-              aria-label="Slide 1"
-            />
+              data-bs-slide="prev"
+              style={
+                {
+                  // left: "35px",
+                }
+              }
+            >
+              <span
+                className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Previous</span>
+            </button>
             <button
+              className="carousel-control-next"
               type="button"
               data-bs-target="#carouselExampleIndicators2"
-              data-bs-slide-to={1}
-              aria-label="Slide 2"
-              className=" bg-black"
-            />
-          </div>
-          <div className="carousel-inner">
-            {/*  */}
-            <div className="carousel-item active">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-                {/* Card #2 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-              </div>
-            </div>
-            {/*  */}
-            <div className="carousel-item">
-              <div className="d-flex flex-wrap gap-3 justify-content-center">
-                {/* Card #1 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-                {/* Card #2 */}
-                <Link
-                  to={""}
-                  className="nav-link d-flex flex-column justify-content-center align-items-center"
-                  style={{ width: "270px", height: "200px" }}
-                >
-                  <svg
-                    width={301}
-                    height={223}
-                    viewBox="0 0 301 223"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M189.858 222.06H111.19C50.1153 222.06 0.160156 172.105 0.160156 111.03C0.160156 49.9551 50.1153 0 111.19 0H189.858C250.933 0 300.888 49.9551 300.888 111.03C300.888 172.105 250.912 222.06 189.858 222.06Z"
-                      fill="#E3E2DC"
-                    />
-                    <path
-                      d="M150.533 147.361C143.445 147.128 136.293 147.277 129.609 144.306C125.258 142.374 123.752 137.43 126.786 133.78C128.717 131.467 131.328 129.642 133.874 127.965C135.954 126.607 138.373 125.779 140.686 124.782C144.315 123.19 145.206 119.222 142.745 116.081C138.246 110.309 135.678 103.964 137.418 96.4727C138.84 90.3609 143.827 86.4349 150.384 86.2651C156.602 86.0954 162.184 89.9577 163.711 95.7936C165.664 103.263 163.308 109.821 158.788 115.72C157.26 117.715 156.369 119.71 157.685 122.023C158.236 122.999 159.17 123.912 160.146 124.485C164.157 126.819 168.38 128.814 172.242 131.361C173.749 132.358 175.022 134.374 175.511 136.178C176.657 140.274 174.98 143.075 170.927 144.666C165.43 146.831 159.595 147.043 153.801 147.34C152.698 147.425 151.615 147.361 150.533 147.361Z"
-                      fill="#878787"
-                    />
-                  </svg>
-                  <h6
-                    className="text-center"
-                    style={{ color: "var(--text-main-color)" }}
-                  >
-                    Lorem ipsum dolor sit amet consectetur....
-                  </h6>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleIndicators2"
-            data-bs-slide="prev"
-            style={
-              {
-                // left: "35px",
+              data-bs-slide="next"
+              style={
+                {
+                  // right: "35px",
+                }
               }
-            }
-          >
-            <span
-              className="carousel-control-prev-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleIndicators2"
-            data-bs-slide="next"
-            style={
-              {
-                // right: "35px",
-              }
-            }
-          >
-            <span
-              className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
-              aria-hidden="true"
-            />
-            <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+            >
+              <span
+                className="carousel-control-next-icon bg-danger p-sm-4 rounded-circle"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+        ) : (
+          <div className="text-center display-3 pt-5">No Posts Yet</div>
+        )}
 
         <hr className="mt-5 w-75 m-auto" />
 

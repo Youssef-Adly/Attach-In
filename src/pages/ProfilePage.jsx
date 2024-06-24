@@ -12,7 +12,7 @@ const ProfilePage = () => {
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
-  console.log("userSkills: ", userSkills);
+  // console.log("userSkills: ", userSkills);
 
   useEffect(() => {
     // console.log(profile);
@@ -44,7 +44,13 @@ const ProfilePage = () => {
           ),
         ]);
       });
-  }, [user.id]);
+  }, [
+    user.certifications,
+    user.experiences,
+    user.id,
+    user.interests,
+    user.skills,
+  ]);
 
   return (
     <>

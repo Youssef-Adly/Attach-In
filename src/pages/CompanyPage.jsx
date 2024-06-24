@@ -1,8 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
+import axios from "axios";
 
 const CompanyPage = () => {
+  const { id } = useParams();
+
+
+  useEffect(() => {
+    axios.get
+  }, []);
+
   return (
     <>
       <main>

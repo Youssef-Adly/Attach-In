@@ -10,6 +10,7 @@ const NetworkPage = () => {
   const baseURL = "https://attachin.com/api/";
   const user = useSelector((state) => state.Auth.user);
   const [friends, setFriends] = useState(null);
+
   useEffect(() => {
     axios
       .get(baseURL + "getAllMyFriends", {
@@ -23,6 +24,7 @@ const NetworkPage = () => {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       {/* Header Title */}

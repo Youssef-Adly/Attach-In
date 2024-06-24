@@ -8,7 +8,7 @@ const CompanyPage = () => {
 
 
   useEffect(() => {
-    axios.get
+    // axios.get
   }, []);
 
   return (

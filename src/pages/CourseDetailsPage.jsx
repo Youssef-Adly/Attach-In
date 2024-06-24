@@ -5,35 +5,24 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const CourseDetailsPage = () => {
-  const [Course, setCourse] = useState(null);
-  const { id } = useParams();
-  // console.log(id);
+  const token = useSelector((state) => state.Auth.user.token);
+  const [Course, setCourse] = useState([]);
   const [t, i18n] = useTranslation();
-
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F0dGFjaGluLmNvbS9hcGkvbG9naW4iLCJpYXQiOjE3MTc4NjM2MzksImV4cCI6MTcyMDQ1NTYzOSwibmJmIjoxNzE3ODYzNjM5LCJqdGkiOiJMNGxoZkVlbFlNcE1pZmtUIiwic3ViIjoiMiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.kiMVSehcTiVAoNXUSQNwl-R65DnxYjFyYpr0hDLV9bk";
+  const { id } = useParams();
 
   useEffect(() => {
     axios
-      .get("https://attachin.com/api/getAllCourseVideos", {
+      .get("https://attachin.com/api/getAllCourseData?course_id=" + id, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setCourse(
-          res.data.data.filter((c) => {
-            return c.course_id === +id;
-          })[0]
-        );
+        setCourse(res.data.data);
         // console.log("res.data.data: ", res.data.data);
-        // console.log(
-        //   res.data.data.filter((c) => {
-        //     return c.course_id === +id;
-        //   })[0]
-        // );
       });
-  }, [id]);
+  }, []);
 
   return (
     <>
@@ -142,55 +131,21 @@ const CourseDetailsPage = () => {
             role="tabpanel"
             aria-labelledby="profile-tab"
           >
-            <div className="d-flex gap-2 flex-wrap justify-content-around mb-5">
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
-              <Link
-                className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
-                to={Course.link}
-                target="_blank"
-              >
-                <img src="/lesson.svg" alt="lesson" className="img-fluid" />
-                <h5 className="mt-2 text-center">Video 1</h5>
-              </Link>
+            <div className="d-flex gap- flex-wrap justify-content-around mb-5">
+              {Course?.Videos &&
+                Course?.Videos.map((vid, idx) => (
+                  <Link
+                    className="nav-link flex-wrap d-flex flex-column justify-content-around align-items-center "
+                    to={vid.link}
+                    target="_blank"
+                    key={idx}
+                  >
+                    <img src="/lesson.svg" alt="lesson" className="img-fluid" />
+                    <h5 className="mt-2 text-center" style={{ width: "230px" }}>
+                      {i18n.language === "ar" ? vid.name_ar : vid.name_en}
+                    </h5>
+                  </Link>
+                ))}
             </div>
           </div>
           {/* Exams */}
@@ -201,165 +156,178 @@ const CourseDetailsPage = () => {
             aria-labelledby="messages-tab"
           >
             <div className="d-flex flex-wrap mb-5 gap-3 justify-content-around align-items-center">
-              <div className="col-10 col-sm-5">
-                <span
-                  className="badge rounded-pill text-black p-3 py-2 text-wrap "
-                  style={{
-                    backgroundColor: "var(--offWhite-color)",
-                  }}
+              {Course.Exams?.length > 0 ? (
+                <>
+                  <div className="col-10 col-sm-5">
+                    <span
+                      className="badge rounded-pill text-black p-3 py-2 text-wrap "
+                      style={{
+                        backgroundColor: "var(--offWhite-color)",
+                      }}
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Exercitationem, est.
+                    </span>
+                    <p
+                      className="px-3"
+                      style={{
+                        color: "var(--text-main-color)",
+                      }}
+                    >
+                      <svg
+                        width={17}
+                        height={17}
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mx-2"
+                      >
+                        <circle
+                          cx="8.51151"
+                          cy="8.34818"
+                          r="7.6912"
+                          fill="#99B0DC"
+                        />
+                      </svg>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptatum, facilis minima voluptatibus dolor consequatur
+                      exercitationem perspiciatis eos nam aliquid adipisci.
+                    </p>
+                  </div>
+                  <div className="col-10 col-sm-5">
+                    <span
+                      className="badge rounded-pill text-black p-3 py-2  text-wrap "
+                      style={{
+                        backgroundColor: "var(--offWhite-color)",
+                      }}
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Exercitationem, est.
+                    </span>
+                    <p
+                      className="px-3"
+                      style={{
+                        color: "var(--text-main-color)",
+                      }}
+                    >
+                      <svg
+                        width={17}
+                        height={17}
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mx-2"
+                      >
+                        <circle
+                          cx="8.51151"
+                          cy="8.34818"
+                          r="7.6912"
+                          fill="#99B0DC"
+                        />
+                      </svg>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptatum, facilis minima voluptatibus dolor consequatur
+                      exercitationem perspiciatis eos nam aliquid adipisci.
+                    </p>
+                  </div>
+                  <div className="col-10 col-sm-5">
+                    <span
+                      className="badge rounded-pill text-black p-3 py-2 text-wrap "
+                      style={{
+                        backgroundColor: "var(--offWhite-color)",
+                      }}
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Exercitationem, est.
+                    </span>
+                    <p
+                      className="px-3"
+                      style={{
+                        color: "var(--text-main-color)",
+                      }}
+                    >
+                      <svg
+                        width={17}
+                        height={17}
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mx-2"
+                      >
+                        <circle
+                          cx="8.51151"
+                          cy="8.34818"
+                          r="7.6912"
+                          fill="#99B0DC"
+                        />
+                      </svg>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptatum, facilis minima voluptatibus dolor consequatur
+                      exercitationem perspiciatis eos nam aliquid adipisci.
+                    </p>
+                  </div>
+                  <div className="col-10 col-sm-5">
+                    <span
+                      className="badge rounded-pill text-black p-3 py-2  text-wrap "
+                      style={{
+                        backgroundColor: "var(--offWhite-color)",
+                      }}
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Exercitationem, est.
+                    </span>
+                    <p
+                      className="px-3"
+                      style={{
+                        color: "var(--text-main-color)",
+                      }}
+                    >
+                      <svg
+                        width={17}
+                        height={17}
+                        viewBox="0 0 17 17"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mx-2"
+                      >
+                        <circle
+                          cx="8.51151"
+                          cy="8.34818"
+                          r="7.6912"
+                          fill="#99B0DC"
+                        />
+                      </svg>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptatum, facilis minima voluptatibus dolor consequatur
+                      exercitationem perspiciatis eos nam aliquid adipisci.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <h1
+                  className="display-1"
+                  style={{ color: "var(--text-main-color)" }}
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Exercitationem, est.
-                </span>
-                <p
-                  className="px-3"
-                  style={{
-                    color: "var(--text-main-color)",
-                  }}
-                >
-                  <svg
-                    width={17}
-                    height={17}
-                    viewBox="0 0 17 17"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mx-2"
-                  >
-                    <circle
-                      cx="8.51151"
-                      cy="8.34818"
-                      r="7.6912"
-                      fill="#99B0DC"
-                    />
-                  </svg>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum, facilis minima voluptatibus dolor consequatur
-                  exercitationem perspiciatis eos nam aliquid adipisci.
-                </p>
-              </div>
-              <div className="col-10 col-sm-5">
-                <span
-                  className="badge rounded-pill text-black p-3 py-2  text-wrap "
-                  style={{
-                    backgroundColor: "var(--offWhite-color)",
-                  }}
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Exercitationem, est.
-                </span>
-                <p
-                  className="px-3"
-                  style={{
-                    color: "var(--text-main-color)",
-                  }}
-                >
-                  <svg
-                    width={17}
-                    height={17}
-                    viewBox="0 0 17 17"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mx-2"
-                  >
-                    <circle
-                      cx="8.51151"
-                      cy="8.34818"
-                      r="7.6912"
-                      fill="#99B0DC"
-                    />
-                  </svg>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum, facilis minima voluptatibus dolor consequatur
-                  exercitationem perspiciatis eos nam aliquid adipisci.
-                </p>
-              </div>
-              <div className="col-10 col-sm-5">
-                <span
-                  className="badge rounded-pill text-black p-3 py-2 text-wrap "
-                  style={{
-                    backgroundColor: "var(--offWhite-color)",
-                  }}
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Exercitationem, est.
-                </span>
-                <p
-                  className="px-3"
-                  style={{
-                    color: "var(--text-main-color)",
-                  }}
-                >
-                  <svg
-                    width={17}
-                    height={17}
-                    viewBox="0 0 17 17"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mx-2"
-                  >
-                    <circle
-                      cx="8.51151"
-                      cy="8.34818"
-                      r="7.6912"
-                      fill="#99B0DC"
-                    />
-                  </svg>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum, facilis minima voluptatibus dolor consequatur
-                  exercitationem perspiciatis eos nam aliquid adipisci.
-                </p>
-              </div>
-              <div className="col-10 col-sm-5">
-                <span
-                  className="badge rounded-pill text-black p-3 py-2  text-wrap "
-                  style={{
-                    backgroundColor: "var(--offWhite-color)",
-                  }}
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Exercitationem, est.
-                </span>
-                <p
-                  className="px-3"
-                  style={{
-                    color: "var(--text-main-color)",
-                  }}
-                >
-                  <svg
-                    width={17}
-                    height={17}
-                    viewBox="0 0 17 17"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mx-2"
-                  >
-                    <circle
-                      cx="8.51151"
-                      cy="8.34818"
-                      r="7.6912"
-                      fill="#99B0DC"
-                    />
-                  </svg>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum, facilis minima voluptatibus dolor consequatur
-                  exercitationem perspiciatis eos nam aliquid adipisci.
-                </p>
-              </div>
+                  Soon
+                </h1>
+              )}
             </div>
-            <Link
-              // to={"/login"}
-              onClick={(e) => {
-                // handleSubmit(e);
-              }}
-              style={{
-                backgroundcolor: "var(--text-main-color)",
-                height: "100px",
-                width: "100px",
-              }}
-              className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-            >
-              Submit
-            </Link>
+            {Course.Exams?.length > 0 && (
+              <Link
+                // to={"/login"}
+                onClick={(e) => {
+                  // handleSubmit(e);
+                }}
+                style={{
+                  backgroundColor: "var(--main-color)",
+                  height: "100px",
+                  width: "100px",
+                }}
+                className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+              >
+                Submit
+              </Link>
+            )}
           </div>
         </div>
       ) : (

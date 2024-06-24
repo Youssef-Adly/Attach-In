@@ -359,6 +359,83 @@ const Post = ({
             alt="Post"
           />
         )}
+        {/* Parent Post If Existed */}
+        {/* {console.log("parent: ", parent)} */}
+        {parent && (
+          <div className="bg-body-secondary rounded-4">
+            <div className="card-header border-0 pb-0 ">
+              <div className="d-flex align-items-center justify-content-between p-2">
+                <div className="d-flex align-items-center">
+                  {/* Avatar */}
+                  <div className="avatar avatar-story me-2">
+                    <Link
+                      to={
+                        authUser.id === parent.user.id
+                          ? `/profile`
+                          : user.user_type === "student"
+                          ? `/profile/${parent.user.id}`
+                          : user.user_type === "university"
+                          ? `/universityProfile/${parent.user.id}`
+                          : user.user_type === "company"
+                          ? `/companyProfile/${parent.user.id}`
+                          : ""
+                      }
+                    >
+                      <img
+                        className="avatar-img rounded-circle"
+                        src={
+                          parent.user.profile_photo
+                            ? `${baseURL + parent.user.profile_photo}`
+                            : "/profile.png"
+                        }
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                  {/* Info */}
+                  <div>
+                    <div className="nav nav-divider">
+                      <h6 className="nav-item card-title mb-0">
+                        <Link
+                          to={
+                            authUser.id === parent.user.id
+                              ? `/profile`
+                              : user.user_type === "student"
+                              ? `/profile/${parent.user.id}`
+                              : user.user_type === "university"
+                              ? `/universityProfile/${parent.user.id}`
+                              : user.user_type === "company"
+                              ? `/companyProfile/${parent.user.id}`
+                              : ""
+                          }
+                        >
+                          {parent.user.full_name}
+                        </Link>
+                      </h6>
+                      {/* <span className="nav-item small"> 2hr</span> */}
+                    </div>
+                    <p className="mb-0 small">
+                      {formatDateForPost(parent.created_at)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="card-body">
+              <p>{parent.title}</p>
+              {/* Card img */}
+              {parent.image && (
+                <img
+                  className="card-img"
+                  src={baseURL + parent.image}
+                  // src="https://social.webestica.com/assets/images/post/3by2/01.jpg"
+                  alt="Post"
+                />
+              )}
+            </div>
+          </div>
+        )}
+        {/* Parent Post End */}
         {/* Feed react START */}
         <ul className="nav nav-stack py-3 small">
           <li className="nav-item">
@@ -514,7 +591,7 @@ const Post = ({
         {/* Comments wrap START */}
         <ul className="comment-wrap list-unstyled">
           {/* Comments items START */}
-          {console.log(allComments)}
+          {/* {console.log(allComments)} */}
           {allComments.length > 0 &&
             allComments.map((comment) => (
               <li className="comment-item" key={uuid()}>

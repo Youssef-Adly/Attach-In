@@ -4,7 +4,6 @@ import AddPost from "../Components/AddPost";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
-import Toast from "../Components/Toast";
 
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
@@ -24,7 +23,6 @@ const HomePage = () => {
       <div className="d-flex flex-column gap-3">
         {posts ? (
           <>
-            <Toast message="turnOffComment" />
             {/* Add Post */}
             <AddPost setPosts={setPosts} />
             {/* ============== */}

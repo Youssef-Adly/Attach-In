@@ -16,3 +16,7 @@
   background-color: var(--pink-color) !important;
   color: black !important;
 }
+
+.noTransition {
+  transition: none !important;
+}

@@ -368,6 +368,7 @@ const Post = ({
             style={{
               maxHeight: "500px",
               maxWidth: "100%",
+              margin: "auto",
             }}
           />
         )}
@@ -445,6 +446,8 @@ const Post = ({
                   style={{
                     maxHeight: "500px",
                     maxWidth: "100%",
+                    marginInline: "auto",
+                    display: "inherit",
                   }}
                 />
               )}
@@ -457,8 +460,15 @@ const Post = ({
           {/* Like */}
           <li className="nav-item">
             <Link
-              className={isLiked ? "nav-link liked" : "nav-link"}
+              className={
+                isLiked
+                  ? "nav-link liked noTransition"
+                  : "nav-link noTransition"
+              }
               onClick={() => handleLikeClick(id)}
+              // style={{
+              //   color: "var(--main-color)",
+              // }}
             >
               <FontAwesomeIcon icon={faHeart} className="pe-1" />
               {isLiked ? "Unlike" : "Like"} ({likes.length})

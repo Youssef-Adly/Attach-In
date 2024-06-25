@@ -15,13 +15,17 @@ const ResetPassword = () => {
   // yup Schema
   const schema = yup
     .object({
+      current_password: yup
+        .string()
+        .min(6, "Password should be more than 6 characters")
+        .required("current password can't be empty"),
       new_password: yup
         .string()
         .min(6, "Password should be more than 6 characters")
-        .required("Password can't be empty"),
+        .required("new password can't be empty"),
       confirmPassword: yup
         .string()
-        .required("Confirm Password can't be empty")
+        .required("confirm Password can't be empty")
         .oneOf([yup.ref("new_password"), null], "Passwords must match"),
     })
     .required();
@@ -32,6 +36,7 @@ const ResetPassword = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
+      current_password: "",
       new_password: "",
       confirmPassword: "",
     },
@@ -42,11 +47,12 @@ const ResetPassword = () => {
     setLoading(true);
     await axios
       .post(
-        "https://attachin.com/api/setNewPassword",
+        "https://attachin.com/api/changePasswordFromSettingPage",
         {
-          emailorphone: user.email,
-          language: "ar",
+          // emailorphone: user.email,
+          // language: "ar",
           new_password: data.new_password,
+          current_password: data.current_password,
         },
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
@@ -68,17 +74,21 @@ const ResetPassword = () => {
     >
       <h1 style={{ color: "var(--text-main-color)" }}>Reset Password</h1>
       <hr />
-      {/* <div className="form-floating">
+      <div className="form-floating">
         <input
           type="password"
-          className="form-control rounded-5"
           id="floatingInput"
           placeholder="name@example.com"
           style={{
             bordercolor: "var(--text-main-color)",
           }}
           name="CurrentPassword"
-          onChange={(e) => handleChange(e)}
+          className={
+            errors.current_password
+              ? "border border-1 border-danger form-control rounded-5"
+              : "form-control rounded-5"
+          }
+          {...register("current_password")}
         />
         <label
           htmlFor="floatingInput"
@@ -86,7 +96,8 @@ const ResetPassword = () => {
         >
           Current Password
         </label>
-      </div> */}
+        <ErrorMessage>{errors.current_password?.message}</ErrorMessage>
+      </div>
       <div className="form-floating">
         <input
           type="password"

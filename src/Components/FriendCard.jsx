@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const FriendCard = ({
@@ -10,11 +11,22 @@ const FriendCard = ({
   user_type,
 }) => {
   // const baseURL = "https://attachin.com/api/";
+  const user = useSelector((state) => state.Auth.user);
   const baseImgURL = "https://attachin.com/";
 
   return (
     <Link
-      to={"/profile/" + id}
+      to={
+        user.id === id
+          ? `/profile`
+          : user_type === "student"
+          ? `/profile/${id}`
+          : user_type === "university"
+          ? `/universityProfile/${id}`
+          : user_type === "company"
+          ? `/companyProfile/${id}`
+          : ""
+      }
       className="bg-dark-subtle nav-link"
       style={{ width: "300px", height: "250px", borderRadius: "80px" }}
     >
@@ -37,12 +49,7 @@ const FriendCard = ({
               style={{ height: "100px" }}
             />
             <div className="position-absolute bottom-0 end-0 hoverOne">
-              <img
-                className=""
-                src="chatIcon.svg"
-                alt="icon4"
-                style={{ width: "30px" }}
-              />
+              <img src="chatIcon.svg" alt="icon4" style={{ width: "30px" }} />
             </div>
           </div>
         </div>

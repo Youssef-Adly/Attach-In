@@ -30,6 +30,7 @@ import PrivateRoute from "./utils/IsLoggedGuard";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import SearchAttachInNetwork from "./pages/SearchAttachInNetwork";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -153,6 +154,7 @@ function App() {
         { path: "userExp/:id", element: <UserSkills /> },
         { path: "userPosts/:id", element: <UserPosts /> },
         { path: "profile/:id", element: <UserProfile /> },
+        { path: "search/*", element: <SearchAttachInNetwork /> },
       ],
     },
     { path: "*", element: <NotFound /> },

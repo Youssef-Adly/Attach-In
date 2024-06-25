@@ -12,10 +12,10 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { setAuth } from "../Redux/slices/AuthSlice";
 
 const Aside = () => {
@@ -24,6 +24,23 @@ const Aside = () => {
   const user = useSelector((state) => state.Auth.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  let [search, setSearch] = useState("");
+
+  const searchWithQuery = () => {
+    if (search) {
+      navigate(`/search?name=${search}`);
+      setSearch("");
+    }
+    if (location.pathname === "/search") {
+      window.location.reload();
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    // console.log(e.target.value);
+    setSearch(e.target.value);
+  };
 
   const logout = (e) => {
     navigate("/");
@@ -58,25 +75,26 @@ const Aside = () => {
       >
         {t("View Profile")}
       </Link>
-      <form className="d-flex my-3 position-relative" role="search">
+      <div className="d-flex my-3 position-relative" role="search">
         <input
           className="form-control me-1 rounded-5 "
-          type="search"
+          type="text"
           placeholder={t("Search Attach-In")}
-          aria-label="Search"
+          onChange={(e) => handleSearchChange(e)}
         />
         <button
           className="btn-sm btn"
-          type="submit"
+          // type="submit"
           style={{
             position: "absolute",
             right: "10px",
             top: "3px",
           }}
+          onClick={searchWithQuery}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
-      </form>
+      </div>
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
           <NavLink

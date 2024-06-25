@@ -52,6 +52,44 @@ const CompanyPage = () => {
     // console.log("profile.current.height: ", profile.current.height);
   }, [profile]);
 
+  // Add Friends
+  const addFriend = (e) => {
+    axios
+      .post(
+        baseURL + "addFriendshipRequest",
+        { user_id_2: id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
+  // deleteFriend
+  const deleteFriend = (e) => {
+    axios
+      .post(
+        baseURL + "deleteFriendshipRequest",
+        { user_id_2: id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        window.location.reload();
+      });
+  };
+
+  // const blockRequest = () => {
+  //   axios
+  //     .post(
+  //       baseURL + "blockFriendshipRequest",
+  //       { user_id_2: id },
+  //       { headers: { Authorization: `Bearer ${authUser.token}` } }
+  //     )
+  //     .then((res) => {
+  //       console.log("res: ", res);
+  //       window.location.reload();
+  //     });
+  // };
+
   return (
     <>
       <main>
@@ -113,14 +151,102 @@ const CompanyPage = () => {
             }}
           >
             <div className="d-flex justify-content-end gap-2">
-              <Link /* to={"/university/posts"} */ className="">
+              {/* <Link >
                 <img
                   src="/icon2.svg"
                   className="img-fluid"
                   style={{ width: "50px", height: "50px" }}
                   alt=""
+                  title="add Friend"
                 />
-              </Link>
+              </Link> */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+
+              {company?.we_are_friend ===
+                "no" /* || user?.we_are_friend === "no" */ && (
+                <Link onClick={(e) => addFriend(e)} className="">
+                  <img
+                    src="/icon2.svg"
+                    className="img-fluid"
+                    style={{ width: "50px", height: "50px" }}
+                    alt="Add Friend"
+                    title="Add Friend"
+                  />
+                </Link>
+              )}
+              {company?.we_are_friend === "pending" && (
+                <div /* className="dropdown" */>
+                  <Link to={"/notifications"} /* data-bs-toggle="dropdown" */>
+                    <img
+                      src="/pending.svg"
+                      className="img-fluid"
+                      style={{ width: "50px", height: "50px" }}
+                      alt="Request Pending"
+                      title="Request Pending"
+                    />
+                  </Link>
+                  {/* <ul
+                      className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
+                      aria-labelledby="feedActionShare"
+                      style={{ backgroundColor: "var(--offWhite-color)" }}
+                    >
+                      <li className="mt-1">
+                        <Link
+                          className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                          onClick={(e) => acceptFriendRequest(e)}
+                        >
+                          <img
+                            src="/reportIcon.svg"
+                            alt="report"
+                            className="pe-2"
+                          />
+                          Accept Friend Request
+                        </Link>
+                      </li>
+                      <li className="mt-2">
+                        <Link
+                          className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                          onClick={(e) => rejectFriendRequest(e)}
+                        >
+                          <img
+                            src="/BlockIcon.svg"
+                            alt="block"
+                            className="pe-2"
+                          />
+                          Reject Friend Request
+                        </Link>
+                      </li>
+                    </ul> */}
+                </div>
+              )}
+              {company?.we_are_friend === "approve" && (
+                <Link onClick={(e) => deleteFriend(e)} className="">
+                  <img
+                    src="/approve.svg"
+                    className="img-fluid"
+                    style={{ width: "50px", height: "50px" }}
+                    alt="Delete Friend"
+                    title="Delete Friend"
+                  />
+                </Link>
+              )}
+              {company?.we_are_friend === "block" && (
+                <div /* onClick={(e) => deleteFriend(e)} */ className="">
+                  <img
+                    src="/BlockIcon.svg"
+                    className="img-fluid"
+                    style={{ width: "40px", height: "40px" }}
+                    alt="Blocked"
+                    title="Blocked"
+                  />
+                </div>
+              )}
+
+              {/*  */}
+              {/*  */}
+              {/*  */}
               <Link /* to={"/university/schedule"} */ className="">
                 <img
                   src="/icon4.svg"

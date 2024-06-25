@@ -152,8 +152,6 @@ const Post = ({
 
   const reportSubmit = async () => {
     let reportValue = report.current.value;
-    // console.log("reportValue: ", reportValue);
-    // console.log("user_id: ", user.id);
     setloadingReport(true);
     await axios
       .post(
@@ -177,7 +175,6 @@ const Post = ({
   };
 
   const instantShare = async () => {
-    console.log("id: ", id);
     await axios
       .post(
         baseURL + "api/addUserRePost",
@@ -197,8 +194,6 @@ const Post = ({
 
   const shareWithThoughts = async () => {
     let title = thoughts.current.value;
-    // console.log("thoughts: ", title);
-    // console.log("id: ", id);
     setloadingShare(true);
     await axios
       .post(
@@ -210,8 +205,8 @@ const Post = ({
       )
       .then((res) => {
         console.log(res);
-        thoughts.current.value = "";
         window.location.reload();
+        // thoughts.current.value = "";
         // setloadingShare(false);
       })
       .catch((err) => {

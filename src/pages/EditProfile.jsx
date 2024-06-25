@@ -195,6 +195,7 @@ const EditProfile = () => {
     for (const key in form) {
       if (
         Object.hasOwnProperty.call(form, key) &&
+        form[key] &&
         form[key].toString().trim() !== ""
       ) {
         const element = form[key];

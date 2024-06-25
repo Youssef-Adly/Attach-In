@@ -29,6 +29,8 @@ const ProfilePage = () => {
       .get("https://attachin.com/api/getAllHomePosts?user_id=" + user.id)
       .then((res) => {
         setposts(res.data.data);
+      })
+      .then(() => {
         setSkills([
           ...user.skills?.map(
             (skill) => (skill = { ...skill, type: "skills" })
@@ -43,6 +45,9 @@ const ProfilePage = () => {
             (exp) => (exp = { ...exp, type: "experiences" })
           ),
         ]);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [
     user.certifications,
@@ -65,19 +70,7 @@ const ProfilePage = () => {
                 }) no-repeat right center / cover`
               : "url(/banner.jpg) no-repeat right top / cover",
           }}
-        >
-          {/* <img
-            src={
-              user.profile_cover
-                ? `${baseURL + user.profile_cover}`
-                : "https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
-            }
-            // src="https://static.vecteezy.com/system/resources/previews/001/263/405/non_2x/dark-banner-with-golden-light-detail-in-a-luxury-style-background-vector.jpg"
-            className="rounded-5 shadow-lg bannerCover"
-            style={{ width: "100%" }}
-            alt="cover"
-          /> */}
-        </div>
+        ></div>
 
         {/* Profile Picture With Name and Icons */}
         <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">

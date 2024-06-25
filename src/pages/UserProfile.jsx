@@ -14,7 +14,7 @@ const UserProfile = () => {
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
-  console.log("userSkills: ", userSkills);
+  // console.log("userSkills: ", userSkills);
 
   const { id } = useParams();
   // console.log(id);
@@ -98,6 +98,43 @@ const UserProfile = () => {
       .then((res) => {
         console.log("res: ", res);
         window.location.reload();
+      });
+  };
+
+  // Accept Request
+  const acceptFriendRequest = (e) => {
+    axios
+      .post(
+        baseURL + "api/responseOnFriendshipRequest",
+        { id: id, response: "approve" },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        console.log("res: ", res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // Reject Request
+  const rejectFriendRequest = (e) => {
+    axios
+      .post(
+        baseURL + "api/responseOnFriendshipRequest",
+        { id: id, response: "reject" },
+        {
+          headers: { Authorization: `Bearer ${authUser.token}` },
+        }
+      )
+      .then((res) => {
+        console.log("res: ", res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -221,7 +258,8 @@ const UserProfile = () => {
                     alt=""
                   />
                 </Link>
-                {user?.we_are_friend === "no" && (
+                {user?.we_are_friend ===
+                  "no" /* || user?.we_are_friend === "no" */ && (
                   <Link onClick={(e) => addFriend(e)} className="">
                     <img
                       src="/icon2.svg"
@@ -233,14 +271,48 @@ const UserProfile = () => {
                   </Link>
                 )}
                 {user?.we_are_friend === "pending" && (
-                  <div /* onClick={(e) => addFriend(e)} */ className="">
-                    <img
-                      src="/pending.svg"
-                      className="img-fluid"
-                      style={{ width: "40px", height: "40px" }}
-                      alt="Request Pending"
-                      title="Request Pending"
-                    />
+                  <div /* className="dropdown" */>
+                    <Link to={"/notifications"} /* data-bs-toggle="dropdown" */>
+                      <img
+                        src="/pending.svg"
+                        className="img-fluid"
+                        style={{ width: "40px", height: "40px" }}
+                        alt="Request Pending"
+                        title="Request Pending"
+                      />
+                    </Link>
+                    {/* <ul
+                      className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
+                      aria-labelledby="feedActionShare"
+                      style={{ backgroundColor: "var(--offWhite-color)" }}
+                    >
+                      <li className="mt-1">
+                        <Link
+                          className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                          onClick={(e) => acceptFriendRequest(e)}
+                        >
+                          <img
+                            src="/reportIcon.svg"
+                            alt="report"
+                            className="pe-2"
+                          />
+                          Accept Friend Request
+                        </Link>
+                      </li>
+                      <li className="mt-2">
+                        <Link
+                          className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                          onClick={(e) => rejectFriendRequest(e)}
+                        >
+                          <img
+                            src="/BlockIcon.svg"
+                            alt="block"
+                            className="pe-2"
+                          />
+                          Reject Friend Request
+                        </Link>
+                      </li>
+                    </ul> */}
                   </div>
                 )}
                 {user?.we_are_friend === "approve" && (

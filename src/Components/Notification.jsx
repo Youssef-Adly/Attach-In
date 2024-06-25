@@ -1,13 +1,13 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+// import { useTranslation } from "react-i18next";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Notification = (props) => {
-  const [t, i18n] = useTranslation();
-  const baseURL = "https://attachin.com/api/";
+  // const [t, i18n] = useTranslation();
+  // const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
-  const user = useSelector((state) => state.Auth.user);
+  // const user = useSelector((state) => state.Auth.user);
 
   return (
     <>
@@ -23,7 +23,7 @@ const Notification = (props) => {
                     ? baseImgURL + props.from_user?.profile_photo
                     : "/profile.png"
                 }
-                style={{ width: "70px", height: "auto" }}
+                style={{ width: "70px", height: "70px" }}
                 alt=""
               />
             </Link>

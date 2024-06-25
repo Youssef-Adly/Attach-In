@@ -1,28 +1,74 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import ErrorMessage from "../Components/ErrorMessage";
+import LoadingSuspese from "../Components/LoadingSuspense";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ResetPassword = () => {
-  const [userReset, setUserReset] = useState({
-    CurrentPassword: "",
-    NewPassword: "",
-    ConfirmPassword: "",
+  const user = useSelector((state) => state.Auth.user);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  // yup Schema
+  const schema = yup
+    .object({
+      new_password: yup
+        .string()
+        .min(6, "Password should be more than 6 characters")
+        .required("Password can't be empty"),
+      confirmPassword: yup
+        .string()
+        .required("Confirm Password can't be empty")
+        .oneOf([yup.ref("new_password"), null], "Passwords must match"),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      new_password: "",
+      confirmPassword: "",
+    },
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (e) => {
-    setUserReset((old) => ({ ...old, [e.target.name]: e.target.value }));
-    // console.log(userReset);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(userReset);
+  const handleForgetPassword = async (data) => {
+    setLoading(true);
+    await axios
+      .post(
+        "https://attachin.com/api/setNewPassword",
+        {
+          emailorphone: user.email,
+          language: "ar",
+          new_password: data.new_password,
+        },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      .then((res) => {
+        console.log(res);
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
-    <div className="col-10 mx-auto d-flex flex-column gap-4 mt-4 justify-content-center">
+    <form
+      className="col-10 mx-auto d-flex flex-column gap-4 mt-4 justify-content-center"
+      onSubmit={handleSubmit(handleForgetPassword)}
+      disabled={isSubmitting}
+    >
       <h1 style={{ color: "var(--text-main-color)" }}>Reset Password</h1>
       <hr />
-      <div className="form-floating">
+      {/* <div className="form-floating">
         <input
           type="password"
           className="form-control rounded-5"
@@ -40,18 +86,22 @@ const ResetPassword = () => {
         >
           Current Password
         </label>
-      </div>
+      </div> */}
       <div className="form-floating">
         <input
           type="password"
-          className="form-control rounded-5"
+          className={
+            errors.new_password
+              ? "border border-1 border-danger form-control rounded-5"
+              : "form-control rounded-5"
+          }
+          {...register("new_password")}
           id="floatingPassword"
           placeholder="Password"
           style={{
             bordercolor: "var(--text-main-color)",
           }}
-          name="NewPassword"
-          onChange={(e) => handleChange(e)}
+          name="new_password"
         />
         <label
           htmlFor="floatingPassword"
@@ -61,18 +111,23 @@ const ResetPassword = () => {
         >
           New Password
         </label>
+        <ErrorMessage>{errors.new_password?.message}</ErrorMessage>
       </div>
       <div className="form-floating">
         <input
           type="password"
-          className="form-control rounded-5"
           id="floatingPassword"
           placeholder="Password"
+          className={
+            errors.confirmPassword
+              ? "border border-1 border-danger form-control rounded-5"
+              : "form-control rounded-5"
+          }
+          {...register("confirmPassword")}
           style={{
             bordercolor: "var(--text-main-color)",
           }}
-          name="ConfirmPassword"
-          onChange={(e) => handleChange(e)}
+          name="confirmPassword"
         />
         <label
           htmlFor="floatingPassword"
@@ -82,21 +137,27 @@ const ResetPassword = () => {
         >
           ConfirmPassword
         </label>
+        <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
       </div>
-      <Link
-        onClick={(e) => {
-          handleSubmit(e);
-        }}
-        style={{
-          backgroundColor: "var(--main-color)",
-          height: "100px",
-          width: "100px",
-        }}
-        className="mx-auto mt-4 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-      >
-        Confirm
-      </Link>
-    </div>
+      {/* Submit */}
+      {!loading ? (
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          style={{
+            backgroundColor: "var(--main-color)",
+            height: "100px",
+            width: "100px",
+            border: "none",
+          }}
+          className="regbtn mx-auto mb-5 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+        >
+          Confirm
+        </button>
+      ) : (
+        <LoadingSuspese />
+      )}
+    </form>
   );
 };
 

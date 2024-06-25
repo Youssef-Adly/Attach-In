@@ -361,10 +361,14 @@ const Post = ({
         {/* Card img */}
         {image && (
           <img
-            className="card-img"
+            // className="card-img"
             src={baseURL + image}
             // src="https://social.webestica.com/assets/images/post/3by2/01.jpg"
             alt="Post"
+            style={{
+              maxHeight: "500px",
+              maxWidth: "100%",
+            }}
           />
         )}
         {/* Parent Post If Existed */}
@@ -438,6 +442,10 @@ const Post = ({
                   src={baseURL + parent.image}
                   // src="https://social.webestica.com/assets/images/post/3by2/01.jpg"
                   alt="Post"
+                  style={{
+                    maxHeight: "500px",
+                    maxWidth: "100%",
+                  }}
                 />
               )}
             </div>
@@ -450,14 +458,7 @@ const Post = ({
           <li className="nav-item">
             <Link
               className={isLiked ? "nav-link liked" : "nav-link"}
-              to=""
               onClick={() => handleLikeClick(id)}
-              // data-bs-container="body"
-              // data-bs-toggle="tooltip"
-              // data-bs-placement="top"
-              // data-bs-html="true"
-              // data-bs-custom-class="tooltip-text-start"
-              // data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
             >
               <FontAwesomeIcon icon={faHeart} className="pe-1" />
               {isLiked ? "Unlike" : "Like"} ({likes.length})

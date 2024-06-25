@@ -26,6 +26,7 @@ const SearchAttachInNetwork = () => {
   //   params.delete("myParam");
   //   return params;
   // });
+
   const search = (e) => {
     setSearchBar(e.target.value);
     setSearchedUsers(

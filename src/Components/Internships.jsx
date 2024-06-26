@@ -99,9 +99,9 @@ const Internships = ({
   const addComment = async (e) => {
     e.preventDefault();
     const commentValue = commentBox.current.value;
-    if (commentValue.trim().length > 0) {
-      commentBox.current.rows = 1;
-      commentBox.current.value = "";
+    if (commentValue.trim().length > 0 && !turnOffComment) {
+      // commentBox.current.rows = 1;
+      // commentBox.current.value = "";
       await axios
         .post(
           baseURL + "api/addCompanyInternshipComment",
@@ -115,13 +115,13 @@ const Internships = ({
         .then((res) => {
           // console.log(res.data.data);
           setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
-          // commentBox.current.value = "";
-          // commentBox.current.rows = 1;
+          commentBox.current.value = "";
+          commentBox.current.rows = 1;
         });
-    } else {
+    } /* else {
       commentBox.current.rows = commentBox.current.value.split("\n").length;
       return;
-    }
+    } */
   };
 
   const deletePost = async (id) => {
@@ -162,26 +162,28 @@ const Internships = ({
 
   const reportSubmit = async () => {
     let reportValue = report.current.value;
-    setloadingReport(true);
-    await axios
-      .post(
-        baseURL + "api/reportUserRequest",
-        {
-          user_id_2: user.id,
-          reason: reportValue,
-        },
-        { headers: { Authorization: `Bearer ${authUser.token}` } }
-      )
-      .then((res) => {
-        // console.log(res);
-        report.current.value = "";
-        setloadingReport(false);
-      })
-      .catch((err) => {
-        setloadingReport(false);
-        console.log(err);
-        // report.current.value = "";
-      });
+    if (reportValue.trim()) {
+      setloadingReport(true);
+      await axios
+        .post(
+          baseURL + "api/reportUserRequest",
+          {
+            user_id_2: user.id,
+            reason: reportValue,
+          },
+          { headers: { Authorization: `Bearer ${authUser.token}` } }
+        )
+        .then((res) => {
+          // console.log(res);
+          report.current.value = "";
+          setloadingReport(false);
+        })
+        .catch((err) => {
+          setloadingReport(false);
+          console.log(err);
+          // report.current.value = "";
+        });
+    }
   };
 
   const instantShare = async () => {
@@ -206,9 +208,7 @@ const Internships = ({
     let req = requirement.current.value;
     let desc = descriptions.current.value;
     let dep = departments.current.value;
-    // console.log("req && desc && dep: ", req && desc && dep);
-    if (req && desc && dep) {
-      console.log("req && desc && dep: ", req && desc && dep);
+    if (req.trim() && desc.trim() && dep.trim()) {
       setloadingShare(true);
       await axios
         .post(
@@ -240,7 +240,7 @@ const Internships = ({
     let req = requirementEdit.current.value;
     let desc = descriptionsEdit.current.value;
     let dep = departmentsEdit.current.value;
-    if (req && desc && dep) {
+    if (req.trim() && desc.trim() && dep.trim()) {
       setloadingShare(true);
       await axios
         .post(
@@ -844,7 +844,13 @@ const Internships = ({
         >
           {!loadingReport ? (
             <div className="modal-dialog">
-              <div className="modal-content">
+              <div
+                className="modal-content"
+                style={{
+                  background: "var(--main-color)",
+                  color: "#eee",
+                }}
+              >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id={"Report" + id}>
                     Report User Request
@@ -906,7 +912,13 @@ const Internships = ({
         >
           {!loadingShare ? (
             <div className="modal-dialog">
-              <div className="modal-content">
+              <div
+                className="modal-content"
+                style={{
+                  background: "var(--main-color)",
+                  color: "#eee",
+                }}
+              >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel">
                     Share Post
@@ -991,7 +1003,13 @@ const Internships = ({
         >
           {!loadingShare ? (
             <div className="modal-dialog">
-              <div className="modal-content">
+              <div
+                className="modal-content"
+                style={{
+                  background: "var(--main-color)",
+                  color: "#eee",
+                }}
+              >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel">
                     Edit Post

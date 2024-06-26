@@ -24,7 +24,6 @@ const HomeLayout = () => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
 
-
   // useEffect(() => {
   // console.log("files: ", files);
   // console.log(files[0]?.file);
@@ -402,7 +401,13 @@ const HomeLayout = () => {
       >
         {!loading ? (
           <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
+            <div
+              className="modal-content"
+              // style={{
+              //   background: "var(--main-color)",
+              //   color: "#eee",
+              // }}
+            >
               {/* Modal feed header START */}
               <div className="modal-header">
                 <h5 className="modal-title" id="feedActionPhotoLabel">

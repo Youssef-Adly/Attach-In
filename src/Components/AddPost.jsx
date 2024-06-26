@@ -5,10 +5,8 @@ import {
   faBookmark,
   faEllipsis,
   faEnvelope,
-  // faFaceSmile,
   faImage,
   faPenToSquare,
-  // faVideoCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -85,15 +83,6 @@ const AddPost = ({ setPosts }) => {
             }}
           />
         </form>
-        <li className="nav-item list-unstyled mb-auto ms-3">
-          <button
-            onClick={(e) => addPostWithoutImage(e)}
-            type="button"
-            className="btn btn-outline-success"
-          >
-            Post
-          </button>
-        </li>
       </div>
       {/* Share feed toolbar START */}
       <ul className="nav nav-pills nav-stack small justify-content-end fw-normal">
@@ -107,6 +96,21 @@ const AddPost = ({ setPosts }) => {
             <FontAwesomeIcon icon={faImage} className="text-success pe-2" />
             Photo
           </Link>
+        </li>
+        <li className="nav-item list-unstyled mb-auto ms-3">
+          <button
+            onClick={(e) => addPostWithoutImage(e)}
+            type="button"
+            className="btn btn-outline-success"
+            style={{
+              // background: "var(--pink-color)",
+              color: "var(--text-main-color)",
+              paddingInline: "20px",
+              marginRight: "5px",
+            }}
+          >
+            Post
+          </button>
         </li>
         {/* <li className="nav-item">
           <Link
@@ -146,7 +150,7 @@ const AddPost = ({ setPosts }) => {
           </Link>
         </li> */}
         {/* removed ms-lg-auto for lake of other btns */}
-        <li className="nav-item dropdown">
+        {/* <li className="nav-item dropdown">
           <Link
             className="nav-link bg-light py-1 px-2 mb-0"
             to=""
@@ -156,8 +160,6 @@ const AddPost = ({ setPosts }) => {
           >
             <FontAwesomeIcon icon={faEllipsis} />
           </Link>
-          {/* Dropdown menu */}
-          {/* added justify-content-end for lake of other btns */}
           <ul
             className="dropdown-menu dropdown-menu-end"
             aria-labelledby="feedActionShare"
@@ -184,7 +186,7 @@ const AddPost = ({ setPosts }) => {
               </Link>
             </li>
           </ul>
-        </li>
+        </li> */}
       </ul>
       {/* Share feed toolbar END */}
     </div>

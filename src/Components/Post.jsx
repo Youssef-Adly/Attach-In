@@ -37,9 +37,11 @@ const Post = ({
   const commentBox = useRef();
   const report = useRef();
   const thoughts = useRef();
+  const titleEditPost = useRef();
   const authUser = useSelector((state) => state.Auth.user);
   let [loadingShare, setloadingShare] = useState(false);
   let [loadingReport, setloadingReport] = useState(false);
+  let [loadingEdit, setloadingEdit] = useState(false);
   const isMyPost = authUser.id === user_id;
   let [turnOffComment, setTurnOffComment] = useState(turn_of_comments !== "0");
 
@@ -85,13 +87,14 @@ const Post = ({
   };
 
   // Comments Logic Here
+  const [commentLength, setcommentLength] = useState(1);
   const [allComments, setComments] = useState(comments);
   // console.log("allComments: ", allComments);
 
   const addComment = async (e) => {
     e.preventDefault();
     const commentValue = commentBox.current.value;
-    if (commentValue.trim().length > 0) {
+    if (commentValue.trim().length > 0 && !turnOffComment) {
       await axios
         .post(
           "https://attachin.com/api/addUserPostComment",
@@ -108,10 +111,10 @@ const Post = ({
           commentBox.current.value = "";
           commentBox.current.rows = 1;
         });
-    } else {
+    } /* else {
       commentBox.current.rows = commentBox.current.value.split("\n").length;
       return;
-    }
+    } */
   };
 
   const deletePost = async (id) => {
@@ -215,6 +218,31 @@ const Post = ({
       });
   };
 
+  const editPost = async () => {
+    let title = titleEditPost.current.value;
+    if (title.trim().length > 0) {
+      setloadingEdit(true);
+      await axios
+        .post(
+          baseURL + "api/editUserPost",
+          {
+            title: title,
+            post_id: id,
+          },
+          { headers: { Authorization: `Bearer ${authUser.token}` } }
+        )
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+          // setloadingEdit(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setloadingEdit(true);
+        });
+    }
+  };
+
   return (
     <div className="card rounded-4">
       {/* Card header START */}
@@ -291,7 +319,11 @@ const Post = ({
             >
               {isMyPost && (
                 <li className="mt-1">
-                  <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                  <Link
+                    className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                    data-bs-toggle="modal"
+                    data-bs-target={"#editModel" + id}
+                  >
                     <img
                       src="/edit.svg"
                       alt="Edit Post"
@@ -618,7 +650,7 @@ const Post = ({
           {/* Comments items START */}
           {/* {console.log(allComments)} */}
           {allComments.length > 0 &&
-            allComments.map((comment) => (
+            allComments.slice(0, commentLength).map((comment) => (
               <li className="comment-item" key={uuid()}>
                 <div className="d-flex position-relative">
                   {/* Avatar */}
@@ -774,7 +806,13 @@ const Post = ({
       >
         {!loadingReport ? (
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div
+              className="modal-content"
+              style={{
+                background: "var(--main-color)",
+                color: "#eee",
+              }}
+            >
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id={"Report" + id}>
                   Report User Request
@@ -836,7 +874,13 @@ const Post = ({
       >
         {!loadingShare ? (
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div
+              className="modal-content"
+              style={{
+                background: "var(--main-color)",
+                color: "#eee",
+              }}
+            >
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
                   Share Post
@@ -885,15 +929,83 @@ const Post = ({
         )}
       </div>
 
+      {/* Edit Post Model */}
+      <div
+        className="modal fade "
+        id={"editModel" + id}
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex={-1}
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        {!loadingEdit ? (
+          <div className="modal-dialog">
+            <div
+              className="modal-content"
+              style={{
+                background: "var(--main-color)",
+                color: "#eee",
+              }}
+            >
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Edit Post
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor={"edit" + id} className="form-label">
+                    Edit Your Post
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id={"edit" + id}
+                    rows={2}
+                    defaultValue={title}
+                    ref={titleEditPost}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={editPost}
+                  className="btn btn-danger"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <LoadingSuspese />
+        )}
+      </div>
+
       {/* Load more comments */}
-      {false && (
-        <div className="card-footer border-0 pt-0">
+      {comments.length > commentLength && (
+        <div className="card-footer border-0 pt-0 ms-auto">
           <Link
             to=""
             role="button"
             className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
             data-bs-toggle="button"
             aria-pressed="true"
+            onClick={() => setcommentLength((old) => old + 2)}
           >
             <FontAwesomeIcon icon={faEllipsis} className="me-2" />
             Load more comments

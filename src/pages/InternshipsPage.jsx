@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import HomeLayout from "../Components/HomeLayout";
 import Internships from "../Components/Internships";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
+import axios from "axios";
+import LoadingSuspese from "../Components/LoadingSuspense";
 
 const InternshipsPage = () => {
   const [t] = useTranslation();
+  const baseURL = "https://attachin.com/api/";
+  let [internships, setInterships] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(baseURL + "getAllInternships")
+      .then((res) => {
+        setInterships(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -17,9 +34,23 @@ const InternshipsPage = () => {
       </h1>
       <hr />
       {/* Internships Posts */}
-      <Internships />
-      <Internships />
-      <Internships />
+      {internships ? (
+        internships.map((i, idx) => (
+          <Internships key={uuid()} {...i} postState={[idx, setInterships]} />
+        ))
+      ) : (
+        <LoadingSuspese />
+      )}
+      {internships?.length === 0 && (
+        <div
+          className="text-center display-3 pt-5"
+          style={{
+            color: "var(--text-main-color)",
+          }}
+        >
+          No Internships Yet
+        </div>
+      )}
     </>
   );
 };

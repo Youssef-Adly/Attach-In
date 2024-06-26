@@ -1,14 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LoadingSuspese from "../Components/LoadingSuspense";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const InternshipDetails = () => {
-  const { id } = useParams();
-  console.log(id);
   const [t] = useTranslation();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const baseURL = "https://attachin.com/api/";
+  const baseImgURL = "https://attachin.com/";
+  const authUser = useSelector((state) => state.Auth.user);
+  let [loading, setLoading] = useState(false);
+  let [internship, setInternship] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(baseURL + "getInternshipDetailsByInternshipId?internship_id=" + id)
+      .then((res) => {
+        console.log(res);
+        setInternship(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    await axios
+      .post(
+        baseURL + "addCompanyInternshipApplyRequest",
+        {
+          internship_id: id,
+        },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        console.log(res);
+        // setLoading(false);
+        navigate("/home");
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -71,7 +111,7 @@ const InternshipDetails = () => {
       </ul>
 
       {/* <!-- Tab panes --> */}
-      {true ? (
+      {internship ? (
         <div
           className="tab-content"
           style={{
@@ -91,9 +131,6 @@ const InternshipDetails = () => {
             </Link>
             <h4 style={{ color: "var(--text-main-color)" }}>
               Back To Internships
-              {/* McDonalds <br /> */}
-              {/* <small className="small">Marketing</small> */}
-              {/* {i18n.language === "ar" ? Course.name_ar : Course.name_en} */}
             </h4>
           </div>
           <hr />
@@ -108,22 +145,35 @@ const InternshipDetails = () => {
               className="d-flex gap-3 align-content-center px-2 px-sm-5 mb-5"
               style={{ color: "var(--text-main-color)" }}
             >
-              <img src="/Mac.svg" alt="internship img" />
+              <img
+                className="avatar-img rounded-circle"
+                style={{ width: "100px", height: "100px" }}
+                src={
+                  internship.user.profile_photo
+                    ? `${baseImgURL + internship.user.profile_photo}`
+                    : "/profile.png"
+                }
+                alt="internship img"
+              />
               <div className="d-flex flex-column justify-content-center">
-                <h3>McDonalds</h3>
-                <h6 className="ms-1">Marketing</h6>
+                <h3>{internship.user.full_name}</h3>
+                <h6 className="ms-1">
+                  {internship.department[0].toUpperCase() +
+                    internship.department.slice(1)}
+                </h6>
               </div>
               {/* {i18n.language === "ar"
                 ? Course.description_ar
                 : Course.description_en} */}
             </div>
             <p className="col-12 col-sm-9 px-2 px-sm-5">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex dicta
+              {internship.description}
+              {/* Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex dicta
               autem eaque non natus soluta libero, sunt alias provident minus
               cum facere temporibus nemo iure impedit id. Assumenda obcaecati
               tempore hic aut neque. Corporis, consectetur mollitia eos incidunt
               adipisci nemo aut facilis molestias. Quibusdam tempore molestiae
-              ratione omnis officia dolores!
+              ratione omnis officia dolores! */}
             </p>
           </div>
           {/* REQ */}
@@ -134,7 +184,7 @@ const InternshipDetails = () => {
             aria-labelledby="profile-tab"
           >
             <div className="d-flex px-2 px-sm-5 me-md-5 gap-2 flex-column justify-content-around mb-5">
-              <h5>Development</h5>
+              {/* <h5>Development</h5> */}
               <h6
                 className="p-2 rounded-5"
                 style={{
@@ -143,9 +193,9 @@ const InternshipDetails = () => {
                   color: "var(--text-main-color)",
                 }}
               >
-                Marketing Department
+                {internship.requirements}
               </h6>
-              <p
+              {/* <p
                 className="p-3 rounded-5"
                 style={{
                   width: "fit-content",
@@ -157,9 +207,9 @@ const InternshipDetails = () => {
                 consequuntur quibusdam iure animi, quas nihil cupiditate
                 distinctio officia sunt fugiat. Lorem ipsum dolor sit amet
                 consectetur, adipisicing elit. Fugit consequuntur quibusdam iure
-              </p>
+              </p> */}
               {/*  */}
-              <h5>Internship Info</h5>
+              {/* <h5>Internship Info</h5>
               <h6
                 className="p-2 rounded-5"
                 style={{
@@ -182,9 +232,9 @@ const InternshipDetails = () => {
                 consequuntur quibusdam iure animi, quas nihil cupiditate
                 distinctio officia sunt fugiat. Lorem ipsum dolor sit amet
                 consectetur, adipisicing elit. Fugit consequuntur quibusdam iure
-              </p>
+              </p> */}
               {/*  */}
-              <h5>Responsibilities</h5>
+              {/* <h5>Responsibilities</h5>
               <h6
                 className="p-2 pe-5 rounded-5"
                 style={{
@@ -207,9 +257,9 @@ const InternshipDetails = () => {
                 consequuntur quibusdam iure animi, quas nihil cupiditate
                 distinctio officia sunt fugiat. Lorem ipsum dolor sit amet
                 consectetur, adipisicing elit. Fugit consequuntur quibusdam iure
-              </p>
+              </p> */}
               {/*  */}
-              <h5>Collage Speciality</h5>
+              {/* <h5>Collage Speciality</h5>
               <h6
                 className="p-2 pe-5 rounded-5"
                 style={{
@@ -219,9 +269,9 @@ const InternshipDetails = () => {
                 }}
               >
                 Accounting section
-              </h6>
+              </h6> */}
               {/*  */}
-              <h5>Requirement year</h5>
+              {/* <h5>Requirement year</h5>
               <h6
                 className="p-2 pe-5 rounded-5"
                 style={{
@@ -231,9 +281,9 @@ const InternshipDetails = () => {
                 }}
               >
                 First and second year
-              </h6>
+              </h6> */}
               {/*  */}
-              <h5>Requirement Skills</h5>
+              {/* <h5>Requirement Skills</h5>
               <h6
                 className="p-2 pe-5 rounded-5"
                 style={{
@@ -243,7 +293,7 @@ const InternshipDetails = () => {
                 }}
               >
                 Requirement Skills
-              </h6>
+              </h6> */}
               {/*  */}
             </div>
           </div>
@@ -278,7 +328,7 @@ const InternshipDetails = () => {
             <Link
               // to={"/login"}
               onClick={(e) => {
-                // handleSubmit(e);
+                handleSubmit(e);
               }}
               style={{
                 backgroundColor: "var(--main-color)",

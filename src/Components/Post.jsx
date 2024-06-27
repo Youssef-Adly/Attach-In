@@ -223,7 +223,6 @@ const Post = ({
       .catch((err) => {
         if (err.response.data.errors[0] === "Unauthenticated") {
           console.log(err.response.data.errors[0]);
-          setloadingReport(false);
           navigate("/login");
         } else {
           console.log("error Sharing" + err);

@@ -1,7 +1,7 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,7 +12,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAsStudent } from "../Redux/actions/authActions";
 import { setGuest } from "../Redux/slices/AuthSlice";
-// import { setAuth } from "../Redux/slices/AuthSlice";
 
 // yup Magic Here
 //#region
@@ -114,7 +113,7 @@ const Register = () => {
     // Destructure password before submission (optional)
     const { confirmPassword, ...formData } = data;
     // Handle form submission logic here
-    console.log("formData: ", formData);
+    // console.log("formData: ", formData);
     dispatch(registerAsStudent(formData)).then((res) => {
       if (res.error?.message !== "Rejected") {
         navigate("/home");
@@ -140,7 +139,7 @@ const Register = () => {
         });
       }
     }
-    console.log("errorsArr: ", errorsArr);
+    // console.log("errorsArr: ", errorsArr);
     setFormErrors([...errorsArr]);
   };
 

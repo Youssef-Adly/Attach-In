@@ -5,7 +5,9 @@
 }
 
 * {
-  transition: all 0.5s !important;
+  transition: color 0s !important;
+  transition: all 0.3s !important;
+  transition-timing-function: ease !important;
 }
 
 body {

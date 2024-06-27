@@ -43,7 +43,7 @@ const HomeLayout = () => {
           },
         })
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           // if (!image) {
           //   postBox2.current.value = "";
           //   postBox2.current.rows = 2;
@@ -57,12 +57,12 @@ const HomeLayout = () => {
             navigate("/login");
             window.location.reload();
           } else {
-            window.location.reload();
+            setLoading(false);
           }
         });
-      setTimeout(() => {
-        setLoading(false);
-      }, 100);
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 100);
     } /* else {
       postBox2.current.rows = postBox2.current.value.split("\n").length;
       return;

@@ -10,6 +10,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./i18n";
 
+/////////////////////////////////
+//#region
 // Import React FilePond
 import { registerPlugin } from "react-filepond";
 
@@ -39,9 +41,9 @@ registerPlugin(
   FilePondPluginImageResize,
   FilePondPluginImageCrop
 );
-// import LoadingSuspese from "./Components/LoadingSuspense";
-// import Loading from "./Components/Loading";
 /////////////////////////////////
+//#endregion
+
 // Lazy Loadin Routes
 //#region
 const CompanyPage = lazy(() => import("./pages/CompanyPage"));
@@ -88,7 +90,6 @@ function App() {
   const root = document.documentElement;
   const theme = useSelector((state) => state.theme.value);
   const lang = useSelector((state) => state.lang.value);
-
   const x = useTranslation();
 
   useEffect(() => {

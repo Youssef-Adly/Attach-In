@@ -1,17 +1,15 @@
 import React from "react";
-// import { useTranslation } from "react-i18next";
-// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Notification = (props) => {
-  // const [t, i18n] = useTranslation();
-  // const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
-  // const user = useSelector((state) => state.Auth.user);
 
   return (
     <>
-      <div className="col-11 col-sm-8 col-md-6 col-x-5 mx-aut ms-3 bg-secondary-subtle rounded-pill">
+      <div
+        style={{ transition: "0" }}
+        className="col-11 col-sm-8 col-md-6 col-x-5 mx-aut ms-3 bg-secondary-subtle rounded-pill"
+      >
         <div className="d-flex align-items-center gap-3">
           {/* Avatar */}
           <div className="position-relative ">
@@ -34,7 +32,10 @@ const Notification = (props) => {
               <h5 className="card-title mb-0">
                 <Link
                   to={"/profile/" + props.from_user.id}
-                  className="text-decoration-none text-black-50"
+                  className="text-decoration-none"
+                  style={{
+                    color: "var(--text-main-color)",
+                  }}
                 >
                   {props.from_user?.full_name}
                 </Link>

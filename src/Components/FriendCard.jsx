@@ -32,7 +32,13 @@ const FriendCard = ({
     >
       <div
         className="bg-secondary position-relative "
-        style={{ height: "30%", borderRadius: "80px 80px 0 0" }}
+        style={{
+          height: "30%",
+          borderRadius: "80px 80px 0 0",
+          background: profile_cover
+            ? `url("${baseImgURL + profile_cover}") right top / cover no-repeat`
+            : `url("/banner.jpg") right top / cover no-repeat`,
+        }}
       >
         <div
           className="col-4 position-absolute start-50 translate-middle"

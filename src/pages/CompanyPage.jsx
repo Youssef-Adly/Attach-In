@@ -129,10 +129,10 @@ const CompanyPage = () => {
                 transform: "translateY(-50%)",
                 backgroundColor: "var(--offWhite-color)",
                 objectFit: "cover",
-                // height: "55%",
-                // width: "100%",
                 height: `${width}px`,
                 width: `${width}px`,
+                // height: "55%",
+                // width: "100%",
               }}
             />
           </div>
@@ -247,7 +247,7 @@ const CompanyPage = () => {
               {/*  */}
               {/*  */}
               {/*  */}
-              <Link /* to={"/university/schedule"} */ className="">
+              <Link to={"/companyProfile/internships/" + id} className="">
                 <img
                   src="/icon4.svg"
                   className="img-fluid"

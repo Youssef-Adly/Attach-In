@@ -275,15 +275,23 @@ const Login = () => {
               Login
             </button>
           ) : (
-            <LoadingSuspese />
+            <>
+              <img
+                src="/Opener Loading.gif"
+                // className="m-auto"
+                style={{ width: "250px" }}
+                alt="Loading"
+              />
+              {/* <LoadingSuspese /> */}
+            </>
           )}
         </form>
         {/* Footer */}
         <div
-          className="col-12 d-none d-lg-block g-0 mt-5 rounded-2 "
+          className="col-12 d-none d-lg-block g-0 mt-5 mb-5 rounded-2 "
           style={{ backgroundColor: "var(--sec-color)" }}
         >
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>

@@ -94,6 +94,7 @@ const Internships = ({
   };
 
   // Comments Logic Here
+  const [commentLength, setcommentLength] = useState(2);
   const [allComments, setComments] = useState(comments);
 
   const addComment = async (e) => {
@@ -699,7 +700,7 @@ const Internships = ({
             {/* Comments items START */}
             {/* {console.log(allComments)} */}
             {allComments.length > 0 &&
-              allComments.reverse().map((comment) => (
+              allComments.slice(0, commentLength).map((comment) => (
                 <li
                   className="comment-item rounded-4 mb-3"
                   // style={{ backgroundColor: "#EEE", padding: "10px" }}
@@ -992,94 +993,26 @@ const Internships = ({
         </div>
 
         {/* Edit Internship */}
-        <div
-          className="modal fade "
-          id={"editModel" + id}
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex={-1}
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          {!loadingShare ? (
-            <div className="modal-dialog">
-              <div
-                className="modal-content"
-                style={{
-                  background: "var(--main-color)",
-                  color: "#eee",
-                }}
-              >
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                    Edit Post
-                  </h1>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  />
-                </div>
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label htmlFor={"share5" + id} className="form-label">
-                      Internship Department
-                    </label>
-                    <input
-                      className="form-control"
-                      id={"share5" + id}
-                      defaultValue={department}
-                      ref={departmentsEdit}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor={"share111" + id} className="form-label">
-                      Internship Description
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id={"share111" + id}
-                      rows={1}
-                      defaultValue={description}
-                      ref={descriptionsEdit}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor={"share222" + id} className="form-label">
-                      Internship Requirements
-                    </label>
-                    <textarea
-                      className="form-control"
-                      id={"share222" + id}
-                      rows={1}
-                      defaultValue={requirements}
-                      ref={requirementEdit}
-                    />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    onClick={editInternShip}
-                    className="btn btn-danger"
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <LoadingSuspese />
-          )}
-        </div>
+        {comments.length > commentLength && (
+          <div
+            className="card-footer border-0 pt-0 ms-auto"
+            style={{
+              background: "none",
+            }}
+          >
+            <Link
+              to=""
+              role="button"
+              className="btn btn-link btn-link-loader btn-sm d-flex align-items-center"
+              data-bs-toggle="button"
+              aria-pressed="true"
+              onClick={() => setcommentLength((old) => old + 2)}
+            >
+              <FontAwesomeIcon icon={faEllipsis} className="me-2" />
+              Load more comments
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   );

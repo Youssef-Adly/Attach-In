@@ -110,9 +110,10 @@ const NotificationsPage = () => {
             {notifications && friendRequests ? (
               <>
                 {notifications ? (
-                  notifications.map((n, idx) => (
-                    <Notification {...n} key={idx} />
-                  ))
+                  notifications
+                    .reverse()
+                    .slice(0, 4)
+                    .map((n, idx) => <Notification {...n} key={idx} />)
                 ) : (
                   <p
                     className="fs-3 text-center"

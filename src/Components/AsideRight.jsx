@@ -39,7 +39,6 @@ const AsideRight = () => {
   };
 
   const handleSearchChange = (e) => {
-    // console.log(e.target.value);
     setSearch(e.target.value);
   };
 
@@ -57,8 +56,8 @@ const AsideRight = () => {
       }}
     >
       <Link
-        to=""
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none"
+        to="/profile"
       >
         {/* Avatar */}
         <div className="avatar avatar-story me-2">
@@ -87,7 +86,13 @@ const AsideRight = () => {
           type="text"
           placeholder={t("Search Attach-In")}
           aria-label="Search"
+          value={search}
           onChange={(e) => handleSearchChange(e)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              searchWithQuery();
+            }
+          }}
         />
         <button
           className="btn-sm btn"

@@ -87,7 +87,7 @@ const Post = ({
   };
 
   // Comments Logic Here
-  const [commentLength, setcommentLength] = useState(1);
+  const [commentLength, setcommentLength] = useState(2);
   const [allComments, setComments] = useState(comments);
   // console.log("allComments: ", allComments);
 
@@ -471,15 +471,14 @@ const Post = ({
               {/* Card img */}
               {parent.image && (
                 <img
-                  className="card-img"
+                  // className="card-img"
                   src={baseURL + parent.image}
                   // src="https://social.webestica.com/assets/images/post/3by2/01.jpg"
                   alt="Post"
                   style={{
                     maxHeight: "500px",
                     maxWidth: "100%",
-                    marginInline: "auto",
-                    display: "inherit",
+                    margin: "auto",
                   }}
                 />
               )}
@@ -585,19 +584,7 @@ const Post = ({
         <div className="d-flex mb-3">
           {/* Avatar */}
           <div className="avatar avatar-xs me-2">
-            <Link
-              to={
-                authUser.id === user_id
-                  ? `/profile`
-                  : user.user_type === "student"
-                  ? `/profile/${user_id}`
-                  : user.user_type === "university"
-                  ? `/universityProfile/${user_id}`
-                  : user.user_type === "company"
-                  ? `/companyProfile/${user_id}`
-                  : ""
-              }
-            >
+            <Link to={`/profile`}>
               <img
                 className="avatar-img rounded-circle"
                 src={
@@ -708,7 +695,7 @@ const Post = ({
                       <p className="small mb-0">{comment.comment}</p>
                     </div>
                     {/* Comment react */}
-                    <ul className="nav nav-divider py-2 small">
+                    {/* <ul className="nav nav-divider py-2 small">
                       <li className="nav-item">
                         <Link className="nav-link" to="">
                           Like (3)
@@ -724,7 +711,6 @@ const Post = ({
                           View 5 replies
                         </Link>
                       </li>
-                      {/*  */}
                       <li className="nav-item dropdown  ms-auto">
                         <Link
                           className="nav-link mb-0"
@@ -735,7 +721,6 @@ const Post = ({
                         >
                           <FontAwesomeIcon icon={faEllipsis} />
                         </Link>
-                        {/* Card share action dropdown menu */}
                         <ul
                           className="dropdown-menu dropdown-menu-end"
                           aria-labelledby="cardShareAction2"
@@ -783,7 +768,7 @@ const Post = ({
                           </li>
                         </ul>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </li>
@@ -998,11 +983,16 @@ const Post = ({
 
       {/* Load more comments */}
       {comments.length > commentLength && (
-        <div className="card-footer border-0 pt-0 ms-auto">
+        <div
+          className="card-footer border-0 pt-0 ms-auto"
+          style={{
+            background: "none",
+          }}
+        >
           <Link
             to=""
             role="button"
-            className="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
+            className="btn btn-link btn-link-loader btn-sm d-flex align-items-center"
             data-bs-toggle="button"
             aria-pressed="true"
             onClick={() => setcommentLength((old) => old + 2)}

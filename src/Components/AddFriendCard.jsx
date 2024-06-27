@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AddFriendCard = ({
   reqID,
@@ -42,9 +43,11 @@ const AddFriendCard = ({
         window.location.reload();
       });
   };
+
   return (
-    <div
-      className="bg-dark-subtle position-relative"
+    <Link
+      to={"/profile/" + id}
+      className="nav-link bg-dark-subtle position-relative"
       style={{ width: "300px", height: "250px", borderRadius: "80px" }}
     >
       <img
@@ -74,7 +77,13 @@ const AddFriendCard = ({
 
       <div
         className="bg-secondary position-relative "
-        style={{ height: "30%", borderRadius: "80px 80px 0 0" }}
+        style={{
+          height: "30%",
+          borderRadius: "80px 80px 0 0",
+          background: profile_cover
+            ? `url("${baseImgURL + profile_cover}") right top / cover no-repeat`
+            : `url("/banner.jpg") right top / cover no-repeat`,
+        }}
       >
         <div
           className="col-4 position-absolute start-50 translate-middle"
@@ -106,7 +115,7 @@ const AddFriendCard = ({
         <h4 className="card-title mb-0">{full_name}</h4>
         <p className="mb-0 small">{bio}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

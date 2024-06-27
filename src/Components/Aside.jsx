@@ -52,8 +52,8 @@ const Aside = () => {
       // style={{ width: 280 }}
     >
       <Link
-        to=""
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        to="/profile"
       >
         {/* Avatar */}
         <div className="avatar avatar-story me-2">
@@ -80,7 +80,13 @@ const Aside = () => {
           className="form-control me-1 rounded-5 "
           type="text"
           placeholder={t("Search Attach-In")}
+          value={search}
           onChange={(e) => handleSearchChange(e)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              searchWithQuery();
+            }
+          }}
         />
         <button
           className="btn-sm btn"
@@ -140,6 +146,7 @@ const Aside = () => {
             style={({ isActive, isPending, isTransitioning }) => {
               return {
                 backgroundColor: isActive ? "var(--sec-color)" : "unset",
+                transform: isTransitioning ? "scale(.80)" : "unset",
               };
             }}
           >

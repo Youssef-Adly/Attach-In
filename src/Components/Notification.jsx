@@ -11,7 +11,7 @@ const Notification = (props) => {
 
   return (
     <>
-      <div className="col-11 mx-auto">
+      <div className="col-11 col-sm-8 col-md-6 col-x-5 mx-aut ms-3 bg-secondary-subtle rounded-pill">
         <div className="d-flex align-items-center gap-3">
           {/* Avatar */}
           <div className="position-relative ">
@@ -31,15 +31,23 @@ const Notification = (props) => {
           {/* Info */}
           <div className="">
             <div className="nav nav-divider">
-              <h5 className="card-title mb-0">{props.from_user?.full_name}</h5>
+              <h5 className="card-title mb-0">
+                <Link
+                  to={"/profile/" + props.from_user.id}
+                  className="text-decoration-none text-black-50"
+                >
+                  {props.from_user?.full_name}
+                </Link>
+              </h5>
               {/* <span className="nav-item small"> 2hr</span> */}
             </div>
             <p className="mb-0 small">
-              {props.from_user?.bio || props.from_user?.type}
+              {/* {props.from_user?.bio || props.from_user?.type} */}
+              {props.body}
             </p>
           </div>
         </div>
-        <p className="p-3">{props.body}</p>
+        {/* <p className="p-3">{props.body}</p> */}
       </div>
       <hr className="col-12" />
     </>

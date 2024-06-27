@@ -112,7 +112,7 @@ const NotificationsPage = () => {
                 {notifications ? (
                   notifications
                     .reverse()
-                    .slice(0, 4)
+                    // .slice(0, 4)
                     .map((n, idx) => <Notification {...n} key={idx} />)
                 ) : (
                   <p

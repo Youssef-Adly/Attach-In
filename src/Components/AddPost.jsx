@@ -1,13 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import {
-  faBookmark,
-  faEllipsis,
-  faEnvelope,
-  faImage,
-  faPenToSquare,
-} from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -15,6 +9,7 @@ const AddPost = ({ setPosts }) => {
   const baseURL = "https://attachin.com/";
   const user = useSelector((state) => state.Auth.user);
   const postBox = useRef();
+  const navigate = useNavigate();
 
   const addPostWithoutImage = async (e) => {
     e.preventDefault();
@@ -38,11 +33,17 @@ const AddPost = ({ setPosts }) => {
             { user, comments: [], lovers: [], ...res.data.data },
             ...old,
           ]);
+        })
+        .catch((err) => {
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            navigate("/login");
+          }
         });
-    } else {
+    } /*  else {
       postBox.current.rows = postBox.current.value.split("\n").length;
       return;
-    }
+    } */
   };
 
   return (

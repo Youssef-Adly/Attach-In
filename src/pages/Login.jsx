@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Footer from "../Components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -7,10 +6,10 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Redux/actions/authActions";
 import ErrorMessage from "../Components/ErrorMessage";
-import LoadingSuspese from "../Components/LoadingSuspense";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { setGuest } from "../Redux/slices/AuthSlice";
 
 // yup Schema
 const schema = yup
@@ -29,10 +28,11 @@ const schema = yup
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.Auth.error);
+  const user = useSelector((state) => state.Auth.user);
+  // console.log("user: ", user);
   const [t] = useTranslation();
   const [loginForm, setLoginForm] = useState(false);
-  const [userLogin, setUserLogin] = useState({ email: "", password: "" });
+  // const [userLogin, setUserLogin] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [FormErrors, setFormErrors] = useState(null);
 
@@ -57,12 +57,12 @@ const Login = () => {
   // };
 
   const handleLogin = (data) => {
-    console.log("data: ", data);
+    // console.log("data: ", data);
     setLoading(true);
     setFormErrors(null);
 
     dispatch(login(data)).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.error?.message !== "Rejected") {
         navigate("/home");
       } else {
@@ -92,6 +92,15 @@ const Login = () => {
     setFormErrors([...errorsArr]);
   };
 
+  // Login As Guest
+  const loginAsGuest = () => {
+    if (user?.user_type === "guest") {
+      navigate("/home");
+    }
+    dispatch(setGuest());
+    navigate("/home");
+  };
+
   return (
     <div
       style={{
@@ -101,13 +110,19 @@ const Login = () => {
       className="d-flex flex-column align-items-end position-relative"
     >
       {/* <img src="graything.svg" alt="graything" className="img-fluid" /> */}
-      <Link to={"/"} className="text-dark">
+      <div
+        className="text-dark"
+        onClick={loginAsGuest}
+        style={{
+          cursor: "pointer",
+        }}
+      >
         <FontAwesomeIcon
           icon={faXmark}
           fontSize={50}
           className="position-absolute start-0 p-4"
         />
-      </Link>
+      </div>
       <div
         style={{
           background: "url(graything.svg) no-repeat top/cover",

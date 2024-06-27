@@ -1,16 +1,12 @@
 import React, { memo, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCommentDots,
-  faCommentSlash,
   faEllipsis,
-  faFlag,
   faHeart,
   faPaperPlane,
   faShare,
-  faTrash,
-  faUserSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { formatDateForPost } from "./formatDateForPost";
 import { v4 as uuid } from "uuid";
@@ -38,6 +34,7 @@ const Post = ({
   const report = useRef();
   const thoughts = useRef();
   const titleEditPost = useRef();
+  const navigate = useNavigate();
   const authUser = useSelector((state) => state.Auth.user);
   let [loadingShare, setloadingShare] = useState(false);
   let [loadingReport, setloadingReport] = useState(false);
@@ -80,8 +77,13 @@ const Post = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
-    } catch (error) {
-      console.error("Error liking post:", error);
+    } catch (err) {
+      if (err.response.data.errors[0] === "Unauthenticated") {
+        console.log(err.response.data.errors[0]);
+        navigate("/login");
+      } else {
+        console.error("Error liking post:", err);
+      }
       // Handle errors appropriately (e.g., display error message to user)
     }
   };
@@ -89,7 +91,6 @@ const Post = ({
   // Comments Logic Here
   const [commentLength, setcommentLength] = useState(2);
   const [allComments, setComments] = useState(comments);
-  // console.log("allComments: ", allComments);
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -110,6 +111,14 @@ const Post = ({
           setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
           commentBox.current.value = "";
           commentBox.current.rows = 1;
+        })
+        .catch((err) => {
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            navigate("/login");
+          } else {
+            console.log("error adding Comment" + err);
+          }
         });
     } /* else {
       commentBox.current.rows = commentBox.current.value.split("\n").length;
@@ -130,8 +139,13 @@ const Post = ({
         // console.log("res: ", res);
         setPosts((old) => old.filter((o) => o.id !== id));
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        if (err.response.data.errors[0] === "Unauthenticated") {
+          console.log(err.response.data.errors[0]);
+          navigate("/login");
+        } else {
+          console.log("error deleting Post" + err);
+        }
       });
   };
 
@@ -148,33 +162,49 @@ const Post = ({
         // console.log("res: ", res);
         setTurnOffComment((old) => !old);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch((err) => {
+        if (err.response.data.errors[0] === "Unauthenticated") {
+          console.log(err.response.data.errors[0]);
+          navigate("/login");
+        } else {
+          console.log("error adding Comment" + err);
+        }
+        console.log("error Turning Off Comments " + err);
       });
   };
 
   const reportSubmit = async () => {
     let reportValue = report.current.value;
-    setloadingReport(true);
-    await axios
-      .post(
-        baseURL + "api/reportUserRequest",
-        {
-          user_id_2: user.id,
-          reason: reportValue,
-        },
-        { headers: { Authorization: `Bearer ${authUser.token}` } }
-      )
-      .then((res) => {
-        // console.log(res);
-        report.current.value = "";
-        setloadingReport(false);
-      })
-      .catch((err) => {
-        setloadingReport(false);
-        console.log(err);
-        // report.current.value = "";
-      });
+    if (reportValue.trim().length > 0) {
+      setloadingReport(true);
+      await axios
+        .post(
+          baseURL + "api/reportUserRequest",
+          {
+            user_id_2: user.id,
+            reason: reportValue,
+          },
+          { headers: { Authorization: `Bearer ${authUser.token}` } }
+        )
+        .then((res) => {
+          console.log(res);
+          report.current.value = "";
+          setloadingReport(false);
+        })
+        .catch((err) => {
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            setloadingReport(false);
+            navigate("/login");
+            window.location.reload();
+          } else {
+            console.log("error adding Comment" + err);
+          }
+          console.log("error submiting report " + err);
+          setloadingReport(false);
+          // report.current.value = "";
+        });
+    }
   };
 
   const instantShare = async () => {
@@ -191,31 +221,48 @@ const Post = ({
         window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.errors[0] === "Unauthenticated") {
+          console.log(err.response.data.errors[0]);
+          setloadingReport(false);
+          navigate("/login");
+        } else {
+          console.log("error Sharing" + err);
+        }
+        console.log("error Sharing " + err);
       });
   };
 
   const shareWithThoughts = async () => {
     let title = thoughts.current.value;
-    setloadingShare(true);
-    await axios
-      .post(
-        baseURL + "api/addUserRePost",
-        { parent_id: id, title: title },
-        {
-          headers: { Authorization: `Bearer ${authUser.token}` },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        window.location.reload();
-        // thoughts.current.value = "";
-        // setloadingShare(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setloadingShare(false);
-      });
+    if (title.trim().length > 0) {
+      setloadingShare(true);
+      await axios
+        .post(
+          baseURL + "api/addUserRePost",
+          { parent_id: id, title: title },
+          {
+            headers: { Authorization: `Bearer ${authUser.token}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+          // thoughts.current.value = "";
+          // setloadingShare(false);
+        })
+        .catch((err) => {
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            setloadingShare(false);
+            navigate("/login");
+            window.location.reload();
+          } else {
+            console.log("error Sharing" + err);
+          }
+          console.log("error Sharing " + err);
+          setloadingShare(false);
+        });
+    }
   };
 
   const editPost = async () => {
@@ -237,8 +284,15 @@ const Post = ({
           // setloadingEdit(true);
         })
         .catch((err) => {
-          console.log(err);
-          setloadingEdit(true);
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            setloadingEdit(false);
+            navigate("/login");
+            window.location.reload();
+          } else {
+            console.log("error Editing Post" + err);
+            setloadingEdit(false);
+          }
         });
     }
   };

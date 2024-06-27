@@ -3,16 +3,16 @@ import { Navigate } from "react-router-dom";
 
 import React from "react";
 
-const PrivateRouteLogged = ({ children }) => {
+const PrivateGuestRoute = ({ children }) => {
   const user = useSelector((state) => state.Auth.user); // Replace with your user selector
 
   // Handle potential missing user state (optional)
-  if (user?.token) {
+  if (user.user_type === "guest") {
     // Or redirect to login if user state is not yet available
-    return <Navigate to="/home" />;
+    return <Navigate to="/login" />;
   }
 
-  return user?.token ? <Navigate to="/home" /> : children;
+  return user.user_type === "guest" ? <Navigate to="/login" /> : children;
 };
 
-export default PrivateRouteLogged;
+export default PrivateGuestRoute;

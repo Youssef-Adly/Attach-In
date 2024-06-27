@@ -1,9 +1,11 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import PrivateRouteLogged from "./utils/isNotLoggedGuard";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Suspention from "./Components/Suspention";
+import PrivateRouteLogged from "./utils/isNotLoggedGuard";
+import PrivateRoute from "./utils/IsLoggedGuard";
+import PrivateGuestRoute from "./utils/IsGuestGuard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./i18n";
@@ -26,12 +28,9 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImageEdit from "filepond-plugin-image-edit";
 
 // Import the plugin code
-import PrivateRoute from "./utils/IsLoggedGuard";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
-import SearchAttachInNetwork from "./pages/SearchAttachInNetwork";
-import CompanyInternships from "./pages/CompanyInternships";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -77,6 +76,11 @@ const PricingPage = lazy(() => import("./pages/PricingPage"));
 const UserSkills = lazy(() => import("./pages/UserSkills"));
 const UserPosts = lazy(() => import("./pages/UserPosts"));
 const UserProfile = lazy(() => import("./pages/UserProfile"));
+const SearchAttachInNetwork = lazy(() =>
+  import("./pages/SearchAttachInNetwork")
+);
+const CompanyInternships = lazy(() => import("./pages/CompanyInternships"));
+
 //#endregion
 /////////////////////////////////
 
@@ -130,35 +134,150 @@ function App() {
       ),
       children: [
         { path: "home", element: <HomePage /> },
-        { path: "network", element: <NetworkPage /> },
-        { path: "notifications", element: <NotificationsPage /> },
+        {
+          path: "network",
+          element: (
+            <PrivateGuestRoute>
+              <NetworkPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "notifications",
+          element: (
+            <PrivateGuestRoute>
+              <NotificationsPage />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "internships", element: <InternshipsPage /> },
-        { path: "internships/:id", element: <InternshipDetails /> },
+        {
+          path: "internships/:id",
+          element: (
+            <PrivateGuestRoute>
+              <InternshipDetails />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "about", element: <About /> },
         { path: "FAQ", element: <FQAPage /> },
-        { path: "about", element: <About /> },
         { path: "terms", element: <TermsAndConditionsPage /> },
         { path: "partners", element: <OurPartnersPage /> },
-        { path: "messages", element: <MessagesPage /> },
-        { path: "contactus", element: <ContactUs /> },
+        {
+          path: "messages",
+          element: (
+            <PrivateGuestRoute>
+              <MessagesPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "contactus",
+          element: (
+            <PrivateGuestRoute>
+              <ContactUs />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "setting", element: <SettingPage /> },
-        { path: "reset", element: <ResetPasswordPage /> },
-        { path: "courses", element: <CoursesPage /> },
-        { path: "courses/:id", element: <CourseDetailsPage /> },
-        { path: "profile", element: <ProfilePage /> },
-        { path: "editprofile", element: <EditProfile /> },
-        { path: "companyProfile/:id", element: <CompanyPage /> },
-        { path: "universityProfile/:id", element: <UniversityPage /> },
-        { path: "university/posts/:id", element: <UniversityNews /> },
-        { path: "university/schedule/:id", element: <UniversitySchedule /> },
+        {
+          path: "reset",
+          element: (
+            <PrivateGuestRoute>
+              <ResetPasswordPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "courses",
+          element: (
+            <PrivateGuestRoute>
+              <CoursesPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "courses/:id",
+          element: (
+            <PrivateGuestRoute>
+              <CourseDetailsPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <PrivateGuestRoute>
+              <ProfilePage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "editprofile",
+          element: (
+            <PrivateGuestRoute>
+              <EditProfile />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "companyProfile/:id",
+          element: (
+            <PrivateGuestRoute>
+              <CompanyPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "universityProfile/:id",
+          element: (
+            <PrivateGuestRoute>
+              <UniversityPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "university/posts/:id",
+          element: (
+            <PrivateGuestRoute>
+              <UniversityNews />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "university/schedule/:id",
+          element: (
+            <PrivateGuestRoute>
+              <UniversitySchedule />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "Subscription", element: <PricingPage /> },
-        { path: "userExp/:id", element: <UserSkills /> },
+        {
+          path: "userExp/:id",
+          element: (
+            <PrivateGuestRoute>
+              <UserSkills />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "userPosts/:id", element: <UserPosts /> },
-        { path: "profile/:id", element: <UserProfile /> },
+        {
+          path: "profile/:id",
+          element: (
+            <PrivateGuestRoute>
+              <UserProfile />
+            </PrivateGuestRoute>
+          ),
+        },
         { path: "search/*", element: <SearchAttachInNetwork /> },
         {
           path: "companyProfile/internships/:id",
-          element: <CompanyInternships />,
+          element: (
+            <PrivateGuestRoute>
+              <CompanyInternships />
+            </PrivateGuestRoute>
+          ),
         },
       ],
     },

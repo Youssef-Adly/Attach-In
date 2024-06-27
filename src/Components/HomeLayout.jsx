@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Aside from "./Aside";
 import AsideRight from "./AsideRight";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faVideoCamera } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "./HomeLayout.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
-// Import React FilePond
 import { FilePond } from "react-filepond";
 
 const HomeLayout = () => {
@@ -23,11 +22,7 @@ const HomeLayout = () => {
   const user = useSelector((state) => state.Auth.user);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
-
-  // useEffect(() => {
-  // console.log("files: ", files);
-  // console.log(files[0]?.file);
-  // }, [files]);
+  const navigate = useNavigate();
 
   const addPostWithImage = async (e) => {
     e.preventDefault();
@@ -56,15 +51,22 @@ const HomeLayout = () => {
           window.location.reload();
         })
         .catch((err) => {
-          window.location.reload();
+          if (err.response.data.errors[0] === "Unauthenticated") {
+            console.log(err.response.data.errors[0]);
+            setLoading(false);
+            navigate("/login");
+            window.location.reload();
+          } else {
+            window.location.reload();
+          }
         });
       setTimeout(() => {
         setLoading(false);
       }, 100);
-    } else {
+    } /* else {
       postBox2.current.rows = postBox2.current.value.split("\n").length;
       return;
-    }
+    } */
   };
 
   return (
@@ -503,240 +505,6 @@ const HomeLayout = () => {
         ) : (
           <LoadingSuspese />
         )}
-      </div>
-      {/* ========================== */}
-      {/* Video Model */}
-      <div
-        className="modal fade"
-        id="feedActionVideo"
-        tabIndex={-1}
-        aria-labelledby="feedActionVideoLabel"
-        style={{ display: "none" }}
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            {/* Modal feed header START */}
-            <div className="modal-header">
-              <h5 className="modal-title" id="feedActionVideoLabel">
-                Add post video
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            {/* Modal feed header END */}
-            {/* Modal feed body START */}
-            <div className="modal-body">
-              {/* Add Feed */}
-              <div className="d-flex mb-3">
-                {/* Avatar */}
-                <div className="avatar avatar-xs me-2">
-                  <img
-                    className="avatar-img rounded-circle"
-                    src="https://github.com/mdo.png"
-                    alt=""
-                  />
-                </div>
-                {/* Feed box  */}
-                <form className="w-100">
-                  <textarea
-                    className="form-control pe-4 fs-3 lh-1 border-0"
-                    rows={2}
-                    placeholder="Share your thoughts..."
-                    defaultValue={""}
-                  />
-                </form>
-              </div>
-              {/* Dropzone photo START */}
-              <div>
-                <label className="form-label">Upload attachment</label>
-                {/* <div
-                  className="dropzone dropzone-default card shadow-none dz-clickable"
-                  data-dropzone='{"maxFiles":2}'
-                >
-                  <div className="dz-message">
-                    <i className="bi bi-camera-reels display-3" />
-                    <p>Drag here or click to upload video.</p>
-                  </div>
-                </div> */}
-                <div>
-                  <label htmlFor="formFileLg" className="form-label">
-                    <FontAwesomeIcon
-                      icon={faVideoCamera}
-                      className="text-info pe-2"
-                    />
-                    Drag here or click to upload Video
-                  </label>
-                  <input
-                    className="form-control form-control-lg"
-                    id="formFileLg"
-                    type="file"
-                  />
-                </div>
-              </div>
-              {/* Dropzone photo END */}
-            </div>
-            {/* Modal feed body END */}
-            {/* Modal feed footer */}
-            <div className="modal-footer">
-              {/* Button */}
-              <button type="button" className="btn btn-danger-soft me-2">
-                <i className="bi bi-camera-video-fill pe-1" /> Live video
-              </button>
-              <button type="button" className="btn btn-success-soft">
-                Post
-              </button>
-            </div>
-            {/* Modal feed footer */}
-          </div>
-        </div>
-      </div>
-      {/* ========================== */}
-      {/* Feeling Model */}
-      <div
-        className="modal fade"
-        id="modalCreateFeed"
-        tabIndex={-1}
-        aria-labelledby="modalLabelCreateFeed"
-        style={{ display: "none" }}
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content">
-            {/* Modal feed header START */}
-            <div className="modal-header">
-              <h5 className="modal-title" id="modalLabelCreateFeed">
-                Create post
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            {/* Modal feed header END */}
-            {/* Modal feed body START */}
-            <div className="modal-body">
-              {/* Add Feed */}
-              <div className="d-flex mb-3">
-                {/* Avatar */}
-                <div className="avatar avatar-xs me-2">
-                  <img
-                    className="avatar-img rounded-circle"
-                    src="https://github.com/mdo.png"
-                    alt=""
-                  />
-                </div>
-                {/* Feed box  */}
-                <form className="w-100">
-                  <textarea
-                    className="form-control pe-4 fs-3 lh-1 border-0"
-                    rows={4}
-                    placeholder="Share your thoughts..."
-                    autoFocus
-                    defaultValue={""}
-                  />
-                </form>
-              </div>
-              {/* Feed rect START */}
-              <div className="hstack gap-2">
-                <Link
-                  className="icon-md bg-success bg-opacity-10 text-success rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Photo"
-                  data-bs-original-title="Photo"
-                >
-                  <i className="bi bi-image-fill" />
-                </Link>
-                <Link
-                  className="icon-md bg-info bg-opacity-10 text-info rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Video"
-                  data-bs-original-title="Video"
-                >
-                  {" "}
-                  <i className="bi bi-camera-reels-fill" />{" "}
-                </Link>
-                <Link
-                  className="icon-md bg-danger bg-opacity-10 text-danger rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Events"
-                  data-bs-original-title="Events"
-                >
-                  {" "}
-                  <i className="bi bi-calendar2-event-fill" />{" "}
-                </Link>
-                <Link
-                  className="icon-md bg-warning bg-opacity-10 text-warning rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Feeling/Activity"
-                  data-bs-original-title="Feeling/Activity"
-                >
-                  {" "}
-                  <i className="bi bi-emoji-smile-fill" />{" "}
-                </Link>
-                <Link
-                  className="icon-md bg-light text-secondary rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Check in"
-                  data-bs-original-title="Check in"
-                >
-                  {" "}
-                  <i className="bi bi-geo-alt-fill" />{" "}
-                </Link>
-                <Link
-                  className="icon-md bg-primary bg-opacity-10 text-primary rounded-circle"
-                  to=""
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  aria-label="Tag people on top"
-                  data-bs-original-title="Tag people on top"
-                >
-                  {" "}
-                  <i className="bi bi-tag-fill" />{" "}
-                </Link>
-              </div>
-              {/* Feed rect END */}
-            </div>
-            {/* Modal feed body END */}
-            {/* Modal feed footer */}
-            <div className="modal-footer row justify-content-between">
-              {/* Select */}
-              <div className="col-lg-3">
-                <select className="form-select form-select-lg mb-3">
-                  <option value={"Public"}>Public</option>
-                  <option value={"Only me"}>Only me</option>
-                  <option value={"Friends"}>Friends</option>
-                </select>
-                {/* Button */}
-              </div>
-              <div className="col-lg-8 text-sm-end">
-                {/* <button type="button" className="btn btn-danger-soft me-2">
-                  <i className="bi bi-camera-video-fill pe-1" /> Live video
-                </button> */}
-                <button type="button" className="btn px-4 btn-success me-3">
-                  Post
-                </button>
-              </div>
-            </div>
-            {/* Modal feed footer */}
-          </div>
-        </div>
       </div>
       {/* End Of Models */}
       {/* ========================== */}

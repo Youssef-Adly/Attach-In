@@ -11,6 +11,7 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAsStudent } from "../Redux/actions/authActions";
+import { setGuest } from "../Redux/slices/AuthSlice";
 // import { setAuth } from "../Redux/slices/AuthSlice";
 
 // yup Magic Here
@@ -71,8 +72,9 @@ const Register = () => {
   // Redux Hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const apiErrors = useSelector((state) => state.Auth.error);
+  const user = useSelector((state) => state.Auth.user);
   const lang = useSelector((state) => state.lang.value);
+  // const apiErrors = useSelector((state) => state.Auth.error);
   // const user = useSelector((state) => state.Auth.user);
 
   // Resets User For Debuging
@@ -142,6 +144,15 @@ const Register = () => {
     setFormErrors([...errorsArr]);
   };
 
+  // Login As Guest
+  const loginAsGuest = () => {
+    if (user?.user_type === "guest") {
+      navigate("/home");
+    }
+    dispatch(setGuest());
+    navigate("/home");
+  };
+
   return (
     <div
       style={{
@@ -150,13 +161,19 @@ const Register = () => {
       }}
       className="d-flex flex-column position-relative"
     >
-      <Link to={"/"} className="text-dark">
+      <div
+        className="text-dark"
+        style={{
+          cursor: "pointer",
+        }}
+        onClick={loginAsGuest}
+      >
         <FontAwesomeIcon
           icon={faXmark}
           fontSize={50}
           className="position-absolute start-0 p-4"
         />
-      </Link>
+      </div>
       <div className="mt-5 pt-4 d-flex flex-column justify-content-center align-items-center">
         <img
           src="Logowithout.svg"

@@ -46,9 +46,15 @@ const Internships = ({
   const descriptionsEdit = useRef();
   const requirementEdit = useRef();
   const departmentsEdit = useRef();
+  //////
+  // const descriptionsEdit = useRef();
+  // const requirementEdit = useRef();
+  // const departmentsEdit = useRef();
+  /////
   const authUser = useSelector((state) => state.Auth.user);
   let [loadingShare, setloadingShare] = useState(false);
   let [loadingReport, setloadingReport] = useState(false);
+  let [loadingEdit, setloadingEdit] = useState(false);
   const isMyPost = authUser.id === user_id;
   let [turnOffComment, setTurnOffComment] = useState(turn_of_comments !== "0");
 
@@ -237,12 +243,12 @@ const Internships = ({
     }
   };
 
-  const editInternShip = async () => {
+  const editInternship = async () => {
     let req = requirementEdit.current.value;
     let desc = descriptionsEdit.current.value;
     let dep = departmentsEdit.current.value;
     if (req.trim() && desc.trim() && dep.trim()) {
-      setloadingShare(true);
+      setloadingEdit(true);
       await axios
         .post(
           baseURL + "api/editCompanyInternship",
@@ -259,11 +265,11 @@ const Internships = ({
         .then((res) => {
           console.log(res);
           window.location.reload();
-          // setloadingShare(false);
+          // setloadingEdit(false);
         })
         .catch((err) => {
           console.log(err);
-          setloadingShare(false);
+          setloadingEdit(false);
         });
     }
   };
@@ -922,7 +928,7 @@ const Internships = ({
               >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                    Share Post
+                    Share Internship
                   </h1>
                   <button
                     type="button"
@@ -993,6 +999,107 @@ const Internships = ({
         </div>
 
         {/* Edit Internship */}
+
+        <div
+          className="modal fade "
+          id={"editModel" + id}
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex={-1}
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          {!loadingEdit ? (
+            <div className="modal-dialog">
+              <div
+                className="modal-content"
+                style={{
+                  background: "var(--main-color)",
+                  color: "#eee",
+                }}
+              >
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                    Edit Internship
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label
+                      htmlFor={"editInternship3" + id}
+                      className="form-label"
+                    >
+                      Internship Department
+                    </label>
+                    <input
+                      className="form-control"
+                      id={"editInternship3" + id}
+                      // rows={1}
+                      defaultValue={department}
+                      ref={departmentsEdit}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label
+                      htmlFor={"editInternship" + id}
+                      className="form-label"
+                    >
+                      Internship Description
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id={"editInternship" + id}
+                      rows={1}
+                      defaultValue={description}
+                      ref={descriptionsEdit}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label
+                      htmlFor={"editInternship2" + id}
+                      className="form-label"
+                    >
+                      Internship Requirements
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id={"editInternship2" + id}
+                      rows={1}
+                      defaultValue={requirements}
+                      ref={requirementEdit}
+                    />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    onClick={editInternship}
+                    className="btn btn-danger"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <LoadingSuspese />
+          )}
+        </div>
+
+        {/* Comments Pagination */}
         {comments.length > commentLength && (
           <div
             className="card-footer border-0 pt-0 ms-auto"

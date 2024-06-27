@@ -41,7 +41,7 @@ const Footer = () => {
           <Link to={"/terms"} className="btn">
             {t("Terms & Conditions")}
           </Link>
-          <Link to={"/contact"} className="btn">
+          <Link to={"/contactus"} className="btn">
             {t("Contact Us")}
           </Link>
           <Link to={"/partners"} className="btn">

@@ -6,10 +6,7 @@ const Notification = (props) => {
 
   return (
     <>
-      <div
-        style={{ transition: "0" }}
-        className="col-11 col-sm-8 col-md-6 col-x-5 mx-aut ms-3 bg-secondary-subtle rounded-pill"
-      >
+      <div className="col-11 col-sm-8 col-md-6 col-x-5 mx-aut ms-3 bg-secondary-subtle rounded-pill">
         <div className="d-flex align-items-center gap-3">
           {/* Avatar */}
           <div className="position-relative ">
@@ -42,7 +39,7 @@ const Notification = (props) => {
               </h5>
               {/* <span className="nav-item small"> 2hr</span> */}
             </div>
-            <p className="mb-0 small">
+            <p className="mb-0 small txtColor">
               {/* {props.from_user?.bio || props.from_user?.type} */}
               {props.body}
             </p>

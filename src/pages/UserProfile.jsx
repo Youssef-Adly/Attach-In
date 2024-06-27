@@ -10,7 +10,6 @@ const UserProfile = () => {
   const profile = useRef();
   const baseURL = "https://attachin.com/";
   let [user, setUser] = useState(null);
-  console.log("user: ", user);
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
@@ -594,21 +593,18 @@ const UserProfile = () => {
                 className="carousel-indicators"
                 style={{ marginBottom: "-40px" }}
               >
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={0}
-                  className="active bg-black"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                />
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={1}
-                  aria-label="Slide 2"
-                  className=" bg-black"
-                />
+                {posts.length > 2 &&
+                  posts
+                    .slice(0, 2)
+                    .map((p, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        data-bs-target="#carouselExampleIndicators2"
+                        data-bs-slide-to={idx}
+                        className="active bg-black"
+                      />
+                    ))}
               </div>
               <div className="carousel-inner">
                 {/*  */}

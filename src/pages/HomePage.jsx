@@ -39,8 +39,8 @@ const HomePage = () => {
               <button
                 className="btn col-8 col-sm-5 col-md-4 col-lg-4 col-xl-3 ms-auto my-4 mb-md-0 rounde"
                 style={{
-                  backgroundColor: "var(--main-color)",
-                  color: "var(--offWhite-color)",
+                  backgroundColor: "var(--sec-color)",
+                  color: "var(--text-main-color)",
                 }}
                 onClick={() => {
                   setFetching(true);

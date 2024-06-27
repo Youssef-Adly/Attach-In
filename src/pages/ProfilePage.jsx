@@ -217,7 +217,6 @@ const ProfilePage = () => {
         </div>
 
         {/* Carosel #1 */}
-        {/* {console.log(user)} */}
         {userSkills?.length > 0 ? (
           <div id="carouselExampleIndicators" className="carousel slide mt-3">
             <div

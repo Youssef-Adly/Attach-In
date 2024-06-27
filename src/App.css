@@ -17,6 +17,15 @@
   color: black !important;
 }
 
+.txtColor {
+  color: var(--text-main-color) !important;
+}
+
 .noTransition {
-  transition: none !important;
+  transition: all 0s !important;
+}
+[data-bs-theme="dark"] .iconDark {
+  background: #eee;
+  padding: 5px;
+  border-radius: 5px 10px;
 }

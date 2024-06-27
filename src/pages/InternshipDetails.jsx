@@ -21,7 +21,7 @@ const InternshipDetails = () => {
     axios
       .get(baseURL + "getInternshipDetailsByInternshipId?internship_id=" + id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setInternship(res.data.data);
       })
       .catch((err) => {
@@ -40,7 +40,7 @@ const InternshipDetails = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // setLoading(false);
         navigate("/home");
       })
@@ -166,7 +166,7 @@ const InternshipDetails = () => {
                 ? Course.description_ar
                 : Course.description_en} */}
             </div>
-            <p className="col-12 col-sm-9 px-2 px-sm-5">
+            <p className="col-12 col-sm-9 px-2 px-sm-5 txtColor">
               {internship.description}
               {/* Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex dicta
               autem eaque non natus soluta libero, sunt alias provident minus
@@ -325,20 +325,24 @@ const InternshipDetails = () => {
                 </h5>
               </div>
             </div>
-            <Link
-              // to={"/login"}
-              onClick={(e) => {
-                handleSubmit(e);
-              }}
-              style={{
-                backgroundColor: "var(--main-color)",
-                height: "100px",
-                width: "100px",
-              }}
-              className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-            >
-              Confirm
-            </Link>
+            {!loading ? (
+              <Link
+                // to={"/login"}
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
+                style={{
+                  backgroundColor: "var(--main-color)",
+                  height: "100px",
+                  width: "100px",
+                }}
+                className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+              >
+                Confirm
+              </Link>
+            ) : (
+              <LoadingSuspese />
+            )}
           </div>
         </div>
       ) : (

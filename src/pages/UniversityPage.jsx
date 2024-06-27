@@ -12,7 +12,18 @@ const UniversityPage = () => {
   const [university, setUniversity] = useState(null);
   let [posts, setposts] = useState(null);
   console.log("university: ", university);
-  // let [width, setWidth] = useState(null);
+  let [width, setWidth] = useState(null);
+  const profile = useRef();
+
+  useEffect(() => {
+    // console.log(profile);
+    setWidth(profile.current.width);
+    // profile.current.height = profile.current.width;
+    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+    // console.log("profile.current.width: ", profile.current.width);
+    // console.log("profile.current.height: ", profile.current.height);
+  }, [profile]);
 
   useEffect(() => {
     axios
@@ -27,6 +38,9 @@ const UniversityPage = () => {
       )
       .then((res) => {
         setUniversity(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -35,6 +49,9 @@ const UniversityPage = () => {
       .get("https://attachin.com/api/getAllHomePosts?user_id=" + university?.id)
       .then((res) => {
         setposts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [university]);
 
@@ -46,7 +63,7 @@ const UniversityPage = () => {
 
   return (
     <>
-      {university ? (
+      {
         <main>
           {/* banner Cover */}
           <div
@@ -93,21 +110,21 @@ const UniversityPage = () => {
               /> */}
 
               <img
+                ref={profile}
                 src={
                   university?.profile_photo
                     ? `${baseURL + university?.profile_photo}`
                     : "/profile.png"
                 }
-                // src="https://images.vexels.com/media/users/3/203446/isolated/preview/98dc102b7416329f4d189d919ab31076-university-building-icon-blue-by-vexels.png"
                 alt="profile"
-                className="img-fluid rounded-circle shadow-lg profilePic"
+                className="col img-fluid rounded-circle shadow-lg profilePic"
                 style={{
                   transform: "translateY(-50%)",
                   objectFit: "cover",
-                  // backgroundColor: "#eee",
-                  // padding: "20px",
-                  // width: "150px",
-                  // height: "150px",
+                  // height: "55%",
+                  // width: "100%",
+                  height: `${width}px`,
+                  width: `${width}px`,
                 }}
               />
             </div>
@@ -207,24 +224,25 @@ const UniversityPage = () => {
                 className="carousel-indicators"
                 style={{ marginBottom: "-40px" }}
               >
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={0}
-                  className="active bg-black"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                />
-                <button
+                {posts.slice(0, posts.length / 2).map((p, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators2"
+                    data-bs-slide-to={idx}
+                    className="active bg-black"
+                  />
+                ))}
+                {/* <button
                   type="button"
                   data-bs-target="#carouselExampleIndicators2"
                   data-bs-slide-to={1}
-                  aria-label="Slide 2"
                   className=" bg-black"
-                />
+                /> */}
               </div>
               <div className="carousel-inner">
                 {/*  */}
+                {/* {console.log('posts: ', posts)} */}
                 {posts?.length > 0 ? (
                   <div className="carousel-item active">
                     <div className="d-flex flex-wrap gap-3 justify-content-center">
@@ -251,7 +269,7 @@ const UniversityPage = () => {
                           />
                         </svg>
                         <h6
-                          className="text-center mt-3"
+                          className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[0]?.title}
@@ -281,7 +299,7 @@ const UniversityPage = () => {
                             />
                           </svg>
                           <h6
-                            className="text-center mt-3"
+                            className="text-center"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[1]?.title}
@@ -320,7 +338,7 @@ const UniversityPage = () => {
                           />
                         </svg>
                         <h6
-                          className="text-center mt-3"
+                          className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[2]?.title}
@@ -350,7 +368,7 @@ const UniversityPage = () => {
                             />
                           </svg>
                           <h6
-                            className="text-center mt-3"
+                            className="text-center"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[3]?.title}
@@ -453,9 +471,9 @@ const UniversityPage = () => {
 
           {/*  */}
         </main>
-      ) : (
-        <LoadingSuspese />
-      )}
+        // ) : (
+        // <LoadingSuspese />
+      }
     </>
   );
 };

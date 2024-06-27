@@ -31,28 +31,28 @@ const schema = yup
   .object({
     email: yup
       .string()
-      .email("Please enter a valid email address")
-      .required("Email can't be empty"),
+      .required("Email can't be empty")
+      .email("Please enter a valid email address"),
     first_name: yup
       .string()
-      .matches(/^[aA-zZ\s]+$/, "first name must be letters only")
-      .required("first name can't be empty"),
+      .required("first name can't be empty")
+      .matches(/^[aA-zZ\s]+$/, "first name must be letters only"),
     last_name: yup
       .string()
-      .matches(/^[aA-zZ\s]+$/, "last name must be letters only")
-      .required("last name can't be empty"),
+      .required("last name can't be empty")
+      .matches(/^[aA-zZ\s]+$/, "last name must be letters only"),
     phone: yup
       .string()
-      .phoneLength()
-      .required("You have to enter a valid phone number"),
+      .required("You have to enter a phone number")
+      .phoneLength(),
     university: yup
       .number()
       .typeError("select a university please")
       .required("select a university please"),
     password: yup
       .string()
-      .min(6, "Password should be more than 6 characters")
-      .required("Password can't be empty"),
+      .required("Password can't be empty")
+      .min(6, "Password should be more than 6 characters"),
     confirmPassword: yup
       .string()
       .required("Confirm Password can't be empty")

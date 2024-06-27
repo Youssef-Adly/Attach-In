@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -57,7 +57,7 @@ const ResetPassword = () => {
         { headers: { Authorization: `Bearer ${user.token}` } }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         navigate("/home");
       })
       .catch((err) => {

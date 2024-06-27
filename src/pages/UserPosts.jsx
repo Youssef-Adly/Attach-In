@@ -10,12 +10,19 @@ const UserPosts = () => {
   const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
   let [posts, setPosts] = useState(null);
+  let [user, setUser] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`${baseURL}api/getAllHomePosts?user_id=` + id).then((res) => {
-      setPosts(res.data.data);
-    });
+    axios
+      .get(`${baseURL}api/getAllHomePosts?user_id=` + id)
+      .then((res) => {
+        setPosts(res.data.data);
+        setUser(res.data.data[0].user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -35,7 +42,11 @@ const UserPosts = () => {
             }}
           />
         </Link>
-        <h1 style={{ color: "var(--text-main-color)" }}>User Posts</h1>
+        {user && (
+          <h1 style={{ color: "var(--text-main-color)" }}>
+            {user?.full_name} Posts
+          </h1>
+        )}
       </div>
       <hr />
       {/*  */}

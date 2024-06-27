@@ -24,6 +24,9 @@ const UserSkills = () => {
       )
       .then((res) => {
         setUser(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [id, authUser.token]);
 

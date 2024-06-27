@@ -10,10 +10,15 @@ const TermsAndConditionsPage = () => {
   const [TermsAndConditions, setTermsAndConditions] = useState(null);
 
   useEffect(() => {
-    axios.get("https://attachin.com/api/staticPages/1").then((res) => {
-      // console.log(res.data.data);
-      setTermsAndConditions([res.data.data]);
-    });
+    axios
+      .get("https://attachin.com/api/staticPages/1")
+      .then((res) => {
+        // console.log(res.data.data);
+        setTermsAndConditions([res.data.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

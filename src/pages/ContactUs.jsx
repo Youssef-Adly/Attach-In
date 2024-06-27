@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,8 +42,11 @@ const ContactUs = () => {
         headers: { Authorization: `Bearer ${authUser.token}` },
       })
       .then((res) => {
-        console.log("res: ", res);
+        // console.log("res: ", res);
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

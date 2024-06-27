@@ -109,7 +109,7 @@ const EditProfile = () => {
         });
       }
     }
-    console.log("errorsArr: ", errorsArr);
+    // console.log("errorsArr: ", errorsArr);
     setFormErrors([...errorsArr]);
   };
 
@@ -119,18 +119,33 @@ const EditProfile = () => {
   const [universities, setUniversities] = useState(null);
   const [governments, setGovernments] = useState(null);
   useEffect(() => {
-    axios.get(baseURL + "api/getColleges").then((res) => {
-      // console.log("colleges", res.data.data.colleges);
-      setColleges(res.data.data.colleges);
-    });
-    axios.get(baseURL + "api/getUniversities").then((res) => {
-      // console.log("universities", res.data.data.universities);
-      setUniversities(res.data.data.universities);
-    });
-    axios.get(baseURL + "api/getGovernments").then((res) => {
-      // console.log("governments", res.data.data.governments);
-      setGovernments(res.data.data.governments);
-    });
+    axios
+      .get(baseURL + "api/getColleges")
+      .then((res) => {
+        // console.log("colleges", res.data.data.colleges);
+        setColleges(res.data.data.colleges);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(baseURL + "api/getUniversities")
+      .then((res) => {
+        // console.log("universities", res.data.data.universities);
+        setUniversities(res.data.data.universities);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(baseURL + "api/getGovernments")
+      .then((res) => {
+        // console.log("governments", res.data.data.governments);
+        setGovernments(res.data.data.governments);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   //#endregion
@@ -152,7 +167,7 @@ const EditProfile = () => {
       profilePic[0]?.source !== baseURL + user.profile_photo &&
       profilePic[0]?.filename
     ) {
-      console.log(profilePic[0].filename);
+      // console.log(profilePic[0].filename);
       // setUserReg((old) => ({ ...old, profile_photo: profilePic[0]?.file }));
       setImages((old) => ({ ...old, profile_photo: profilePic[0]?.file }));
     }
@@ -168,7 +183,7 @@ const EditProfile = () => {
       profileCover[0]?.source !== baseURL + user.profile_cover &&
       profileCover[0]?.filename
     ) {
-      console.log(profileCover[0]);
+      // console.log(profileCover[0]);
       // setUserReg((old) => ({ ...old, profile_cover: profileCover[0]?.file }));
       setImages((old) => ({ ...old, profile_cover: profileCover[0]?.file }));
     }
@@ -204,9 +219,9 @@ const EditProfile = () => {
       }
     }
     // Logging Values
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + " ==> ", pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + " ==> ", pair[1]);
+    // }
 
     // API CALL
     await axios
@@ -217,7 +232,7 @@ const EditProfile = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         dispatch(updateUserInfo(user));
         setTimeout(() => {
           setLoading(false);
@@ -258,25 +273,34 @@ const EditProfile = () => {
           certifications: newArray,
         }));
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         dispatch(updateUserInfo(user));
       });
   };
 
   const handleAddCert = async (e) => {
-    await axios
-      .post(
-        baseURL + "api/addUserCertification",
-        {
-          title: userCert,
-        },
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        dispatch(updateUserInfo(user));
-      });
+    if (userCert.length > 0) {
+      await axios
+        .post(
+          baseURL + "api/addUserCertification",
+          {
+            title: userCert,
+          },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          setUserCert("");
+          dispatch(updateUserInfo(user));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -318,25 +342,33 @@ const EditProfile = () => {
           skills: newArray,
         }));
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         dispatch(updateUserInfo(user));
       });
   };
 
   const handleAddSkill = async (e) => {
-    await axios
-      .post(
-        baseURL + "api/addUserSkill",
-        {
-          title: userSkill,
-        },
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        dispatch(updateUserInfo(user));
-      });
+    if (userSkill.length > 0) {
+      await axios
+        .post(
+          baseURL + "api/addUserSkill",
+          {
+            title: userSkill,
+          },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          dispatch(updateUserInfo(user));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -378,25 +410,33 @@ const EditProfile = () => {
           interests: newArray,
         }));
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
         dispatch(updateUserInfo(user));
       });
   };
 
   const handleAddInterest = async (e) => {
-    await axios
-      .post(
-        baseURL + "api/addUserInterest",
-        {
-          title: userInterest,
-        },
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        dispatch(updateUserInfo(user));
-      });
+    if (userInterest.length > 0) {
+      await axios
+        .post(
+          baseURL + "api/addUserInterest",
+          {
+            title: userInterest,
+          },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          dispatch(updateUserInfo(user));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {
@@ -437,25 +477,33 @@ const EditProfile = () => {
           experiences: newArray,
         }));
       })
+      .catch((err) => {
+        console.log(err);
+      })
       .finally((res) => {
         dispatch(updateUserInfo(user));
       });
   };
 
   const handleAddComputerExp = async (e) => {
-    await axios
-      .post(
-        baseURL + "api/addUserExperience",
-        {
-          title: userComputerExp,
-        },
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        dispatch(updateUserInfo(user));
-      });
+    if (userComputerExp.length > 0) {
+      await axios
+        .post(
+          baseURL + "api/addUserExperience",
+          {
+            title: userComputerExp,
+          },
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          dispatch(updateUserInfo(user));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   useEffect(() => {

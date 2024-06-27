@@ -48,7 +48,6 @@ registerPlugin(
 //#region
 const CompanyPage = lazy(() => import("./pages/CompanyPage"));
 const UniversitySchedule = lazy(() => import("./pages/UniversitySchedule"));
-const UniversityNews = lazy(() => import("./pages/UniversityNews"));
 const UniversityPage = lazy(() => import("./pages/UniversityPage"));
 const InternshipDetails = lazy(() => import("./pages/InternshipDetails"));
 const EditProfile = lazy(() => import("./pages/EditProfile"));
@@ -234,14 +233,6 @@ function App() {
           element: (
             <PrivateGuestRoute>
               <UniversityPage />
-            </PrivateGuestRoute>
-          ),
-        },
-        {
-          path: "university/posts/:id",
-          element: (
-            <PrivateGuestRoute>
-              <UniversityNews />
             </PrivateGuestRoute>
           ),
         },

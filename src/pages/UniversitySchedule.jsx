@@ -8,11 +8,11 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const UniversitySchedule = () => {
-  const [t, i18n] = useTranslation();
-  const navigate = useNavigate();
+  const [t] = useTranslation();
+  // const navigate = useNavigate();
   const { id } = useParams();
   const baseURL = "https://attachin.com/api/";
-  const baseImgURL = "https://attachin.com/";
+  // const baseImgURL = "https://attachin.com/";
   const user = useSelector((state) => state.Auth.user);
   const language = useSelector((state) => state.lang.value);
   const [colleges, setColleges] = useState(null);
@@ -32,6 +32,9 @@ const UniversitySchedule = () => {
       .then((res) => {
         console.log(res.data.data.colleges);
         setColleges(res.data.data.colleges);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -50,6 +53,9 @@ const UniversitySchedule = () => {
       .then((res) => {
         console.log(res.data.data.levels);
         setLevels(res.data.data.levels);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   const getCollegeLevelLectures = async (id) => {
@@ -63,6 +69,9 @@ const UniversitySchedule = () => {
         // console.log("filteredData: ", filteredData);
         // console.log("getCollegeLevelLectures", res.data.data);
         setLectures(filteredData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   const getCollegeLevelSections = async (id) => {
@@ -76,6 +85,9 @@ const UniversitySchedule = () => {
         // console.log("filteredData: ", filteredData);
         // console.log("getCollegeLevelSections", res.data.data);
         setSections(filteredData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   const getCollegeLevelExams = async (id) => {
@@ -89,6 +101,9 @@ const UniversitySchedule = () => {
         // console.log("filteredData: ", filteredData);
         // console.log("getCollegeLevelExams", res.data.data);
         setExams(filteredData);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

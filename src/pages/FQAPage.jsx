@@ -9,10 +9,15 @@ const FQAPage = () => {
   const [FAQ, setFAQ] = useState(null);
 
   useEffect(() => {
-    axios.get("https://attachin.com/api/FAQ").then((res) => {
-      // console.log(res.data.data.FAQ);
-      setFAQ(res.data.data.FAQ);
-    });
+    axios
+      .get("https://attachin.com/api/FAQ")
+      .then((res) => {
+        // console.log(res.data.data.FAQ);
+        setFAQ(res.data.data.FAQ);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

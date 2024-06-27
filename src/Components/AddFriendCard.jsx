@@ -27,6 +27,9 @@ const AddFriendCard = ({
       )
       .then((res) => {
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -41,6 +44,9 @@ const AddFriendCard = ({
       )
       .then((res) => {
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

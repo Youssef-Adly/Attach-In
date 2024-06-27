@@ -26,7 +26,7 @@ const AddPost = ({ setPosts }) => {
           }
         )
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           postBox.current.value = "";
           postBox.current.rows = 2;
           setPosts((old) => [

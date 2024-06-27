@@ -13,15 +13,23 @@ const About = () => {
   const baseURL = "https://attachin.com/";
 
   useEffect(() => {
-    axios.get("https://attachin.com/api/staticPages").then((res) => {
-      // console.log(res.data.data.static_pages);
-      setAboutUs(res.data.data.static_pages);
-    });
+    axios
+      .get("https://attachin.com/api/staticPages")
+      .then((res) => {
+        // console.log(res.data.data.static_pages);
+        setAboutUs(res.data.data.static_pages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios
       .get("https://attachin.com/api/getCreatorsAndManagements")
       .then((res) => {
         // console.log('res: ', res.data.data.creators);
         setCreators(res.data.data.creators);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 

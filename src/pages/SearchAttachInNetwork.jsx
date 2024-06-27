@@ -15,7 +15,7 @@ const SearchAttachInNetwork = () => {
 
   // Get a specific query parameter
   const myParam = searchParams.get("name");
-  console.log("myParam: ", myParam);
+  // console.log("myParam: ", myParam);
   const [searchBar, setSearchBar] = useState(myParam);
 
   // Set a query parameter

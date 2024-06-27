@@ -11,10 +11,15 @@ const OurPartnersPage = () => {
   const baseURL = "https://attachin.com/";
 
   useEffect(() => {
-    axios.get("https://attachin.com/api/getOurPartners").then((res) => {
-      // console.log(res.data.data.partners);
-      setOurPartners(res.data.data.partners);
-    });
+    axios
+      .get("https://attachin.com/api/getOurPartners")
+      .then((res) => {
+        // console.log(res.data.data.partners);
+        setOurPartners(res.data.data.partners);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <>

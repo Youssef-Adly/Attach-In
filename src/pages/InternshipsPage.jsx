@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import HomeLayout from "../Components/HomeLayout";
 import Internships from "../Components/Internships";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";

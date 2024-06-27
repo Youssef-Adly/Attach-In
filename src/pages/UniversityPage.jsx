@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import LoadingSuspese from "../Components/LoadingSuspense";
 
 const UniversityPage = () => {
   const baseURL = "https://attachin.com/";
@@ -11,7 +10,6 @@ const UniversityPage = () => {
   const { id } = useParams();
   const [university, setUniversity] = useState(null);
   let [posts, setposts] = useState(null);
-  console.log("university: ", university);
   let [width, setWidth] = useState(null);
   const profile = useRef();
 
@@ -42,7 +40,7 @@ const UniversityPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [authUser.token, id]);
 
   useEffect(() => {
     axios

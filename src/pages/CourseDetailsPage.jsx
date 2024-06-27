@@ -21,6 +21,9 @@ const CourseDetailsPage = () => {
       .then((res) => {
         setCourse(res.data.data);
         // console.log("res.data.data: ", res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [id, token]);
 

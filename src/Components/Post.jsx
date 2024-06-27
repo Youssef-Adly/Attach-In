@@ -107,7 +107,7 @@ const Post = ({
           }
         )
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
           commentBox.current.value = "";
           commentBox.current.rows = 1;
@@ -187,7 +187,7 @@ const Post = ({
           { headers: { Authorization: `Bearer ${authUser.token}` } }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           report.current.value = "";
           setloadingReport(false);
         })
@@ -217,7 +217,7 @@ const Post = ({
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         window.location.reload();
       })
       .catch((err) => {
@@ -244,7 +244,7 @@ const Post = ({
           }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location.reload();
           // thoughts.current.value = "";
           // setloadingShare(false);
@@ -278,7 +278,7 @@ const Post = ({
           { headers: { Authorization: `Bearer ${authUser.token}` } }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location.reload();
           // setloadingEdit(true);
         })

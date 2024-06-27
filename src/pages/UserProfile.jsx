@@ -29,9 +29,14 @@ const UserProfile = () => {
   }, [profile]);
 
   useEffect(() => {
-    axios.get(`${baseURL}api/getAllHomePosts?user_id=` + id).then((res) => {
-      setposts(res.data.data);
-    });
+    axios
+      .get(`${baseURL}api/getAllHomePosts?user_id=` + id)
+      .then((res) => {
+        setposts(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id]);
 
   useEffect(() => {
@@ -60,8 +65,12 @@ const UserProfile = () => {
             (exp) => (exp = { ...exp, type: "experiences" })
           ),
         ]);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [authUser.token, id]);
+
   // Add Friends
   const addFriend = (e) => {
     axios
@@ -72,6 +81,9 @@ const UserProfile = () => {
       )
       .then((res) => {
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
   // deleteFriend
@@ -84,6 +96,9 @@ const UserProfile = () => {
       )
       .then((res) => {
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -95,47 +110,50 @@ const UserProfile = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        console.log("res: ", res);
+        // console.log("res: ", res);
         window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   // Accept Request
-  const acceptFriendRequest = (e) => {
-    axios
-      .post(
-        baseURL + "api/responseOnFriendshipRequest",
-        { id: id, response: "approve" },
-        {
-          headers: { Authorization: `Bearer ${authUser.token}` },
-        }
-      )
-      .then((res) => {
-        console.log("res: ", res);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const acceptFriendRequest = (e) => {
+  //   axios
+  //     .post(
+  //       baseURL + "api/responseOnFriendshipRequest",
+  //       { id: id, response: "approve" },
+  //       {
+  //         headers: { Authorization: `Bearer ${authUser.token}` },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log("res: ", res);
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   // Reject Request
-  const rejectFriendRequest = (e) => {
-    axios
-      .post(
-        baseURL + "api/responseOnFriendshipRequest",
-        { id: id, response: "reject" },
-        {
-          headers: { Authorization: `Bearer ${authUser.token}` },
-        }
-      )
-      .then((res) => {
-        console.log("res: ", res);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const rejectFriendRequest = (e) => {
+  //   axios
+  //     .post(
+  //       baseURL + "api/responseOnFriendshipRequest",
+  //       { id: id, response: "reject" },
+  //       {
+  //         headers: { Authorization: `Bearer ${authUser.token}` },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log("res: ", res);
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   return (
     <>

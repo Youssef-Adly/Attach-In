@@ -100,9 +100,14 @@ const Register = () => {
   });
 
   useEffect(() => {
-    axios.get("https://attachin.com/api/getUniversities").then((res) => {
-      setUniversities(res.data.data.universities);
-    });
+    axios
+      .get("https://attachin.com/api/getUniversities")
+      .then((res) => {
+        setUniversities(res.data.data.universities);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // Form Submition Logic

@@ -6,7 +6,7 @@ import axios from "axios";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.Auth.user);
-  console.log("user: ", user);
+  // console.log("user: ", user);
   const baseURL = "https://attachin.com/";
   const profile = useRef();
   let [width, setWidth] = useState(null);

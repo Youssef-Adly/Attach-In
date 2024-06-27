@@ -226,7 +226,7 @@ const Internships = ({
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         window.location.reload();
       })
       .catch((err) => {
@@ -260,7 +260,7 @@ const Internships = ({
           }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location.reload();
           // thoughts.current.value = "";
           // setloadingShare(false);
@@ -300,7 +300,7 @@ const Internships = ({
           }
         )
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location.reload();
           // setloadingEdit(false);
         })

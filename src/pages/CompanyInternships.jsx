@@ -16,7 +16,7 @@ const CompanyInternships = () => {
     axios
       .get(baseURL + "getAllInternships?user_id=" + id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setInterships(res.data.data);
       })
       .catch((err) => {

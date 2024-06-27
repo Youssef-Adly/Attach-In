@@ -20,6 +20,9 @@ const CoursesPage = () => {
       .then((res) => {
         setCourses(res.data.data);
         // console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [token]);
 

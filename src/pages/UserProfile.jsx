@@ -189,10 +189,9 @@ const UserProfile = () => {
                 style={{
                   transform: "translateY(-50%)",
                   objectFit: "cover",
-                  // height: "55%",
-                  // width: "100%",
                   height: `${width}px`,
                   width: `${width}px`,
+                  aspectRatio: "1",
                 }}
               />
             </div>

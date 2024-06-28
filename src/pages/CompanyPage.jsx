@@ -131,8 +131,7 @@ const CompanyPage = () => {
                 objectFit: "cover",
                 height: `${width}px`,
                 width: `${width}px`,
-                // height: "55%",
-                // width: "100%",
+                aspectRatio: "1",
               }}
             />
           </div>

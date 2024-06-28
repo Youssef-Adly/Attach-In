@@ -59,10 +59,7 @@ const SearchAttachInNetwork = () => {
     <>
       {searchedUsers ? (
         <>
-          <div
-            className="d-flex col-6 mx-auto mb-5 position-relative"
-            role="search"
-          >
+          <div className="d-flex col-10 col-sm-8 col-md-6 mx-auto mb-5 position-relative">
             <input
               className="form-control me-1 rounded-5 "
               type="text"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,11 +7,16 @@ import ErrorMessage from "../Components/ErrorMessage";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const [t] = useTranslation();
+
   const user = useSelector((state) => state.Auth.user);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   // yup Schema
   const schema = yup
     .object({
@@ -72,7 +77,25 @@ const ResetPassword = () => {
       onSubmit={handleSubmit(handleForgetPassword)}
       disabled={isSubmitting}
     >
-      <h1 style={{ color: "var(--text-main-color)" }}>Reset Password</h1>
+      <div className="d-flex align-items-center gap-4">
+        <Link
+          onClick={(e) => {
+            navigate(-1);
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faCircleArrowLeft}
+            fontSize={27}
+            style={{
+              color: "var(--text-main-color)",
+              marginBottom: "7px",
+            }}
+          />
+        </Link>
+        <h1 style={{ color: "var(--text-main-color)" }}>
+          {t("Reset Password")}
+        </h1>
+      </div>
       <hr />
       <div className="form-floating">
         <input

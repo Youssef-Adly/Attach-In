@@ -67,7 +67,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
   const user = useSelector((state) => state.Auth.user);
-  const [i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [loading, setLoading] = useState(false);
   const [FormErrors, setFormErrors] = useState(null);
   const dispatch = useDispatch();
@@ -530,6 +530,7 @@ const EditProfile = () => {
           to={"/profile"}
           onClick={(e) => {
             navigate(-1);
+            navigate.reload();
           }}
         >
           <FontAwesomeIcon
@@ -541,7 +542,7 @@ const EditProfile = () => {
             }}
           />
         </Link>
-        <h1 style={{ color: "var(--text-main-color)" }}>Edit Profile</h1>
+        <h1 style={{ color: "var(--text-main-color)" }}>{t("Edit Profile")}</h1>
       </div>
       <hr />
       <div className="d-flex flex-column justify-content-center align-items-center">

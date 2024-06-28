@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./SettingPage.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +44,7 @@ const SettingPage = () => {
       <Link to={"/reset"} className="nav-link d-flex gap-3 align-items-center ">
         <img src="/lock.svg" alt="lock" />
         <div style={{ color: "var(--text-main-color)" }}>
-          {t("Change Password")}
+          {t("Reset Password")}
         </div>
       </Link>
       <hr />

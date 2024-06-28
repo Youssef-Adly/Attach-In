@@ -46,6 +46,7 @@ const Aside = () => {
     navigate("/");
     dispatch(setAuth(null));
   };
+
   return (
     <div
       className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary"
@@ -174,7 +175,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              className="me-2 pe-0 txtColor"
+            />
             {t("About")}
           </NavLink>
         </li>
@@ -188,7 +192,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faCircleQuestion}
+              className="me-2 pe-0 txtColor"
+            />
             {t("FAQ")}
           </NavLink>
         </li>
@@ -202,7 +209,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faMoneyBill}
+              className="me-2 pe-0 txtColor"
+            />
             {t("Subscription")}
           </NavLink>
         </li>
@@ -216,7 +226,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faHandshakeSimple}
+              className="me-2 pe-0 txtColor"
+            />
             {t("Our Partners")}
           </NavLink>
         </li>
@@ -230,7 +243,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="me-2 pe-0 txtColor"
+            />
             {t("Terms & Conditions")}
           </NavLink>
         </li>
@@ -244,7 +260,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faAddressCard}
+              className="me-2 pe-0 txtColor"
+            />
             {t("Contact Us")}
           </NavLink>
         </li>
@@ -259,7 +278,10 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="me-2 pe-0 txtColor"
+            />
             {t("Log Out")}
           </NavLink>
         </li>

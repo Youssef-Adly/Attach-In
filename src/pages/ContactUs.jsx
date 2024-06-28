@@ -6,6 +6,7 @@ import ErrorMessage from "../Components/ErrorMessage";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 // yup Schema
 const schema = yup
@@ -17,7 +18,9 @@ const schema = yup
 
 const ContactUs = () => {
   const baseURL = "https://attachin.com/api/";
+  const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
+  const lang = useSelector((state) => state.lang.value);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -54,7 +57,7 @@ const ContactUs = () => {
     <>
       {/* Header Title */}
       <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
-        Contact Us
+        {t("Contact Us")}
       </h1>
       <hr />
       <div
@@ -74,7 +77,9 @@ const ContactUs = () => {
               aria-expanded="false"
               aria-controls="#section"
             >
-              What is Attach In App
+              {lang === "en"
+                ? " What is Attach In App"
+                : '؟ "Attach In-App"ما هو'}
             </button>
           </h2>
           <div
@@ -83,11 +88,9 @@ const ContactUs = () => {
             // data-bs-parent="#accordionFlushExample"
           >
             <div className="accordion-body dir">
-              "Attach In-App" is a social media platform designed for college
-              students. It offers a semi-professional networking environment
-              where users can connect with peers, mentors, and industry
-              professionals, find internships and courses, and share
-              achievements.
+              {lang === "en"
+                ? '"Attach In-App" is a social media platform designed for college students. It offers a semi-professional networking environment where users can connect with peers, mentors, and industry professionals, find internships and courses, and share achievements.'
+                : "عبارة عن منصة تواصل اجتماعي مصممة لطلاب الجامعات. فهو يوفر بيئة شبكات شبه احترافية حيث يمكن للمستخدمين التواصل مع أقرانهم والموجهين والمتخصصين في هذا المجال، والعثور على التدريب الداخلي والدورات التدريبية، ومشاركة الإنجازات."}
             </div>
           </div>
         </div>
@@ -106,7 +109,7 @@ const ContactUs = () => {
               {...register("subject")}
               style={{
                 bordercolor: "var(--text-main-color)",
-                backgroundColor: "#eee",
+                backgroundColor: "var(--offWhite-color)",
               }}
             />
             <ErrorMessage>{errors.subject?.message}</ErrorMessage>
@@ -121,7 +124,7 @@ const ContactUs = () => {
               {...register("message")}
               style={{
                 bordercolor: "var(--text-main-color)",
-                backgroundColor: "#eee",
+                backgroundColor: "var(--offWhite-color)",
               }}
             />
             <ErrorMessage>{errors.message?.message}</ErrorMessage>

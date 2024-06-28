@@ -9,8 +9,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
 import { FilePond } from "react-filepond";
+import { useTranslation } from "react-i18next";
 
 const HomeLayout = () => {
+  const [t] = useTranslation();
   const { pathname } = useLocation();
   useEffect(() => {
     document.documentElement.scrollTo(0, 0);
@@ -403,17 +405,11 @@ const HomeLayout = () => {
       >
         {!loading ? (
           <div className="modal-dialog modal-dialog-centered">
-            <div
-              className="modal-content"
-              // style={{
-              //   background: "var(--main-color)",
-              //   color: "#eee",
-              // }}
-            >
+            <div className="modal-content">
               {/* Modal feed header START */}
               <div className="modal-header">
                 <h5 className="modal-title" id="feedActionPhotoLabel">
-                  Add post photo
+                  {t("Add Post Photo")}
                 </h5>
                 <button
                   type="button"
@@ -436,17 +432,17 @@ const HomeLayout = () => {
                           ? baseURL + user.profile_photo
                           : "/profile.png"
                       }
-                      // src="https://github.com/mdo.png"
                       alt={user.full_name}
                       title={user.full_name}
+                      // src="https://github.com/mdo.png"
                     />
                   </div>
                   {/* Feed box  */}
                   <form className="w-100">
                     <textarea
-                      className="form-control pe-4 fs-3 lh-1 border-0"
+                      className="form-control pe-4 fs-3 lh-1 border-0 dir"
                       rows={2}
-                      placeholder="Share your thoughts..."
+                      placeholder={t("Share Your thoughts")}
                       defaultValue={""}
                       ref={postBox2}
                       onKeyUp={(e) => {
@@ -462,8 +458,8 @@ const HomeLayout = () => {
                 </div>
                 {/* Dropzone photo START */}
                 <div>
-                  <label className="form-label text-muted">
-                    Upload Picture...
+                  <label className="form-label text-muted dir d-block pb-1">
+                    {t("Upload Picture")}
                   </label>
                   <div className="rounded-5">
                     <FilePond
@@ -474,7 +470,7 @@ const HomeLayout = () => {
                       credits={false}
                       name="files" /* sets the file input name, it's filepond by default */
                       // allowMultiple={true}
-                      labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                      labelIdle='Drag & Drop your Image or <span class="filepond--label-action">Browse</span>'
                     />
                   </div>
                 </div>
@@ -489,14 +485,14 @@ const HomeLayout = () => {
                   className="btn btn-outline-danger me-2"
                   data-bs-dismiss="modal"
                 >
-                  Cancel
+                  {t("Cancel")}
                 </button>
                 <button
                   onClick={(e) => addPostWithImage(e)}
                   type="button"
-                  className="btn mainColor"
+                  className="btn btn-outline-info"
                 >
-                  Post
+                  {t("Post")}
                 </button>
               </div>
               {/* Modal feed footer */}

@@ -13,6 +13,7 @@ import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const Post = ({
   id,
@@ -35,6 +36,7 @@ const Post = ({
   const thoughts = useRef();
   const titleEditPost = useRef();
   const navigate = useNavigate();
+  const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
   let [loadingShare, setloadingShare] = useState(false);
   let [loadingReport, setloadingReport] = useState(false);
@@ -383,7 +385,7 @@ const Post = ({
                       className="pe-2"
                       style={{ width: "35px" }}
                     />
-                    Edit this Post
+                    {t("Edit this Post")}
                   </Link>
                 </li>
               )}
@@ -391,7 +393,7 @@ const Post = ({
                 <li className="mt-1">
                   <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
                     <img src="/reportIcon.svg" alt="report" className="pe-2" />
-                    Report this Profile
+                    {t("Report this Profile")}
                   </Link>
                 </li>
               )}
@@ -402,7 +404,7 @@ const Post = ({
                     className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                   >
                     <img src="/deleteIcon.svg" alt="delete" className="pe-2" />
-                    Delete Post
+                    {t("Delete Post")}
                   </Link>
                 </li>
               )}
@@ -413,7 +415,9 @@ const Post = ({
                     className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                   >
                     <img src="/BlockIcon.svg" alt="block" className="pe-2" />
-                    {!turnOffComment ? "Turn off Comments" : "Turn on Comments"}
+                    {!turnOffComment
+                      ? t("Turn off Comments")
+                      : t("Turn on Comments")}
                   </Link>
                 </li>
               )}
@@ -429,7 +433,7 @@ const Post = ({
                       className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                     >
                       <img src="/BlockIcon.svg" alt="block" className="pe-2" />
-                      Report This Person
+                      {t("Report This Person")}
                     </Link>
                   </li>
                 </>
@@ -555,7 +559,7 @@ const Post = ({
               // }}
             >
               <FontAwesomeIcon icon={faHeart} className="pe-1" />
-              {isLiked ? "Unlike" : "Like"} ({likes.length})
+              {isLiked ? t("unlike") : t("like")} ({likes.length})
             </Link>
           </li>
           {/* Comment */}
@@ -566,7 +570,7 @@ const Post = ({
             >
               {/* {console.log('commentBox: ', commentBox)} */}
               <FontAwesomeIcon icon={faCommentDots} className="pe-1" />
-              Comments ({allComments.length})
+              {t("comment")} ({allComments.length})
             </Link>
           </li>
           {/* Share */}
@@ -577,7 +581,7 @@ const Post = ({
               data-bs-toggle="dropdown"
             >
               <FontAwesomeIcon icon={faShare} className="pe-1" />
-              Share {/* (3) */}
+              {t("share")} {/* (3) */}
             </Link>
             {/* Card share action dropdown menu */}
             <ul
@@ -604,7 +608,8 @@ const Post = ({
                       borderRadius: "50%",
                     }}
                   />
-                  Share Your thoughts
+                  {t("Share Your thoughts")}
+                  {/* Share Your thoughts */}
                 </Link>
               </li>
               {/* Instant Share */}
@@ -625,7 +630,7 @@ const Post = ({
                       borderRadius: "50%",
                     }}
                   />
-                  Repost instantly
+                  {t("Repost instantly")}
                 </Link>
               </li>
             </ul>
@@ -659,8 +664,8 @@ const Post = ({
               rows={!turnOffComment ? 1 : 2}
               placeholder={
                 turnOffComment
-                  ? "Comments Turned Off By Auther"
-                  : "Add a comment..."
+                  ? t("Comments Turned Off By Auther")
+                  : t("Add a comment")
               }
               defaultValue={""}
               disabled={turnOffComment}
@@ -688,7 +693,6 @@ const Post = ({
         {/* Comments wrap START */}
         <ul className="comment-wrap list-unstyled">
           {/* Comments items START */}
-          {/* {console.log(allComments)} */}
           {allComments.length > 0 &&
             allComments.slice(0, commentLength).map((comment) => (
               <li className="comment-item" key={uuid()}>
@@ -853,7 +857,7 @@ const Post = ({
             >
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id={"Report" + id}>
-                  Report User Request
+                  {t("Report User Request")}
                 </h1>
                 <button
                   type="button"
@@ -864,8 +868,11 @@ const Post = ({
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label htmlFor={"Report" + id} className="form-label">
-                    Please Provide A Reason To Be Reviewed
+                  <label
+                    htmlFor={"Report" + id}
+                    className="form-label dir d-block pb-2"
+                  >
+                    {t("Please Provide A Reason To Be Reviewed")}
                   </label>
                   <textarea
                     className="form-control"
@@ -882,7 +889,7 @@ const Post = ({
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  {t("Cancel")}
                 </button>
                 <button
                   type="button"
@@ -890,7 +897,7 @@ const Post = ({
                   data-bs-dismiss="modal"
                   onClick={reportSubmit}
                 >
-                  Send
+                  {t("Send")}
                 </button>
               </div>
             </div>
@@ -921,7 +928,7 @@ const Post = ({
             >
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Share Post
+                  {t("Share Post")}
                 </h1>
                 <button
                   type="button"
@@ -932,8 +939,11 @@ const Post = ({
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label htmlFor={"share" + id} className="form-label">
-                    Share With Your Thoughts
+                  <label
+                    htmlFor={"share" + id}
+                    className="form-label d-block pb-2 dir"
+                  >
+                    {t("Share With Your Thoughts")}
                   </label>
                   <textarea
                     className="form-control"
@@ -950,14 +960,14 @@ const Post = ({
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  {t("Cancel")}
                 </button>
                 <button
                   type="button"
                   onClick={shareWithThoughts}
                   className="btn btn-danger"
                 >
-                  Share
+                  {t("share")}
                 </button>
               </div>
             </div>
@@ -988,7 +998,7 @@ const Post = ({
             >
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Edit Post
+                  {t("Edit Post")}
                 </h1>
                 <button
                   type="button"
@@ -1000,7 +1010,7 @@ const Post = ({
               <div className="modal-body">
                 <div className="mb-3">
                   <label htmlFor={"edit" + id} className="form-label">
-                    Edit Your Post
+                    {t("Edit this Post ")}
                   </label>
                   <textarea
                     className="form-control"
@@ -1017,14 +1027,14 @@ const Post = ({
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Close
+                  {t("Cancel")}
                 </button>
                 <button
                   type="button"
                   onClick={editPost}
                   className="btn btn-danger"
                 >
-                  Done
+                  {t("Done")}
                 </button>
               </div>
             </div>
@@ -1051,7 +1061,7 @@ const Post = ({
             onClick={() => setcommentLength((old) => old + 2)}
           >
             <FontAwesomeIcon icon={faEllipsis} className="me-2" />
-            Load more comments
+            {t("Load more comments")}
           </Link>
         </div>
       )}

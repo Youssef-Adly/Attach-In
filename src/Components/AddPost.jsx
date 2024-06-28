@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const AddPost = ({ setPosts }) => {
   const baseURL = "https://attachin.com/";
+  const [t] = useTranslation();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.Auth.user);
   const postBox = useRef();
-  const navigate = useNavigate();
 
   const addPostWithoutImage = async (e) => {
     e.preventDefault();
@@ -68,14 +70,13 @@ const AddPost = ({ setPosts }) => {
         {/* Post input */}
         <form className="w-100">
           <textarea
-            className="form-control pe-4 border-0"
+            className="form-control pe-4 border-0 dir"
             rows={2}
             data-autoresize
-            placeholder="Share your thoughts..."
+            placeholder={t("Share Your thoughts") + "..."}
             defaultValue={""}
             ref={postBox}
             onKeyUp={(e) => {
-              // console.log(postBox.current.value.split("\n").length);
               postBox.current.rows =
                 postBox.current.value.split("\n").length + 1;
               if (e.key === "Enter" && !e.shiftKey) {
@@ -95,7 +96,7 @@ const AddPost = ({ setPosts }) => {
             data-bs-target="#feedActionPhoto"
           >
             <FontAwesomeIcon icon={faImage} className="text-success pe-2" />
-            Photo
+            {t("Photo")}
           </Link>
         </li>
         <li className="nav-item list-unstyled mb-auto ms-3">
@@ -110,7 +111,7 @@ const AddPost = ({ setPosts }) => {
               marginRight: "5px",
             }}
           >
-            Post
+            {t("Post")}
           </button>
         </li>
         {/* <li className="nav-item">

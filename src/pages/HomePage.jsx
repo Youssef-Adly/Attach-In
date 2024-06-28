@@ -4,11 +4,12 @@ import AddPost from "../Components/AddPost";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
   let [posts, setPosts] = useState(null);
-  // console.log("posts: ", posts);
+  const [t] = useTranslation();
   let [limit, setLimit] = useState(10);
   let [fetching, setFetching] = useState(false);
 
@@ -49,7 +50,7 @@ const HomePage = () => {
                   setLimit((old) => old + 5);
                 }}
               >
-                Load More Posts
+                {t("Load More Posts")}
               </button>
             ) : (
               <>

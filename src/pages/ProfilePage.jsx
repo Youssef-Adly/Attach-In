@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
-  const user = useSelector((state) => state.Auth.user);
-  // console.log("user: ", user);
   const baseURL = "https://attachin.com/";
   const profile = useRef();
+  const [t] = useTranslation();
+  const user = useSelector((state) => state.Auth.user);
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
@@ -137,13 +138,13 @@ const ProfilePage = () => {
                         alt="report"
                         className="pe-2"
                       />
-                      Report this Profile
+                      {t("Report this Profile")}
                     </Link>
                   </li>
                   <li className="mt-2">
                     <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
                       <img src="/BlockIcon.svg" alt="block" className="pe-2" />
-                      Block This Person
+                      {t("Block This Person")}
                     </Link>
                   </li>
                   <li>
@@ -156,7 +157,7 @@ const ProfilePage = () => {
                         alt="delete"
                         className="pe-2"
                       />
-                      Delete This Profile
+                      {t("Delete This Profile")}
                     </Link>
                   </li>
                 </ul>
@@ -167,7 +168,8 @@ const ProfilePage = () => {
                   src="/peopleIcon.svg"
                   className="img-fluid"
                   style={{ width: "40px", height: "40px" }}
-                  alt=""
+                  title="Your Friends"
+                  alt="Your Friends"
                 />
               </Link>
               <Link to={"/editprofile"} className="">
@@ -175,7 +177,8 @@ const ProfilePage = () => {
                   src="/editPenIcon.svg"
                   className="img-fluid"
                   style={{ width: "40px", height: "40px" }}
-                  alt=""
+                  alt="editProfile"
+                  title="Edit Profile"
                 />
               </Link>
             </div>
@@ -194,7 +197,9 @@ const ProfilePage = () => {
                   style={{ width: "18px", marginRight: "5px" }}
                   alt="graduationCap"
                 />
-                <small style={{ color: "var(--main-color)" }}>University</small>
+                <small style={{ color: "var(--main-color)" }}>
+                  {t("University")}
+                </small>
               </Link>
             </div>
           </div>
@@ -204,14 +209,14 @@ const ProfilePage = () => {
 
         <div className="d-flex justify-content-around gap-3 px-3">
           <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
-            Skills & certifications
+            {t("Skills & certifications")}
           </p>
           <Link to={"/userExp/" + user.id} className="nav-link col-4 col-sm-2">
             <p
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
             >
-              See All
+              {t("See All")}
             </p>
           </Link>
         </div>
@@ -389,7 +394,7 @@ const ProfilePage = () => {
             </button>
           </div>
         ) : (
-          <div className="text-center display-3 pt-5">No Skills Yet</div>
+          <div className="text-center display-3 pt-5">{t("No Skills Yet")}</div>
         )}
 
         <hr className="mt-5 w-75 m-auto" />
@@ -400,7 +405,7 @@ const ProfilePage = () => {
             className="h4 ms-sm5 col-8"
             style={{ color: "var(--text-main-color)" }}
           >
-            Posts
+            {t("Posts")}
           </p>
           <Link
             to={"/userPosts/" + user.id}
@@ -410,7 +415,7 @@ const ProfilePage = () => {
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
             >
-              See All
+              {t("See All")}
             </p>
           </Link>
         </div>

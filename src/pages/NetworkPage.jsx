@@ -23,7 +23,7 @@ const NetworkPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [user.token]);
 
   return (
     <>

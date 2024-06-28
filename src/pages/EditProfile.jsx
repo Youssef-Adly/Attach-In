@@ -5,7 +5,7 @@ import {
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FilePondPicture from "../Components/FilePondPicture";
 import FilePondPictureCover from "../Components/FilePondPictureCover";

@@ -10,7 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const SearchAttachInNetwork = () => {
   const [searchedUsers, setSearchedUsers] = useState(null);
   const [AllUsers, setAllUsers] = useState(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams /* , setSearchParams */] = useSearchParams();
   const [t] = useTranslation();
 
   // Get a specific query parameter

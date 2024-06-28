@@ -559,7 +559,7 @@ const Post = ({
               // }}
             >
               <FontAwesomeIcon icon={faHeart} className="pe-1" />
-              {isLiked ? t("unlike") : t("like")} ({likes.length})
+              {isLiked ? t("Unlike") : t("Like")} ({likes.length})
             </Link>
           </li>
           {/* Comment */}
@@ -570,7 +570,7 @@ const Post = ({
             >
               {/* {console.log('commentBox: ', commentBox)} */}
               <FontAwesomeIcon icon={faCommentDots} className="pe-1" />
-              {t("comment")} ({allComments.length})
+              {t("Comments")} ({allComments.length})
             </Link>
           </li>
           {/* Share */}

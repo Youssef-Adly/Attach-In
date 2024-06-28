@@ -4,11 +4,13 @@ import "./ProfilePage.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
-  const authUser = useSelector((state) => state.Auth.user);
-  const profile = useRef();
   const baseURL = "https://attachin.com/";
+  const profile = useRef();
+  const [t] = useTranslation();
+  const authUser = useSelector((state) => state.Auth.user);
   let [user, setUser] = useState(null);
   let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
@@ -235,7 +237,7 @@ const UserProfile = () => {
                           alt="report"
                           className="pe-2"
                         />
-                        Report this Profile
+                        {t("Report this Profile")}
                       </Link>
                     </li>
                     <li className="mt-2">
@@ -248,7 +250,7 @@ const UserProfile = () => {
                           alt="block"
                           className="pe-2"
                         />
-                        Block This Person
+                        {t("Block This Person")}
                       </Link>
                     </li>
                     {/* <li>
@@ -273,6 +275,7 @@ const UserProfile = () => {
                     className="img-fluid"
                     style={{ width: "40px", height: "40px" }}
                     alt=""
+                    title=""
                   />
                 </Link>
                 {user?.we_are_friend ===
@@ -282,8 +285,8 @@ const UserProfile = () => {
                       src="/icon2.svg"
                       className="img-fluid"
                       style={{ width: "40px", height: "40px" }}
-                      alt="Add Friend"
-                      title="Add Friend"
+                      alt={t("Add Friend")}
+                      title={t("Add Friend")}
                     />
                   </Link>
                 )}
@@ -294,8 +297,8 @@ const UserProfile = () => {
                         src="/pending.svg"
                         className="img-fluid"
                         style={{ width: "40px", height: "40px" }}
-                        alt="Request Pending"
-                        title="Request Pending"
+                        alt={t("Request Pending")}
+                        title={t("Request Pending")}
                       />
                     </Link>
                     {/* <ul
@@ -338,8 +341,8 @@ const UserProfile = () => {
                       src="/approve.svg"
                       className="img-fluid"
                       style={{ width: "40px", height: "40px" }}
-                      alt="Delete Friend"
-                      title="Delete Friend"
+                      alt={t("Delete Friend")}
+                      title={t("Delete Friend")}
                     />
                   </Link>
                 )}
@@ -349,8 +352,8 @@ const UserProfile = () => {
                       src="/BlockIcon.svg"
                       className="img-fluid"
                       style={{ width: "40px", height: "40px" }}
-                      alt="Blocked"
-                      title="Blocked"
+                      alt={t("Blocked")}
+                      title={t("Blocked")}
                     />
                   </div>
                 )}
@@ -364,7 +367,7 @@ const UserProfile = () => {
                       color: "var(--text-main-color)",
                       backgroundColor: "#E3E2DC",
                     }}
-                    title="University"
+                    title={t("University")}
                   >
                     <img
                       src="/graduationCap.svg"
@@ -372,7 +375,7 @@ const UserProfile = () => {
                       alt="graduationCap"
                     />
                     <small style={{ color: "var(--main-color)" }}>
-                      University
+                      {t("University")}
                     </small>
                   </Link>
                 )}
@@ -384,7 +387,7 @@ const UserProfile = () => {
 
           <div className="d-flex justify-content-around gap-3 px-3">
             <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
-              Skills & certifications
+              {t("Skills & certifications")}
             </p>
             <Link
               to={"/userExp/" + user?.id}
@@ -394,7 +397,7 @@ const UserProfile = () => {
                 className="h5 text-decoration-underline"
                 style={{ color: "var(--text-main-color)" }}
               >
-                See All
+                {t("See All")}
               </p>
             </Link>
           </div>
@@ -574,7 +577,9 @@ const UserProfile = () => {
               </button>
             </div>
           ) : (
-            <div className="text-center display-3 pt-5">No Skills Yet</div>
+            <div className="text-center display-3 pt-5">
+              {t("No Skills Yet")}
+            </div>
           )}
 
           <hr className="mt-5 w-75 m-auto" />
@@ -585,7 +590,7 @@ const UserProfile = () => {
               className="h4 ms-sm5 col-8"
               style={{ color: "var(--text-main-color)" }}
             >
-              Posts
+              {t("Posts")}
             </p>
             <Link
               to={"/userPosts/" + user?.id}
@@ -595,7 +600,7 @@ const UserProfile = () => {
                 className="h5 text-decoration-underline"
                 style={{ color: "var(--text-main-color)" }}
               >
-                See All
+                {t("See All")}
               </p>
             </Link>
           </div>
@@ -801,7 +806,9 @@ const UserProfile = () => {
               </button>
             </div>
           ) : (
-            <div className="text-center display-3 pt-5">No Posts Yet</div>
+            <div className="text-center display-3 pt-5">
+              {t("No Posts Yet")}
+            </div>
           )}
 
           <hr className="mt-5 w-75 m-auto" />

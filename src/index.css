@@ -3,6 +3,8 @@
   src: url("./fonts/ARLRDBD.TTF") format("truetype"); /* Adjust file name and format */
   /*font-weight: normal;*/ /* Optional: specify font weight */
 }
+/* @import url("https://fonts.googleapis.com/css2?family=Marhey:wght@300..700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap");
 
 * {
   transition: color 0s !important;
@@ -10,11 +12,19 @@
   transition-timing-function: ease !important;
 }
 
-body {
+[lang="en"] body {
   font-family: "Arial Rounded MT" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 600 !important;
+}
+
+[lang="ar"] body {
+  font-family: "Noto Sans Arabic", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: bold; */
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
 [data-bs-theme="light"] {

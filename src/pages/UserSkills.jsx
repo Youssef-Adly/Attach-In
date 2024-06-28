@@ -5,9 +5,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const UserSkills = () => {
   const navigate = useNavigate();
+  const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
   const baseURL = "https://attachin.com/";
   let [user, setUser] = useState(null);
@@ -48,7 +50,7 @@ const UserSkills = () => {
           />
         </Link>
         <h1 style={{ color: "var(--text-main-color)" }}>
-          Skills and Certifications
+          {t("Skills & certifications")}
         </h1>
       </div>
       <hr />
@@ -205,7 +207,7 @@ const UserSkills = () => {
           (user.interests.length > 0) ? (
             ""
           ) : (
-            <h3 className="display-5">No Skills Yet</h3>
+            <h3 className="display-5 pt-3">{t("No Skills Yet")}</h3>
           )}
         </div>
       ) : (

@@ -28,10 +28,10 @@ const NetworkPage = () => {
   return (
     <>
       {/* Header Title */}
-      {/* <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
-        Network
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Friends")}
       </h1>
-      <hr /> */}
+      <hr />
       {friends ? (
         <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
           {friends.length > 0 ? (

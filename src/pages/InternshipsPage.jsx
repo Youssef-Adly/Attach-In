@@ -6,8 +6,8 @@ import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 
 const InternshipsPage = () => {
-  const [t] = useTranslation();
   const baseURL = "https://attachin.com/api/";
+  const [t] = useTranslation();
   let [internships, setInterships] = useState(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const InternshipsPage = () => {
             color: "var(--text-main-color)",
           }}
         >
-          No Internships Yet
+          {t("No Internships Yet")}
         </div>
       )}
     </>

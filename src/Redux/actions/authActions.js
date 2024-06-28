@@ -78,6 +78,7 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
 export const updateUserInfo = createAsyncThunk(
   "auth/updateUserInfo",
   async (user, thunkAPI) => {
@@ -90,7 +91,7 @@ export const updateUserInfo = createAsyncThunk(
         }
       );
       const data = await res.data;
-      console.log("data: ", data);
+      // console.log("data: ", data);
       return data;
     } catch (err) {
       console.log("err: ", err);

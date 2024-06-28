@@ -98,7 +98,7 @@ const SearchAttachInNetwork = () => {
                   color: "var(--text-main-color)",
                 }}
               >
-                No New Users Found
+                {t("No Users Found By That Name")}
               </p>
             )}
           </main>

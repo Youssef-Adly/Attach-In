@@ -168,8 +168,8 @@ const ProfilePage = () => {
                   src="/peopleIcon.svg"
                   className="img-fluid"
                   style={{ width: "40px", height: "40px" }}
-                  title="Your Friends"
-                  alt="Your Friends"
+                  title={t("Friends")}
+                  alt={t("Friends")}
                 />
               </Link>
               <Link to={"/editprofile"} className="">
@@ -177,8 +177,8 @@ const ProfilePage = () => {
                   src="/editPenIcon.svg"
                   className="img-fluid"
                   style={{ width: "40px", height: "40px" }}
-                  alt="editProfile"
-                  title="Edit Profile"
+                  alt={t("Edit Profile")}
+                  title={t("Edit Profile")}
                 />
               </Link>
             </div>
@@ -190,7 +190,7 @@ const ProfilePage = () => {
                   color: "var(--text-main-color)",
                   backgroundColor: "#E3E2DC",
                 }}
-                title="University"
+                title={t("University")}
               >
                 <img
                   src="/graduationCap.svg"
@@ -620,7 +620,7 @@ const ProfilePage = () => {
             </button>
           </div>
         ) : (
-          <div className="text-center display-3 pt-5">No Posts Yet</div>
+          <div className="text-center display-3 pt-5">{t("No Posts Yet")}</div>
         )}
 
         <hr className="mt-5 w-75 m-auto" />

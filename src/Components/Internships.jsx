@@ -13,6 +13,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { formatDateForPost } from "./formatDateForPost";
 import LoadingSuspese from "./LoadingSuspense";
+import { useTranslation } from "react-i18next";
 
 const Internships = ({
   id,
@@ -32,8 +33,9 @@ const Internships = ({
   lovers,
   postState: [idx, setInterships],
 }) => {
-  const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
+  const navigate = useNavigate();
+  const [t] = useTranslation();
   const commentBox = useRef();
   const report = useRef();
   const descriptions = useRef();
@@ -410,7 +412,7 @@ const Internships = ({
                         className="pe-2"
                         style={{ width: "35px" }}
                       />
-                      Edit Internship
+                      {t("Edit Internship")}
                     </Link>
                   </li>
                 )}
@@ -422,7 +424,7 @@ const Internships = ({
                         alt="report"
                         className="pe-2"
                       />
-                      Report this Profile
+                      {t("Report this Profile")}
                     </Link>
                   </li>
                 )}
@@ -437,7 +439,7 @@ const Internships = ({
                         alt="delete"
                         className="pe-2"
                       />
-                      Delete Post
+                      {t("Delete Post")}
                     </Link>
                   </li>
                 )}
@@ -449,8 +451,8 @@ const Internships = ({
                     >
                       <img src="/BlockIcon.svg" alt="block" className="pe-2" />
                       {!turnOffComment
-                        ? "Turn off Comments"
-                        : "Turn on Comments"}
+                        ? t("Turn off Comments")
+                        : t("Turn on Comments")}
                     </Link>
                   </li>
                 )}
@@ -470,7 +472,7 @@ const Internships = ({
                           alt="block"
                           className="pe-2"
                         />
-                        Report This Person
+                        {t("Report This Person")}
                       </Link>
                     </li>
                   </>
@@ -487,7 +489,7 @@ const Internships = ({
             {description}
             <br />
             <Link className="col-2 d-block ms-auto text-center" to={`${id}`}>
-              See More
+              {t("See More")}
             </Link>
           </p>
           {/*  */}
@@ -602,7 +604,7 @@ const Internships = ({
                 // }}
               >
                 <FontAwesomeIcon icon={faHeart} className="pe-1" />
-                {isLiked ? "Unlike" : "Like"} ({likes.length})
+                {isLiked ? t("Unlike") : t("Like")} ({likes.length})
               </Link>
             </li>
             {/* Comment */}
@@ -613,7 +615,7 @@ const Internships = ({
               >
                 {/* {console.log('commentBox: ', commentBox)} */}
                 <FontAwesomeIcon icon={faCommentDots} className="pe-1" />
-                Comments ({allComments.length})
+                {t("Comments")} ({allComments.length})
               </Link>
             </li>
             {/* Share */}
@@ -624,7 +626,7 @@ const Internships = ({
                 data-bs-toggle="dropdown"
               >
                 <FontAwesomeIcon icon={faShare} className="pe-1" />
-                Share {/* (3) */}
+                {t("share")} {/* (3) */}
               </Link>
               {/* Card share action dropdown menu */}
               <ul
@@ -651,7 +653,7 @@ const Internships = ({
                         borderRadius: "50%",
                       }}
                     />
-                    Share Your thoughts
+                    {t("Share Your thoughts")}
                   </Link>
                 </li>
                 {/* Instant Share */}
@@ -672,7 +674,7 @@ const Internships = ({
                         borderRadius: "50%",
                       }}
                     />
-                    Repost instantly
+                    {t("Repost instantly")}
                   </Link>
                 </li>
               </ul>
@@ -718,8 +720,8 @@ const Internships = ({
                 rows={!turnOffComment ? 1 : 2}
                 placeholder={
                   turnOffComment
-                    ? "Comments Turned Off By Auther"
-                    : "Add a comment..."
+                    ? t("Comments Turned Off By Auther")
+                    : t("Add a comment")
                 }
                 defaultValue={""}
                 disabled={turnOffComment}
@@ -904,7 +906,7 @@ const Internships = ({
               >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id={"Report" + id}>
-                    Report User Request
+                    {t("Report User Request")}
                   </h1>
                   <button
                     type="button"
@@ -915,8 +917,11 @@ const Internships = ({
                 </div>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor={"Report" + id} className="form-label">
-                      Please Provide A Reason To Be Reviewed
+                    <label
+                      htmlFor={"Report" + id}
+                      className="form-label dir d-block pb-1"
+                    >
+                      {t("Please Provide A Reason To Be Reviewed")}
                     </label>
                     <textarea
                       className="form-control"
@@ -933,7 +938,7 @@ const Internships = ({
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
-                    Close
+                    {t("Cancel")}
                   </button>
                   <button
                     type="button"
@@ -941,7 +946,7 @@ const Internships = ({
                     data-bs-dismiss="modal"
                     onClick={reportSubmit}
                   >
-                    Send
+                    {t("Send")}
                   </button>
                 </div>
               </div>
@@ -972,7 +977,7 @@ const Internships = ({
               >
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                    Share Internship
+                    {t("Share Internship")}
                   </h1>
                   <button
                     type="button"
@@ -983,8 +988,11 @@ const Internships = ({
                 </div>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor={"share3" + id} className="form-label">
-                      Internship Department
+                    <label
+                      htmlFor={"share3" + id}
+                      className="form-label dir d-block pb-1"
+                    >
+                      {t("Internship Department")}
                     </label>
                     <input
                       className="form-control"
@@ -995,8 +1003,11 @@ const Internships = ({
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor={"share" + id} className="form-label">
-                      Internship Description
+                    <label
+                      htmlFor={"share" + id}
+                      className="form-label dir d-block pb-1"
+                    >
+                      {t("Internship Description")}
                     </label>
                     <textarea
                       className="form-control"
@@ -1007,8 +1018,11 @@ const Internships = ({
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor={"share2" + id} className="form-label">
-                      Internship Requirements
+                    <label
+                      htmlFor={"share2" + id}
+                      className="form-label dir d-block pb-1"
+                    >
+                      {t("Internship Requirements")}
                     </label>
                     <textarea
                       className="form-control"
@@ -1025,14 +1039,14 @@ const Internships = ({
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
-                    Close
+                    {t("Cancel")}
                   </button>
                   <button
                     type="button"
                     onClick={shareWithThoughts}
                     className="btn btn-danger"
                   >
-                    Share
+                    {t("share")}
                   </button>
                 </div>
               </div>
@@ -1063,8 +1077,11 @@ const Internships = ({
                 }}
               >
                 <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                    Edit Internship
+                  <h1
+                    className="modal-title fs-5 dir d-block pb-1"
+                    id="staticBackdropLabel"
+                  >
+                    {t("Edit Internship")}
                   </h1>
                   <button
                     type="button"
@@ -1077,9 +1094,9 @@ const Internships = ({
                   <div className="mb-3">
                     <label
                       htmlFor={"editInternship3" + id}
-                      className="form-label"
+                      className="form-label dir d-block pb-1"
                     >
-                      Internship Department
+                      {t("Internship Department")}
                     </label>
                     <input
                       className="form-control"
@@ -1092,9 +1109,9 @@ const Internships = ({
                   <div className="mb-3">
                     <label
                       htmlFor={"editInternship" + id}
-                      className="form-label"
+                      className="form-label dir d-block pb-1"
                     >
-                      Internship Description
+                      {t("Internship Description")}
                     </label>
                     <textarea
                       className="form-control"
@@ -1107,9 +1124,9 @@ const Internships = ({
                   <div className="mb-3">
                     <label
                       htmlFor={"editInternship2" + id}
-                      className="form-label"
+                      className="form-label dir d-block pb-1"
                     >
-                      Internship Requirements
+                      {t("Internship Requirements")}
                     </label>
                     <textarea
                       className="form-control"
@@ -1126,14 +1143,14 @@ const Internships = ({
                     className="btn btn-secondary"
                     data-bs-dismiss="modal"
                   >
-                    Close
+                    {t("Cancel")}
                   </button>
                   <button
                     type="button"
                     onClick={editInternship}
                     className="btn btn-danger"
                   >
-                    Done
+                    {t("Send")}
                   </button>
                 </div>
               </div>
@@ -1152,15 +1169,14 @@ const Internships = ({
             }}
           >
             <Link
-              to=""
+              // to=""
               role="button"
               className="btn btn-link btn-link-loader btn-sm d-flex align-items-center"
               data-bs-toggle="button"
-              aria-pressed="true"
               onClick={() => setcommentLength((old) => old + 2)}
             >
               <FontAwesomeIcon icon={faEllipsis} className="me-2" />
-              Load more comments
+              {t("Load more comments")}
             </Link>
           </div>
         )}

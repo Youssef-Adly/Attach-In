@@ -5,10 +5,12 @@ import Post from "../Components/Post";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const UserPosts = () => {
-  const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
+  const navigate = useNavigate();
+  const [t] = useTranslation();
   let [posts, setPosts] = useState(null);
   let [user, setUser] = useState(null);
   const { id } = useParams();
@@ -23,32 +25,36 @@ const UserPosts = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
 
   return (
     <>
-      <div className="d-flex align-items-center gap-4">
-        <Link
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faCircleArrowLeft}
-            fontSize={27}
-            style={{
-              color: "var(--text-main-color)",
-              marginBottom: "7px",
-            }}
-          />
-        </Link>
-        {user && (
-          <h1 style={{ color: "var(--text-main-color)" }}>
-            {user?.full_name} Posts
-          </h1>
-        )}
-      </div>
-      <hr />
+      {posts && (
+        <>
+          <div className="d-flex align-items-center gap-4">
+            <Link
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCircleArrowLeft}
+                fontSize={27}
+                style={{
+                  color: "var(--text-main-color)",
+                  marginBottom: "7px",
+                }}
+              />
+            </Link>
+            <h1 style={{ color: "var(--text-main-color)" }}>
+              {user?.full_name
+                ? user?.full_name + " " + t("Posts User")
+                : t("Go Back")}
+            </h1>
+          </div>
+          <hr />
+        </>
+      )}
       {/*  */}
       <div className="d-flex flex-column gap-3">
         {posts ? (
@@ -61,7 +67,14 @@ const UserPosts = () => {
               />
             ))
           ) : (
-            <div className="display-5">No Posts Yet</div>
+            <div
+              className="display-5 pt-3 text-center"
+              style={{
+                color: "var(--text-main-color)",
+              }}
+            >
+              {t("No Posts Yet")}
+            </div>
           )
         ) : (
           <LoadingSuspese />

@@ -130,7 +130,7 @@ const InternshipDetails = () => {
               />
             </Link>
             <h4 style={{ color: "var(--text-main-color)" }}>
-              Back To Internships
+              {t("Back To Internships")}
             </h4>
           </div>
           <hr />
@@ -312,8 +312,7 @@ const InternshipDetails = () => {
                     color: "var(--text-main-color)",
                   }}
                 >
-                  Don't worry we will send your profile to the company Attach In
-                  profile is your CV
+                  {t("InternshipSubmit#1")}
                 </h1>
                 <h5
                   className="px-3 text-wrap text-center"
@@ -321,7 +320,7 @@ const InternshipDetails = () => {
                     color: "var(--text-main-color)",
                   }}
                 >
-                  If you want to make some changes go to your profile
+                  {t("InternshipSubmit#2")}
                 </h5>
               </div>
             </div>

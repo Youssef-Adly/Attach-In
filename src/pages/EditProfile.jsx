@@ -118,6 +118,7 @@ const EditProfile = () => {
   const [colleges, setColleges] = useState(null);
   const [universities, setUniversities] = useState(null);
   const [governments, setGovernments] = useState(null);
+
   useEffect(() => {
     axios
       .get(baseURL + "api/getColleges")
@@ -161,6 +162,7 @@ const EditProfile = () => {
     user.profile_photo ? baseURL + user.profile_photo : "/profile.png",
   ]);
   // console.log(profilePic);
+
   useEffect(() => {
     if (
       profilePic[0]?.source !== "/profile.png" &&
@@ -526,12 +528,12 @@ const EditProfile = () => {
     <>
       {/* Header Title */}
       <div className="d-flex align-items-center gap-4">
-        <Link
-          to={"/profile"}
-          onClick={(e) => {
-            navigate(-1);
-            navigate.reload();
-          }}
+        <a
+          href={"/profile"}
+          // onClick={(e) => {
+          //   navigate(-1);
+          //   navigate.reload();
+          // }}
         >
           <FontAwesomeIcon
             icon={faCircleArrowLeft}
@@ -541,7 +543,7 @@ const EditProfile = () => {
               marginBottom: "7px",
             }}
           />
-        </Link>
+        </a>
         <h1 style={{ color: "var(--text-main-color)" }}>{t("Edit Profile")}</h1>
       </div>
       <hr />

@@ -81,6 +81,7 @@ const SearchAttachInNetwork = lazy(() =>
   import("./pages/SearchAttachInNetwork")
 );
 const CompanyInternships = lazy(() => import("./pages/CompanyInternships"));
+const Chat = lazy(() => import("./pages/Chat"));
 
 //#endregion
 /////////////////////////////////
@@ -168,6 +169,14 @@ function App() {
           element: (
             <PrivateGuestRoute>
               <MessagesPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "chat/:id",
+          element: (
+            <PrivateGuestRoute>
+              <Chat />
             </PrivateGuestRoute>
           ),
         },

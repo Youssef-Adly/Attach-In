@@ -670,7 +670,6 @@ const Post = ({
               defaultValue={""}
               disabled={turnOffComment}
               onKeyUp={(e) => {
-                console.log(commentBox.current.value.split("\n").length);
                 commentBox.current.rows =
                   commentBox.current.value.split("\n").length;
                 if (e.key === "Enter" && !e.shiftKey) {

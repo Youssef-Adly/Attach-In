@@ -10,7 +10,7 @@ const CompanyPage = () => {
   const authUser = useSelector((state) => state.Auth.user);
   const [company, setCompany] = useState(null);
   let [posts, setPosts] = useState(null);
-  let [width, setWidth] = useState(null);
+  // let [width, setWidth] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -42,15 +42,15 @@ const CompanyPage = () => {
   }, [authUser.token, id]);
 
   const profile = useRef();
-  useEffect(() => {
-    // console.log(profile);
-    setWidth(profile.current.width);
-    // profile.current.height = profile.current.width;
+  // useEffect(() => {
+  //   // console.log(profile);
+  //   setWidth(profile.current.width);
+  //   // profile.current.height = profile.current.width;
     // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
     // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
     // console.log("profile.current.width: ", profile.current.width);
     // console.log("profile.current.height: ", profile.current.height);
-  }, [profile]);
+  // }, [profile]);
 
   // Add Friends
   const addFriend = (e) => {

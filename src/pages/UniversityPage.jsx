@@ -10,18 +10,18 @@ const UniversityPage = () => {
   const { id } = useParams();
   const [university, setUniversity] = useState(null);
   let [posts, setposts] = useState(null);
-  let [width, setWidth] = useState(null);
+  // let [width, setWidth] = useState(null);
   const profile = useRef();
 
-  useEffect(() => {
-    // console.log(profile);
-    setWidth(profile.current.width);
-    // profile.current.height = profile.current.width;
-    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-    // console.log("profile.current.width: ", profile.current.width);
-    // console.log("profile.current.height: ", profile.current.height);
-  }, [profile]);
+  // useEffect(() => {
+  //   // console.log(profile);
+  //   setWidth(profile.current.width);
+  //   // profile.current.height = profile.current.width;
+  //   // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+  //   // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+  //   // console.log("profile.current.width: ", profile.current.width);
+  //   // console.log("profile.current.height: ", profile.current.height);
+  // }, [profile]);
 
   useEffect(() => {
     axios

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -59,7 +59,7 @@ const Chat = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [user.token, id]);
+  }, [user.token, user.id, id]);
 
   const sendMsg = async (e) => {
     let message = msgInput.current.value;
@@ -131,14 +131,14 @@ const Chat = () => {
               className="avatar-img me-2 rounded-circle"
               src={baseImgURL + msgsTo.profile_photo}
               style={{ width: "40px", height: "auto", aspectRatio: "1" }}
-              // alt="profile_photo"
+              alt="profile_photo"
             />
           ) : (
             <img
               className="avatar-img me-2 rounded-circle"
               src="/profile2.svg"
               style={{ width: "40px", height: "auto" }}
-              // alt=""
+              alt="profile_photo"
             />
           )}
           {msgsTo && msgsTo.full_name}

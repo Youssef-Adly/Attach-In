@@ -52,14 +52,14 @@ const MessagesPage = () => {
                     className="avatar-img rounded-circle"
                     src={baseImgURL + m.user2.profile_photo}
                     style={{ width: "50px", height: "auto", aspectRatio: "1" }}
-                    // alt="profile_photo"
+                    alt="profile_photo"
                   />
                 ) : (
                   <img
                     className="avatar-img rounded-circle"
                     src="/profile2.svg"
                     style={{ width: "50px", height: "auto", aspectRatio: "1" }}
-                    // alt=""
+                    alt="profile_photo"
                   />
                 )}
                 {/* </Link> */}

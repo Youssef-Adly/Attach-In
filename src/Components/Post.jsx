@@ -670,10 +670,16 @@ const Post = ({
               defaultValue={""}
               disabled={turnOffComment}
               onKeyUp={(e) => {
-                commentBox.current.rows =
-                  commentBox.current.value.split("\n").length;
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (
+                  e.key === "Enter" &&
+                  !e.shiftKey &&
+                  commentBox.current.value.trim().length > 0
+                ) {
                   addComment(e);
+                  commentBox.current.value = commentBox.current.value.trim();
+                } else {
+                  commentBox.current.rows =
+                    commentBox.current.value.split("\n").length;
                 }
               }}
             />

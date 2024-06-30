@@ -77,10 +77,15 @@ const AddPost = ({ setPosts }) => {
             defaultValue={""}
             ref={postBox}
             onKeyUp={(e) => {
-              postBox.current.rows =
-                postBox.current.value.split("\n").length + 1;
-              if (e.key === "Enter" && !e.shiftKey) {
+              if (
+                e.key === "Enter" &&
+                !e.shiftKey &&
+                postBox.current.value.trim().length > 0
+              ) {
                 addPostWithoutImage(e);
+              } else {
+                postBox.current.rows =
+                  postBox.current.value.split("\n").length + 1;
               }
             }}
           />

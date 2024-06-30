@@ -13,10 +13,24 @@ const Chat = () => {
   const baseImgURL = "https://attachin.com/";
   const [t] = useTranslation();
   const { id } = useParams();
-  let msgInput = useRef();
+  const msgInput = useRef();
+  const bottomRef = useRef(null);
   let user = useSelector((state) => state.Auth.user);
-  console.log("user: ", user.id);
   let [msgs, setMsgs] = useState(null);
+  let [msgsTo, setmsgsTo] = useState(null);
+  console.log("msgsTo: ", msgsTo);
+  let [reciverID, setReciverID] = useState(null);
+  let [sending, setsending] = useState(false);
+
+  const scrollToBottom = () => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom(); // Optionally, scroll to bottom on component mount
+  }, []);
 
   useEffect(() => {
     axios
@@ -24,18 +38,58 @@ const Chat = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        setMsgs(res.data.data);
-        console.log(res.data.data);
+        setMsgs(res.data.data.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    /////////////////
+    axios
+      .get(baseURL + "getAllMyConversation", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        let reciver = res.data.data.filter((m) => +m.id === +id)[0];
+        let reciverObj =
+          reciver.user1.id === user.id ? reciver.user2 : reciver.user1;
+        setmsgsTo(reciverObj);
+        scrollToBottom();
       })
       .catch((err) => {
         console.log(err);
       });
   }, [user.token, id]);
 
-  const sendMsg = (e) => {
-    if (msgInput.current.value.length > 0) {
-      console.log(msgInput.current.value);
-      console.log(e);
+  const sendMsg = async (e) => {
+    let message = msgInput.current.value;
+
+    if (message.trim().length > 0) {
+      setsending(true);
+
+      let formData = {
+        conversation_id: id,
+        // sender_id: user.id,
+        receiver_id: msgsTo.id,
+        message: message,
+      };
+
+      await axios
+        .post(baseURL + "saveConversationMessage", formData, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        .then((res) => {
+          setMsgs((old) => [...old, res.data.data]);
+          window.scrollTo(0, document.body.scrollHeight);
+          msgInput.current.value = "";
+          msgInput.current.rows = 1;
+          setsending(false);
+        })
+        .catch((err) => {
+          setsending(false);
+          console.log(err);
+        });
     }
   };
 
@@ -45,6 +99,29 @@ const Chat = () => {
       <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
         {t("Chat")}
       </h1>
+      <h2
+        className="text-left d-flex align-items-center"
+        style={{
+          color: "var(--text-main-color)",
+        }}
+      >
+        {msgsTo?.profile_photo ? (
+          <img
+            className="avatar-img me-2 rounded-circle"
+            src={baseImgURL + msgsTo.profile_photo}
+            style={{ width: "40px", height: "auto" }}
+            // alt="profile_photo"
+          />
+        ) : (
+          <img
+            className="avatar-img me-2 rounded-circle"
+            src="/profile2.svg"
+            style={{ width: "40px", height: "auto" }}
+            // alt=""
+          />
+        )}
+        {msgsTo && msgsTo.full_name}
+      </h2>
       <hr />
       <div
         className="d-flex flex-column gap-3 position-relative justify-content-between"
@@ -64,18 +141,21 @@ const Chat = () => {
                 return (
                   <div
                     key={uuid()}
-                    className="bg-primary rounded-start-pill rounded-top-pill p-3 align-self-end"
-                    style={{
-                      minWidth: "10vw",
-                      maxWidth: "70vw",
-                    }}
+                    className="position-relative bg-primary rounded-start-pill rounded-top-pill px-3 py-2 align-self-end"
+                    style={
+                      {
+                        // minWidth: "10vw",
+                        // maxWidth: "70vw",
+                        // marginRight: "35px",
+                      }
+                    }
                   >
                     <h6 className="d-inline">{m.message}</h6>
-                    {m.sender.profile_photo ? (
+                    {/* {m.sender.profile_photo ? (
                       <img
-                        className="avatar-img ms-2 rounded-circle"
+                        className="avatar-img ms-2 rounded-circle position-absolute"
                         src={baseImgURL + m.sender.profile_photo}
-                        style={{ width: "40px", height: "auto" }}
+                        style={{ width: "30px", height: "auto", right:"-40px" }}
                         // alt="profile_photo"
                       />
                     ) : (
@@ -85,20 +165,22 @@ const Chat = () => {
                         style={{ width: "40px", height: "auto" }}
                         // alt=""
                       />
-                    )}
+                    )} */}
                   </div>
                 );
               } else {
                 return (
                   <div
                     key={uuid()}
-                    className="bg-success rounded-end-pill rounded-top-pill p-3 align-self-start"
-                    style={{
-                      minWidth: "10vw",
-                      maxWidth: "70vw",
-                    }}
+                    className="bg-success rounded-end-pill rounded-top-pill px-3 py-2 align-self-start"
+                    style={
+                      {
+                        // minWidth: "10vw",
+                        // maxWidth: "70vw",
+                      }
+                    }
                   >
-                    {m.sender.profile_photo ? (
+                    {/* {m.sender.profile_photo ? (
                       <img
                         className="avatar-img me-2 rounded-circle"
                         src={baseImgURL + m.sender.profile_photo}
@@ -112,7 +194,7 @@ const Chat = () => {
                         style={{ width: "40px", height: "auto" }}
                         // alt=""
                       />
-                    )}
+                    )} */}
                     <h6 className="d-inline">{m.message}</h6>
                   </div>
                 );
@@ -121,9 +203,11 @@ const Chat = () => {
           ) : (
             <LoadingSuspese />
           )}
+
+          {/*  */}
         </div>
         {/* Text Input */}
-        <div className="col-12 position-relative">
+        <div className="col-10 position-sticky mx-auto start-0 chatBox">
           <textarea
             // data-autoresize
             className="form-control pe-5"
@@ -131,13 +215,18 @@ const Chat = () => {
             rows={1}
             placeholder={"Write Your Message"}
             defaultValue={""}
-            // disabled={turnOffComment}
+            disabled={sending}
             onKeyUp={(e) => {
-              // console.log(commentBox.current.value.split("\n").length);
-              // commentBox.current.rows =
-              //   commentBox.current.value.split("\n").length;
-              if (e.key === "Enter" && !e.shiftKey) {
-                // addComment(e);
+              if (
+                e.key === "Enter" &&
+                !e.shiftKey &&
+                msgInput.current.value.trim().length > 0
+              ) {
+                sendMsg(e);
+                msgInput.current.value = msgInput.current.value.trim();
+              } else {
+                msgInput.current.rows =
+                  msgInput.current.value.split("\n").length;
               }
             }}
             style={{ resize: "none" }}
@@ -145,15 +234,16 @@ const Chat = () => {
           <button
             className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
             onClick={(e) => sendMsg(e)}
-            // disabled={turnOffComment}
-            // style={{
-            //   cursor: turnOffComment ? "not-allowed" : "",
-            // }}
+            disabled={sending}
+            style={{
+              cursor: sending ? "not-allowed" : "",
+            }}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>
       </div>
+      <div ref={bottomRef} style={{ height: 0 }} />
     </>
   );
 };

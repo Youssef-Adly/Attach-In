@@ -29,3 +29,13 @@
   padding: 5px;
   border-radius: 5px 10px;
 }
+
+@media only screen and (max-width: 768px) {
+  .chatBox {
+    bottom: 75px !important;
+  }
+}
+
+.chatBox {
+  bottom: 20px;
+}

@@ -5,7 +5,7 @@ import {
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FilePondPicture from "../Components/FilePondPicture";
 import FilePondPictureCover from "../Components/FilePondPictureCover";
@@ -528,8 +528,8 @@ const EditProfile = () => {
     <>
       {/* Header Title */}
       <div className="d-flex align-items-center gap-4">
-        <a
-          href={"/profile"}
+        <Link
+          to={"/profile"}
           // onClick={(e) => {
           //   navigate(-1);
           //   navigate.reload();
@@ -543,7 +543,7 @@ const EditProfile = () => {
               marginBottom: "7px",
             }}
           />
-        </a>
+        </Link>
         <h1 style={{ color: "var(--text-main-color)" }}>{t("Edit Profile")}</h1>
       </div>
       <hr />

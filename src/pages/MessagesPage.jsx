@@ -20,7 +20,7 @@ const MessagesPage = () => {
       })
       .then((res) => {
         setMsgs(res.data.data.filter((m) => m.last_message));
-        console.log("res.data.data: ", res.data.data);
+        // console.log("res.data.data: ", res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,14 +51,14 @@ const MessagesPage = () => {
                   <img
                     className="avatar-img rounded-circle"
                     src={baseImgURL + m.user2.profile_photo}
-                    style={{ width: "50px", height: "auto" }}
+                    style={{ width: "50px", height: "auto", aspectRatio: "1" }}
                     // alt="profile_photo"
                   />
                 ) : (
                   <img
                     className="avatar-img rounded-circle"
                     src="/profile2.svg"
-                    style={{ width: "50px", height: "auto" }}
+                    style={{ width: "50px", height: "auto", aspectRatio: "1" }}
                     // alt=""
                   />
                 )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -10,25 +10,26 @@ const UserProfile = () => {
   const baseURL = "https://attachin.com/";
   const profile = useRef();
   const [t] = useTranslation();
+  const navigate = useNavigate();
   const authUser = useSelector((state) => state.Auth.user);
   let [user, setUser] = useState(null);
-  let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
+  // let [width, setWidth] = useState(null);
   // console.log("userSkills: ", userSkills);
 
   const { id } = useParams();
   // console.log(id);
 
-  useEffect(() => {
-    // console.log(profile);
-    setWidth(profile.current.width);
-    // profile.current.height = profile.current.width;
-    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-    // console.log("profile.current.width: ", profile.current.width);
-    // console.log("profile.current.height: ", profile.current.height);
-  }, [profile]);
+  // useEffect(() => {
+  // console.log(profile);
+  // setWidth(profile.current.width);
+  // profile.current.height = profile.current.width;
+  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+  // console.log("profile.current.width: ", profile.current.width);
+  // console.log("profile.current.height: ", profile.current.height);
+  // }, [profile]);
 
   useEffect(() => {
     axios
@@ -157,6 +158,22 @@ const UserProfile = () => {
   //     });
   // };
 
+  const chatWithUser = async () => {
+    await axios
+      .post(
+        baseURL + "api/findOrCreateConversation",
+        { user_id_2: id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        // console.log(res.data.data);
+        navigate(`/chat/${res.data.data.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       {id ? (
@@ -189,8 +206,8 @@ const UserProfile = () => {
                 style={{
                   transform: "translateY(-50%)",
                   objectFit: "cover",
-                  height: `${width}px`,
-                  width: `${width}px`,
+                  // height: `${width}px`,
+                  // width: `${width}px`,
                   aspectRatio: "1",
                 }}
               />
@@ -268,13 +285,13 @@ const UserProfile = () => {
                   </ul>
                   {/* End of Dropdown Menu */}
                 </div>
-                <Link to={"/messages"} className="">
+                <Link onClick={chatWithUser} className="">
                   <img
                     src="/chatIcon.svg"
                     className="img-fluid"
                     style={{ width: "40px", height: "40px" }}
-                    alt=""
-                    title=""
+                    alt="Chat"
+                    title="Chat"
                   />
                 </Link>
                 {user?.we_are_friend ===

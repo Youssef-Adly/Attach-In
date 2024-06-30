@@ -1,6 +1,7 @@
+import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FriendCard = ({
   id,
@@ -10,9 +11,26 @@ const FriendCard = ({
   profile_cover,
   user_type,
 }) => {
-  // const baseURL = "https://attachin.com/api/";
-  const user = useSelector((state) => state.Auth.user);
+  const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.Auth.user);
+
+  const chatWithUser = async () => {
+    await axios
+      .post(
+        baseURL + "findOrCreateConversation",
+        { user_id_2: id },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      .then((res) => {
+        // console.log(res.data.data);
+        navigate(`/chat/${res.data.data.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Link
@@ -55,7 +73,12 @@ const FriendCard = ({
               style={{ height: "100px" }}
             />
             <div className="position-absolute bottom-0 end-0 hoverOne">
-              <img src="chatIcon.svg" alt="icon4" style={{ width: "30px" }} />
+              <img
+                onClick={chatWithUser}
+                src="chatIcon.svg"
+                alt="icon4"
+                style={{ width: "40px" }}
+              />
             </div>
           </div>
         </div>

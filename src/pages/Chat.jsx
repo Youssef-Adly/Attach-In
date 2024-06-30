@@ -2,24 +2,25 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { v4 as uuid } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Chat = () => {
   const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
-  const [t] = useTranslation();
+  // const [t] = useTranslation();
   const { id } = useParams();
   const msgInput = useRef();
   const bottomRef = useRef(null);
   let user = useSelector((state) => state.Auth.user);
   let [msgs, setMsgs] = useState(null);
   let [msgsTo, setmsgsTo] = useState(null);
-  console.log("msgsTo: ", msgsTo);
-  let [reciverID, setReciverID] = useState(null);
   let [sending, setsending] = useState(false);
 
   const scrollToBottom = () => {
@@ -81,7 +82,9 @@ const Chat = () => {
         })
         .then((res) => {
           setMsgs((old) => [...old, res.data.data]);
-          window.scrollTo(0, document.body.scrollHeight);
+          if (msgs.length > 6) {
+            window.scrollTo(0, document.body.scrollHeight);
+          }
           msgInput.current.value = "";
           msgInput.current.rows = 1;
           setsending(false);
@@ -96,32 +99,52 @@ const Chat = () => {
   return (
     <>
       {/* Header Title */}
-      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+      {/* <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
         {t("Chat")}
-      </h1>
-      <h2
-        className="text-left d-flex align-items-center"
-        style={{
-          color: "var(--text-main-color)",
-        }}
-      >
-        {msgsTo?.profile_photo ? (
-          <img
-            className="avatar-img me-2 rounded-circle"
-            src={baseImgURL + msgsTo.profile_photo}
-            style={{ width: "40px", height: "auto" }}
-            // alt="profile_photo"
+      </h1> */}
+      {/* Header Title */}
+      <div className="d-flex align-items-center gap-4">
+        <Link
+          to={"/messages"}
+          // onClick={(e) => {
+          //   navigate(-1);
+          //   navigate.reload();
+          // }}
+        >
+          <FontAwesomeIcon
+            icon={faCircleArrowLeft}
+            fontSize={27}
+            style={{
+              color: "var(--text-main-color)",
+              marginBottom: "7px",
+            }}
           />
-        ) : (
-          <img
-            className="avatar-img me-2 rounded-circle"
-            src="/profile2.svg"
-            style={{ width: "40px", height: "auto" }}
-            // alt=""
-          />
-        )}
-        {msgsTo && msgsTo.full_name}
-      </h2>
+        </Link>
+        <h2
+          className="text-left d-flex align-items-center"
+          style={{
+            color: "var(--text-main-color)",
+          }}
+        >
+          {msgsTo?.profile_photo ? (
+            <img
+              className="avatar-img me-2 rounded-circle"
+              src={baseImgURL + msgsTo.profile_photo}
+              style={{ width: "40px", height: "auto", aspectRatio: "1" }}
+              // alt="profile_photo"
+            />
+          ) : (
+            <img
+              className="avatar-img me-2 rounded-circle"
+              src="/profile2.svg"
+              style={{ width: "40px", height: "auto" }}
+              // alt=""
+            />
+          )}
+          {msgsTo && msgsTo.full_name}
+        </h2>
+      </div>
+
       <hr />
       <div
         className="d-flex flex-column gap-3 position-relative justify-content-between"

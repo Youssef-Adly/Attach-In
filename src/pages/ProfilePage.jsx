@@ -92,8 +92,8 @@ const ProfilePage = () => {
                 objectFit: "cover",
                 // height: "55%",
                 // width: "100%",
-                height: `${width}px`,
-                width: `${width}px`,
+                // height: `${width}px`,
+                // width: `${width}px`,
                 aspectRatio: "1",
               }}
             />

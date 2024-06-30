@@ -120,8 +120,8 @@ const UniversityPage = () => {
                   transform: "translateY(-50%)",
                   objectFit: "cover",
                   aspectRatio: "1",
-                  height: `${width}px`,
-                  width: `${width}px`,
+                  // height: `${width}px`,
+                  // width: `${width}px`,
                 }}
               />
             </div>

@@ -49,7 +49,7 @@ const CompanyInternships = () => {
             color: "var(--text-main-color)",
           }}
         >
-          No Internships For This Company Yet
+          {t("No Internships For This Company Yet")}
         </div>
       )}
     </>

@@ -129,8 +129,8 @@ const CompanyPage = () => {
                 transform: "translateY(-50%)",
                 backgroundColor: "var(--offWhite-color)",
                 objectFit: "cover",
-                height: `${width}px`,
-                width: `${width}px`,
+                // height: `${width}px`,
+                // width: `${width}px`,
                 aspectRatio: "1",
               }}
             />

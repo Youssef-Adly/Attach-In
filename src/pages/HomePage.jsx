@@ -14,11 +14,17 @@ const HomePage = () => {
   let [fetching, setFetching] = useState(false);
 
   useEffect(() => {
+    // const toastID = 
     axios
       .get(baseURL + "getAllHomePosts?limit=" + limit)
       .then((res) => {
         setPosts(res.data.data);
         setFetching(false);
+        // toast.update(toastID.current, {
+        //   render: "Unauthenticated...",
+        //   type: "error",
+        //   isLoading: false,
+        // });
       })
       .catch((err) => {
         console.log(err);

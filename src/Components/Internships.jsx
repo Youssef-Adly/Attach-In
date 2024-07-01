@@ -125,8 +125,8 @@ const Internships = ({
           commentBox.current.rows = 1;
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             navigate("/login");
           } else {
             console.log("error adding Comment" + err);
@@ -152,8 +152,8 @@ const Internships = ({
         setInterships((old) => old.filter((o) => o.id !== id));
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error deleting Post" + err);
@@ -175,8 +175,8 @@ const Internships = ({
         setTurnOffComment((old) => !old);
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error deleting Post" + err);
@@ -203,8 +203,8 @@ const Internships = ({
           setloadingReport(false);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingReport(false);
             navigate("/login");
             window.location.reload();
@@ -232,8 +232,8 @@ const Internships = ({
         window.location.reload();
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error Sharing" + err);
@@ -268,8 +268,8 @@ const Internships = ({
           // setloadingShare(false);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingShare(false);
             navigate("/login");
             window.location.reload();
@@ -307,8 +307,8 @@ const Internships = ({
           // setloadingEdit(false);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingEdit(false);
             navigate("/login");
             window.location.reload();

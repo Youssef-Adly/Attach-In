@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 const Post = ({
   id,
@@ -43,7 +44,28 @@ const Post = ({
   let [loadingEdit, setloadingEdit] = useState(false);
   const isMyPost = authUser.id === user_id;
   let [turnOffComment, setTurnOffComment] = useState(turn_of_comments !== "0");
-
+  let toastSuccess = (txt) =>
+    toast.success(txt, {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  const showLoadingToast = () => {
+    const toastId = toast.loading("Loading...", {
+      position: "bottom-right",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    return toastId; // Return the toast ID for potential clearing later
+  };
   const [likes, setLikes] = useState([...lovers]); // Copy the likes array to avoid mutation
 
   const [isLiked, setIsLiked] = useState(() => {
@@ -80,8 +102,8 @@ const Post = ({
       setLikes(newLikes);
       setIsLiked(newIsLiked);
     } catch (err) {
-      if (err.response.data.errors[0] === "Unauthenticated") {
-        console.log(err.response.data.errors[0]);
+      if (err.response?.data?.errors[0] === "Unauthenticated") {
+        console.log(err.response?.data?.errors[0]);
         navigate("/login");
       } else {
         console.error("Error liking post:", err);
@@ -115,8 +137,8 @@ const Post = ({
           commentBox.current.rows = 1;
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             navigate("/login");
           } else {
             console.log("error adding Comment" + err);
@@ -142,8 +164,8 @@ const Post = ({
         setPosts((old) => old.filter((o) => o.id !== id));
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error deleting Post" + err);
@@ -163,10 +185,12 @@ const Post = ({
       .then((res) => {
         // console.log("res: ", res);
         setTurnOffComment((old) => !old);
+        // toastID();
+        toastSuccess("Comments Turned Off");
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error adding Comment" + err);
@@ -194,8 +218,8 @@ const Post = ({
           setloadingReport(false);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingReport(false);
             navigate("/login");
             window.location.reload();
@@ -210,6 +234,7 @@ const Post = ({
   };
 
   const instantShare = async () => {
+    let toastID = showLoadingToast();
     await axios
       .post(
         baseURL + "api/addUserRePost",
@@ -220,11 +245,16 @@ const Post = ({
       )
       .then((res) => {
         // console.log(res);
-        window.location.reload();
+        // window.location.reload();
+        toast.update(toastID, {
+          isLoading: false,
+          type: toast.TYPE.SUCCESS,
+          render: "Data fetched successfully!",
+        });
       })
       .catch((err) => {
-        if (err.response.data.errors[0] === "Unauthenticated") {
-          console.log(err.response.data.errors[0]);
+        if (err.response?.data?.errors[0] === "Unauthenticated") {
+          console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error Sharing" + err);
@@ -252,8 +282,8 @@ const Post = ({
           // setloadingShare(false);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingShare(false);
             navigate("/login");
             window.location.reload();
@@ -285,8 +315,8 @@ const Post = ({
           // setloadingEdit(true);
         })
         .catch((err) => {
-          if (err.response.data.errors[0] === "Unauthenticated") {
-            console.log(err.response.data.errors[0]);
+          if (err.response?.data?.errors[0] === "Unauthenticated") {
+            console.log(err.response?.data?.errors[0]);
             setloadingEdit(false);
             navigate("/login");
             window.location.reload();

@@ -14,10 +14,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import {
   showLoadingToast,
-  toastSuccess,
   updateError,
   updateSuccess,
 } from "../utils/ToastsFunctions";
@@ -63,6 +61,7 @@ const Post = ({
     const newIsLiked = !isLiked;
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
+    let toastID = showLoadingToast("Liking Post.....");
     // API Call
     try {
       const response = await axios.post(
@@ -86,12 +85,15 @@ const Post = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
+      updateSuccess(toastID, "Post Liked");
     } catch (err) {
       if (err.response?.data?.errors[0] === "Unauthenticated") {
         console.log(err.response?.data?.errors[0]);
+        updateError(toastID, err.response?.data?.errors[0]);
         navigate("/login");
       } else {
-        console.error("Error liking post:", err);
+        console.log("Error liking post:", err);
+        updateError(toastID, err.message);
       }
       // Handle errors appropriately (e.g., display error message to user)
     }
@@ -105,6 +107,7 @@ const Post = ({
     e.preventDefault();
     const commentValue = commentBox.current.value;
     if (commentValue.trim().length > 0 && !turnOffComment) {
+      let toastID = showLoadingToast("Adding Comment.....");
       await axios
         .post(
           "https://attachin.com/api/addUserPostComment",
@@ -120,13 +123,16 @@ const Post = ({
           setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
           commentBox.current.value = "";
           commentBox.current.rows = 1;
+          updateSuccess(toastID, "Comment Added Successfully");
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
             console.log(err.response?.data?.errors[0]);
+            updateError(toastID, err.response?.data?.errors[0]);
             navigate("/login");
           } else {
             console.log("error adding Comment" + err);
+            updateError(toastID, err.message);
           }
         });
     } /* else {
@@ -136,6 +142,7 @@ const Post = ({
   };
 
   const deletePost = async (id) => {
+    let toastID = showLoadingToast("Deleting Post.....");
     await axios
       .post(
         baseURL + "api/deletePost",
@@ -147,18 +154,24 @@ const Post = ({
       .then((res) => {
         // console.log("res: ", res);
         setPosts((old) => old.filter((o) => o.id !== id));
+        updateSuccess(toastID, "Post Deleted Successfully");
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
           console.log(err.response?.data?.errors[0]);
+          updateError(toastID, err.response?.data?.errors[0]);
           navigate("/login");
         } else {
           console.log("error deleting Post" + err);
+          updateError(toastID, err.message);
         }
       });
   };
 
   const turnOffComments = async (id) => {
+    let toastID = showLoadingToast(
+      turnOffComment ? "Turning off Comments....." : "Turning on Comments....."
+    );
     await axios
       .post(
         baseURL + "api/changeUserPostTurnOffComments",
@@ -170,23 +183,29 @@ const Post = ({
       .then((res) => {
         // console.log("res: ", res);
         setTurnOffComment((old) => !old);
-        // toastID();
-        toastSuccess("Comments Turned Off");
+        updateSuccess(
+          toastID,
+          !turnOffComment ? "Comments Turned Off" : "Comments Turned On"
+        );
+        // toastSuccess("Comments Turned Off");
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
           console.log(err.response?.data?.errors[0]);
+          updateError(toastID, err.response?.data?.errors[0]);
           navigate("/login");
         } else {
-          console.log("error adding Comment" + err);
+          console.log("Error Turning Comments off" + err);
+          updateError(toastID, err.message);
         }
-        console.log("error Turning Off Comments " + err);
+        // console.log("error Turning Off Comments " + err);
       });
   };
 
   const reportSubmit = async () => {
     let reportValue = report.current.value;
     if (reportValue.trim().length > 0) {
+      let toastID = showLoadingToast("submitting Report.....");
       setloadingReport(true);
       await axios
         .post(
@@ -199,27 +218,30 @@ const Post = ({
         )
         .then((res) => {
           // console.log(res);
+          updateSuccess(toastID, "Report Submit Successed");
           report.current.value = "";
           setloadingReport(false);
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
             console.log(err.response?.data?.errors[0]);
+            updateError(toastID, err.response?.data?.errors[0]);
             setloadingReport(false);
             navigate("/login");
             window.location.reload();
           } else {
-            console.log("error adding Comment" + err);
+            updateError(toastID, err.message);
+            console.log("error submiting report" + err);
+            setloadingReport(false);
+            // report.current.value = "";
           }
-          console.log("error submiting report " + err);
-          setloadingReport(false);
-          // report.current.value = "";
+          // console.log("error submiting report " + err);
         });
     }
   };
 
   const instantShare = async () => {
-    let toastID = showLoadingToast("Sharing.....");
+    let toastID = showLoadingToast("Sharing Post.....");
     await axios
       .post(
         baseURL + "api/addUserRePost",
@@ -252,6 +274,7 @@ const Post = ({
   const shareWithThoughts = async () => {
     let title = thoughts.current.value;
     if (title.trim().length > 0) {
+      let toastID = showLoadingToast("Sharing Post....");
       setloadingShare(true);
       await axios
         .post(
@@ -263,21 +286,25 @@ const Post = ({
         )
         .then((res) => {
           // console.log(res);
-          window.location.reload();
+          updateSuccess(toastID, "Shared Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
           // thoughts.current.value = "";
           // setloadingShare(false);
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
+            updateError(toastID, err.response?.data?.errors[0]);
             console.log(err.response?.data?.errors[0]);
             setloadingShare(false);
             navigate("/login");
             window.location.reload();
           } else {
             console.log("error Sharing" + err);
+            updateError(toastID, err?.message);
+            setloadingShare(false);
           }
-          console.log("error Sharing " + err);
-          setloadingShare(false);
         });
     }
   };
@@ -285,6 +312,7 @@ const Post = ({
   const editPost = async () => {
     let title = titleEditPost.current.value;
     if (title.trim().length > 0) {
+      let toastID = showLoadingToast("Editing Post....");
       setloadingEdit(true);
       await axios
         .post(
@@ -297,17 +325,22 @@ const Post = ({
         )
         .then((res) => {
           // console.log(res);
-          window.location.reload();
+          updateSuccess(toastID, "Post Edited Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
           // setloadingEdit(true);
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
             console.log(err.response?.data?.errors[0]);
             setloadingEdit(false);
+            updateError(toastID, err.response?.data?.errors[0]);
             navigate("/login");
             window.location.reload();
           } else {
             console.log("error Editing Post" + err);
+            updateError(toastID, err?.message);
             setloadingEdit(false);
           }
         });

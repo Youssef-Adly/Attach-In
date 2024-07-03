@@ -11,6 +11,8 @@ const config = {
 };
 
 export let toastSuccess = (txt) => toast.success(txt, config);
+export let toastError = (txt) => toast.error(txt, config);
+export let toastInfo = (txt) => toast.info(txt, config);
 
 export const showLoadingToast = (txt) => {
   const toastId = toast.loading(txt, {
@@ -30,6 +32,7 @@ export const updateSuccess = (toastID, txt) => {
     isLoading: false,
     type: "success",
     render: txt,
+    autoClose: 1000,
     hideProgressBar: true,
   });
 };

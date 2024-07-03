@@ -5,6 +5,7 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import { toastError } from "../utils/ToastsFunctions";
 
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
@@ -14,19 +15,14 @@ const HomePage = () => {
   let [fetching, setFetching] = useState(false);
 
   useEffect(() => {
-    // const toastID = 
     axios
       .get(baseURL + "getAllHomePosts?limit=" + limit)
       .then((res) => {
         setPosts(res.data.data);
         setFetching(false);
-        // toast.update(toastID.current, {
-        //   render: "Unauthenticated...",
-        //   type: "error",
-        //   isLoading: false,
-        // });
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [limit]);

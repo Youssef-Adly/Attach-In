@@ -5,6 +5,11 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import {
+  showLoadingToast,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const AddPost = ({ setPosts }) => {
   const baseURL = "https://attachin.com/";
@@ -17,6 +22,8 @@ const AddPost = ({ setPosts }) => {
     e.preventDefault();
     const postValue = postBox.current.value;
     if (postValue.trim().length > 0) {
+      let toastID = showLoadingToast("Posting.....");
+
       await axios
         .post(
           "https://attachin.com/api/addUserPost",
@@ -35,11 +42,16 @@ const AddPost = ({ setPosts }) => {
             { user, comments: [], lovers: [], ...res.data.data },
             ...old,
           ]);
+          updateSuccess(toastID, "Posted Successfully");
         })
         .catch((err) => {
           if (err.response.data.errors[0] === "Unauthenticated") {
             console.log(err.response.data.errors[0]);
+            updateError(toastID, err.response?.data?.errors[0]);
             navigate("/login");
+          } else {
+            updateError(toastID, err.message);
+            console.log(err);
           }
         });
     } /*  else {

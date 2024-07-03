@@ -14,6 +14,11 @@ import { useSelector } from "react-redux";
 import { formatDateForPost } from "./formatDateForPost";
 import LoadingSuspese from "./LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import {
+  showLoadingToast,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const Internships = ({
   id,
@@ -64,6 +69,7 @@ const Internships = ({
     const newIsLiked = !isLiked;
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
+    let toastID = showLoadingToast("Liking Post.....");
     // API Call
     try {
       const response = await axios.post(
@@ -87,12 +93,15 @@ const Internships = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
+      updateSuccess(toastID, "Post Liked");
     } catch (err) {
       if (err.response.data.errors[0] === "Unauthenticated") {
         console.log(err.response.data.errors[0]);
+        updateError(toastID, err.response?.data?.errors[0]);
         navigate("/login");
       } else {
         console.error("Error liking post:", err);
+        updateError(toastID, err.message);
       }
       // Handle errors appropriately (e.g., display error message to user)
     }
@@ -106,6 +115,7 @@ const Internships = ({
     e.preventDefault();
     const commentValue = commentBox.current.value;
     if (commentValue.trim().length > 0 && !turnOffComment) {
+      let toastID = showLoadingToast("Adding Comment.....");
       // commentBox.current.rows = 1;
       // commentBox.current.value = "";
       await axios
@@ -123,22 +133,23 @@ const Internships = ({
           setComments((old) => [{ ...res.data.data, user: authUser }, ...old]);
           commentBox.current.value = "";
           commentBox.current.rows = 1;
+          updateSuccess(toastID, "Comment Added Successfully");
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
+            updateError(toastID, err.response?.data?.errors[0]);
             console.log(err.response?.data?.errors[0]);
             navigate("/login");
           } else {
+            updateError(toastID, err.message);
             console.log("error adding Comment" + err);
           }
         });
-    } /* else {
-      commentBox.current.rows = commentBox.current.value.split("\n").length;
-      return;
-    } */
+    }
   };
 
   const deletePost = async (id) => {
+    let toastID = showLoadingToast("Deleting Post.....");
     await axios
       .post(
         baseURL + "api/deleteInternship",
@@ -150,18 +161,24 @@ const Internships = ({
       .then((res) => {
         // console.log("res: ", res);
         setInterships((old) => old.filter((o) => o.id !== id));
+        updateSuccess(toastID, "Post Deleted Successfully");
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
+          updateError(toastID, err.response?.data?.errors[0]);
           console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
+          updateError(toastID, err.message);
           console.log("error deleting Post" + err);
         }
       });
   };
 
   const turnOffComments = async (id) => {
+    let toastID = showLoadingToast(
+      turnOffComment ? "Turning off Comments....." : "Turning on Comments....."
+    );
     await axios
       .post(
         baseURL + "api/changeCompanyInternshipTurnOffComments",
@@ -173,12 +190,19 @@ const Internships = ({
       .then((res) => {
         // console.log("res: ", res);
         setTurnOffComment((old) => !old);
+
+        updateSuccess(
+          toastID,
+          !turnOffComment ? "Comments Turned Off" : "Comments Turned On"
+        );
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
+          updateError(toastID, err.response?.data?.errors[0]);
           console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
+          updateError(toastID, err.message);
           console.log("error deleting Post" + err);
         }
       });
@@ -188,6 +212,7 @@ const Internships = ({
     let reportValue = report.current.value;
     if (reportValue.trim()) {
       setloadingReport(true);
+      let toastID = showLoadingToast("submitting Report.....");
       await axios
         .post(
           baseURL + "api/reportUserRequest",
@@ -201,24 +226,26 @@ const Internships = ({
           // console.log(res);
           report.current.value = "";
           setloadingReport(false);
+          updateSuccess(toastID, "Report Submit Successed");
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
+            updateError(toastID, err.response?.data?.errors[0]);
             console.log(err.response?.data?.errors[0]);
             setloadingReport(false);
             navigate("/login");
             window.location.reload();
           } else {
+            updateError(toastID, err.message);
             console.log("error adding Comment" + err);
+            setloadingReport(false);
           }
-          console.log("error submiting report " + err);
-          setloadingReport(false);
-          // report.current.value = "";
         });
     }
   };
 
   const instantShare = async () => {
+    let toastID = showLoadingToast("Sharing Post.....");
     await axios
       .post(
         baseURL + "api/addUserRePost",
@@ -228,17 +255,20 @@ const Internships = ({
         }
       )
       .then((res) => {
-        // console.log(res);
-        window.location.reload();
+        updateSuccess(toastID, "Post Shared");
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
+          updateError(toastID, err.response?.data?.errors[0]);
           console.log(err.response?.data?.errors[0]);
           navigate("/login");
         } else {
+          updateError(toastID, err.message);
           console.log("error Sharing" + err);
         }
-        console.log("error Sharing " + err);
       });
   };
 
@@ -247,6 +277,7 @@ const Internships = ({
     let desc = descriptions.current.value;
     let dep = departments.current.value;
     if (req.trim() && desc.trim() && dep.trim()) {
+      let toastID = showLoadingToast("Sharing Post....");
       setloadingShare(true);
       await axios
         .post(
@@ -263,21 +294,26 @@ const Internships = ({
         )
         .then((res) => {
           // console.log(res);
-          window.location.reload();
+          updateSuccess(toastID, "Shared Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
           // thoughts.current.value = "";
           // setloadingShare(false);
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
+            updateError(toastID, err.response?.data?.errors[0]);
             console.log(err.response?.data?.errors[0]);
             setloadingShare(false);
             navigate("/login");
             window.location.reload();
           } else {
+            updateError(toastID, err?.message);
             console.log("error Sharing" + err);
+            setloadingShare(false);
           }
-          console.log("error Sharing " + err);
-          setloadingShare(false);
+          // console.log("error Sharing " + err);
         });
     }
   };
@@ -288,6 +324,7 @@ const Internships = ({
     let dep = departmentsEdit.current.value;
     if (req.trim() && desc.trim() && dep.trim()) {
       setloadingEdit(true);
+      let toastID = showLoadingToast("Editing Post....");
       await axios
         .post(
           baseURL + "api/editCompanyInternship",
@@ -302,17 +339,20 @@ const Internships = ({
           }
         )
         .then((res) => {
-          // console.log(res);
-          window.location.reload();
-          // setloadingEdit(false);
+          updateSuccess(toastID, "Post Edited Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         })
         .catch((err) => {
           if (err.response?.data?.errors[0] === "Unauthenticated") {
+            updateError(toastID, err.response?.data?.errors[0]);
             console.log(err.response?.data?.errors[0]);
             setloadingEdit(false);
             navigate("/login");
             window.location.reload();
           } else {
+            updateError(toastID, err?.message);
             console.log("error Editing Post" + err);
             setloadingEdit(false);
           }

@@ -5,14 +5,19 @@ import axios from "axios";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
-import { toastError } from "../utils/ToastsFunctions";
+import { toastError, toastInfo } from "../utils/ToastsFunctions";
+import { useSelector } from "react-redux";
+import { getGreeting } from "../Components/formatDateForPost";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
-  let [posts, setPosts] = useState(null);
   const [t] = useTranslation();
-  let [limit, setLimit] = useState(10);
+  const user = useSelector((state) => state.Auth.user);
   let [fetching, setFetching] = useState(false);
+  let [limit, setLimit] = useState(10);
+  let [posts, setPosts] = useState(null);
+  let [toastUser, setToastUser] = useState(null);
 
   useEffect(() => {
     axios
@@ -26,6 +31,19 @@ const HomePage = () => {
         console.log(err);
       });
   }, [limit]);
+
+  // Great User
+  useEffect(() => {
+    if (!toast.isActive(toastUser)) {
+      setToastUser(toastInfo(getGreeting() + user.full_name));
+    } else {
+      toast.dismiss(toastUser);
+    }
+
+    return () => {
+      toast.dismiss(toastUser);
+    };
+  }, [user]);
 
   return (
     <>

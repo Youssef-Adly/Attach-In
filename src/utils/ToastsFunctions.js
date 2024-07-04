@@ -8,11 +8,15 @@ const config = {
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
+  theme: "colored",
 };
 
-export let toastSuccess = (txt) => toast.success(txt, config);
-export let toastError = (txt) => toast.error(txt, config);
-export let toastInfo = (txt) => toast.info(txt, config);
+export let toastSuccess = (txt, extraConfig = {}) =>
+  toast.success(txt, { ...config, ...extraConfig });
+export let toastError = (txt, extraConfig = {}) =>
+  toast.error(txt, { ...config, ...extraConfig });
+export let toastInfo = (txt, extraConfig = {}) =>
+  toast.info(txt, { ...config, ...extraConfig });
 
 export const showLoadingToast = (txt) => {
   const toastId = toast.loading(txt, {

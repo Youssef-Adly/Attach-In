@@ -43,7 +43,7 @@ const SearchAttachInNetwork = () => {
         search: myParam,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setAllUsers(res.data.data);
         setSearchedUsers(() =>
           res.data.data.filter((user) =>

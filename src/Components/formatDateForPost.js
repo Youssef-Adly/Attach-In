@@ -26,3 +26,16 @@ export function formatDateForPost(dateString) {
     return `${Math.floor(diffInYears)} year${diffInYears !== 1 ? "s" : ""} ago`;
   }
 }
+
+export function getGreeting() {
+  const date = new Date();
+  const hours = date.getHours();
+
+  if (hours < 12) {
+    return "Good Morning ";
+  } else if (hours < 18) {
+    return "Good Afternoon ";
+  } else {
+    return "Good Evening ";
+  }
+}

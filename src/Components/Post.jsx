@@ -59,9 +59,12 @@ const Post = ({
   // Like Button
   const handleLikeClick = async (id) => {
     const newIsLiked = !isLiked;
+    console.log("newIsLiked: ", newIsLiked);
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
-    let toastID = showLoadingToast("Liking Post.....");
+    let toastID = showLoadingToast(
+      newIsLiked ? "Liking Post....." : "Unliking Post....."
+    );
     // API Call
     try {
       const response = await axios.post(
@@ -85,7 +88,7 @@ const Post = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
-      updateSuccess(toastID, "Post Liked");
+      updateSuccess(toastID, newIsLiked ? "Post Liked" : "Post Unliked");
     } catch (err) {
       if (err.response?.data?.errors[0] === "Unauthenticated") {
         console.log(err.response?.data?.errors[0]);
@@ -93,7 +96,7 @@ const Post = ({
         navigate("/login");
       } else {
         console.log("Error liking post:", err);
-        updateError(toastID, err.message);
+        updateError(toastID, "Network Error");
       }
       // Handle errors appropriately (e.g., display error message to user)
     }
@@ -132,7 +135,7 @@ const Post = ({
             navigate("/login");
           } else {
             console.log("error adding Comment" + err);
-            updateError(toastID, err.message);
+            updateError(toastID, "Network Error");
           }
         });
     } /* else {
@@ -163,7 +166,7 @@ const Post = ({
           navigate("/login");
         } else {
           console.log("error deleting Post" + err);
-          updateError(toastID, err.message);
+          updateError(toastID, "Network Error");
         }
       });
   };
@@ -196,7 +199,7 @@ const Post = ({
           navigate("/login");
         } else {
           console.log("Error Turning Comments off" + err);
-          updateError(toastID, err.message);
+          updateError(toastID, "Network Error");
         }
         // console.log("error Turning Off Comments " + err);
       });
@@ -230,7 +233,7 @@ const Post = ({
             navigate("/login");
             window.location.reload();
           } else {
-            updateError(toastID, err.message);
+            updateError(toastID, "Network Error");
             console.log("error submiting report" + err);
             setloadingReport(false);
             // report.current.value = "";
@@ -264,10 +267,10 @@ const Post = ({
           navigate("/login");
         } else {
           console.log("error Sharing" + err.message);
-          updateError(toastID, err.message);
+          updateError(toastID, "Network Error");
         }
         // console.log("error Sharing " + err.message);
-        // updateError(toastID, err.message);
+        // updateError(toastID, "Network Error");
       });
   };
 
@@ -302,7 +305,7 @@ const Post = ({
             window.location.reload();
           } else {
             console.log("error Sharing" + err);
-            updateError(toastID, err?.message);
+            updateError(toastID, "Network Error");
             setloadingShare(false);
           }
         });
@@ -340,7 +343,7 @@ const Post = ({
             window.location.reload();
           } else {
             console.log("error Editing Post" + err);
-            updateError(toastID, err?.message);
+            updateError(toastID, "Network Error");
             setloadingEdit(false);
           }
         });

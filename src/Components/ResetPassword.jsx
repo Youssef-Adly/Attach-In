@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { showLoadingToast, toastError, updateSuccess } from "../utils/ToastsFunctions";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const ResetPassword = () => {
   });
 
   const handleForgetPassword = async (data) => {
+    let toastID = showLoadingToast("Changing Password.....");
     setLoading(true);
     await axios
       .post(
@@ -63,10 +65,12 @@ const ResetPassword = () => {
       )
       .then((res) => {
         // console.log(res);
+        updateSuccess(toastID, " Password Changed Successfully");
         navigate("/home");
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
         setLoading(false);
       });
   };

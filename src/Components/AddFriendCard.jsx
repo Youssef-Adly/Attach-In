@@ -2,6 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  showLoadingToast,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const AddFriendCard = ({
   reqID,
@@ -17,6 +22,7 @@ const AddFriendCard = ({
   const user = useSelector((state) => state.Auth.user);
 
   const aproveRequest = () => {
+    let toastID = showLoadingToast("Aproving Request.....");
     axios
       .post(
         baseURL + "responseOnFriendshipRequest",
@@ -26,14 +32,19 @@ const AddFriendCard = ({
         }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Added Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       });
   };
 
   const rejectRequest = () => {
+    let toastID = showLoadingToast("Rejecting Request.....");
     axios
       .post(
         baseURL + "responseOnFriendshipRequest",
@@ -43,10 +54,14 @@ const AddFriendCard = ({
         }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Added Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
         console.log(err);
+        updateError(toastID, "Network Error");
       });
   };
 

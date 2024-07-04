@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { toastError } from "../utils/ToastsFunctions";
 
 const InternshipsPage = () => {
   const baseURL = "https://attachin.com/api/";
@@ -17,6 +18,7 @@ const InternshipsPage = () => {
         setInterships(res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, []);

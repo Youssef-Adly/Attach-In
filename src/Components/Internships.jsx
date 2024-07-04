@@ -69,7 +69,7 @@ const Internships = ({
     const newIsLiked = !isLiked;
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
-    let toastID = showLoadingToast("Liking Post.....");
+    let toastID = showLoadingToast("Liking Internship.....");
     // API Call
     try {
       const response = await axios.post(
@@ -93,14 +93,14 @@ const Internships = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
-      updateSuccess(toastID, "Post Liked");
+      updateSuccess(toastID, "Internship Liked");
     } catch (err) {
       if (err.response.data.errors[0] === "Unauthenticated") {
         console.log(err.response.data.errors[0]);
         updateError(toastID, err.response?.data?.errors[0]);
         navigate("/login");
       } else {
-        console.error("Error liking post:", err);
+        console.error("Error liking Internship:", err);
         updateError(toastID, err.message);
       }
       // Handle errors appropriately (e.g., display error message to user)
@@ -149,7 +149,7 @@ const Internships = ({
   };
 
   const deletePost = async (id) => {
-    let toastID = showLoadingToast("Deleting Post.....");
+    let toastID = showLoadingToast("Deleting Internship.....");
     await axios
       .post(
         baseURL + "api/deleteInternship",
@@ -161,7 +161,7 @@ const Internships = ({
       .then((res) => {
         // console.log("res: ", res);
         setInterships((old) => old.filter((o) => o.id !== id));
-        updateSuccess(toastID, "Post Deleted Successfully");
+        updateSuccess(toastID, "Internship Deleted Successfully");
       })
       .catch((err) => {
         if (err.response?.data?.errors[0] === "Unauthenticated") {
@@ -203,7 +203,7 @@ const Internships = ({
           navigate("/login");
         } else {
           updateError(toastID, err.message);
-          console.log("error deleting Post" + err);
+          console.log("error Turned Off Comments" + err);
         }
       });
   };
@@ -237,7 +237,7 @@ const Internships = ({
             window.location.reload();
           } else {
             updateError(toastID, err.message);
-            console.log("error adding Comment" + err);
+            console.log("error Submitting Report" + err);
             setloadingReport(false);
           }
         });
@@ -245,7 +245,7 @@ const Internships = ({
   };
 
   const instantShare = async () => {
-    let toastID = showLoadingToast("Sharing Post.....");
+    let toastID = showLoadingToast("Sharing Internship.....");
     await axios
       .post(
         baseURL + "api/addUserRePost",
@@ -255,7 +255,7 @@ const Internships = ({
         }
       )
       .then((res) => {
-        updateSuccess(toastID, "Post Shared");
+        updateSuccess(toastID, "Internship Shared");
         setTimeout(() => {
           window.location.reload();
         }, 500);
@@ -267,7 +267,7 @@ const Internships = ({
           navigate("/login");
         } else {
           updateError(toastID, err.message);
-          console.log("error Sharing" + err);
+          console.log("error Sharing Internship" + err);
         }
       });
   };
@@ -277,7 +277,7 @@ const Internships = ({
     let desc = descriptions.current.value;
     let dep = departments.current.value;
     if (req.trim() && desc.trim() && dep.trim()) {
-      let toastID = showLoadingToast("Sharing Post....");
+      let toastID = showLoadingToast("Sharing Internship....");
       setloadingShare(true);
       await axios
         .post(
@@ -310,7 +310,7 @@ const Internships = ({
             window.location.reload();
           } else {
             updateError(toastID, err?.message);
-            console.log("error Sharing" + err);
+            console.log("error Sharing Internship" + err);
             setloadingShare(false);
           }
           // console.log("error Sharing " + err);
@@ -324,7 +324,7 @@ const Internships = ({
     let dep = departmentsEdit.current.value;
     if (req.trim() && desc.trim() && dep.trim()) {
       setloadingEdit(true);
-      let toastID = showLoadingToast("Editing Post....");
+      let toastID = showLoadingToast("Editing Internship....");
       await axios
         .post(
           baseURL + "api/editCompanyInternship",
@@ -339,7 +339,7 @@ const Internships = ({
           }
         )
         .then((res) => {
-          updateSuccess(toastID, "Post Edited Successfully");
+          updateSuccess(toastID, "Internship Edited Successfully");
           setTimeout(() => {
             window.location.reload();
           }, 500);
@@ -353,7 +353,7 @@ const Internships = ({
             window.location.reload();
           } else {
             updateError(toastID, err?.message);
-            console.log("error Editing Post" + err);
+            console.log("error Editing Internship" + err);
             setloadingEdit(false);
           }
         });
@@ -528,7 +528,10 @@ const Internships = ({
           <p>
             {description}
             <br />
-            <Link className="col-2 d-block ms-auto text-center" to={`${id}`}>
+            <Link
+              className="col-3 col-sm-2 d-block ms-auto text-center"
+              to={`${id}`}
+            >
               {t("See More")}
             </Link>
           </p>
@@ -757,7 +760,11 @@ const Internships = ({
                 data-autoresize
                 className="form-control pe-5"
                 ref={commentBox}
-                rows={!turnOffComment ? 1 : 2}
+                // rows={!turnOffComment ? 1 : 2}
+                rows={1}
+                style={{
+                  fontSize: !turnOffComment ? "" : "14px",
+                }}
                 placeholder={
                   turnOffComment
                     ? t("Comments Turned Off By Auther")

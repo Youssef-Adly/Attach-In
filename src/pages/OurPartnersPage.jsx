@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { toastError } from "../utils/ToastsFunctions";
 
 const OurPartnersPage = () => {
   const [t] = useTranslation();
@@ -19,6 +20,7 @@ const OurPartnersPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, []);
   return (

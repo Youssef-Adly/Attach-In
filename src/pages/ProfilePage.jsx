@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { toastError } from "../utils/ToastsFunctions";
 
 const ProfilePage = () => {
   const baseURL = "https://attachin.com/";
@@ -16,13 +17,13 @@ const ProfilePage = () => {
   // console.log("userSkills: ", userSkills);
 
   // useEffect(() => {
-    // console.log(profile);
-    // setWidth(profile.current.width);
-    // profile.current.height = profile.current.width;
-    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-    // console.log("profile.current.width: ", profile.current.width);
-    // console.log("profile.current.height: ", profile.current.height);
+  // console.log(profile);
+  // setWidth(profile.current.width);
+  // profile.current.height = profile.current.width;
+  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+  // console.log("profile.current.width: ", profile.current.width);
+  // console.log("profile.current.height: ", profile.current.height);
   // }, [profile]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const ProfilePage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [
     user.certifications,

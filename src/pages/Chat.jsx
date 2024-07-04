@@ -10,6 +10,7 @@ import {
   faCircleArrowLeft,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import { toastError } from "../utils/ToastsFunctions";
 
 const Chat = () => {
   const baseURL = "https://attachin.com/api/";
@@ -42,6 +43,7 @@ const Chat = () => {
         setMsgs(res.data.data.reverse());
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
     /////////////////
@@ -57,6 +59,7 @@ const Chat = () => {
         scrollToBottom();
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [user.token, user.id, id]);
@@ -91,6 +94,7 @@ const Chat = () => {
         })
         .catch((err) => {
           setsending(false);
+          toastError("Network Error");
           console.log(err);
         });
     }

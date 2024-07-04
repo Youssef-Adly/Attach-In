@@ -710,7 +710,11 @@ const Post = ({
               data-autoresize
               className="form-control pe-5"
               ref={commentBox}
-              rows={!turnOffComment ? 1 : 2}
+              // rows={!turnOffComment ? 1 : 2}
+              rows={1}
+              style={{
+                fontSize: !turnOffComment ? "" : "14px",
+              }}
               placeholder={
                 turnOffComment
                   ? t("Comments Turned Off By Auther")

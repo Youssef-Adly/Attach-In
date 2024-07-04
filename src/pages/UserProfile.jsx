@@ -5,6 +5,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import {
+  showLoadingToast,
+  toastError,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const UserProfile = () => {
   const baseURL = "https://attachin.com/";
@@ -76,6 +82,7 @@ const UserProfile = () => {
 
   // Add Friends
   const addFriend = (e) => {
+    let toastID = showLoadingToast("Adding Friend.....");
     axios
       .post(
         baseURL + "api/addFriendshipRequest",
@@ -83,14 +90,19 @@ const UserProfile = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Friend Request Sent");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       });
   };
   // deleteFriend
   const deleteFriend = (e) => {
+    let toastID = showLoadingToast("Deleting Friend.....");
     axios
       .post(
         baseURL + "api/deleteFriendshipRequest",
@@ -98,14 +110,19 @@ const UserProfile = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Deleted Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       });
   };
 
   const blockRequest = () => {
+    let toastID = showLoadingToast("Blocking.....");
     axios
       .post(
         baseURL + "api/blockFriendshipRequest",
@@ -114,10 +131,14 @@ const UserProfile = () => {
       )
       .then((res) => {
         // console.log("res: ", res);
-        window.location.reload();
+        updateSuccess(toastID, "Blocked Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
         console.log(err);
+        updateError(toastID, "Network Error");
       });
   };
 
@@ -170,6 +191,7 @@ const UserProfile = () => {
         navigate(`/chat/${res.data.data.id}`);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   };

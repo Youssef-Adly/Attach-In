@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import FriendCard from "../Components/FriendCard";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { toastError } from "../utils/ToastsFunctions";
 
 const NetworkPage = () => {
   const [t] = useTranslation();
@@ -22,6 +23,7 @@ const NetworkPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [user.token]);
 

@@ -17,6 +17,11 @@ import * as yup from "yup";
 import ErrorMessage from "../Components/ErrorMessage";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { updateUserInfo } from "../Redux/actions/authActions";
+import {
+  showLoadingToast,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 // yup Magic Here
 //#region
@@ -205,6 +210,7 @@ const EditProfile = () => {
   const submitForm = async (data) => {
     setLoading(true);
     setFormErrors(null);
+    let toastID = showLoadingToast("Submitting.....");
     // console.log(userReg);
     const form = { ...data, ...images };
     // console.log({ ...data, ...images });
@@ -236,6 +242,7 @@ const EditProfile = () => {
       .then((res) => {
         // console.log(res.data.data);
         dispatch(updateUserInfo(user));
+        updateSuccess(toastID, "Submitted Successfully");
         setTimeout(() => {
           setLoading(false);
           navigate("/profile");
@@ -243,6 +250,7 @@ const EditProfile = () => {
       })
       .catch((err) => {
         getErrorsFromAPI(err.errors);
+        updateError(toastID, err.errors[0]);
       });
   };
 
@@ -257,6 +265,7 @@ const EditProfile = () => {
   const certInput = useRef();
 
   const handleDeleteCert = async (index, id) => {
+    let toastID = showLoadingToast("Deleting Certificate.....");
     await axios
       .post(
         baseURL + "api/deleteUserCertification",
@@ -274,8 +283,10 @@ const EditProfile = () => {
           ...old,
           certifications: newArray,
         }));
+        updateSuccess(toastID, "Deleted Successfully");
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       })
       .finally(() => {
@@ -285,6 +296,7 @@ const EditProfile = () => {
 
   const handleAddCert = async (e) => {
     if (userCert.length > 0) {
+      let toastID = showLoadingToast("Adding Certificate.....");
       await axios
         .post(
           baseURL + "api/addUserCertification",
@@ -298,8 +310,11 @@ const EditProfile = () => {
         .then((res) => {
           setUserCert("");
           dispatch(updateUserInfo(user));
+          updateSuccess(toastID, "Added Successfully");
         })
         .catch((err) => {
+          // toastError("Network Error");
+          updateError(toastID, "Network Error");
           console.log(err);
         });
     }
@@ -326,6 +341,7 @@ const EditProfile = () => {
   const skillInput = useRef();
 
   const handleDeleteSkill = async (index, id) => {
+    let toastID = showLoadingToast("Deleting Skill.....");
     await axios
       .post(
         baseURL + "api/deleteUserSkill",
@@ -343,8 +359,10 @@ const EditProfile = () => {
           ...old,
           skills: newArray,
         }));
+        updateSuccess(toastID, "Deleted Successfully");
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       })
       .finally(() => {
@@ -354,6 +372,7 @@ const EditProfile = () => {
 
   const handleAddSkill = async (e) => {
     if (userSkill.length > 0) {
+      let toastID = showLoadingToast("Adding Skill.....");
       await axios
         .post(
           baseURL + "api/addUserSkill",
@@ -366,8 +385,11 @@ const EditProfile = () => {
         )
         .then((res) => {
           dispatch(updateUserInfo(user));
+          setUserSkill("");
+          updateSuccess(toastID, "Added Successfully");
         })
         .catch((err) => {
+          updateError(toastID, "Network Error");
           console.log(err);
         });
     }
@@ -394,6 +416,7 @@ const EditProfile = () => {
   const interestInput = useRef();
 
   const handleDeleteInterest = async (index, id) => {
+    let toastID = showLoadingToast("Deleting Interest.....");
     await axios
       .post(
         baseURL + "api/deleteUserInterest",
@@ -411,9 +434,11 @@ const EditProfile = () => {
           ...old,
           interests: newArray,
         }));
+        updateSuccess(toastID, "Deleted Successfully");
       })
       .catch((err) => {
         console.log(err);
+        updateError(toastID, "Network Error");
       })
       .finally(() => {
         dispatch(updateUserInfo(user));
@@ -422,6 +447,7 @@ const EditProfile = () => {
 
   const handleAddInterest = async (e) => {
     if (userInterest.length > 0) {
+      let toastID = showLoadingToast("Adding Interest.....");
       await axios
         .post(
           baseURL + "api/addUserInterest",
@@ -434,9 +460,12 @@ const EditProfile = () => {
         )
         .then((res) => {
           dispatch(updateUserInfo(user));
+          setUserInterest("");
+          updateSuccess(toastID, "Added Successfully");
         })
         .catch((err) => {
           console.log(err);
+          updateError(toastID, "Network Error");
         });
     }
   };
@@ -461,6 +490,7 @@ const EditProfile = () => {
   const ComputerExpInput = useRef();
 
   const handleDeleteComputerExp = async (index, id) => {
+    let toastID = showLoadingToast("Deleting Experiance.....");
     await axios
       .post(
         baseURL + "api/deleteUserExperience",
@@ -478,8 +508,10 @@ const EditProfile = () => {
           ...old,
           experiences: newArray,
         }));
+        updateSuccess(toastID, "Deleted Successfully");
       })
       .catch((err) => {
+        updateError(toastID, "Network Error");
         console.log(err);
       })
       .finally((res) => {
@@ -489,6 +521,7 @@ const EditProfile = () => {
 
   const handleAddComputerExp = async (e) => {
     if (userComputerExp.length > 0) {
+      let toastID = showLoadingToast("Adding Experiance.....");
       await axios
         .post(
           baseURL + "api/addUserExperience",
@@ -501,8 +534,11 @@ const EditProfile = () => {
         )
         .then((res) => {
           dispatch(updateUserInfo(user));
+          setUserComputerExp("")
+          updateSuccess(toastID, "Added Successfully");
         })
         .catch((err) => {
+          updateError(toastID, "Network Error");
           console.log(err);
         });
     }

@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { toastError } from "../utils/ToastsFunctions";
 
 const CoursesPage = () => {
   const [AllCourses, setCourses] = useState(null);
@@ -22,6 +23,7 @@ const CoursesPage = () => {
         // console.log(res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [token]);

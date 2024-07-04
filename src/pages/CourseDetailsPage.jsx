@@ -6,6 +6,7 @@ import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { toastError } from "../utils/ToastsFunctions";
 
 const CourseDetailsPage = () => {
   const token = useSelector((state) => state.Auth.user.token);
@@ -23,6 +24,7 @@ const CourseDetailsPage = () => {
         // console.log("res.data.data: ", res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [id, token]);

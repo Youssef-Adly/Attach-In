@@ -5,6 +5,7 @@ import Notification from "../Components/Notification";
 import AddFriendCard from "../Components/AddFriendCard";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { showLoadingToast, toastError } from "../utils/ToastsFunctions";
 
 const NotificationsPage = () => {
   const [t] = useTranslation();
@@ -14,6 +15,7 @@ const NotificationsPage = () => {
   const [notifications, setNotifications] = useState(null);
 
   useEffect(() => {
+    // let toastID = showLoadingToast("Submitting.....");
     //friendRequests
     axios
       .get(baseURL + "getFriendshipRequestsToMe", {
@@ -24,22 +26,25 @@ const NotificationsPage = () => {
       })
       .catch((err) => {
         console.log("error getting friends requests " + err);
+        toastError("Network Error");
       });
 
     //notifications
     axios
       .post(
-        "https://attachin.com/api/getMyUserNotifications",
+        baseURL + "getMyUserNotifications",
         {},
         {
           headers: { Authorization: `Bearer ${user.token}` },
         }
       )
       .then((res) => {
+        // setNotifications([]);
         setNotifications(res.data.data.filter((e) => e.from_user !== null));
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, []);
 
@@ -109,7 +114,7 @@ const NotificationsPage = () => {
             {/* All notifications */}
             {notifications && friendRequests ? (
               <>
-                {notifications ? (
+                {notifications.length > 0 ? (
                   notifications
                     .reverse()
                     // .slice(0, 4)
@@ -124,7 +129,7 @@ const NotificationsPage = () => {
                     No New Notifications
                   </p>
                 )}
-
+                <hr className="col-6 mx-auto" />
                 {/* Friend Requests */}
                 {friendRequests ? (
                   <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
@@ -163,23 +168,23 @@ const NotificationsPage = () => {
             {/* Notifications */}
             {notifications ? (
               <>
-                {notifications.length > 1 ? (
+                {notifications.length > 0 ? (
                   notifications.map((n, idx) => (
                     <Notification {...n} key={idx} />
                   ))
                 ) : (
-                  <LoadingSuspese />
+                  <p
+                    className="fs-3 text-center"
+                    style={{
+                      color: "var(--text-main-color)",
+                    }}
+                  >
+                    No New Notifications
+                  </p>
                 )}
               </>
             ) : (
-              <p
-                className="fs-3 text-center"
-                style={{
-                  color: "var(--text-main-color)",
-                }}
-              >
-                No New Notifications
-              </p>
+              <LoadingSuspese />
             )}
           </div>
 

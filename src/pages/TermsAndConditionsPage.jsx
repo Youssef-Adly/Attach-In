@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
+import { toastError } from "../utils/ToastsFunctions";
 
 const TermsAndConditionsPage = () => {
   const [t, i18n] = useTranslation();
@@ -18,6 +19,7 @@ const TermsAndConditionsPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, []);
 

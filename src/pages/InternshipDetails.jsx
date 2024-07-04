@@ -6,6 +6,12 @@ import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import {
+  showLoadingToast,
+  toastError,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const InternshipDetails = () => {
   const [t] = useTranslation();
@@ -25,12 +31,14 @@ const InternshipDetails = () => {
         setInternship(res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [id]);
 
   const handleSubmit = async (e) => {
     setLoading(true);
+    let toastID = showLoadingToast("Applying.....");
     await axios
       .post(
         baseURL + "addCompanyInternshipApplyRequest",
@@ -42,10 +50,14 @@ const InternshipDetails = () => {
       .then((res) => {
         // console.log(res);
         // setLoading(false);
-        navigate("/home");
+        updateSuccess(toastID, "Applied Successfully");
+        setTimeout(() => {
+          navigate("/home");
+        }, 200);
       })
       .catch((err) => {
         setLoading(false);
+        updateError(toastID, "Network Error");
         console.log(err);
       });
   };

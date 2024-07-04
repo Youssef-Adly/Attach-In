@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import { toastError } from "../utils/ToastsFunctions";
 
 const UserSkills = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const UserSkills = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [id, authUser.token]);
 

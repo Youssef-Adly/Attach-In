@@ -5,6 +5,7 @@ import Internships from "../Components/Internships";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
+import { toastError } from "../utils/ToastsFunctions";
 
 const CompanyInternships = () => {
   const baseURL = "https://attachin.com/api/";
@@ -20,6 +21,7 @@ const CompanyInternships = () => {
         setInterships(res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [id]);

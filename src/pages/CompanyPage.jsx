@@ -3,6 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import {
+  showLoadingToast,
+  toastError,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const CompanyPage = () => {
   const baseURL = "https://attachin.com/api/";
@@ -27,6 +33,7 @@ const CompanyPage = () => {
         setCompany(res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
 
@@ -37,6 +44,7 @@ const CompanyPage = () => {
         // console.log("post: ", res.data.data);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, [authUser.token, id]);
@@ -46,14 +54,15 @@ const CompanyPage = () => {
   //   // console.log(profile);
   //   setWidth(profile.current.width);
   //   // profile.current.height = profile.current.width;
-    // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-    // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-    // console.log("profile.current.width: ", profile.current.width);
-    // console.log("profile.current.height: ", profile.current.height);
+  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
+  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
+  // console.log("profile.current.width: ", profile.current.width);
+  // console.log("profile.current.height: ", profile.current.height);
   // }, [profile]);
 
   // Add Friends
   const addFriend = (e) => {
+    let toastID = showLoadingToast("Adding Friend.....");
     axios
       .post(
         baseURL + "addFriendshipRequest",
@@ -61,11 +70,20 @@ const CompanyPage = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Report Submit Successed");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
+      })
+      .catch((err) => {
+        updateError(toastID, err.message);
+        // toastError("Network Error");
+        console.log(err);
       });
   };
   // deleteFriend
   const deleteFriend = (e) => {
+    let toastID = showLoadingToast("Deleting Friend.....");
     axios
       .post(
         baseURL + "deleteFriendshipRequest",
@@ -73,7 +91,15 @@ const CompanyPage = () => {
         { headers: { Authorization: `Bearer ${authUser.token}` } }
       )
       .then((res) => {
-        window.location.reload();
+        updateSuccess(toastID, "Deleted Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
+      })
+      .catch((err) => {
+        updateError(toastID, err.message);
+        // toastError("Network Error");
+        console.log(err);
       });
   };
 

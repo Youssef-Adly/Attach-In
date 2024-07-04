@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { toastError } from "../utils/ToastsFunctions";
 
 const UniversitySchedule = () => {
   const [t] = useTranslation();
@@ -30,11 +31,12 @@ const UniversitySchedule = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        console.log(res.data.data.colleges);
+        // console.log(res.data.data.colleges);
         setColleges(res.data.data.colleges);
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, []);
 
@@ -51,11 +53,12 @@ const UniversitySchedule = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        console.log(res.data.data.levels);
+        // console.log(res.data.data.levels);
         setLevels(res.data.data.levels);
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   };
   const getCollegeLevelLectures = async (id) => {
@@ -72,6 +75,7 @@ const UniversitySchedule = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   };
   const getCollegeLevelSections = async (id) => {
@@ -88,6 +92,7 @@ const UniversitySchedule = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   };
   const getCollegeLevelExams = async (id) => {
@@ -104,6 +109,7 @@ const UniversitySchedule = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   };
 

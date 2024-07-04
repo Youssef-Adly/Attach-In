@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
+import { toastError } from "../utils/ToastsFunctions";
 
 const MessagesPage = () => {
   const baseURL = "https://attachin.com/api/";
@@ -24,6 +25,7 @@ const MessagesPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [user.token]);
 

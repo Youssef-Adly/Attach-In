@@ -50,7 +50,7 @@ const AddPost = ({ setPosts }) => {
             updateError(toastID, err.response?.data?.errors[0]);
             navigate("/login");
           } else {
-            updateError(toastID, err.message);
+            updateError(toastID, "Network Error");
             console.log(err);
           }
         });

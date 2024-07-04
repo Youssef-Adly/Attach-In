@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { toastError } from "../utils/ToastsFunctions";
 
 const UniversityPage = () => {
   const baseURL = "https://attachin.com/";
@@ -39,6 +40,7 @@ const UniversityPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [authUser.token, id]);
 

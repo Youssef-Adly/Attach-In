@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { Link } from "react-router-dom";
+import { toastError } from "../utils/ToastsFunctions";
 
 const About = () => {
   const [t, i18n] = useTranslation();
@@ -20,6 +21,7 @@ const About = () => {
         setAboutUs(res.data.data.static_pages);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
     axios
@@ -29,6 +31,7 @@ const About = () => {
         setCreators(res.data.data.creators);
       })
       .catch((err) => {
+        toastError("Network Error");
         console.log(err);
       });
   }, []);

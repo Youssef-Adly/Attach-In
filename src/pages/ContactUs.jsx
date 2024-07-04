@@ -7,6 +7,11 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import {
+  showLoadingToast,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 // yup Schema
 const schema = yup
@@ -40,15 +45,21 @@ const ContactUs = () => {
 
   const handleContactUs = (data) => {
     setLoading(true);
+    let toastID = showLoadingToast("Submitting.....");
     axios
       .post(baseURL + "sendContactUsMessageToEmail", data, {
         headers: { Authorization: `Bearer ${authUser.token}` },
       })
       .then((res) => {
         // console.log("res: ", res);
-        window.location.reload();
+        updateSuccess(toastID, "Sent Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       })
       .catch((err) => {
+        updateError(toastID, err.message);
+        // toastError("Network Error");
         console.log(err);
       });
   };

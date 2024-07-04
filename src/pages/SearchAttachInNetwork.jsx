@@ -6,6 +6,7 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { toastError } from "../utils/ToastsFunctions";
 
 const SearchAttachInNetwork = () => {
   const [searchedUsers, setSearchedUsers] = useState(null);
@@ -52,6 +53,7 @@ const SearchAttachInNetwork = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   }, [myParam]);
 

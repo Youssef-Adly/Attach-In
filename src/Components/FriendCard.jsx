@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toastError } from "../utils/ToastsFunctions";
 
 const FriendCard = ({
   id,
@@ -29,6 +30,7 @@ const FriendCard = ({
       })
       .catch((err) => {
         console.log(err);
+        toastError("Network Error");
       });
   };
 

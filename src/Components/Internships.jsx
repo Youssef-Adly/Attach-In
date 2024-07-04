@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -485,7 +485,7 @@ const Internships = ({
                 )}
                 {isMyPost && (
                   <li className="mt-2">
-                    <Link
+                    <div
                       onClick={() => turnOffComments(id)}
                       className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                     >
@@ -493,7 +493,7 @@ const Internships = ({
                       {!turnOffComment
                         ? t("Turn off Comments")
                         : t("Turn on Comments")}
-                    </Link>
+                    </div>
                   </li>
                 )}
                 {!isMyPost && (
@@ -1237,4 +1237,4 @@ const Internships = ({
   );
 };
 
-export default Internships;
+export default memo(Internships);

@@ -107,7 +107,7 @@ const Chat = () => {
         {t("Chat")}
       </h1> */}
       {/* Header Title */}
-      <div className="d-flex align-items-center gap-4">
+      <div className="d-flex align-items-center gap-4 text-light">
         <Link
           to={"/messages"}
           // onClick={(e) => {

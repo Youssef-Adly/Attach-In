@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import FriendCard from "../Components/FriendCard";
@@ -56,4 +56,4 @@ const NetworkPage = () => {
   );
 };
 
-export default NetworkPage;
+export default memo(NetworkPage);

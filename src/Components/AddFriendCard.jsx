@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -140,4 +140,4 @@ const AddFriendCard = ({
   );
 };
 
-export default AddFriendCard;
+export default memo(AddFriendCard);

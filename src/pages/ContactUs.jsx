@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -159,4 +159,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default memo(ContactUs);

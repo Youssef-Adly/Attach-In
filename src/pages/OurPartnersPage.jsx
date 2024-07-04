@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -69,4 +69,4 @@ const OurPartnersPage = () => {
   );
 };
 
-export default OurPartnersPage;
+export default memo(OurPartnersPage);

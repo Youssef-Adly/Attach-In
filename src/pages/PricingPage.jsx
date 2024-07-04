@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./PricingPage.css";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,9 @@ const PricingPage = () => {
                   <li>50GB Disk Space</li>
                   <li>50 Email Accounts</li>
                 </ul>
-                <Link to={""} className="nav-link">Get start</Link>
+                <Link to={""} className="nav-link">
+                  Get start
+                </Link>
               </div>
             </div>
             {/*- END COL */}
@@ -64,7 +66,9 @@ const PricingPage = () => {
                   <li>50GB Monthly Bandwidth</li>
                   <li>10 Subdomains</li>
                 </ul>
-                <Link to={""} className="nav-link">Get start</Link>
+                <Link to={""} className="nav-link">
+                  Get start
+                </Link>
               </div>
             </div>
             {/*- END COL */}
@@ -96,7 +100,9 @@ const PricingPage = () => {
                   <li>15 Domains</li>
                   <li>Unlimited Support</li>
                 </ul>
-                <Link to={""} className="nav-link">Get start</Link>
+                <Link to={""} className="nav-link">
+                  Get start
+                </Link>
               </div>
             </div>
             {/*- END COL */}
@@ -109,4 +115,4 @@ const PricingPage = () => {
   );
 };
 
-export default PricingPage;
+export default memo(PricingPage);

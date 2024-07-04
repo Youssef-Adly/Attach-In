@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useRef } from "react";
+import React, { memo, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
@@ -211,4 +211,4 @@ const AddPost = ({ setPosts }) => {
   );
 };
 
-export default AddPost;
+export default memo(AddPost);

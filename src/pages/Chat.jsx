@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 // import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -275,4 +275,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default memo(Chat);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
@@ -733,4 +733,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default memo(ProfilePage);

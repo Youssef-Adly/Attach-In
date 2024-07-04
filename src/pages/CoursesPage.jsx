@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 // import HomeLayout from "../Components/HomeLayout";
 import CourseCard from "../Components/CourseCard";
 import axios from "axios";
@@ -45,4 +45,4 @@ const CoursesPage = () => {
   );
 };
 
-export default CoursesPage;
+export default memo(CoursesPage);

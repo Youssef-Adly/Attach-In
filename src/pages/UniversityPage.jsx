@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
@@ -530,4 +530,4 @@ const UniversityPage = () => {
   );
 };
 
-export default UniversityPage;
+export default memo(UniversityPage);

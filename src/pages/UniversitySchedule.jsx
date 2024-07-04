@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -720,4 +720,4 @@ const UniversitySchedule = () => {
   );
 };
 
-export default UniversitySchedule;
+export default memo(UniversitySchedule);

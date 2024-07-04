@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,7 +10,11 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { showLoadingToast, toastError, updateSuccess } from "../utils/ToastsFunctions";
+import {
+  showLoadingToast,
+  toastError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -199,4 +203,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default memo(ResetPassword);

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -86,4 +86,4 @@ const TermsAndConditionsPage = () => {
   );
 };
 
-export default TermsAndConditionsPage;
+export default memo(TermsAndConditionsPage);

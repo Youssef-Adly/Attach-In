@@ -4,7 +4,7 @@ import {
   faSquareMinus,
   faSquarePlus,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FilePondPicture from "../Components/FilePondPicture";
@@ -534,7 +534,7 @@ const EditProfile = () => {
         )
         .then((res) => {
           dispatch(updateUserInfo(user));
-          setUserComputerExp("")
+          setUserComputerExp("");
           updateSuccess(toastID, "Added Successfully");
         })
         .catch((err) => {
@@ -1182,4 +1182,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default memo(EditProfile);

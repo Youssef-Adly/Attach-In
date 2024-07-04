@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
@@ -645,4 +645,4 @@ const CompanyPage = () => {
   );
 };
 
-export default CompanyPage;
+export default memo(CompanyPage);

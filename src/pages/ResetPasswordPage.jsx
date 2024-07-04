@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 // import HomeLayout from "../Components/HomeLayout";
 import ResetPassword from "../Components/ResetPassword";
 
@@ -10,4 +10,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default memo(ResetPasswordPage);

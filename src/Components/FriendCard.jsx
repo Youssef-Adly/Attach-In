@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toastError } from "../utils/ToastsFunctions";
@@ -96,4 +96,4 @@ const FriendCard = ({
   );
 };
 
-export default FriendCard;
+export default memo(FriendCard);

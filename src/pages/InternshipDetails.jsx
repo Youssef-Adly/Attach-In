@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -363,4 +363,4 @@ const InternshipDetails = () => {
   );
 };
 
-export default InternshipDetails;
+export default memo(InternshipDetails);

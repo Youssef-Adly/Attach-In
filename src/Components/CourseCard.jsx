@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -33,4 +33,4 @@ const CourseCard = ({
   );
 };
 
-export default CourseCard;
+export default memo(CourseCard);

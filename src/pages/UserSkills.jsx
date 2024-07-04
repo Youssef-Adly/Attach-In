@@ -1,7 +1,7 @@
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -219,4 +219,4 @@ const UserSkills = () => {
   );
 };
 
-export default UserSkills;
+export default memo(UserSkills);

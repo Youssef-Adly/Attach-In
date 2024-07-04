@@ -1,15 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { memo, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Internships from "../Components/Internships";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
 import { toastError } from "../utils/ToastsFunctions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const CompanyInternships = () => {
   const baseURL = "https://attachin.com/api/";
   const [t] = useTranslation();
+  const navigate = useNavigate();
   const { id } = useParams();
   let [internships, setInterships] = useState(null);
 
@@ -29,12 +32,29 @@ const CompanyInternships = () => {
   return (
     <>
       {/* Header Title */}
-      <h1
-        className="mt-3 mt-md-0 mb-0 dir"
-        style={{ color: "var(--text-main-color)" }}
-      >
-        {t("Internships")}
-      </h1>
+      <div className="d-flex align-items-center gap-4">
+        <Link
+          onClick={(e) => {
+            navigate(-1);
+          }}
+        >
+          <FontAwesomeIcon
+            icon={faCircleArrowLeft}
+            fontSize={27}
+            style={{
+              color: "var(--text-main-color)",
+              marginTop: "4px",
+            }}
+          />
+        </Link>
+        <h1
+          className="mt-3 mt-md-0 mb-0 dir"
+          style={{ color: "var(--text-main-color)" }}
+        >
+          {t("Internships")}
+        </h1>
+      </div>
+
       <hr />
       {/* Internships Posts */}
       {internships ? (
@@ -58,4 +78,4 @@ const CompanyInternships = () => {
   );
 };
 
-export default CompanyInternships;
+export default memo(CompanyInternships);

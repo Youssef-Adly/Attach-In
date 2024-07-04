@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -342,4 +342,4 @@ const CourseDetailsPage = () => {
   );
 };
 
-export default CourseDetailsPage;
+export default memo(CourseDetailsPage);

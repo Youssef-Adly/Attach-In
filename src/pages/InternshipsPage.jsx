@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Internships from "../Components/Internships";
 import { useTranslation } from "react-i18next";
 import { v4 as uuid } from "uuid";
@@ -55,4 +55,4 @@ const InternshipsPage = () => {
   );
 };
 
-export default InternshipsPage;
+export default memo(InternshipsPage);

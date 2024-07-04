@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -86,4 +86,4 @@ const MessagesPage = () => {
   );
 };
 
-export default MessagesPage;
+export default memo(MessagesPage);

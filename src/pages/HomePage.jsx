@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Post from "../Components/Post";
 import AddPost from "../Components/AddPost";
 import axios from "axios";
@@ -92,4 +92,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default memo(HomePage);

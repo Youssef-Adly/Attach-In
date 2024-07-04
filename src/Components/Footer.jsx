@@ -5,7 +5,7 @@ import {
   faTiktok,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -59,4 +59,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 
 const Notification = (props) => {
@@ -52,4 +52,4 @@ const Notification = (props) => {
   );
 };
 
-export default Notification;
+export default memo(Notification);

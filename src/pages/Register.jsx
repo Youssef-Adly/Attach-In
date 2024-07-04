@@ -1,6 +1,6 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 import { useForm } from "react-hook-form";
@@ -451,4 +451,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default memo(Register);

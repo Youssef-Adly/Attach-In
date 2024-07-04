@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 const ErrorMessage = (props) => {
   return (
@@ -10,4 +10,4 @@ const ErrorMessage = (props) => {
   );
 };
 
-export default ErrorMessage;
+export default memo(ErrorMessage);

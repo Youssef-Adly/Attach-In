@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FriendCard from "../Components/FriendCard";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -109,4 +109,4 @@ const SearchAttachInNetwork = () => {
   );
 };
 
-export default SearchAttachInNetwork;
+export default memo(SearchAttachInNetwork);

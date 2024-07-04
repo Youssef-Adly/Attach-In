@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../Components/Loading";
 import "./Landingpage.css";
@@ -765,4 +765,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default memo(LandingPage);

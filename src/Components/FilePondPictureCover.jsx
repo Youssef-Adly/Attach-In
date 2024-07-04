@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FilePond } from "react-filepond";
 
 const FilePondPictureCover = ({ profileCover, setProfileCover }) => {
@@ -21,4 +21,4 @@ const FilePondPictureCover = ({ profileCover, setProfileCover }) => {
   );
 };
 
-export default FilePondPictureCover;
+export default memo(FilePondPictureCover);

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import Aside from "./Aside";
 import AsideRight from "./AsideRight";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -10,7 +10,12 @@ import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
 import { FilePond } from "react-filepond";
 import { useTranslation } from "react-i18next";
-import { showLoadingToast, toastError, updateError, updateSuccess } from "../utils/ToastsFunctions";
+import {
+  showLoadingToast,
+  toastError,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const HomeLayout = () => {
   const [t] = useTranslation();
@@ -515,4 +520,4 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default memo(HomeLayout);

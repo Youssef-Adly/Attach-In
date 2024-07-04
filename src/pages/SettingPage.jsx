@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./SettingPage.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -109,4 +109,4 @@ const SettingPage = () => {
   );
 };
 
-export default SettingPage;
+export default memo(SettingPage);

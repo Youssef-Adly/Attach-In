@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
@@ -78,4 +78,4 @@ const FQAPage = () => {
   );
 };
 
-export default FQAPage;
+export default memo(FQAPage);

@@ -10,6 +10,7 @@ import axios from "axios";
 import LoadingSuspese from "./LoadingSuspense";
 import { FilePond } from "react-filepond";
 import { useTranslation } from "react-i18next";
+import { showLoadingToast, toastError, updateError, updateSuccess } from "../utils/ToastsFunctions";
 
 const HomeLayout = () => {
   const [t] = useTranslation();
@@ -37,6 +38,7 @@ const HomeLayout = () => {
         formData.append("image", files[0]?.file); // Image data
       }
       setLoading(true);
+      let toastID = showLoadingToast("Posting.....");
       await axios
         .post("https://attachin.com/api/addUserPost", formData, {
           headers: {
@@ -50,16 +52,21 @@ const HomeLayout = () => {
           //   postBox2.current.value = "";
           //   postBox2.current.rows = 2;
           // }
-          window.location.reload();
+          updateSuccess(toastID, "Posted Successfully");
+          setTimeout(() => {
+            window.location.reload();
+          }, 200);
         })
         .catch((err) => {
           if (err.response.data.errors[0] === "Unauthenticated") {
             console.log(err.response.data.errors[0]);
             setLoading(false);
+            updateError(toastID, err.response.data.errors[0]);
             navigate("/login");
             window.location.reload();
           } else {
             setLoading(false);
+            toastError("Network Error");
           }
         });
       // setTimeout(() => {

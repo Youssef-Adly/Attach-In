@@ -23,7 +23,6 @@ const AddPost = ({ setPosts }) => {
     const postValue = postBox.current.value;
     if (postValue.trim().length > 0) {
       let toastID = showLoadingToast("Posting.....");
-
       await axios
         .post(
           "https://attachin.com/api/addUserPost",

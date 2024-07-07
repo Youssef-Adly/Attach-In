@@ -17,7 +17,6 @@ const HomePage = () => {
   let [fetching, setFetching] = useState(false);
   let [limit, setLimit] = useState(10);
   let [posts, setPosts] = useState(null);
-  let [toastUser, setToastUser] = useState(null);
 
   useEffect(() => {
     axios
@@ -35,7 +34,7 @@ const HomePage = () => {
   // Great User
   useEffect(() => {
     if (!toast.isActive()) {
-      setToastUser(toastInfo(getGreeting() + user.full_name));
+      toastInfo(getGreeting() + user.full_name);
     } else {
       toast.dismiss();
     }

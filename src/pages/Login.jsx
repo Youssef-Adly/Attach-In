@@ -29,10 +29,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.Auth.user);
-  // console.log("user: ", user);
   const [t] = useTranslation();
   const [loginForm, setLoginForm] = useState(false);
-  // const [userLogin, setUserLogin] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [FormErrors, setFormErrors] = useState(null);
 
@@ -50,11 +48,6 @@ const Login = () => {
     },
     resolver: yupResolver(schema),
   });
-
-  // const handleChange = (e) => {
-  //   setUserLogin((old) => ({ ...old, [e.target.name]: e.target.value }));
-  //   // console.log(userLogin);
-  // };
 
   const handleLogin = (data) => {
     // console.log("data: ", data);
@@ -207,7 +200,7 @@ const Login = () => {
                 htmlFor="floatingInput"
                 style={{ color: "var(--text-main-color)" }}
               >
-                Email
+                {t("Email")}
               </label>
               <ErrorMessage>{errors.email?.message}</ErrorMessage>
               {FormErrors
@@ -248,7 +241,7 @@ const Login = () => {
                   color: "var(--text-main-color)",
                 }}
               >
-                Password
+                {t("Password")}
               </label>
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
               {FormErrors

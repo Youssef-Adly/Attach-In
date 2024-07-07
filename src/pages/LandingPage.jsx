@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Components/Loading";
 import "./Landingpage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,12 +9,95 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../Components/Footer";
 import { useTranslation } from "react-i18next";
 import PWAPrompt from "react-ios-pwa-prompt";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../Redux/actions/authActions";
+import ErrorMessage from "../Components/ErrorMessage";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { getGreeting } from "../Components/formatDateForPost";
+import { setAuth } from "../Redux/slices/AuthSlice";
+
+// yup Schema
+const schema = yup
+  .object({
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email can't be empty"),
+    password: yup
+      .string()
+      .min(6, "Password should be more than 6 characters")
+      .required("Password can't be empty"),
+  })
+  .required();
 
 const LandingPage = () => {
   const [t] = useTranslation();
   const darkTheme = useSelector((state) => state.theme.value);
-  // console.log("theme: ", darkTheme);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.Auth.user);
+  const [loading, setLoading] = useState(false);
+  const [FormErrors, setFormErrors] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting /* , isValid, isLoading, isValidating */,
+    },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const handleLogin = (data) => {
+    // console.log("data: ", data);
+    setLoading(true);
+    setFormErrors(null);
+
+    dispatch(login(data)).then((res) => {
+      // console.log(res);
+      if (res.error?.message !== "Rejected") {
+        navigate("/home");
+      } else {
+        setFormErrors(res.payload);
+        // console.log("res.payload: ", res.payload);
+        getErrorsFromAPI(res.payload);
+      }
+      setLoading(false);
+    });
+    // console.log(data);
+  };
+
+  // To Show Api Errors In View
+  const getErrorsFromAPI = (err) => {
+    let errorsArr = [];
+    for (let i = 0; i < Object.entries(err).length; i++) {
+      if (Object.entries(err)[i][1].isError) {
+        // console.log({
+        //   [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        // });
+        errorsArr.push({
+          [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        });
+      }
+    }
+    console.log("errorsArr: ", errorsArr);
+    setFormErrors([...errorsArr]);
+  };
+
+  const logout = (e) => {
+    dispatch(setAuth(null));
+    // window.location.reload();
+    // navigate("/");
+  };
 
   //#region [Loading Screen Timer]
   const [isLoading, setIsLoading] = useState(true);
@@ -129,9 +212,18 @@ const LandingPage = () => {
                         color: "var(--text-main-color)",
                       }}
                     >
-                      <Link className="nav-link fs-5 col-12" to="/login">
-                        {t("Sign in")}
-                      </Link>
+                      {!(user && user?.user_type !== "guest") ? (
+                        <Link className="nav-link fs-5 col-12" to="/login">
+                          {t("Sign in")}
+                        </Link>
+                      ) : (
+                        <Link
+                          className="nav-link fs-5 col-12"
+                          onClick={(e) => logout(e)}
+                        >
+                          {t("Log Out")}
+                        </Link>
+                      )}
                     </li>
                   </ul>
                 </div>
@@ -709,47 +801,110 @@ const LandingPage = () => {
               // color:"white"
             }}
           >
-            <h1>{t("firstTime")}</h1>
-            <form
-              className="d-flex flex-column flex-sm-row m-3 mt-5 gap-3 gap-md-5 align-items-center"
-              onSubmit={(e) => {
-                e.nativeEvent.preventDefault();
-              }}
-            >
-              <div className="mb-3 col-12 col-sm-4">
-                <label htmlFor="exampleInputEmail1" className="form-label">
-                  {t("Email")}
-                </label>
-                <input
-                  type="email"
-                  className="form-control rounded-5"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  style={{
-                    backgroundColor: "var(--sec-color)",
-                  }}
-                />
-                {/* <div id="emailHelp" className="form-text">
-                  We'll never share your email with anyone else.
-                </div> */}
-              </div>
-              <div className="mb-3 col-12 col-sm-4">
-                <label htmlFor="exampleInputPassword1" className="form-label">
-                  {t("Password")}
-                </label>
-                <input
-                  type="password"
-                  className="form-control rounded-5"
-                  id="exampleInputPassword1"
-                  style={{
-                    backgroundColor: "var(--sec-color)",
-                  }}
-                />
-              </div>
-              <button type="submit" className="btn text-light">
-                <FontAwesomeIcon icon={faCircleArrowRight} fontSize={40} />
-              </button>
-            </form>
+            {!(user && user?.user_type !== "guest") ? (
+              <>
+                <h1>{t("firstTime")}</h1>
+                <form
+                  className={`d-flex flex-column flex-sm-row m-3 mt-5 gap-3 gap-md-5 align-items-center`}
+                  onSubmit={handleSubmit(handleLogin)}
+                >
+                  <div className="mb-3 col-12 col-sm-4">
+                    <label htmlFor="exampleInputEmail1" className="form-label">
+                      {t("Email")}
+                    </label>
+                    <input
+                      type="text"
+                      disabled={isSubmitting}
+                      className={
+                        errors.email
+                          ? "border border-1 border-danger form-control rounded-5"
+                          : "form-control rounded-5"
+                      }
+                      {...register("email")}
+                      id="exampleInputEmail1"
+                      name="email"
+                      style={{
+                        backgroundColor: "var(--sec-color)",
+                      }}
+                    />
+                    <ErrorMessage>{errors.email?.message}</ErrorMessage>
+                    {FormErrors
+                      ? FormErrors.map((err, idx) => {
+                          // console.log(Object.entries(err)[0][0]);
+                          return Object.entries(err)[0][0] === "email" ? (
+                            <ErrorMessage key={idx}>
+                              {Object.entries(err)[0][1]?.message}
+                            </ErrorMessage>
+                          ) : (
+                            ""
+                          );
+                        })
+                      : ""}
+                  </div>
+                  <div className="mb-3 col-12 col-sm-4">
+                    <label
+                      htmlFor="exampleInputPassword1"
+                      className="form-label"
+                    >
+                      {t("Password")}
+                    </label>
+                    <input
+                      {...register("password")}
+                      disabled={isSubmitting}
+                      type="password"
+                      className={
+                        errors.password
+                          ? "border border-1 border-danger form-control rounded-5"
+                          : "form-control rounded-5"
+                      }
+                      id="exampleInputPassword1"
+                      style={{
+                        backgroundColor: "var(--sec-color)",
+                      }}
+                    />
+                    <ErrorMessage>{errors.password?.message}</ErrorMessage>
+                    {FormErrors
+                      ? FormErrors.map((err, idx) => {
+                          // console.log(Object.entries(err)[0][0]);
+                          return Object.entries(err)[0][0] === "password" ? (
+                            <ErrorMessage key={idx}>
+                              {Object.entries(err)[0][1]?.message}
+                            </ErrorMessage>
+                          ) : (
+                            ""
+                          );
+                        })
+                      : ""}
+                  </div>
+                  {!loading ? (
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="btn text-light"
+                      onClick={(e) => {
+                        handleSubmit(e);
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCircleArrowRight}
+                        fontSize={40}
+                      />
+                    </button>
+                  ) : (
+                    <img
+                      src="/Opener Loading.gif"
+                      // className="m-auto"
+                      style={{ width: "50px" }}
+                      alt="Loading"
+                    />
+                  )}
+                </form>
+              </>
+            ) : (
+              <h1>
+                {getGreeting()}, {user.full_name}
+              </h1>
+            )}
           </section>
           {/* Footer */}
           <Footer />

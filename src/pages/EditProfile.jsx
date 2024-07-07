@@ -72,34 +72,12 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
   const user = useSelector((state) => state.Auth.user);
+  // console.log("user: ", user);
   const [t, i18n] = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [loadingSkills, setLoadingSkills] = useState(false);
   const [FormErrors, setFormErrors] = useState(null);
   const dispatch = useDispatch();
-
-  const {
-    register,
-    handleSubmit,
-    formState: {
-      errors,
-      isSubmitting /* , isValid, isLoading, isValidating */,
-    },
-  } = useForm({
-    defaultValues: {
-      first_name: user.first_name || user.full_name.split(" ")[0],
-      last_name: user.last_name || user.full_name.split(" ")[1],
-      email: user.email,
-      phone: user.phone,
-      university: user.university?.id,
-      collage: user.collage?.id || "",
-      address: user.address,
-      bio: user.bio || "",
-      birthday: user.birthday || "",
-      governorate: user.governorate?.id || "",
-      language: "en",
-    },
-    resolver: yupResolver(schema),
-  });
 
   // To Show Api Errors In View
   const getErrorsFromAPI = (err) => {
@@ -155,6 +133,32 @@ const EditProfile = () => {
   }, []);
 
   //#endregion
+
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting /* , isValid, isLoading, isValidating */,
+    },
+  } = useForm({
+    defaultValues: {
+      first_name: user.first_name || user.full_name.split(" ")[0],
+      last_name: user.last_name || user.full_name.split(" ")[1],
+      email: user.email,
+      phone: user.phone,
+      university: user.university?.id.toString() || "",
+      collage: user.collage?.id.toString() || "",
+      address: user.address || "",
+      bio: user.bio || "",
+      birthday: user.birthday || "",
+      governorate: user.governorate?.id.toString() || "",
+      language: "en",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  // console.log(typeof user.university?.id.toString());
 
   //Adds Images in FormSubmit Object
   //#region
@@ -213,6 +217,7 @@ const EditProfile = () => {
     let toastID = showLoadingToast("Submitting.....");
     // console.log(userReg);
     const form = { ...data, ...images };
+    // console.log('form: ', form);
     // console.log({ ...data, ...images });
     const formData = new FormData();
     for (const key in form) {
@@ -253,7 +258,7 @@ const EditProfile = () => {
         updateError(toastID, err.errors[0]);
       });
   };
-
+  // !loadingSkills &&
   //#endregion
 
   // Adding Dynamic Inputs
@@ -266,6 +271,7 @@ const EditProfile = () => {
 
   const handleDeleteCert = async (index, id) => {
     let toastID = showLoadingToast("Deleting Certificate.....");
+    setLoadingSkills(true);
     await axios
       .post(
         baseURL + "api/deleteUserCertification",
@@ -284,6 +290,7 @@ const EditProfile = () => {
           certifications: newArray,
         }));
         updateSuccess(toastID, "Deleted Successfully");
+        // setLoadingSkills(false);
       })
       .catch((err) => {
         updateError(toastID, "Network Error");
@@ -291,12 +298,14 @@ const EditProfile = () => {
       })
       .finally(() => {
         dispatch(updateUserInfo(user));
+        setLoadingSkills(false);
       });
   };
 
   const handleAddCert = async (e) => {
     if (userCert.length > 0) {
       let toastID = showLoadingToast("Adding Certificate.....");
+      setLoadingSkills(true);
       await axios
         .post(
           baseURL + "api/addUserCertification",
@@ -311,11 +320,13 @@ const EditProfile = () => {
           setUserCert("");
           dispatch(updateUserInfo(user));
           updateSuccess(toastID, "Added Successfully");
+          setLoadingSkills(false);
         })
         .catch((err) => {
           // toastError("Network Error");
           updateError(toastID, "Network Error");
           console.log(err);
+          setLoadingSkills(false);
         });
     }
   };
@@ -342,6 +353,7 @@ const EditProfile = () => {
 
   const handleDeleteSkill = async (index, id) => {
     let toastID = showLoadingToast("Deleting Skill.....");
+    setLoadingSkills(true);
     await axios
       .post(
         baseURL + "api/deleteUserSkill",
@@ -367,12 +379,14 @@ const EditProfile = () => {
       })
       .finally(() => {
         dispatch(updateUserInfo(user));
+        setLoadingSkills(false);
       });
   };
 
   const handleAddSkill = async (e) => {
     if (userSkill.length > 0) {
       let toastID = showLoadingToast("Adding Skill.....");
+      setLoadingSkills(true);
       await axios
         .post(
           baseURL + "api/addUserSkill",
@@ -387,10 +401,12 @@ const EditProfile = () => {
           dispatch(updateUserInfo(user));
           setUserSkill("");
           updateSuccess(toastID, "Added Successfully");
+          setLoadingSkills(false);
         })
         .catch((err) => {
           updateError(toastID, "Network Error");
           console.log(err);
+          setLoadingSkills(false);
         });
     }
   };
@@ -417,6 +433,7 @@ const EditProfile = () => {
 
   const handleDeleteInterest = async (index, id) => {
     let toastID = showLoadingToast("Deleting Interest.....");
+    setLoadingSkills(true);
     await axios
       .post(
         baseURL + "api/deleteUserInterest",
@@ -442,12 +459,14 @@ const EditProfile = () => {
       })
       .finally(() => {
         dispatch(updateUserInfo(user));
+        setLoadingSkills(false);
       });
   };
 
   const handleAddInterest = async (e) => {
     if (userInterest.length > 0) {
       let toastID = showLoadingToast("Adding Interest.....");
+      setLoadingSkills(true);
       await axios
         .post(
           baseURL + "api/addUserInterest",
@@ -462,10 +481,12 @@ const EditProfile = () => {
           dispatch(updateUserInfo(user));
           setUserInterest("");
           updateSuccess(toastID, "Added Successfully");
+          setLoadingSkills(false);
         })
         .catch((err) => {
           console.log(err);
           updateError(toastID, "Network Error");
+          setLoadingSkills(false);
         });
     }
   };
@@ -491,6 +512,7 @@ const EditProfile = () => {
 
   const handleDeleteComputerExp = async (index, id) => {
     let toastID = showLoadingToast("Deleting Experiance.....");
+    setLoadingSkills(true);
     await axios
       .post(
         baseURL + "api/deleteUserExperience",
@@ -516,12 +538,14 @@ const EditProfile = () => {
       })
       .finally((res) => {
         dispatch(updateUserInfo(user));
+        setLoadingSkills(false);
       });
   };
 
   const handleAddComputerExp = async (e) => {
     if (userComputerExp.length > 0) {
       let toastID = showLoadingToast("Adding Experiance.....");
+      setLoadingSkills(true);
       await axios
         .post(
           baseURL + "api/addUserExperience",
@@ -536,10 +560,12 @@ const EditProfile = () => {
           dispatch(updateUserInfo(user));
           setUserComputerExp("");
           updateSuccess(toastID, "Added Successfully");
+          setLoadingSkills(false);
         })
         .catch((err) => {
           updateError(toastID, "Network Error");
           console.log(err);
+          setLoadingSkills(false);
         });
     }
   };
@@ -730,11 +756,10 @@ const EditProfile = () => {
               className="form-select rounded-5"
               id="Governorate"
               {...register("governorate")}
-              aria-label="Floating label select example"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              defaultValue={""}
+              // defaultValue={""}
               name="governorate"
               // onChange={(e) => handleChange(e)}
             >
@@ -753,6 +778,7 @@ const EditProfile = () => {
                     key={idx}
                     value={g.id}
                     style={{ color: "var(--text-main-color)" }}
+                    selected={user.governorate?.id === g.id ? true : false}
                   >
                     {i18n.language === "ar" ? g.name_ar : g.name_en}
                   </option>
@@ -804,17 +830,19 @@ const EditProfile = () => {
             >
               Certifications
             </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddCert(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
+            {!loadingSkills && (
+              <div
+                className="position-absolute"
+                style={{
+                  right: " 0",
+                  transform: "translate(-25px, -43px)",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => handleAddCert(e)}
+              >
+                <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
+              </div>
+            )}
           </div>
           {/* Certifications */}
           {userReg.certifications.map((item, index) => (
@@ -838,17 +866,19 @@ const EditProfile = () => {
               >
                 Certificate #{index + 1}
               </label>
-              <div
-                className="position-absolute"
-                style={{
-                  right: "0px",
-                  transform: "translate(-25px, -43px)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDeleteCert(index, item.id)}
-              >
-                <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
-              </div>
+              {!loadingSkills && (
+                <div
+                  className="position-absolute"
+                  style={{
+                    right: "0px",
+                    transform: "translate(-25px, -43px)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDeleteCert(index, item.id)}
+                >
+                  <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
+                </div>
+              )}
             </div>
           ))}
           {/* /////////////////////////// */}
@@ -870,17 +900,19 @@ const EditProfile = () => {
             <label htmlFor="skills" style={{ color: "var(--text-main-color)" }}>
               Skills
             </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddSkill(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
+            {!loadingSkills && (
+              <div
+                className="position-absolute"
+                style={{
+                  right: " 0",
+                  transform: "translate(-25px, -43px)",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => handleAddSkill(e)}
+              >
+                <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
+              </div>
+            )}
           </div>
           {/* Skills */}
           {userReg.skills.map((item, index) => (
@@ -903,17 +935,19 @@ const EditProfile = () => {
               >
                 Skill #{index + 1}
               </label>
-              <div
-                className="position-absolute"
-                style={{
-                  right: "0px",
-                  transform: "translate(-25px, -43px)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDeleteSkill(index, item.id)}
-              >
-                <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
-              </div>
+              {!loadingSkills && (
+                <div
+                  className="position-absolute"
+                  style={{
+                    right: "0px",
+                    transform: "translate(-25px, -43px)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDeleteSkill(index, item.id)}
+                >
+                  <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
+                </div>
+              )}
             </div>
           ))}
           {/*  */}
@@ -939,17 +973,19 @@ const EditProfile = () => {
             >
               Interests
             </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddInterest(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
+            {!loadingSkills && (
+              <div
+                className="position-absolute"
+                style={{
+                  right: " 0",
+                  transform: "translate(-25px, -43px)",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => handleAddInterest(e)}
+              >
+                <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
+              </div>
+            )}
           </div>
           {/* interests */}
           {userReg.interests.map((item, index) => (
@@ -972,17 +1008,19 @@ const EditProfile = () => {
               >
                 Interest #{index + 1}
               </label>
-              <div
-                className="position-absolute"
-                style={{
-                  right: "0px",
-                  transform: "translate(-25px, -43px)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDeleteInterest(index, item.id)}
-              >
-                <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
-              </div>
+              {!loadingSkills && (
+                <div
+                  className="position-absolute"
+                  style={{
+                    right: "0px",
+                    transform: "translate(-25px, -43px)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDeleteInterest(index, item.id)}
+                >
+                  <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
+                </div>
+              )}
             </div>
           ))}
           {/*  */}
@@ -1032,17 +1070,19 @@ const EditProfile = () => {
             >
               User Experiences
             </label>
-            <div
-              className="position-absolute"
-              style={{
-                right: " 0",
-                transform: "translate(-25px, -43px)",
-                cursor: "pointer",
-              }}
-              onClick={(e) => handleAddComputerExp(e)}
-            >
-              <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
-            </div>
+            {!loadingSkills && (
+              <div
+                className="position-absolute"
+                style={{
+                  right: " 0",
+                  transform: "translate(-25px, -43px)",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => handleAddComputerExp(e)}
+              >
+                <FontAwesomeIcon fontSize={30} icon={faSquarePlus} />
+              </div>
+            )}
           </div>
           {/* User Experiences */}
           {userReg.experiences.map((item, index) => (
@@ -1065,17 +1105,19 @@ const EditProfile = () => {
               >
                 User Experience #{index + 1}
               </label>
-              <div
-                className="position-absolute"
-                style={{
-                  right: "0px",
-                  transform: "translate(-25px, -43px)",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleDeleteComputerExp(index, item.id)}
-              >
-                <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
-              </div>
+              {!loadingSkills && (
+                <div
+                  className="position-absolute"
+                  style={{
+                    right: "0px",
+                    transform: "translate(-25px, -43px)",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleDeleteComputerExp(index, item.id)}
+                >
+                  <FontAwesomeIcon fontSize={30} icon={faSquareMinus} />
+                </div>
+              )}
             </div>
           ))}
           {/*  */}
@@ -1088,9 +1130,10 @@ const EditProfile = () => {
                 bordercolor: "var(--text-main-color)",
               }}
               {...register("university")}
-              defaultValue={""}
               name="university"
-              // onChange={(e) => handleChange(e)}
+              // value={user.university?.id}
+              // defaultValue={user.university?.id}
+              // onChange={(e) => console.log(e.target.value)}
             >
               <option
                 value={""}
@@ -1100,13 +1143,18 @@ const EditProfile = () => {
                 {i18n.language === "ar" ? "اختار جامعه" : "Choose a University"}
               </option>
               {universities &&
-                universities.map((u, idx) => (
+                universities.map((university, idx) => (
                   <option
-                    key={idx}
-                    value={u.id}
+                    key={university.id}
+                    value={university.id}
                     style={{ color: "var(--text-main-color)" }}
+                    selected={
+                      user.university?.id === university.id ? true : false
+                    }
                   >
-                    {i18n.language === "ar" ? u.name_ar : u.name_en}
+                    {i18n.language === "ar"
+                      ? university.name_ar
+                      : university.name_en}
                   </option>
                 ))}
             </select>
@@ -1117,13 +1165,13 @@ const EditProfile = () => {
           <div className="form-floating my-3">
             <select
               className="form-select rounded-5"
-              id="Collage"
+              id="collage"
               style={{
                 bordercolor: "var(--text-main-color)",
               }}
-              defaultValue={""}
               {...register("collage")}
               name="collage"
+              // defaultValue={user.collage?.id}
               // onChange={(e) => handleChange(e)}
             >
               <option
@@ -1136,15 +1184,16 @@ const EditProfile = () => {
               {colleges &&
                 colleges.map((c, idx) => (
                   <option
-                    key={idx}
+                    key={c.id}
                     value={c.id}
                     style={{ color: "var(--text-main-color)" }}
+                    selected={user.collage?.id === c.id ? true : false}
                   >
                     {i18n.language === "ar" ? c.name_ar : c.name_en}
                   </option>
                 ))}
             </select>
-            <label htmlFor="Collage">Collage</label>
+            <label htmlFor="collage">Collage</label>
             <ErrorMessage>{errors.collage?.message}</ErrorMessage>
           </div>
           {/* API Validations */}

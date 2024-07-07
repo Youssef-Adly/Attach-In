@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import {
   showLoadingToast,
-  toastError,
+  updateError,
   updateSuccess,
 } from "../utils/ToastsFunctions";
 
@@ -74,7 +74,7 @@ const ResetPassword = () => {
       })
       .catch((err) => {
         console.log(err);
-        toastError("Network Error");
+        updateError(toastID, "Current Password are Not Valid");
         setLoading(false);
       });
   };

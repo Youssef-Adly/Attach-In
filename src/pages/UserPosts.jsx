@@ -6,7 +6,7 @@ import LoadingSuspese from "../Components/LoadingSuspense";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { toastError } from "../utils/ToastsFunctions";
+// import { toastError } from "../utils/ToastsFunctions";
 
 const UserPosts = () => {
   const baseURL = "https://attachin.com/";
@@ -21,11 +21,11 @@ const UserPosts = () => {
       .get(`${baseURL}api/getAllHomePosts?user_id=` + id)
       .then((res) => {
         setPosts(res.data.data);
-        setUser(res.data.data[0].user);
+        setUser(res.data.data[0]?.user);
       })
       .catch((err) => {
         console.log(err);
-        toastError("Network Error");
+        // toastError("Network Error");
       });
   }, [id]);
 

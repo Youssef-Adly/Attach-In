@@ -69,7 +69,9 @@ const Internships = ({
     const newIsLiked = !isLiked;
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
-    let toastID = showLoadingToast("Liking Internship.....");
+    let toastID = showLoadingToast(
+      newIsLiked ? "Liking Internship....." : "Unliking Internship....."
+    );
     // API Call
     try {
       const response = await axios.post(
@@ -93,7 +95,10 @@ const Internships = ({
       }
       setLikes(newLikes);
       setIsLiked(newIsLiked);
-      updateSuccess(toastID, "Internship Liked");
+      updateSuccess(
+        toastID,
+        newIsLiked ? "Internship Liked" : "Internship Unliked"
+      );
     } catch (err) {
       if (err.response.data.errors[0] === "Unauthenticated") {
         console.log(err.response.data.errors[0]);
@@ -485,7 +490,7 @@ const Internships = ({
                 )}
                 {isMyPost && (
                   <li className="mt-2">
-                    <div
+                    <Link
                       onClick={() => turnOffComments(id)}
                       className="dropdown-item rounded-4 border border-1 border-dark-subtle"
                     >
@@ -493,7 +498,7 @@ const Internships = ({
                       {!turnOffComment
                         ? t("Turn off Comments")
                         : t("Turn on Comments")}
-                    </div>
+                    </Link>
                   </li>
                 )}
                 {!isMyPost && (

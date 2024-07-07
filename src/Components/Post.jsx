@@ -59,7 +59,7 @@ const Post = ({
   // Like Button
   const handleLikeClick = async (id) => {
     const newIsLiked = !isLiked;
-    console.log("newIsLiked: ", newIsLiked);
+    // console.log("newIsLiked: ", newIsLiked);
     const newLikes = [...likes]; // Create a copy to avoid mutation
 
     let toastID = showLoadingToast(

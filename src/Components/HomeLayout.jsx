@@ -27,6 +27,7 @@ const HomeLayout = () => {
 
   const baseURL = "https://attachin.com/";
   const postBox2 = useRef();
+  const closeAside = useRef();
   const user = useSelector((state) => state.Auth.user);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
@@ -366,13 +367,14 @@ const HomeLayout = () => {
               className="btn-close btn-close-white"
               data-bs-dismiss="offcanvas"
               aria-label="Close"
+              ref={closeAside}
             ></button>
           </div>
           <div
             className="offcanvas-body"
             style={{ backgroundColor: "var(--main-color)" }}
           >
-            <AsideRight />
+            <AsideRight closeAside={closeAside} />
           </div>
           <img
             src="asideFrame.svg"

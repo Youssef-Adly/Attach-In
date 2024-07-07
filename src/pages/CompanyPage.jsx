@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
@@ -9,14 +9,15 @@ import {
   updateError,
   updateSuccess,
 } from "../utils/ToastsFunctions";
+import { useTranslation } from "react-i18next";
 
 const CompanyPage = () => {
   const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
+  const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
   const [company, setCompany] = useState(null);
   let [posts, setPosts] = useState(null);
-  // let [width, setWidth] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -48,17 +49,6 @@ const CompanyPage = () => {
         console.log(err);
       });
   }, [authUser.token, id]);
-
-  const profile = useRef();
-  // useEffect(() => {
-  //   // console.log(profile);
-  //   setWidth(profile.current.width);
-  //   // profile.current.height = profile.current.width;
-  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-  // console.log("profile.current.width: ", profile.current.width);
-  // console.log("profile.current.height: ", profile.current.height);
-  // }, [profile]);
 
   // Add Friends
   const addFriend = (e) => {
@@ -129,21 +119,13 @@ const CompanyPage = () => {
                 }) no-repeat center center / cover`
               : "url(/banner.jpg) no-repeat right top / cover",
           }}
-        >
-          {/* <img
-            src="https://maymt.com/images/uploaded/Eva-Cosmetics_banner-2.jpg_1000.webp"
-            className=""
-            style={{ width: "100%" }}
-            alt="cover"
-          /> */}
-        </div>
+        ></div>
 
         {/* Profile Picture With Name and Icons */}
         <div className="position-relative d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
             <img
               // src="https://play-lh.googleusercontent.com/hsXfcN2lmhNvvWyIBfxLjrdtwo78Qfqskh4VTfS6UkDinlJ4AwPUpneF3c1qjJhi"
-              ref={profile}
               src={
                 company?.profile_photo
                   ? `${baseImgURL + company?.profile_photo}`
@@ -155,8 +137,6 @@ const CompanyPage = () => {
                 transform: "translateY(-50%)",
                 backgroundColor: "var(--offWhite-color)",
                 objectFit: "cover",
-                // height: `${width}px`,
-                // width: `${width}px`,
                 aspectRatio: "1",
               }}
             />
@@ -286,11 +266,14 @@ const CompanyPage = () => {
 
         {/* About Company */}
 
-        <div className="d-flex justify-content-around gap-3 px-3">
-          <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
-            About Company
+        <div className="d-flex justify-content-around gap-3 px-3 pt-3 pt-sm-0">
+          <p
+            className="h4 col-12 dir mt-3 mt-sm-0"
+            style={{ color: "var(--text-main-color)" }}
+          >
+            {t("About Company")}
           </p>
-          <div
+          {/* <div
             className="nav-link col-4 col-sm-2"
             style={{ visibility: "hidden" }}
           >
@@ -298,7 +281,7 @@ const CompanyPage = () => {
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
             ></p>
-          </div>
+          </div> */}
         </div>
 
         <h4
@@ -318,7 +301,7 @@ const CompanyPage = () => {
             className="h4 ms-sm5 col-8"
             style={{ color: "var(--text-main-color)" }}
           >
-            Posts
+            {t("Posts")}
           </p>
           <Link
             to={"/userPosts/" + company?.id}
@@ -328,7 +311,7 @@ const CompanyPage = () => {
               className="h5 text-decoration-underline"
               style={{ color: "var(--text-main-color)" }}
             >
-              See All
+              {t("See All")}
             </p>
           </Link>
         </div>
@@ -587,7 +570,7 @@ const CompanyPage = () => {
             </button>
           </div>
         ) : (
-          <div className="text-center display-3 pt-5">No Posts Yet</div>
+          <div className="text-center display-3 pt-5">{t("No Posts Yet")}</div>
         )}
 
         <hr className="mt-5 w-75 m-auto" />

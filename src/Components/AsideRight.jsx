@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { setAuth } from "../Redux/slices/AuthSlice";
 
-const AsideRight = () => {
+const AsideRight = ({ closeAside }) => {
   const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
   const user = useSelector((state) => state.Auth.user);
@@ -27,11 +27,11 @@ const AsideRight = () => {
 
   const location = useLocation();
   let [search, setSearch] = useState("");
-
   const searchWithQuery = () => {
     if (search) {
       navigate(`/search?name=${search}`);
       setSearch("");
+      closeAside.current.click();
     }
     if (location.pathname === "/search") {
       window.location.reload();
@@ -58,9 +58,10 @@ const AsideRight = () => {
       <Link
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-light text-decoration-none"
         to="/profile"
+        // data-bs-dismiss="offcanvas"
       >
         {/* Avatar */}
-        <div className="avatar avatar-story me-2">
+        <div className="avatar avatar-story me-2" data-bs-dismiss="offcanvas">
           <img
             className="avatar-img rounded-circle"
             src={
@@ -76,6 +77,7 @@ const AsideRight = () => {
         <Link
           to="/profile"
           className="text-decoration-none text-light listItem"
+          // data-bs-dismiss="offcanvas"
         >
           {t("View Profile")}
         </Link>
@@ -103,6 +105,7 @@ const AsideRight = () => {
             top: "3px",
           }}
           onClick={searchWithQuery}
+          data-bs-dismiss="offcanvas"
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} color="var(--sec-white)" />
         </button>

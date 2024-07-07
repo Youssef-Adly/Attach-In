@@ -13,6 +13,7 @@ const MessagesPage = () => {
   const [t] = useTranslation();
   let user = useSelector((state) => state.Auth.user);
   let [msgs, setMsgs] = useState(null);
+  console.log('msgs: ', msgs);
 
   useEffect(() => {
     axios

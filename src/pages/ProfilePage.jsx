@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
@@ -8,23 +8,10 @@ import { toastError } from "../utils/ToastsFunctions";
 
 const ProfilePage = () => {
   const baseURL = "https://attachin.com/";
-  const profile = useRef();
   const [t] = useTranslation();
   const user = useSelector((state) => state.Auth.user);
-  // let [width, setWidth] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
-  // console.log("userSkills: ", userSkills);
-
-  // useEffect(() => {
-  // console.log(profile);
-  // setWidth(profile.current.width);
-  // profile.current.height = profile.current.width;
-  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-  // console.log("profile.current.width: ", profile.current.width);
-  // console.log("profile.current.height: ", profile.current.height);
-  // }, [profile]);
 
   useEffect(() => {
     axios
@@ -78,10 +65,8 @@ const ProfilePage = () => {
         {/* Profile Picture With Name and Icons */}
         <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
           <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
-            {/* {console.log(profile.current?.width)} */}
             <img
               // src="https://github.com/mdo.png"
-              ref={profile}
               src={
                 user.profile_photo
                   ? `${baseURL + user.profile_photo}`
@@ -92,10 +77,6 @@ const ProfilePage = () => {
               style={{
                 transform: "translateY(-50%)",
                 objectFit: "cover",
-                // height: "55%",
-                // width: "100%",
-                // height: `${width}px`,
-                // width: `${width}px`,
                 aspectRatio: "1",
               }}
             />

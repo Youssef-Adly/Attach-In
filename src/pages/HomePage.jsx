@@ -34,14 +34,14 @@ const HomePage = () => {
 
   // Great User
   useEffect(() => {
-    if (!toast.isActive(toastUser)) {
+    if (!toast.isActive()) {
       setToastUser(toastInfo(getGreeting() + user.full_name));
     } else {
-      toast.dismiss(toastUser);
+      toast.dismiss();
     }
 
     return () => {
-      toast.dismiss(toastUser);
+      toast.dismiss();
     };
   }, [user]);
 

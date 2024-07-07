@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import { useSelector } from "react-redux";
@@ -14,28 +14,14 @@ import {
 
 const UserProfile = () => {
   const baseURL = "https://attachin.com/";
-  const profile = useRef();
   const [t] = useTranslation();
   const navigate = useNavigate();
   const authUser = useSelector((state) => state.Auth.user);
   let [user, setUser] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
-  // let [width, setWidth] = useState(null);
-  // console.log("userSkills: ", userSkills);
 
   const { id } = useParams();
-  // console.log(id);
-
-  // useEffect(() => {
-  // console.log(profile);
-  // setWidth(profile.current.width);
-  // profile.current.height = profile.current.width;
-  // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-  // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-  // console.log("profile.current.width: ", profile.current.width);
-  // console.log("profile.current.height: ", profile.current.height);
-  // }, [profile]);
 
   useEffect(() => {
     axios
@@ -217,9 +203,7 @@ const UserProfile = () => {
           {/* Profile Picture With Name and Icons */}
           <div className="d-flex align-content-center gap-2 mb-4 mb-sm-0">
             <div className="col-3 col-xxl-3 ms-2 ms-sm-4">
-              {/* {console.log(profile.current?.width)} */}
               <img
-                ref={profile}
                 src={
                   user?.profile_photo
                     ? `${baseURL + user?.profile_photo}`
@@ -230,8 +214,6 @@ const UserProfile = () => {
                 style={{
                   transform: "translateY(-50%)",
                   objectFit: "cover",
-                  // height: `${width}px`,
-                  // width: `${width}px`,
                   aspectRatio: "1",
                 }}
               />
@@ -293,19 +275,6 @@ const UserProfile = () => {
                         {t("Block This Person")}
                       </Link>
                     </li>
-                    {/* <li>
-                      <hr className="dropdown-divider" />
-                    </li> */}
-                    {/* <li className="mt-2">
-                      <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
-                        <img
-                          src="/deleteIcon.svg"
-                          alt="delete"
-                          className="pe-2"
-                        />
-                        Delete This Profile
-                      </Link>
-                    </li> */}
                   </ul>
                   {/* End of Dropdown Menu */}
                 </div>

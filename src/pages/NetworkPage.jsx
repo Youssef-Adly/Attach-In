@@ -45,7 +45,7 @@ const NetworkPage = () => {
                 color: "var(--text-main-color)",
               }}
             >
-              No Friends Yet
+              {t("No Friends Yet")}
             </p>
           )}
         </div>

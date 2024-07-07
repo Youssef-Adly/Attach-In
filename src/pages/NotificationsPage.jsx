@@ -5,7 +5,7 @@ import Notification from "../Components/Notification";
 import AddFriendCard from "../Components/AddFriendCard";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
-import { showLoadingToast, toastError } from "../utils/ToastsFunctions";
+import { toastError } from "../utils/ToastsFunctions";
 
 const NotificationsPage = () => {
   const [t] = useTranslation();
@@ -15,13 +15,13 @@ const NotificationsPage = () => {
   const [notifications, setNotifications] = useState(null);
 
   useEffect(() => {
-    // let toastID = showLoadingToast("Submitting.....");
     //friendRequests
     axios
       .get(baseURL + "getFriendshipRequestsToMe", {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
+        // console.log("friendRequests: ", res.data.data);
         setFriendRequests(res.data.data);
       })
       .catch((err) => {
@@ -39,14 +39,18 @@ const NotificationsPage = () => {
         }
       )
       .then((res) => {
+        // console.log("notifications: ", res.data.data);
         // setNotifications([]);
-        setNotifications(res.data.data.filter((e) => e.from_user !== null));
+        let notifications = res.data.data.filter(
+          (e) => (e.from_user !== null) & (e.from_user_id !== user.id)
+        );
+        setNotifications(notifications);
       })
       .catch((err) => {
         console.log(err);
         toastError("Network Error");
       });
-  }, []);
+  }, [user.id, user.token]);
 
   return (
     <>
@@ -126,7 +130,7 @@ const NotificationsPage = () => {
                       color: "var(--text-main-color)",
                     }}
                   >
-                    No New Notifications
+                    {t("No New Notifications")}
                   </p>
                 )}
                 <hr className="col-6 mx-auto" />
@@ -144,7 +148,7 @@ const NotificationsPage = () => {
                           color: "var(--text-main-color)",
                         }}
                       >
-                        No New Friend Requests
+                        {t("No New Friend Requests")}
                       </p>
                     )}
                   </div>
@@ -179,7 +183,7 @@ const NotificationsPage = () => {
                       color: "var(--text-main-color)",
                     }}
                   >
-                    No New Notifications
+                    {t("No New Notifications")}
                   </p>
                 )}
               </>
@@ -209,7 +213,7 @@ const NotificationsPage = () => {
                       color: "var(--text-main-color)",
                     }}
                   >
-                    No New Friend Requests
+                    {t("No New Friend Requests")}
                   </p>
                 )}
               </div>

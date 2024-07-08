@@ -22,6 +22,7 @@ const Chat = () => {
   let user = useSelector((state) => state.Auth.user);
   let [msgs, setMsgs] = useState(null);
   let [msgsTo, setmsgsTo] = useState(null);
+  // console.log('msgsTo: ', msgsTo);
   let [sending, setsending] = useState(false);
 
   const scrollToBottom = () => {
@@ -130,22 +131,24 @@ const Chat = () => {
             color: "var(--text-main-color)",
           }}
         >
-          {msgsTo?.profile_photo ? (
-            <img
-              className="avatar-img me-2 rounded-circle"
-              src={baseImgURL + msgsTo.profile_photo}
-              style={{ width: "40px", height: "auto", aspectRatio: "1" }}
-              alt="profile_photo"
-            />
-          ) : (
-            <img
-              className="avatar-img me-2 rounded-circle"
-              src="/profile2.svg"
-              style={{ width: "40px", height: "auto" }}
-              alt="profile_photo"
-            />
-          )}
-          {msgsTo && msgsTo.full_name}
+          <Link to={"/profile/" + msgsTo?.id} className="nav-link">
+            {msgsTo?.profile_photo ? (
+              <img
+                className="avatar-img me-2 rounded-circle"
+                src={baseImgURL + msgsTo.profile_photo}
+                style={{ width: "40px", height: "auto", aspectRatio: "1" }}
+                alt="profile_photo"
+              />
+            ) : (
+              <img
+                className="avatar-img me-2 rounded-circle"
+                src="/profile2.svg"
+                style={{ width: "40px", height: "auto" }}
+                alt="profile_photo"
+              />
+            )}
+            {msgsTo && msgsTo.full_name}
+          </Link>
         </h2>
       </div>
 

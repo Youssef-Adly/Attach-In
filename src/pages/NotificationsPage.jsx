@@ -13,6 +13,8 @@ const NotificationsPage = () => {
   const user = useSelector((state) => state.Auth.user);
   const [friendRequests, setFriendRequests] = useState(null);
   const [notifications, setNotifications] = useState(null);
+  const [limit, setLimit] = useState(4);
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     //friendRequests
@@ -121,7 +123,7 @@ const NotificationsPage = () => {
                 {notifications.length > 0 ? (
                   notifications
                     .reverse()
-                    // .slice(0, 4)
+                    .slice(0, limit)
                     .map((n, idx) => <Notification {...n} key={idx} />)
                 ) : (
                   <p
@@ -132,6 +134,39 @@ const NotificationsPage = () => {
                   >
                     {t("No New Notifications")}
                   </p>
+                )}
+                {!fetching ? (
+                  notifications?.length >
+                    notifications?.slice(0, limit).length && (
+                    <div className="col-12 d-flex justify-content-end">
+                      <button
+                        className="btn col-sm-5 col-md-4 col-lg-4 col-xl-3 my-4 mb-md-0 rounde"
+                        style={{
+                          backgroundColor: "var(--sec-color)",
+                          color: "var(--text-main-color)",
+                        }}
+                        onClick={() => {
+                          setFetching(true);
+                          setLimit((old) => old + 4);
+                          window.scrollTo(0, document.body.scrollHeight);
+                          // bottomDiv.scrollIntoView();
+                          setFetching(false);
+                        }}
+                      >
+                        {t("Load More")}
+                      </button>
+                    </div>
+                  )
+                ) : (
+                  <>
+                    <img
+                      src="/Opener Loading.gif"
+                      className="ms-auto"
+                      style={{ width: "150px" }}
+                      alt="Loading"
+                    />
+                    {/* <LoadingSuspese /> */}
+                  </>
                 )}
                 <hr className="col-6 mx-auto" />
                 {/* Friend Requests */}
@@ -172,10 +207,11 @@ const NotificationsPage = () => {
             {/* Notifications */}
             {notifications ? (
               <>
-                {notifications.length > 0 ? (
-                  notifications.map((n, idx) => (
-                    <Notification {...n} key={idx} />
-                  ))
+                {notifications?.length > 0 ? (
+                  notifications
+                    ?.reverse()
+                    .slice(0, limit)
+                    .map((n, idx) => <Notification {...n} key={idx} />)
                 ) : (
                   <p
                     className="fs-3 text-center"
@@ -189,6 +225,38 @@ const NotificationsPage = () => {
               </>
             ) : (
               <LoadingSuspese />
+            )}
+            {!fetching ? (
+              notifications?.length > notifications?.slice(0, limit).length && (
+                <div className="col-12 d-flex justify-content-end">
+                  <button
+                    className="btn col-sm-5 col-md-4 col-lg-4 col-xl-3 my-4 mb-md-0 rounde"
+                    style={{
+                      backgroundColor: "var(--sec-color)",
+                      color: "var(--text-main-color)",
+                    }}
+                    onClick={() => {
+                      setFetching(true);
+                      setLimit((old) => old + 4);
+                      window.scrollTo(0, document.body.scrollHeight);
+                      // bottomDiv.scrollIntoView();
+                      setFetching(false);
+                    }}
+                  >
+                    {t("Load More")}
+                  </button>
+                </div>
+              )
+            ) : (
+              <>
+                <img
+                  src="/Opener Loading.gif"
+                  className="ms-auto"
+                  style={{ width: "150px" }}
+                  alt="Loading"
+                />
+                {/* <LoadingSuspese /> */}
+              </>
             )}
           </div>
 

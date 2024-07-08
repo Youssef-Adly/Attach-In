@@ -13,7 +13,6 @@ const MessagesPage = () => {
   const [t] = useTranslation();
   let user = useSelector((state) => state.Auth.user);
   let [msgs, setMsgs] = useState(null);
-  console.log("msgs: ", msgs);
 
   useEffect(() => {
     axios
@@ -51,7 +50,7 @@ const MessagesPage = () => {
                 {/* Avatar */}
                 <div className="position-relative">
                   {m.user1.id !== user.id ? (
-                    <Link to="">
+                    <>
                       {m.user1.profile_photo ? (
                         <img
                           className="avatar-img rounded-circle"
@@ -75,7 +74,7 @@ const MessagesPage = () => {
                           alt="profile_photo"
                         />
                       )}
-                    </Link>
+                    </>
                   ) : (
                     <>
                       {m.user2.profile_photo ? (

@@ -11,7 +11,7 @@ import { toastError } from "../utils/ToastsFunctions";
 const SearchAttachInNetwork = () => {
   const [searchedUsers, setSearchedUsers] = useState(null);
   const [AllUsers, setAllUsers] = useState(null);
-  const [searchParams /* , setSearchParams */] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [t] = useTranslation();
 
   // Get a specific query parameter

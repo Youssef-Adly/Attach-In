@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { memo, useEffect, useRef, useState } from "react";
-// import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
@@ -15,14 +14,12 @@ import { toastError } from "../utils/ToastsFunctions";
 const Chat = () => {
   const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
-  // const [t] = useTranslation();
   const { id } = useParams();
   const msgInput = useRef();
   const bottomRef = useRef(null);
   let user = useSelector((state) => state.Auth.user);
   let [msgs, setMsgs] = useState(null);
   let [msgsTo, setmsgsTo] = useState(null);
-  // console.log('msgsTo: ', msgsTo);
   let [sending, setsending] = useState(false);
 
   const scrollToBottom = () => {

@@ -228,65 +228,69 @@ const UserProfile = () => {
             {/*  */}
             <div className="mt-4 col-4 ms-auto me-sm-3">
               <div className="d-flex justify-content-end gap-2">
-                <div className="dropdown">
-                  <Link
-                    to={""}
-                    id="feedActionShare"
-                    className=""
-                    data-bs-toggle="dropdown"
-                  >
+                {!(user?.we_are_friend === "block") && (
+                  <div className="dropdown">
+                    <Link
+                      to={""}
+                      id="feedActionShare"
+                      className=""
+                      data-bs-toggle="dropdown"
+                    >
+                      <img
+                        src="/threeDots.svg"
+                        className="img-fluid"
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          color: "var(--main-color)",
+                        }}
+                        alt=""
+                      />
+                    </Link>
+                    {/* Dropdown Menu */}
+                    <ul
+                      className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
+                      aria-labelledby="feedActionShare"
+                      style={{ backgroundColor: "var(--offWhite-color)" }}
+                    >
+                      <li className="mt-1">
+                        <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                          <img
+                            src="/reportIcon.svg"
+                            alt="report"
+                            className="pe-2"
+                          />
+                          {t("Report this Profile")}
+                        </Link>
+                      </li>
+                      <li className="mt-2">
+                        <Link
+                          onClick={blockRequest}
+                          className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                        >
+                          <img
+                            src="/BlockIcon.svg"
+                            alt="block"
+                            className="pe-2"
+                          />
+                          {t("Block This Person")}
+                        </Link>
+                      </li>
+                    </ul>
+                    {/* End of Dropdown Menu */}
+                  </div>
+                )}
+                {!(user?.we_are_friend === "block") && (
+                  <Link onClick={chatWithUser} className="">
                     <img
-                      src="/threeDots.svg"
+                      src="/chatIcon.svg"
                       className="img-fluid"
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        color: "var(--main-color)",
-                      }}
-                      alt=""
+                      style={{ width: "40px", height: "40px" }}
+                      alt="Chat"
+                      title="Chat"
                     />
                   </Link>
-                  {/* Dropdown Menu */}
-                  <ul
-                    className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
-                    aria-labelledby="feedActionShare"
-                    style={{ backgroundColor: "var(--offWhite-color)" }}
-                  >
-                    <li className="mt-1">
-                      <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
-                        <img
-                          src="/reportIcon.svg"
-                          alt="report"
-                          className="pe-2"
-                        />
-                        {t("Report this Profile")}
-                      </Link>
-                    </li>
-                    <li className="mt-2">
-                      <Link
-                        onClick={blockRequest}
-                        className="dropdown-item rounded-4 border border-1 border-dark-subtle"
-                      >
-                        <img
-                          src="/BlockIcon.svg"
-                          alt="block"
-                          className="pe-2"
-                        />
-                        {t("Block This Person")}
-                      </Link>
-                    </li>
-                  </ul>
-                  {/* End of Dropdown Menu */}
-                </div>
-                <Link onClick={chatWithUser} className="">
-                  <img
-                    src="/chatIcon.svg"
-                    className="img-fluid"
-                    style={{ width: "40px", height: "40px" }}
-                    alt="Chat"
-                    title="Chat"
-                  />
-                </Link>
+                )}
                 {user?.we_are_friend ===
                   "no" /* || user?.we_are_friend === "no" */ && (
                   <Link onClick={(e) => addFriend(e)} className="">

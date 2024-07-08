@@ -198,11 +198,11 @@ const InternshipDetails = () => {
             <div className="d-flex px-2 px-sm-5 me-md-5 gap-2 flex-column justify-content-around mb-5">
               {/* <h5>Development</h5> */}
               <h6
-                className="p-2 rounded-5"
+                className="p-3 rounded-5 fs-5"
                 style={{
                   width: "fit-content",
-                  background: "var(--gray-color)",
-                  color: "var(--text-main-color)",
+                  background: "var(--main-color)",
+                  color: "#eee",
                 }}
               >
                 {internship.requirements}

@@ -15,7 +15,7 @@ const OurPartnersPage = () => {
     axios
       .get("https://attachin.com/api/getOurPartners")
       .then((res) => {
-        // console.log(res.data.data.partners);
+        console.log(res.data.data.partners);
         setOurPartners(res.data.data.partners);
       })
       .catch((err) => {
@@ -53,7 +53,9 @@ const OurPartnersPage = () => {
                     // src= "companylogo.svg"
                     className="rounded-circle"
                     style={{
-                      maxWidth: "150px",
+                      width: "150px",
+                      aspectRatio: 1,
+                      objectFit: "cover",
                     }}
                     alt={partner.full_name}
                   />

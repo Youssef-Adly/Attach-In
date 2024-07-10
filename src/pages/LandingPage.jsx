@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getGreeting } from "../Components/formatDateForPost";
 import { setAuth } from "../Redux/slices/AuthSlice";
+import axios from "axios";
+import { toastError } from "../utils/ToastsFunctions";
 
 // yup Schema
 const schema = yup
@@ -33,14 +35,45 @@ const schema = yup
   .required();
 
 const LandingPage = () => {
+  const baseURL = "https://attachin.com/api/";
+  const baseImgURL = "https://attachin.com/";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [t] = useTranslation();
   const darkTheme = useSelector((state) => state.theme.value);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.Auth.user);
   const [loading, setLoading] = useState(false);
   const [FormErrors, setFormErrors] = useState(null);
+  const [partners, setPartners] = useState(null);
+  const [universities, setUniversities] = useState(null);
+
+  useEffect(() => {
+    //Set Partners
+    axios
+      .get(baseURL + "getOurPartners")
+      .then((res) => {
+        setPartners(res.data.data.partners);
+      })
+      .catch((err) => {
+        console.log(err);
+        toastError("Network Error");
+      });
+    //Set Universities
+    axios
+      .get("https://attachin.com/api/getUsersWithSearch", {
+        search: "university",
+      })
+      .then((res) => {
+        setUniversities(() =>
+          res.data.data.filter((user) => user.user_type === "university")
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+        toastError("Network Error");
+      });
+  }, []);
 
   const {
     register,
@@ -402,9 +435,21 @@ const LandingPage = () => {
                   color: "var(--text-main-color)",
                 }}
               >
-                <Link className="nav-link fs-6 col-12" to="/login">
+                {/* <Link className="nav-link fs-6 col-12" to="/login">
                   {t("Sign in")}
-                </Link>
+                </Link> */}
+                {!(user && user?.user_type !== "guest") ? (
+                  <Link className="nav-link fs-6 col-12" to="/login">
+                    {t("Sign in")}
+                  </Link>
+                ) : (
+                  <Link
+                    className="nav-link fs-6 col-12"
+                    onClick={(e) => logout(e)}
+                  >
+                    {t("Log Out")}
+                  </Link>
+                )}
               </button>
             </div>
           </nav>
@@ -506,72 +551,69 @@ const LandingPage = () => {
             </div>
             {/* carousel */}
             <div id="carouselExampleIndicators" className="carousel slide">
-              <div
-                className="carousel-indicators"
-                style={{ marginBottom: "-40px" }}
-              >
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to={0}
-                  className="active bg-black"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                />
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to={1}
-                  aria-label="Slide 2"
-                  className=" bg-black"
-                />
-                {/* <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators"
-                  data-bs-slide-to={2}
-                  aria-label="Slide 3"
-                  className=" bg-black"
-                /> */}
-              </div>
+              {partners?.length > 1 && (
+                <div
+                  className="carousel-indicators"
+                  style={{ marginBottom: "-40px" }}
+                >
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to={0}
+                    className="active bg-black"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  />
+                  {partners.length > 3 && (
+                    <button
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators"
+                      data-bs-slide-to={1}
+                      aria-label="Slide 2"
+                      className=" bg-black"
+                    />
+                  )}
+                </div>
+              )}
               <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <div className="d-flex justify-content-center">
-                    <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    />
-                    <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    />
-                    <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    />
+                {partners?.length > 1 && (
+                  <div className="carousel-item active">
+                    <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-5">
+                      {partners?.slice(0, 3).map((p, idx) => (
+                        <img
+                          key={p.id}
+                          src={baseImgURL + p.profile_photo}
+                          className="d-block rounded-circle"
+                          style={{
+                            objectFit: "cover",
+                            maxWidth: "180px",
+                            aspectRatio: 1,
+                          }}
+                          alt="companylogo.svg"
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="d-flex justify-content-center">
-                    <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    />
-                    <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    />
-                    {/* <img
-                      src="companylogo.svg"
-                      className="d-block w-25"
-                      alt="companylogo.svg"
-                    /> */}
+                )}
+                {partners?.length > 3 && (
+                  <div className="carousel-item">
+                    <div className="d-flex justify-content-center">
+                      {partners?.slice(3, 6).map((p, idx) => (
+                        <img
+                          key={p.id}
+                          src={baseImgURL + p.profile_photo}
+                          className="d-block rounded-circle"
+                          style={{
+                            objectFit: "cover",
+                            maxWidth: "180px",
+                            aspectRatio: 1,
+                          }}
+                          alt="companylogo.svg"
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <button
                 className="carousel-control-prev"
@@ -631,72 +673,67 @@ const LandingPage = () => {
             </div>
             {/* carousel2 */}
             <div id="carouselExampleIndicators2" className="carousel slide">
-              <div
-                className="carousel-indicators"
-                style={{ marginBottom: "-40px" }}
-              >
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={0}
-                  className="active bg-black"
-                  aria-current="true"
-                  aria-label="Slide 1"
-                />
-                <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={1}
-                  aria-label="Slide 2"
-                  className=" bg-black"
-                />
-                {/* <button
-                  type="button"
-                  data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={2}
-                  aria-label="Slide 3"
-                  className=" bg-black"
-                /> */}
-              </div>
+              {universities?.length > 1 && (
+                <div
+                  className="carousel-indicators"
+                  style={{ marginBottom: "-40px" }}
+                >
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators2"
+                    data-bs-slide-to={0}
+                    className="active bg-black"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  />
+                  {universities?.length > 3 && (
+                    <button
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators2"
+                      data-bs-slide-to={1}
+                      aria-label="Slide 2"
+                      className=" bg-black"
+                    />
+                  )}
+                </div>
+              )}
               <div className="carousel-inner">
                 <div className="carousel-item active">
-                  <div className="d-flex justify-content-center">
-                    <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    />
-                    <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    />
-                    <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    />
+                  <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-5">
+                    {universities?.slice(0, 3).map((university, idx) => (
+                      <img
+                        key={university.id + idx}
+                        src={baseImgURL + university.profile_photo}
+                        className="d-block rounded-circle"
+                        style={{
+                          objectFit: "cover",
+                          maxWidth: "200px",
+                          aspectRatio: 1,
+                        }}
+                        alt="UniversityLogo.svg"
+                      />
+                    ))}
                   </div>
                 </div>
-                <div className="carousel-item">
-                  <div className="d-flex justify-content-center">
-                    <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    />
-                    <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    />
-                    {/* <img
-                      src="UniversityLogo.svg"
-                      className="d-block w-25"
-                      alt="UniversityLogo.svg"
-                    /> */}
+                {universities?.length > 3 && (
+                  <div className="carousel-item">
+                    <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-5">
+                      {universities?.slice(3, 6).map((university, idx) => (
+                        <img
+                          key={university.id + idx}
+                          src={baseImgURL + university.profile_photo}
+                          className="d-block rounded-circle"
+                          style={{
+                            objectFit: "cover",
+                            maxWidth: "200px",
+                            aspectRatio: 1,
+                          }}
+                          alt="UniversityLogo.svg"
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <button
                 className="carousel-control-prev"

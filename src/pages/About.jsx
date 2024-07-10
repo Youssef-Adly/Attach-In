@@ -114,12 +114,16 @@ const About = () => {
                     to={person.link}
                     target="_blank"
                     key={idx}
-                    className="col-4 nav-link d-flex flex-column gap-2 text-center"
+                    className="nav-link d-flex flex-column gap-2 text-center"
                   >
                     <img
                       src={baseURL + person.photo}
                       className="rounded-circle"
                       alt={person.name}
+                      style={{
+                        aspectRatio: 1,
+                        width: "200px",
+                      }}
                     />
                     <small>{person.name}</small>
                   </Link>

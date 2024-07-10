@@ -121,17 +121,17 @@ const UniversityPage = () => {
 
           <div className="d-flex justify-content-around gap-3 px-3">
             <p
-              className="h4 col-11 dir"
+              className="h4 col-12 dir mt-5 mt-sm-0"
               style={{ color: "var(--text-main-color)" }}
             >
               {t("About University")}
             </p>
-            <div className="nav-link col-4 col-sm-2">
+            {/* <div className="nav-link col-4 col-sm-2 d-none">
               <p
                 className="h5 text-decoration-underline"
                 style={{ color: "var(--text-main-color)" }}
               ></p>
-            </div>
+            </div> */}
           </div>
 
           <h4
@@ -141,7 +141,7 @@ const UniversityPage = () => {
               minHeight: "150px",
             }}
           >
-            {university?.about ? university?.about : "No About Yet"}
+            {university?.about ? university?.about : t("No About Yet")}
           </h4>
 
           <hr className="mt-5 w-75 m-auto" />
@@ -178,25 +178,23 @@ const UniversityPage = () => {
                 className="carousel-indicators"
                 style={{ marginBottom: "-40px" }}
               >
-                {posts.slice(0, posts.length / 2).map((p, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators2"
-                    data-bs-slide-to={idx}
-                    className="active bg-black"
-                  />
-                ))}
-                {/* <button
+                <button
                   type="button"
                   data-bs-target="#carouselExampleIndicators2"
-                  data-bs-slide-to={1}
-                  className=" bg-black"
-                /> */}
+                  data-bs-slide-to={0}
+                  className="active bg-black"
+                />
+                {posts.length > 2 && (
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators2"
+                    data-bs-slide-to={1}
+                    className="active bg-black"
+                  />
+                )}
               </div>
               <div className="carousel-inner">
                 {/*  */}
-                {/* {console.log('posts: ', posts)} */}
                 {posts?.length > 0 ? (
                   <div className="carousel-item active">
                     <div className="d-flex flex-wrap gap-3 justify-content-center">
@@ -236,7 +234,7 @@ const UniversityPage = () => {
                           </svg>
                         )}
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[0]?.title}
@@ -279,7 +277,7 @@ const UniversityPage = () => {
                             </svg>
                           )}
                           <h6
-                            className="text-center"
+                            className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[1]?.title}
@@ -293,7 +291,7 @@ const UniversityPage = () => {
                 )}
                 {/*  */}
                 {posts?.length > 2 ? (
-                  <div className={`carousel-item`}>
+                  <div className="carousel-item">
                     <div className="d-flex flex-wrap gap-3 justify-content-center">
                       {/* Card #1 */}
                       <Link
@@ -331,7 +329,7 @@ const UniversityPage = () => {
                           </svg>
                         )}
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[2]?.title}
@@ -374,7 +372,7 @@ const UniversityPage = () => {
                             </svg>
                           )}
                           <h6
-                            className="text-center"
+                            className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[3]?.title}

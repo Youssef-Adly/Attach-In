@@ -20,8 +20,28 @@ const UserProfile = () => {
   let [user, setUser] = useState(null);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
+  let [universityID, setUniversityID] = useState(null);
+  console.log("universityID: ", universityID);
 
   const { id } = useParams();
+
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "https://attachin.com/api/userInfo",
+  //       {
+  //         for_user_id: authUser.id,
+  //       },
+  //       { headers: { Authorization: `Bearer ${authUser.token}` } }
+  //     )
+  //     .then((res) => {
+  //       setUniversityID(res.data.data.profile_university_id);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       toastError("Network Error");
+  //     });
+  // }, [authUser.token, authUser.id]);
 
   useEffect(() => {
     axios
@@ -46,6 +66,7 @@ const UserProfile = () => {
       )
       .then((res) => {
         let user = res.data.data;
+        setUniversityID(user.profile_university_id);
         setUser(user);
         setSkills([
           ...user.skills?.map(
@@ -372,13 +393,14 @@ const UserProfile = () => {
                 )}
               </div>
               <div className="d-flex justify-content-end">
-                {user?.university && (
+                {universityID && (
                   <Link
-                    to={"/universityProfile/" + user?.university?.id}
-                    className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2"
+                    to={"/universityProfile/" + universityID}
+                    className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2 col-12 text-center"
                     style={{
                       color: "var(--text-main-color)",
                       backgroundColor: "#E3E2DC",
+                      maxWidth: "120px",
                     }}
                     title={t("University")}
                   >
@@ -529,25 +551,81 @@ const UserProfile = () => {
                 {userSkills?.length > 2 ? (
                   <div className={`carousel-item`}>
                     <div className="d-flex flex-wrap gap-3 justify-content-center">
-                      {userSkills.slice(2, 4).map((skill) => (
-                        <div
-                          key={skill.id}
-                          className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
-                          style={{
-                            backgroundColor: "#98AFDB",
-                            width: "270px",
-                            height: "200px",
-                            borderRadius: "40%",
-                          }}
-                        >
-                          <img
-                            src="/cheerIcon2.svg"
-                            alt="cheerIcon2.svg"
-                            className="w-75"
-                          />
-                          <h2 className="text-center mt-2">{skill?.title}</h2>
-                        </div>
-                      ))}
+                      {userSkills?.slice(2, 4).map((skill, idx) => {
+                        if (skill.type === "certifications") {
+                          return (
+                            <div
+                              key={skill.id}
+                              className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                              style={{
+                                backgroundColor: "#F2969C",
+                                width: "270px",
+                                height: "200px",
+                                borderRadius: "40%",
+                              }}
+                            >
+                              <div className="position-absolute bottom-0">
+                                <svg
+                                  width={40}
+                                  height={60}
+                                  viewBox="0 0 46 58"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M43.726 53.3071L35.6831 50.6757L31.2054 57.8485L26.3457 44.5427C30.9932 43.7787 35.1101 41.5717 38.3358 38.4521L43.726 53.3071Z"
+                                    fill="#EE6F5C"
+                                  />
+                                  <path
+                                    d="M19.0226 44.5427L14.1629 57.8485L9.68521 50.6757L1.62109 53.3071L7.01132 38.4521C10.2158 41.5717 14.3751 43.7787 19.0226 44.5427Z"
+                                    fill="#EE6F5C"
+                                  />
+                                  <path
+                                    d="M45.0603 22.4726C45.0603 34.8446 35.0438 44.8611 22.6718 44.8611C10.2997 44.8611 0.283203 34.8446 0.283203 22.4726C0.283203 10.1005 10.2997 0.084018 22.6718 0.084018C35.0438 0.0627966 45.0603 10.1005 45.0603 22.4726Z"
+                                    fill="#F9B74C"
+                                  />
+                                  <path
+                                    d="M22.6711 39.8734C13.079 39.8734 5.26953 32.0639 5.26953 22.4718C5.26953 12.8798 13.079 5.07031 22.6711 5.07031C32.2631 5.07031 40.0726 12.8798 40.0726 22.4718C40.0726 32.0639 32.2631 39.8734 22.6711 39.8734Z"
+                                    fill="#FFD25F"
+                                  />
+                                </svg>
+                              </div>
+                              <div
+                                className="bg-body-secondary d-flex align-items-center justify-content-center"
+                                style={{
+                                  borderRadius: "40%",
+                                  width: "90%",
+                                  height: "90%",
+                                }}
+                              >
+                                <h3 className="text-center">{skill.title}</h3>
+                              </div>
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div
+                              key={skill.id}
+                              className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
+                              style={{
+                                backgroundColor: "#98AFDB",
+                                width: "270px",
+                                height: "200px",
+                                borderRadius: "40%",
+                              }}
+                            >
+                              <img
+                                src="/cheerIcon2.svg"
+                                alt="cheerIcon2.svg"
+                                className="w-75"
+                              />
+                              <h2 className="text-center mt-2">
+                                {skill.title}
+                              </h2>
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
                   </div>
                 ) : (
@@ -727,7 +805,7 @@ const UserProfile = () => {
                             </svg>
                           )}
                           <h6
-                            className="text-center"
+                            className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[1]?.title}
@@ -779,7 +857,7 @@ const UserProfile = () => {
                           </svg>
                         )}
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[2]?.title}
@@ -822,7 +900,7 @@ const UserProfile = () => {
                             </svg>
                           )}
                           <h6
-                            className="text-center"
+                            className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
                             {posts[3]?.title}

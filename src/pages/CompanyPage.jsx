@@ -383,7 +383,7 @@ const CompanyPage = () => {
                         </svg>
                       )}
                       <h6
-                        className="text-center"
+                        className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
                         {posts[0]?.title}
@@ -426,7 +426,7 @@ const CompanyPage = () => {
                           </svg>
                         )}
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[1]?.title}
@@ -478,7 +478,7 @@ const CompanyPage = () => {
                         </svg>
                       )}
                       <h6
-                        className="text-center"
+                        className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
                         {posts[2]?.title}
@@ -521,7 +521,7 @@ const CompanyPage = () => {
                           </svg>
                         )}
                         <h6
-                          className="text-center"
+                          className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
                           {posts[3]?.title}

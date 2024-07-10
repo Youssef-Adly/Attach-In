@@ -667,22 +667,20 @@ const Internships = ({
               </Link>
             </li>
             {/* Share */}
-            <li className="nav-item dropdown ms-sm-auto">
+            {/* <li className="nav-item dropdown ms-sm-auto">
               <Link
                 className="nav-link mb-0"
                 id="cardShareAction"
                 data-bs-toggle="dropdown"
               >
                 <FontAwesomeIcon icon={faShare} className="pe-1" />
-                {t("share")} {/* (3) */}
+                {t("share")}
               </Link>
-              {/* Card share action dropdown menu */}
               <ul
                 className="dropdown-menu dropdown-menu-end mt-3 p-2 rounded-4"
                 aria-labelledby="feedActionShare"
                 style={{ backgroundColor: "var(--offWhite-color)" }}
               >
-                {/* Share Your thoughts */}
                 <li className="mt-1">
                   <Link
                     className="dropdown-item rounded-4 border border-1 border-dark-subtle"
@@ -704,7 +702,6 @@ const Internships = ({
                     {t("Share Your thoughts")}
                   </Link>
                 </li>
-                {/* Instant Share */}
                 <li className="mt-1">
                   <Link
                     className="dropdown-item rounded-4 border border-1 border-dark-subtle"
@@ -726,7 +723,7 @@ const Internships = ({
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
             {/* Card share action END */}
           </ul>
           {/* Feed react END */}

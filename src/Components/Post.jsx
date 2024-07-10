@@ -105,6 +105,7 @@ const Post = ({
   // Comments Logic Here
   const [commentLength, setcommentLength] = useState(2);
   const [allComments, setComments] = useState(comments);
+  console.log("allComments: ", allComments);
 
   const addComment = async (e) => {
     e.preventDefault();
@@ -360,13 +361,13 @@ const Post = ({
             <div className="avatar avatar-story me-2">
               <Link
                 to={
-                  authUser.id === user_id
+                  authUser?.id === user_id
                     ? `/profile`
-                    : user.user_type === "student"
+                    : user?.user_type === "student"
                     ? `/profile/${user_id}`
-                    : user.user_type === "university"
+                    : user?.user_type === "university"
                     ? `/universityProfile/${user_id}`
-                    : user.user_type === "company"
+                    : user?.user_type === "company"
                     ? `/companyProfile/${user_id}`
                     : ""
                 }
@@ -374,8 +375,8 @@ const Post = ({
                 <img
                   className="avatar-img rounded-circle"
                   src={
-                    user.profile_photo
-                      ? `${baseURL + user.profile_photo}`
+                    user?.profile_photo
+                      ? `${baseURL + user?.profile_photo}`
                       : "/profile.png"
                   }
                   alt=""
@@ -388,18 +389,18 @@ const Post = ({
                 <h6 className="nav-item card-title mb-0">
                   <Link
                     to={
-                      authUser.id === user_id
+                      authUser?.id === user_id
                         ? `/profile`
-                        : user.user_type === "student"
+                        : user?.user_type === "student"
                         ? `/profile/${user_id}`
-                        : user.user_type === "university"
+                        : user?.user_type === "university"
                         ? `/universityProfile/${user_id}`
-                        : user.user_type === "company"
+                        : user?.user_type === "company"
                         ? `/companyProfile/${user_id}`
                         : ""
                     }
                   >
-                    {user.full_name}
+                    {user?.full_name}
                   </Link>
                 </h6>
                 {/* <span className="nav-item small"> 2hr</span> */}
@@ -524,22 +525,22 @@ const Post = ({
                   <div className="avatar avatar-story me-2">
                     <Link
                       to={
-                        authUser.id === parent.user.id
+                        authUser.id === parent?.user?.id
                           ? `/profile`
-                          : user.user_type === "student"
-                          ? `/profile/${parent.user.id}`
-                          : user.user_type === "university"
-                          ? `/universityProfile/${parent.user.id}`
-                          : user.user_type === "company"
-                          ? `/companyProfile/${parent.user.id}`
+                          : user?.user_type === "student"
+                          ? `/profile/${parent?.user?.id}`
+                          : user?.user_type === "university"
+                          ? `/universityProfile/${parent?.user?.id}`
+                          : user?.user_type === "company"
+                          ? `/companyProfile/${parent?.user?.id}`
                           : ""
                       }
                     >
                       <img
                         className="avatar-img rounded-circle"
                         src={
-                          parent.user.profile_photo
-                            ? `${baseURL + parent.user.profile_photo}`
+                          parent?.user?.profile_photo
+                            ? `${baseURL + parent?.user?.profile_photo}`
                             : "/profile.png"
                         }
                         alt=""
@@ -552,18 +553,18 @@ const Post = ({
                       <h6 className="nav-item card-title mb-0">
                         <Link
                           to={
-                            authUser.id === parent.user.id
+                            authUser?.id === parent?.user?.id
                               ? `/profile`
-                              : user.user_type === "student"
-                              ? `/profile/${parent.user.id}`
-                              : user.user_type === "university"
-                              ? `/universityProfile/${parent.user.id}`
-                              : user.user_type === "company"
-                              ? `/companyProfile/${parent.user.id}`
+                              : user?.user_type === "student"
+                              ? `/profile/${parent?.user?.id}`
+                              : user?.user_type === "university"
+                              ? `/universityProfile/${parent?.user?.id}`
+                              : user?.user_type === "company"
+                              ? `/companyProfile/${parent?.user?.id}`
                               : ""
                           }
                         >
-                          {parent.user.full_name}
+                          {parent?.user?.full_name}
                         </Link>
                       </h6>
                       {/* <span className="nav-item small"> 2hr</span> */}
@@ -576,12 +577,12 @@ const Post = ({
               </div>
             </div>
             <div className="card-body">
-              <p>{parent.title}</p>
+              <p>{parent?.title}</p>
               {/* Card img */}
               {parent.image && (
                 <img
                   // className="card-img"
-                  src={baseURL + parent.image}
+                  src={baseURL + parent?.image}
                   // src="https://social.webestica.com/assets/images/post/3by2/01.jpg"
                   alt="Post"
                   style={{
@@ -762,22 +763,22 @@ const Post = ({
                   <div className="avatar avatar-xs">
                     <Link
                       to={
-                        authUser.id === comment.user.id
+                        authUser?.id === comment?.user?.id
                           ? `/profile`
-                          : comment.user.user_type === "student"
-                          ? `/profile/${comment.user.id}`
-                          : comment.user.user_type === "university"
-                          ? `/universityProfile/${comment.user.id}`
-                          : comment.user.user_type === "company"
-                          ? `/companyProfile/${comment.user.id}`
+                          : comment?.user?.user_type === "student"
+                          ? `/profile/${comment?.user?.id}`
+                          : comment?.user?.user_type === "university"
+                          ? `/universityProfile/${comment?.user?.id}`
+                          : comment?.user?.user_type === "company"
+                          ? `/companyProfile/${comment?.user?.id}`
                           : ""
                       }
                     >
                       <img
                         className="avatar-img rounded-circle"
                         src={
-                          comment.user.profile_photo
-                            ? `${baseURL + comment.user.profile_photo}`
+                          comment?.user?.profile_photo
+                            ? `${baseURL + comment?.user?.profile_photo}`
                             : "/profile.png"
                         }
                         // src="https://social.webestica.com/assets/images/avatar/06.jpg"
@@ -792,18 +793,18 @@ const Post = ({
                         <h6 className="mb-1">
                           <Link
                             to={
-                              authUser.id === comment.user.id
+                              authUser?.id === comment?.user?.id
                                 ? `/profile`
-                                : comment.user.user_type === "student"
-                                ? `/profile/${comment.user.id}`
-                                : comment.user.user_type === "university"
-                                ? `/universityProfile/${comment.user.id}`
-                                : comment.user.user_type === "company"
-                                ? `/companyProfile/${comment.user.id}`
+                                : comment?.user?.user_type === "student"
+                                ? `/profile/${comment?.user?.id}`
+                                : comment?.user?.user_type === "university"
+                                ? `/universityProfile/${comment?.user?.id}`
+                                : comment?.user?.user_type === "company"
+                                ? `/companyProfile/${comment?.user?.id}`
                                 : ""
                             }
                           >
-                            {comment.user.full_name}
+                            {comment?.user?.full_name}
                           </Link>
                         </h6>
                         <small className="ms-2">

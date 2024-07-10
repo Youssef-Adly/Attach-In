@@ -4,25 +4,15 @@ import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toastError } from "../utils/ToastsFunctions";
+import { useTranslation } from "react-i18next";
 
 const UniversityPage = () => {
   const baseURL = "https://attachin.com/";
+  const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
   const { id } = useParams();
   const [university, setUniversity] = useState(null);
   let [posts, setposts] = useState(null);
-  // let [width, setWidth] = useState(null);
-  const profile = useRef();
-
-  // useEffect(() => {
-  //   // console.log(profile);
-  //   setWidth(profile.current.width);
-  //   // profile.current.height = profile.current.width;
-  //   // console.log("profile.current.clientHeight: ", profile.current.clientHeight);
-  //   // console.log("profile.current.clientWidth: ", profile.current.clientWidth);
-  //   // console.log("profile.current.width: ", profile.current.width);
-  //   // console.log("profile.current.height: ", profile.current.height);
-  // }, [profile]);
 
   useEffect(() => {
     axios
@@ -56,12 +46,6 @@ const UniversityPage = () => {
       });
   }, [university]);
 
-  // width
-  // const profilePic = useRef();
-  // useEffect(() => {
-  //   setWidth(profilePic.current.width);
-  // }, [profilePic]);
-
   return (
     <>
       {
@@ -77,41 +61,10 @@ const UniversityPage = () => {
                 : "url(/banner.jpg) no-repeat right top / cover",
             }}
           ></div>
-          {/* <div className="col-12">
-            <img
-              // src="https://as2.ftcdn.net/v2/jpg/03/52/12/79/1000_F_352127919_PZgCWbOdetaKrIKnoZD7mSGWEM8xwfMB.jpg"
-              src={baseURL + university.profile_photo}
-              className="rounded-5 shadow-lg bannerCover"
-              style={{ width: "100%" }}
-              alt="cover"
-            />
-          </div> */}
-
           {/* Profile Picture With Name and Icons */}
           <div className="position-relative d-flex align-content-center gap-2 mb-4 mb-sm-0">
             <div className="col-3 col-xxl-3 ms-2 ms-sm-4  d-flex justify-content-center align-items-center">
-              {/* <img
-                // src="https://github.com/mdo.png"
-                ref={profilePic}
-                src={
-                  university?.profile_photo
-                    ? `${baseURL + university?.profile_photo}`
-                    : "/profile.png"
-                }
-                alt="profile"
-                className="col img-fluid rounded-circle shadow-lg profilePic"
-                style={{
-                  transform: "translateY(-50%)",
-                  objectFit: "cover",
-                  // height: "55%",
-                  // width: "100%",
-                  height: `${width}px`,
-                  width: `${width}px`,
-                }}
-              /> */}
-
               <img
-                ref={profile}
                 src={
                   university?.profile_photo
                     ? `${baseURL + university?.profile_photo}`
@@ -123,8 +76,6 @@ const UniversityPage = () => {
                   transform: "translateY(-50%)",
                   objectFit: "cover",
                   aspectRatio: "1",
-                  // height: `${width}px`,
-                  // width: `${width}px`,
                 }}
               />
             </div>
@@ -169,8 +120,11 @@ const UniversityPage = () => {
           {/* About University */}
 
           <div className="d-flex justify-content-around gap-3 px-3">
-            <p className="h4 col-8" style={{ color: "var(--text-main-color)" }}>
-              About University
+            <p
+              className="h4 col-11 dir"
+              style={{ color: "var(--text-main-color)" }}
+            >
+              {t("About University")}
             </p>
             <div className="nav-link col-4 col-sm-2">
               <p
@@ -198,7 +152,7 @@ const UniversityPage = () => {
               className="h4 ms-sm5 col-8"
               style={{ color: "var(--text-main-color)" }}
             >
-              Posts
+              {t("Posts")}
             </p>
             <Link
               to={"/userPosts/" + university?.id}
@@ -208,7 +162,7 @@ const UniversityPage = () => {
                 className="h5 text-decoration-underline"
                 style={{ color: "var(--text-main-color)" }}
               >
-                See All
+                {t("See All")}
               </p>
             </Link>
           </div>
@@ -469,7 +423,9 @@ const UniversityPage = () => {
               </button>
             </div>
           ) : (
-            <div className="text-center display-3 pt-5">No Posts Yet</div>
+            <div className="text-center display-3 pt-5">
+              {t("No Posts Yet")}
+            </div>
           )}
 
           <hr className="mt-5 w-75 m-auto" />

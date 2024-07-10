@@ -104,8 +104,7 @@ const Post = ({
 
   // Comments Logic Here
   const [commentLength, setcommentLength] = useState(2);
-  const [allComments, setComments] = useState(comments);
-  console.log("allComments: ", allComments);
+  const [allComments, setComments] = useState(comments.filter((c) => c.user));
 
   const addComment = async (e) => {
     e.preventDefault();

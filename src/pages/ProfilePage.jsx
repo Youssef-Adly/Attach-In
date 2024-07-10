@@ -12,6 +12,7 @@ const ProfilePage = () => {
   const user = useSelector((state) => state.Auth.user);
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
+  let [universityID, setUniversityID] = useState(null);
 
   useEffect(() => {
     axios
@@ -46,6 +47,24 @@ const ProfilePage = () => {
     user.interests,
     user.skills,
   ]);
+
+  useEffect(() => {
+    axios
+      .post(
+        "https://attachin.com/api/userInfo",
+        {
+          for_user_id: user.id,
+        },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      .then((res) => {
+        setUniversityID(res.data.data.profile_university_id);
+      })
+      .catch((err) => {
+        console.log(err);
+        toastError("Network Error");
+      });
+  }, [user.token, user.id]);
 
   return (
     <>
@@ -168,7 +187,7 @@ const ProfilePage = () => {
             </div>
             <div className="d-flex justify-content-end">
               <Link
-                to={`/universityProfile/${user.university.id}`}
+                to={universityID ? `/universityProfile/${universityID}` : ""}
                 className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2"
                 style={{
                   color: "var(--text-main-color)",

@@ -22,7 +22,11 @@ const HomePage = () => {
     axios
       .get(baseURL + "getAllHomePosts?limit=" + limit)
       .then((res) => {
-        setPosts(res.data.data);
+        // console.log(
+        //   "res.data.data: ",
+        //   res.data.data.filter((p) => p.user)
+        // );
+        setPosts(res.data.data.filter((p) => p.user));
         setFetching(false);
       })
       .catch((err) => {
@@ -31,7 +35,7 @@ const HomePage = () => {
       });
   }, [limit]);
 
-  // Great User
+  // Greet User
   useEffect(() => {
     if (!toast.isActive()) {
       toastInfo(getGreeting() + user.full_name);

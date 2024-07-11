@@ -203,6 +203,7 @@ const InternshipDetails = () => {
                   width: "fit-content",
                   background: "var(--main-color)",
                   color: "#eee",
+                  wordBreak:"break-word"
                 }}
               >
                 {internship.requirements}

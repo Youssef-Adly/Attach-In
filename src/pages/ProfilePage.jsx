@@ -188,7 +188,7 @@ const ProfilePage = () => {
             <div className="d-flex justify-content-end">
               <Link
                 to={universityID ? `/universityProfile/${universityID}` : ""}
-                className="nav-link p-2 px-sm-3 px-1 mt-3 rounded-2 col-12 text-center"
+                className="nav-link p-2 px-1 mt-3 rounded-2 col-12 text-center"
                 style={{
                   color: "var(--text-main-color)",
                   backgroundColor: "#E3E2DC",

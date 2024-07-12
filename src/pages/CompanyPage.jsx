@@ -17,6 +17,7 @@ const CompanyPage = () => {
   const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
   const [company, setCompany] = useState(null);
+  const [limtWords, setLimitWords] = useState(50);
   let [posts, setPosts] = useState(null);
   const { id } = useParams();
 
@@ -32,6 +33,7 @@ const CompanyPage = () => {
       .then((res) => {
         // console.log(res.data.data);
         setCompany(res.data.data);
+        // setAbout(res.data.data.about.split(" ").slice(0, 50).join(" "));
       })
       .catch((err) => {
         toastError("Network Error");
@@ -138,6 +140,8 @@ const CompanyPage = () => {
                 backgroundColor: "var(--offWhite-color)",
                 objectFit: "cover",
                 aspectRatio: "1",
+                // height: "100%",
+                width: "100%",
               }}
             />
           </div>
@@ -269,7 +273,7 @@ const CompanyPage = () => {
         <div className="d-flex justify-content-around gap-3 px-3 pt-3 pt-sm-0">
           <p
             className="h4 col-12 dir mt-3 mt-sm-0"
-            style={{ color: "var(--text-main-color)" }}
+            style={{ color: "var(--text-main-color)", marginRight: "25%" }}
           >
             {t("About Company")}
           </p>
@@ -290,7 +294,23 @@ const CompanyPage = () => {
             backgroundColor: "var(--sec-color)",
           }}
         >
-          {company?.about ? company?.about : "No Bio Yet"}
+          {company?.about
+            ? company?.about.split(" ").slice(0, limtWords).join(" ") + "....."
+            : t("No Bio Yet")}
+          {company?.about.length >
+            company?.about.split(" ").slice(0, limtWords).join(" ").length && (
+            <>
+              <br />
+              <Link
+                className="col-12 d-flex justify-content-end"
+                onClick={() => {
+                  setLimitWords(999999999);
+                }}
+              >
+                See More
+              </Link>
+            </>
+          )}
         </h4>
 
         <hr className="mt-5 w-75 m-auto" />

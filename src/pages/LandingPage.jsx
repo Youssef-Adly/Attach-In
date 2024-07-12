@@ -47,6 +47,7 @@ const LandingPage = () => {
   const [FormErrors, setFormErrors] = useState(null);
   const [partners, setPartners] = useState(null);
   const [universities, setUniversities] = useState(null);
+  console.log("universities: ", universities);
 
   useEffect(() => {
     //Set Partners
@@ -66,7 +67,10 @@ const LandingPage = () => {
       })
       .then((res) => {
         setUniversities(() =>
-          res.data.data.filter((user) => user.user_type === "university")
+          res.data.data.filter(
+            (user) =>
+              (user.user_type === "university") & (user.full_name !== "dffddf")
+          )
         );
       })
       .catch((err) => {

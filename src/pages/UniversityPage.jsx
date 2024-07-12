@@ -12,6 +12,7 @@ const UniversityPage = () => {
   const authUser = useSelector((state) => state.Auth.user);
   const { id } = useParams();
   const [university, setUniversity] = useState(null);
+  const [limtWords, setLimitWords] = useState(50);
   let [posts, setposts] = useState(null);
 
   useEffect(() => {
@@ -122,7 +123,7 @@ const UniversityPage = () => {
           <div className="d-flex justify-content-around gap-3 px-3">
             <p
               className="h4 col-12 dir mt-5 mt-sm-0"
-              style={{ color: "var(--text-main-color)" }}
+              style={{ color: "var(--text-main-color)", marginRight: "25%" }}
             >
               {t("About University")}
             </p>
@@ -141,7 +142,22 @@ const UniversityPage = () => {
               minHeight: "150px",
             }}
           >
-            {university?.about ? university?.about : t("No About Yet")}
+            {/* {university?.about ? university?.about : t("No About Yet")} */}
+            {university?.about
+              ? university?.about.split(" ").slice(0, limtWords).join(" ")
+              : t("No About Yet")}
+            {university?.about.length >
+              university?.about.split(" ").slice(0, limtWords).join(" ")
+                .length && (
+              <Link
+                className="col-12 d-flex justify-content-end"
+                onClick={() => {
+                  setLimitWords(999999999);
+                }}
+              >
+                See More
+              </Link>
+            )}
           </h4>
 
           <hr className="mt-5 w-75 m-auto" />

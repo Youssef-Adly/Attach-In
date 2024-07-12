@@ -26,9 +26,14 @@ const Footer = () => {
             style={{ color: "var(--text-main-color)" }}
           >
             <FontAwesomeIcon icon={faSquareInstagram} fontSize={30} />
-            <FontAwesomeIcon icon={faFacebook} fontSize={30} />
-            <FontAwesomeIcon icon={faTiktok} fontSize={30} />
-            <FontAwesomeIcon icon={faLinkedin} fontSize={30} />
+            <Link
+              to={"https://www.facebook.com/profile.php?id=61560351413610"}
+              target="_blank"
+            >
+              <FontAwesomeIcon icon={faFacebook} fontSize={30} color="#eee" />
+            </Link>
+            <FontAwesomeIcon icon={faTiktok} fontSize={30} color="#eee" />
+            <FontAwesomeIcon icon={faLinkedin} fontSize={30} color="#eee" />
           </div>
         </div>
         <div className="col-lg-6 col-12 p-3" role="group">

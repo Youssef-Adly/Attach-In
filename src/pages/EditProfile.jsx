@@ -158,8 +158,6 @@ const EditProfile = () => {
     resolver: yupResolver(schema),
   });
 
-  // console.log(typeof user.university?.id.toString());
-
   //Adds Images in FormSubmit Object
   //#region
 
@@ -254,11 +252,13 @@ const EditProfile = () => {
         }, 1500);
       })
       .catch((err) => {
-        getErrorsFromAPI(err.errors);
-        updateError(toastID, err.errors[0]);
+        console.log("err: ", err);
+        // updateError(toastID, err.errors[0]);
+        updateError(toastID, err.response.data.msg);
+        // getErrorsFromAPI(err.errors);
+        setLoading(false);
       });
   };
-  // !loadingSkills &&
   //#endregion
 
   // Adding Dynamic Inputs

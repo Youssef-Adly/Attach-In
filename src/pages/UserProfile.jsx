@@ -21,27 +21,7 @@ const UserProfile = () => {
   let [posts, setposts] = useState(null);
   let [userSkills, setSkills] = useState(null);
   let [universityID, setUniversityID] = useState(null);
-  console.log("universityID: ", universityID);
-
   const { id } = useParams();
-
-  // useEffect(() => {
-  //   axios
-  //     .post(
-  //       "https://attachin.com/api/userInfo",
-  //       {
-  //         for_user_id: authUser.id,
-  //       },
-  //       { headers: { Authorization: `Bearer ${authUser.token}` } }
-  //     )
-  //     .then((res) => {
-  //       setUniversityID(res.data.data.profile_university_id);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       toastError("Network Error");
-  //     });
-  // }, [authUser.token, authUser.id]);
 
   useEffect(() => {
     axios
@@ -722,7 +702,6 @@ const UserProfile = () => {
               </div>
               <div className="carousel-inner">
                 {/*  */}
-                {/* {console.log("posts: ", posts)} */}
                 {posts?.length > 0 ? (
                   <div className="carousel-item active">
                     <div className="d-flex flex-wrap gap-3 justify-content-center">
@@ -765,7 +744,7 @@ const UserProfile = () => {
                           className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[0]?.title}
+                          {posts[0]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                       {/* Card #2 */}
@@ -808,7 +787,7 @@ const UserProfile = () => {
                             className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
-                            {posts[1]?.title}
+                            {posts[1]?.title.split(" ").slice(0, 5).join(" ")}
                           </h6>
                         </Link>
                       )}
@@ -860,7 +839,7 @@ const UserProfile = () => {
                           className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[2]?.title}
+                          {posts[2]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                       {/* Card #2 */}
@@ -903,7 +882,7 @@ const UserProfile = () => {
                             className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
-                            {posts[3]?.title}
+                            {posts[3]?.title.split(" ").slice(0, 5).join(" ")}
                           </h6>
                         </Link>
                       )}

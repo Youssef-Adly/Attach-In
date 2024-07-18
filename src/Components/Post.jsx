@@ -1106,7 +1106,7 @@ const Post = ({
       </div>
 
       {/* Load more comments */}
-      {comments.length > commentLength && (
+      {allComments.length > commentLength && (
         <div
           className="card-footer border-0 pt-0 ms-auto"
           style={{

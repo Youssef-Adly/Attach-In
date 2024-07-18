@@ -15,17 +15,13 @@ const HomePage = () => {
   const [t] = useTranslation();
   const user = useSelector((state) => state.Auth.user);
   let [fetching, setFetching] = useState(false);
-  let [limit, setLimit] = useState(10);
+  let [limit, setLimit] = useState(15);
   let [posts, setPosts] = useState(null);
 
   useEffect(() => {
     axios
       .get(baseURL + "getAllHomePosts?limit=" + limit)
       .then((res) => {
-        // console.log(
-        //   "res.data.data: ",
-        //   res.data.data.filter((p) => p.user)
-        // );
         setPosts(res.data.data.filter((p) => p.user));
         setFetching(false);
       })

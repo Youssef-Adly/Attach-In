@@ -44,10 +44,16 @@ const SearchAttachInNetwork = () => {
       })
       .then((res) => {
         // console.log(res);
-        setAllUsers(res.data.data);
+        setAllUsers(
+          res.data.data.filter(
+            (user) => user.full_name !== "cario university user"
+          )
+        );
         setSearchedUsers(() =>
-          res.data.data.filter((user) =>
-            user.full_name.toLowerCase().includes(myParam.toLowerCase())
+          res.data.data.filter(
+            (user) =>
+              user.full_name.toLowerCase().includes(myParam.toLowerCase()) &
+              (user.full_name !== "cario university user")
           )
         );
       })

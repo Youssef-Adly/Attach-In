@@ -6,6 +6,7 @@ import AddFriendCard from "../Components/AddFriendCard";
 import { useTranslation } from "react-i18next";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { toastError } from "../utils/ToastsFunctions";
+import { v4 as uuid } from "uuid";
 
 const NotificationsPage = () => {
   const [t] = useTranslation();
@@ -23,7 +24,6 @@ const NotificationsPage = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        // console.log("friendRequests: ", res.data.data);
         setFriendRequests(res.data.data);
       })
       .catch((err) => {
@@ -43,9 +43,9 @@ const NotificationsPage = () => {
       .then((res) => {
         // console.log("notifications: ", res.data.data);
         // setNotifications([]);
-        let notifications = res.data.data.filter(
-          (e) => (e.from_user !== null) & (e.from_user_id !== user.id)
-        );
+        let notifications = res.data.data
+          .filter((e) => (e.from_user !== null) & (e.from_user_id !== user.id))
+          .reverse();
         setNotifications(notifications);
       })
       .catch((err) => {
@@ -122,9 +122,8 @@ const NotificationsPage = () => {
               <>
                 {notifications.length > 0 ? (
                   notifications
-                    .reverse()
                     .slice(0, limit)
-                    .map((n, idx) => <Notification {...n} key={idx} />)
+                    .map((n, idx) => <Notification {...n} key={uuid()} />)
                 ) : (
                   <p
                     className="fs-3 text-center"
@@ -174,7 +173,11 @@ const NotificationsPage = () => {
                   <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
                     {friendRequests.length > 0 ? (
                       friendRequests.map((req, idx) => (
-                        <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+                        <AddFriendCard
+                          {...req.user}
+                          reqID={req.id}
+                          key={uuid()}
+                        />
                       ))
                     ) : (
                       <p
@@ -209,9 +212,8 @@ const NotificationsPage = () => {
               <>
                 {notifications?.length > 0 ? (
                   notifications
-                    ?.reverse()
                     .slice(0, limit)
-                    .map((n, idx) => <Notification {...n} key={idx} />)
+                    .map((n, idx) => <Notification {...n} key={uuid()} />)
                 ) : (
                   <p
                     className="fs-3 text-center"
@@ -272,7 +274,7 @@ const NotificationsPage = () => {
               <div className="d-flex flex-wrap row-cols-2 justify-content-center gap-4 mb-5">
                 {friendRequests.length > 0 ? (
                   friendRequests.map((req, idx) => (
-                    <AddFriendCard {...req.user} reqID={req.id} key={idx} />
+                    <AddFriendCard {...req.user} reqID={req.id} key={uuid()} />
                   ))
                 ) : (
                   <p

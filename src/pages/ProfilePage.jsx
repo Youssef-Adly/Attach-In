@@ -546,7 +546,7 @@ const ProfilePage = () => {
                         className="text-center"
                         style={{ color: "var(--text-main-color)" }}
                       >
-                        {posts[0]?.title}
+                        {posts[0]?.title.split(" ").slice(0, 5).join(" ")}
                       </h6>
                     </Link>
                     {/* Card #2 */}
@@ -589,7 +589,7 @@ const ProfilePage = () => {
                           className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[1]?.title}
+                          {posts[1]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                     )}
@@ -641,7 +641,7 @@ const ProfilePage = () => {
                         className="text-center"
                         style={{ color: "var(--text-main-color)" }}
                       >
-                        {posts[2]?.title}
+                        {posts[2]?.title.split(" ").slice(0, 5).join(" ")}
                       </h6>
                     </Link>
                     {/* Card #2 */}
@@ -684,7 +684,7 @@ const ProfilePage = () => {
                           className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[3]?.title}
+                          {posts[3]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                     )}

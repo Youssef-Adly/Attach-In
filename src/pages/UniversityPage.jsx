@@ -10,6 +10,7 @@ const UniversityPage = () => {
   const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
   const authUser = useSelector((state) => state.Auth.user);
+  const lang = useSelector((state) => state.lang.value);
   const { id } = useParams();
   const [university, setUniversity] = useState(null);
   const [limtWords, setLimitWords] = useState(50);
@@ -123,7 +124,10 @@ const UniversityPage = () => {
           <div className="d-flex justify-content-around gap-3 px-3">
             <p
               className="h4 col-12 dir mt-5 mt-sm-0"
-              style={{ color: "var(--text-main-color)", marginRight: "25%" }}
+              style={{
+                color: "var(--text-main-color)",
+                marginRight: lang === "en" ? "" : "25%",
+              }}
             >
               {t("About University")}
             </p>
@@ -253,7 +257,7 @@ const UniversityPage = () => {
                           className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[0]?.title}
+                          {posts[0]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                       {/* Card #2 */}
@@ -296,7 +300,7 @@ const UniversityPage = () => {
                             className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
-                            {posts[1]?.title}
+                            {posts[1]?.title.split(" ").slice(0, 5).join(" ")}
                           </h6>
                         </Link>
                       )}
@@ -348,7 +352,7 @@ const UniversityPage = () => {
                           className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[2]?.title}
+                          {posts[2]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                       {/* Card #2 */}
@@ -391,7 +395,7 @@ const UniversityPage = () => {
                             className="text-center mt-3"
                             style={{ color: "var(--text-main-color)" }}
                           >
-                            {posts[3]?.title}
+                            {posts[3]?.title.split(" ").slice(0, 5).join(" ")}
                           </h6>
                         </Link>
                       )}

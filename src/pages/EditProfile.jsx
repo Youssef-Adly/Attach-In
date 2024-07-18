@@ -254,8 +254,8 @@ const EditProfile = () => {
       .catch((err) => {
         console.log("err: ", err);
         // updateError(toastID, err.errors[0]);
-        updateError(toastID, err.response.data.msg);
-        // getErrorsFromAPI(err.errors);
+        getErrorsFromAPI(err.response.data.errors);
+        updateError(toastID, Object.values(err.response.data.errors)[0].message);
         setLoading(false);
       });
   };
@@ -710,6 +710,18 @@ const EditProfile = () => {
               Phone Number
             </label>
             <ErrorMessage>{errors.phone?.message}</ErrorMessage>
+            {FormErrors
+              ? FormErrors.map((err, idx) => {
+                  // console.log(Object.entries(err)[0][0]);
+                  return Object.entries(err)[0][0] === "phone" ? (
+                    <ErrorMessage key={idx}>
+                      {Object.entries(err)[0][1]?.message}
+                    </ErrorMessage>
+                  ) : (
+                    ""
+                  );
+                })
+              : ""}
           </div>
           {/* Email */}
           <div className="form-floating my-3">
@@ -729,6 +741,18 @@ const EditProfile = () => {
               Email
             </label>
             <ErrorMessage>{errors.email?.message}</ErrorMessage>
+            {FormErrors
+              ? FormErrors.map((err, idx) => {
+                  // console.log(Object.entries(err)[0][0]);
+                  return Object.entries(err)[0][0] === "email" ? (
+                    <ErrorMessage key={idx}>
+                      {Object.entries(err)[0][1]?.message}
+                    </ErrorMessage>
+                  ) : (
+                    ""
+                  );
+                })
+              : ""}
           </div>
           {/* Bio */}
           <div className="form-floating my-3">
@@ -1197,7 +1221,7 @@ const EditProfile = () => {
             <ErrorMessage>{errors.collage?.message}</ErrorMessage>
           </div>
           {/* API Validations */}
-          {FormErrors
+          {/* {FormErrors
             ? FormErrors.map((err, idx) => {
                 // console.log(Object.entries(err)[0][0]);
                 return (
@@ -1206,7 +1230,7 @@ const EditProfile = () => {
                   </ErrorMessage>
                 );
               })
-            : ""}
+            : ""} */}
           {/* Submit */}
           {!loading ? (
             <button

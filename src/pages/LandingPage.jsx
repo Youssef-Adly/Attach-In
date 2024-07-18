@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { getGreeting } from "../Components/formatDateForPost";
 import { setAuth } from "../Redux/slices/AuthSlice";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import { toastError } from "../utils/ToastsFunctions";
 
 // yup Schema
@@ -47,7 +48,6 @@ const LandingPage = () => {
   const [FormErrors, setFormErrors] = useState(null);
   const [partners, setPartners] = useState(null);
   const [universities, setUniversities] = useState(null);
-  console.log("universities: ", universities);
 
   useEffect(() => {
     //Set Partners
@@ -585,7 +585,7 @@ const LandingPage = () => {
                     <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-5">
                       {partners?.slice(0, 3).map((p, idx) => (
                         <img
-                          key={p.id}
+                          key={uuid()}
                           src={baseImgURL + p.profile_photo}
                           className="d-block rounded-circle"
                           style={{
@@ -604,7 +604,7 @@ const LandingPage = () => {
                     <div className="d-flex justify-content-center">
                       {partners?.slice(3, 6).map((p, idx) => (
                         <img
-                          key={p.id}
+                          key={uuid()}
                           src={baseImgURL + p.profile_photo}
                           className="d-block rounded-circle"
                           style={{
@@ -706,7 +706,7 @@ const LandingPage = () => {
                   <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-5">
                     {universities?.slice(0, 3).map((university, idx) => (
                       <img
-                        key={university.id + idx}
+                        key={uuid()}
                         src={baseImgURL + university.profile_photo}
                         className="d-block rounded-circle"
                         style={{
@@ -724,7 +724,7 @@ const LandingPage = () => {
                     <div className="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-5">
                       {universities?.slice(3, 6).map((university, idx) => (
                         <img
-                          key={university.id + idx}
+                          key={uuid()}
                           src={baseImgURL + university.profile_photo}
                           className="d-block rounded-circle"
                           style={{

@@ -64,7 +64,9 @@ const InternshipDetails = () => {
 
   return (
     <>
-      <h1 style={{ color: "var(--text-main-color)" }}>{t("Internships")}</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Internships")}
+      </h1>
       <hr />
       {/* <!-- Nav tabs --> */}
       <ul
@@ -130,7 +132,7 @@ const InternshipDetails = () => {
             marginBottom: "30px",
           }}
         >
-          <div className="d-flex align-items-center gap-3 ms-4">
+          <div className="d-flex align-items-center gap-3 ms-4 dir">
             <Link to={"/internships"}>
               <FontAwesomeIcon
                 icon={faCircleArrowLeft}
@@ -203,7 +205,7 @@ const InternshipDetails = () => {
                   width: "fit-content",
                   background: "var(--main-color)",
                   color: "#eee",
-                  wordBreak:"break-word"
+                  wordBreak: "break-word",
                 }}
               >
                 {internship.requirements}

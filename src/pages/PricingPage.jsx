@@ -9,11 +9,11 @@ const PricingPage = () => {
         <div className="container">
           <div className="section-title text-center">
             <h1>Pricing Plan</h1>
-            <p>Coming Soon</p>
+            <h3 style={{ color: "var(--text-main-color)" }}>Coming Soon</h3>
           </div>
           <div className="row text-center">
             <div
-              className="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+              className="col-lg-4 col-12 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay="0.1s"
               data-wow-offset={0}
@@ -28,12 +28,12 @@ const PricingPage = () => {
                   <span />
                   <span />
                 </div>
-                <h1 className="price">$29</h1>
+                <h1 className="price">29 EGP</h1>
                 <h5>Monthly</h5>
                 <ul>
-                  <li>5 website</li>
-                  <li>50GB Disk Space</li>
-                  <li>50 Email Accounts</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
                 </ul>
                 <Link to={""} className="nav-link">
                   Get start
@@ -42,7 +42,7 @@ const PricingPage = () => {
             </div>
             {/*- END COL */}
             <div
-              className="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+              className="col-lg-4 col-12 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay="0.2s"
               data-wow-offset={0}
@@ -57,14 +57,14 @@ const PricingPage = () => {
                   <span />
                   <span />
                 </div>
-                <h1 className="price">$49</h1>
+                <h1 className="price">49 EGP</h1>
                 <h5>Monthly</h5>
                 <ul>
-                  <li>10 website</li>
-                  <li>50GB Disk Space</li>
-                  <li>50 Email Accounts</li>
-                  <li>50GB Monthly Bandwidth</li>
-                  <li>10 Subdomains</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
                 </ul>
                 <Link to={""} className="nav-link">
                   Get start
@@ -73,7 +73,7 @@ const PricingPage = () => {
             </div>
             {/*- END COL */}
             <div
-              className="col-lg-4 col-sm-4 col-xs-12 wow fadeInUp"
+              className="col-lg-4 col-12 wow fadeInUp"
               data-wow-duration="1s"
               data-wow-delay="0.3s"
               data-wow-offset={0}
@@ -89,16 +89,16 @@ const PricingPage = () => {
                   <span />
                 </div>
                 <span className="price-label">Best</span>
-                <h1 className="price">$69</h1>
+                <h1 className="price mt-3">69 EGP</h1>
                 <h5>Monthly</h5>
                 <ul>
-                  <li>15 website</li>
-                  <li>50GB Disk Space</li>
-                  <li>50 Email Accounts</li>
-                  <li>50GB Monthly Bandwidth</li>
-                  <li>10 Subdomains</li>
-                  <li>15 Domains</li>
-                  <li>Unlimited Support</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
+                  <li>Lorem, ipsum.</li>
                 </ul>
                 <Link to={""} className="nav-link">
                   Get start

@@ -25,15 +25,45 @@ const Footer = () => {
             className="col-12 col-sm-6 d-flex justify-content-around align-items-center"
             style={{ color: "var(--text-main-color)" }}
           >
-            <FontAwesomeIcon icon={faSquareInstagram} fontSize={30} />
+            <Link
+              to={"https://www.instagram.com/attachin__app"}
+              target="_blank"
+              style={{
+                color: "unset",
+              }}
+            >
+              <FontAwesomeIcon icon={faSquareInstagram} fontSize={30} />
+            </Link>
+
             <Link
               to={"https://www.facebook.com/profile.php?id=61560351413610"}
               target="_blank"
+              style={{
+                color: "unset",
+              }}
             >
-              <FontAwesomeIcon icon={faFacebook} fontSize={30} color="#eee" />
+              <FontAwesomeIcon icon={faFacebook} fontSize={30} />
             </Link>
-            <FontAwesomeIcon icon={faTiktok} fontSize={30} color="#eee" />
-            <FontAwesomeIcon icon={faLinkedin} fontSize={30} color="#eee" />
+
+            <Link
+              to={"https://www.tiktok.com/@attachin7"}
+              target="_blank"
+              style={{
+                color: "unset",
+              }}
+            >
+              <FontAwesomeIcon icon={faTiktok} fontSize={30} />
+            </Link>
+
+            <Link
+              to={""}
+              target="_blank"
+              style={{
+                color: "unset",
+              }}
+            >
+              <FontAwesomeIcon icon={faLinkedin} fontSize={30} />
+            </Link>
           </div>
         </div>
         <div className="col-lg-6 col-12 p-3" role="group">

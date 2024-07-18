@@ -31,7 +31,9 @@ const CourseDetailsPage = () => {
 
   return (
     <>
-      <h1 style={{ color: "var(--text-main-color)" }}>{t("Courses")}</h1>
+      <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
+        {t("Courses")}
+      </h1>
       <hr />
       {/* <!-- Nav tabs --> */}
       <ul
@@ -97,7 +99,7 @@ const CourseDetailsPage = () => {
             marginBottom: "65px",
           }}
         >
-          <div className="d-flex align-items-center gap-3 ms-4">
+          <div className="d-flex align-items-center gap-3 ms-4 dir">
             <Link to={"/courses"}>
               <FontAwesomeIcon
                 icon={faCircleArrowLeft}

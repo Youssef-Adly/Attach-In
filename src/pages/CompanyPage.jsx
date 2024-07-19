@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,6 +15,7 @@ const CompanyPage = () => {
   const baseURL = "https://attachin.com/api/";
   const baseImgURL = "https://attachin.com/";
   const [t] = useTranslation();
+  const navigate = useNavigate();
   const authUser = useSelector((state) => state.Auth.user);
   const lang = useSelector((state) => state.lang.value);
   const [company, setCompany] = useState(null);
@@ -32,8 +33,19 @@ const CompanyPage = () => {
         }
       )
       .then((res) => {
-        // console.log(res.data.data);
-        setCompany(res.data.data);
+        let user = res.data.data;
+        // console.log(user);
+        if (user.user_type === "company") {
+          setCompany(user);
+        } else if (user.user_type === "student") {
+          if (user.id === authUser.id) {
+            navigate(`/profile`);
+          } else {
+            navigate(`/profile/${user.id}`);
+          }
+        } else if (user.user_type === "university") {
+          navigate(`/universityProfile/${user.id}`);
+        }
         // setAbout(res.data.data.about.split(" ").slice(0, 50).join(" "));
       })
       .catch((err) => {

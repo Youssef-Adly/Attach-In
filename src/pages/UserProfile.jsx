@@ -47,22 +47,33 @@ const UserProfile = () => {
       )
       .then((res) => {
         let user = res.data.data;
-        setUniversityID(user.profile_university_id);
-        setUser(user);
-        setSkills([
-          ...user.skills?.map(
-            (skill) => (skill = { ...skill, type: "skills" })
-          ),
-          ...user.certifications?.map(
-            (cert) => (cert = { ...cert, type: "certifications" })
-          ),
-          ...user.interests?.map(
-            (int) => (int = { ...int, type: "interests" })
-          ),
-          ...user.experiences?.map(
-            (exp) => (exp = { ...exp, type: "experiences" })
-          ),
-        ]);
+        if (user.user_type === "company") {
+          navigate(`/companyProfile/${user.id}`);
+        } else if (user.user_type === "student") {
+          if (user.id === authUser.id) {
+            navigate(`/profile`);
+          } else {
+            setUser(user);
+            setUniversityID(user.profile_university_id);
+            setSkills([
+              ...user.skills?.map(
+                (skill) => (skill = { ...skill, type: "skills" })
+              ),
+              ...user.certifications?.map(
+                (cert) => (cert = { ...cert, type: "certifications" })
+              ),
+              ...user.interests?.map(
+                (int) => (int = { ...int, type: "interests" })
+              ),
+              ...user.experiences?.map(
+                (exp) => (exp = { ...exp, type: "experiences" })
+              ),
+            ]);
+            // navigate(`/profile/${user.id}`);
+          }
+        } else if (user.user_type === "university") {
+          navigate(`/universityProfile/${user.id}`);
+        }
       })
       .catch((err) => {
         console.log(err);

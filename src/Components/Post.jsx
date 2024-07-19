@@ -526,11 +526,11 @@ const Post = ({
                       to={
                         authUser.id === parent?.user?.id
                           ? `/profile`
-                          : user?.user_type === "student"
+                          : parent?.user?.user_type === "student"
                           ? `/profile/${parent?.user?.id}`
-                          : user?.user_type === "university"
+                          : parent?.user?.user_type === "university"
                           ? `/universityProfile/${parent?.user?.id}`
-                          : user?.user_type === "company"
+                          : parent?.user?.user_type === "company"
                           ? `/companyProfile/${parent?.user?.id}`
                           : ""
                       }
@@ -554,11 +554,11 @@ const Post = ({
                           to={
                             authUser?.id === parent?.user?.id
                               ? `/profile`
-                              : user?.user_type === "student"
+                              : parent?.user?.user_type === "student"
                               ? `/profile/${parent?.user?.id}`
-                              : user?.user_type === "university"
+                              : parent?.user?.user_type === "university"
                               ? `/universityProfile/${parent?.user?.id}`
-                              : user?.user_type === "company"
+                              : parent?.user?.user_type === "company"
                               ? `/companyProfile/${parent?.user?.id}`
                               : ""
                           }

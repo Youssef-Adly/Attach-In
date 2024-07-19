@@ -18,8 +18,7 @@ const ProfilePage = () => {
     axios
       .get("https://attachin.com/api/getAllHomePosts?user_id=" + user.id)
       .then((res) => {
-        setposts(res.data.data.filter((p) => p.title || p.image));
-        // setposts(res.data.data);
+        setposts(res.data.data);
       })
       .then(() => {
         setSkills([

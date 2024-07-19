@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 const UniversityPage = () => {
   const baseURL = "https://attachin.com/";
   const [t] = useTranslation();
+  const navigate = useNavigate();
   const authUser = useSelector((state) => state.Auth.user);
   const lang = useSelector((state) => state.lang.value);
   const { id } = useParams();
@@ -16,6 +17,7 @@ const UniversityPage = () => {
   const [limtWords, setLimitWords] = useState(50);
   let [posts, setposts] = useState(null);
 
+  // Get User Info
   useEffect(() => {
     axios
       .post(
@@ -28,7 +30,18 @@ const UniversityPage = () => {
         }
       )
       .then((res) => {
-        setUniversity(res.data.data);
+        let user = res.data.data;
+        if (user.user_type === "company") {
+          navigate(`/companyProfile/${user.id}`);
+        } else if (user.user_type === "student") {
+          if (user.id === authUser.id) {
+            navigate(`/profile`);
+          } else {
+            navigate(`/profile/${user.id}`);
+          }
+        } else if (user.user_type === "university") {
+          setUniversity(res.data.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -36,6 +49,7 @@ const UniversityPage = () => {
       });
   }, [authUser.token, id]);
 
+  // get User Posts
   useEffect(() => {
     axios
       .get("https://attachin.com/api/getAllHomePosts?user_id=" + university?.id)

@@ -14,6 +14,7 @@ const HomePage = () => {
   const baseURL = "https://attachin.com/api/";
   const [t] = useTranslation();
   const user = useSelector((state) => state.Auth.user);
+  const theme = useSelector((state) => state.theme.value);
   let [fetching, setFetching] = useState(false);
   let [limit, setLimit] = useState(15);
   let [posts, setPosts] = useState(null);
@@ -33,8 +34,9 @@ const HomePage = () => {
 
   // Greet User
   useEffect(() => {
+    let extraConfig = theme ? { theme: "dark" } : { theme: "colored" };
     if (!toast.isActive()) {
-      toastInfo(getGreeting() + user.full_name);
+      toastInfo(getGreeting() + user.full_name, extraConfig);
     } else {
       toast.dismiss();
     }

@@ -72,7 +72,6 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const baseURL = "https://attachin.com/";
   const user = useSelector((state) => state.Auth.user);
-  // console.log("user: ", user);
   const [t, i18n] = useTranslation();
   const [loading, setLoading] = useState(false);
   const [loadingSkills, setLoadingSkills] = useState(false);

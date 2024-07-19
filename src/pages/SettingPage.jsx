@@ -51,7 +51,9 @@ const SettingPage = () => {
       {/*  */}
       {/* Dark Mode Btn */}
       <div className="d-flex gap-4 align-items-center ">
-        <div style={{ color: "var(--text-main-color)" }}>{t("Light Mode")}</div>
+        <div style={{ color: "var(--text-main-color)" }}>
+          {lang === "ar" ? t("Dark Mode") : t("Light Mode")}
+        </div>
         <div className="checkbox-wrapper-5 mt-2">
           <div className="check">
             {/* checked === Dark */}
@@ -64,7 +66,9 @@ const SettingPage = () => {
             <label htmlFor="check-5" />
           </div>
         </div>
-        <div style={{ color: "var(--text-main-color)" }}>{t("Dark Mode")}</div>
+        <div style={{ color: "var(--text-main-color)" }}>
+          {lang === "ar" ? t("Light Mode") : t("Dark Mode")}
+        </div>
       </div>
       <hr />
       {/* Localization */}

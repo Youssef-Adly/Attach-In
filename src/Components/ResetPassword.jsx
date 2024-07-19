@@ -22,6 +22,7 @@ const ResetPassword = () => {
 
   const user = useSelector((state) => state.Auth.user);
   const [loading, setLoading] = useState(false);
+  const [FormErrors, setFormErrors] = useState(null);
   // yup Schema
   const schema = yup
     .object({
@@ -53,6 +54,22 @@ const ResetPassword = () => {
     resolver: yupResolver(schema),
   });
 
+  const getErrorsFromAPI = (err) => {
+    let errorsArr = [];
+    for (let i = 0; i < Object.entries(err).length; i++) {
+      if (Object.entries(err)[i][1].isError) {
+        // console.log({
+        //   [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        // });
+        errorsArr.push({
+          [Object.entries(err)[i][0]]: err[Object.entries(err)[i][0]],
+        });
+      }
+    }
+    // console.log("errorsArr: ", errorsArr);
+    setFormErrors([...errorsArr]);
+  };
+
   const handleForgetPassword = async (data) => {
     let toastID = showLoadingToast("Changing Password.....");
     setLoading(true);
@@ -74,6 +91,7 @@ const ResetPassword = () => {
       })
       .catch((err) => {
         console.log(err);
+        getErrorsFromAPI(err.response.data.errors);
         updateError(toastID, "Current Password are Not Valid");
         setLoading(false);
       });
@@ -128,6 +146,18 @@ const ResetPassword = () => {
           Current Password
         </label>
         <ErrorMessage>{errors.current_password?.message}</ErrorMessage>
+        {FormErrors
+          ? FormErrors.map((err, idx) => {
+              // console.log(Object.entries(err)[0][0]);
+              return Object.entries(err)[0][0] === "current_password" ? (
+                <ErrorMessage key={idx}>
+                  {Object.entries(err)[0][1]?.message}
+                </ErrorMessage>
+              ) : (
+                ""
+              );
+            })
+          : ""}
       </div>
       <div className="form-floating">
         <input

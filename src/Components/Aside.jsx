@@ -72,6 +72,7 @@ const Aside = () => {
         className="fs-4"
         style={{
           color: "var(--text-main-color)",
+          fontFamily: "Arial Rounded MT",
         }}
       >
         {user.full_name}

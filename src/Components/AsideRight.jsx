@@ -72,7 +72,14 @@ const AsideRight = ({ closeAside }) => {
           />
         </div>
       </Link>
-      <span className="fs-4 text-light">{user.full_name}</span>
+      <span
+        className="fs-4 text-light"
+        style={{
+          fontFamily: "Arial Rounded MT",
+        }}
+      >
+        {user.full_name}
+      </span>
       <div data-bs-dismiss="offcanvas" style={{ width: "fit-content" }}>
         <Link
           to="/profile"

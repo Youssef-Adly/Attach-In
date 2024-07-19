@@ -3,8 +3,13 @@
   src: url("./fonts/ARLRDBD.TTF") format("truetype"); /* Adjust file name and format */
   /*font-weight: normal;*/ /* Optional: specify font weight */
 }
+@font-face {
+  font-family: "Noto Sans Arabic"; /* Replace with your font name */
+  src: url("./fonts/NotoSansArabic.ttf") format("truetype"); /* Adjust file name and format */
+  /*font-weight: normal;*/ /* Optional: specify font weight */
+}
 /* @import url("https://fonts.googleapis.com/css2?family=Marhey:wght@300..700&display=swap"); */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap"); */
 
 * {
   transition: color 0s !important;
@@ -20,11 +25,13 @@
 }
 
 [lang="ar"] body {
-  font-family: "Noto Sans Arabic", sans-serif;
+  font-family: "Noto Sans Arabic", "Arial Rounded MT", sans-serif;
   font-optical-sizing: auto;
-  /* font-weight: bold; */
+  font-weight: 500 !important;
   font-style: normal;
   font-variation-settings: "wdth" 100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 [data-bs-theme="light"] {

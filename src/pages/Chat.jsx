@@ -29,8 +29,10 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    scrollToBottom(); // Optionally, scroll to bottom on component mount
-  }, []);
+    if (msgs?.length > 6) {
+      scrollToBottom(); // Optionally, scroll to bottom on component mount
+    }
+  }, [msgs]);
 
   useEffect(() => {
     axios
@@ -54,7 +56,7 @@ const Chat = () => {
         let reciverObj =
           reciver.user1.id === user.id ? reciver.user2 : reciver.user1;
         setmsgsTo(reciverObj);
-        scrollToBottom();
+        // scrollToBottom();
       })
       .catch((err) => {
         toastError("Network Error");
@@ -128,7 +130,10 @@ const Chat = () => {
             color: "var(--text-main-color)",
           }}
         >
-          <Link to={"/profile/" + msgsTo?.id} className="nav-link">
+          <Link
+            to={"/profile/" + msgsTo?.id}
+            className="nav-link d-flex align-items-center"
+          >
             {msgsTo?.profile_photo ? (
               <img
                 className="avatar-img me-2 rounded-circle"

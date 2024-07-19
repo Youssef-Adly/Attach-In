@@ -39,3 +39,13 @@ export function getGreeting() {
     return "Good Evening ";
   }
 }
+
+export function convertLinksToAnchors(text) {
+  // Regular expression to match URLs
+  const urlRegex = /(https?:\/\/[^ ]+)/g;
+
+  // Replace URLs with anchor tags
+  return text.replace(urlRegex, (match) => {
+    return `<a href="${match}" target="_blank">${match} </a>`;
+  });
+}

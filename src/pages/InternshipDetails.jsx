@@ -12,6 +12,7 @@ import {
   updateError,
   updateSuccess,
 } from "../utils/ToastsFunctions";
+import { convertLinksToAnchors } from "../Components/formatDateForPost";
 
 const InternshipDetails = () => {
   const [t] = useTranslation();
@@ -207,8 +208,12 @@ const InternshipDetails = () => {
                   color: "#eee",
                   wordBreak: "break-word",
                 }}
+                dangerouslySetInnerHTML={{
+                  __html: convertLinksToAnchors(internship?.requirements),
+                }}
+                // {_html}
               >
-                {internship.requirements}
+                {/* {} */}
               </h6>
               {/* <p
                 className="p-3 rounded-5"

@@ -357,7 +357,7 @@ const InternshipDetails = () => {
                 }}
                 className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
               >
-                Confirm
+                {t("Apply")}
               </Link>
             ) : (
               <LoadingSuspese />

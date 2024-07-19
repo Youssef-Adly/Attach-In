@@ -535,7 +535,7 @@ const Internships = ({
             <br />
             <Link
               className="col-3 col-sm-2 d-block ms-auto text-center"
-              to={`${id}`}
+              to={`/internships/${id}`}
             >
               {t("See More")}
             </Link>

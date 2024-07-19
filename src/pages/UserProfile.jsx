@@ -27,7 +27,8 @@ const UserProfile = () => {
     axios
       .get(`${baseURL}api/getAllHomePosts?user_id=` + id)
       .then((res) => {
-        setposts(res.data.data);
+        setposts(res.data.data.filter((p) => p.title || p.image));
+        // console.log("res.data.data: ", res.data.data.filter((p) => p.title || p.image));
       })
       .catch((err) => {
         console.log(err);
@@ -744,7 +745,8 @@ const UserProfile = () => {
                           className="text-center"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[0]?.title.split(" ").slice(0, 5).join(" ")}
+                          {posts[0]?.title &&
+                            posts[0]?.title.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                       {/* Card #2 */}

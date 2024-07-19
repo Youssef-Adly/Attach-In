@@ -44,7 +44,10 @@ const CompanyPage = () => {
     axios
       .get(`${baseURL}getAllHomePosts?user_id=` + id)
       .then((res) => {
-        res.data.data.length === 0 ? setPosts(null) : setPosts(res.data.data);
+        res.data.data.length === 0
+          ? setPosts(null)
+          : setPosts(res.data.data.filter((p) => p.title || p.image));
+        // setposts(res.data.data.filter((p) => p.title || p.image));
         // console.log("post: ", res.data.data);
       })
       .catch((err) => {

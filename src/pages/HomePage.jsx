@@ -44,7 +44,7 @@ const HomePage = () => {
     return () => {
       toast.dismiss();
     };
-  }, [user]);
+  }, [theme, user]);
 
   return (
     <>

@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { setActive } from "../Redux/slices/AuthSlice";
 import { useNavigate } from "react-router-dom";
-import LoadingSuspese from "../Components/LoadingSuspense";
 
 const OtpAuth = () => {
   const apiURL = "https://attachin.com/api/";

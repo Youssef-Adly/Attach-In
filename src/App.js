@@ -6,6 +6,7 @@ import Suspention from "./Components/Suspention";
 import PrivateRouteLogged from "./utils/isNotLoggedGuard";
 import PrivateRoute from "./utils/IsLoggedGuard";
 import PrivateGuestRoute from "./utils/IsGuestGuard";
+import PrivateRouteActive from "./utils/isActive";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./i18n";
@@ -33,8 +34,6 @@ import FilePondPluginImageEdit from "filepond-plugin-image-edit";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
-import OtpAuth from "./pages/OtpAuth";
-import PrivateRouteActive from "./utils/isActive";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -84,6 +83,7 @@ const SearchAttachInNetwork = lazy(() =>
 );
 const CompanyInternships = lazy(() => import("./pages/CompanyInternships"));
 const Chat = lazy(() => import("./pages/Chat"));
+const OtpAuth = lazy(() => import("./pages/OtpAuth"));
 
 //#endregion
 /////////////////////////////////

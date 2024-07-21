@@ -39,8 +39,11 @@ export const AuthSlice = createSlice({
         certifications: [],
         experiences: [],
         token: null,
+        is_active: 1,
       };
-      // window
+    },
+    setActive: (state) => {
+      state.user = { ...state.user, is_active: 1 };
     },
   },
   extraReducers: (builder) => {
@@ -96,6 +99,6 @@ export const AuthSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setAuth, setGuest } = AuthSlice.actions;
+export const { setAuth, setGuest, setActive } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

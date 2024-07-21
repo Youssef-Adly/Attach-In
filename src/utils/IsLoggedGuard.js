@@ -7,9 +7,9 @@ const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.Auth.user); // Replace with your user selector
 
   // Handle potential missing user state (optional)
-  if (!user) {
-    // Or redirect to login if user state is not yet available
-    return <Navigate to="/login" />;
+  if (user?.is_active === 0) {
+    // Or redirect to otp if user is active === 0
+    return <Navigate to="/otp" />;
   }
 
   return user ? children : <Navigate to="/login" />;

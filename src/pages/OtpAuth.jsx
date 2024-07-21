@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./otpAuth.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   showLoadingToast,
   toastInfo,
@@ -11,11 +11,16 @@ import {
   updateSuccess,
 } from "../utils/ToastsFunctions";
 import axios from "axios";
+import { setActive } from "../Redux/slices/AuthSlice";
+import { useNavigate } from "react-router-dom";
+import LoadingSuspese from "../Components/LoadingSuspense";
 
 const OtpAuth = () => {
   const apiURL = "https://attachin.com/api/";
   const user = useSelector((state) => state.Auth.user);
-  // console.log('user: ', user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState("");
 
   const handleChange = (e) => {
@@ -24,7 +29,8 @@ const OtpAuth = () => {
 
   const handleSubmit = async (e) => {
     if (otp.length > 3) {
-      console.log(otp);
+      // console.log(otp);
+      setLoading(true);
       let toastID = showLoadingToast("Verifying");
       await axios
         .post(apiURL + "checkValidationCode", {
@@ -35,15 +41,23 @@ const OtpAuth = () => {
         .then((res) => {
           // console.log(res);
           updateSuccess(toastID, "Email Verified");
+          dispatch(setActive());
+          navigate("/home");
         })
         .catch((err) => {
           console.log("err: ", err);
+          setLoading(false);
           updateError(toastID, err.response.data.errors[0]);
         });
     } else {
       toastInfo("otp Must Be 4 Numbers", { theme: "light" });
     }
   };
+
+  useEffect(() => {
+    // document.documentElement.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <section
@@ -60,7 +74,7 @@ const OtpAuth = () => {
       />
       <div
         className="text-dark position-absolute top-0"
-        // onClick={loginAsGuest}
+        onClick={() => navigate("/")}
         style={{
           cursor: "pointer",
         }}
@@ -114,18 +128,22 @@ const OtpAuth = () => {
             From Your Mail
           </h4>
         </div>
-        <div
-          className="h3 offWhiteBgColor rounded-circle d-flex align-items-center justify-content-center mb-0"
-          style={{
-            width: "100px",
-            height: "100px",
-            cursor: "pointer",
-            color: "var(--text-main-color)",
-          }}
-          onClick={handleSubmit}
-        >
-          Verify
-        </div>
+        {!loading ? (
+          <div
+            className="h3 offWhiteBgColor rounded-circle d-flex align-items-center justify-content-center mb-0"
+            style={{
+              width: "100px",
+              height: "100px",
+              cursor: "pointer",
+              color: "var(--text-main-color)",
+            }}
+            onClick={handleSubmit}
+          >
+            Verify
+          </div>
+        ) : (
+          <img src="/Opener Loading.gif" className="w-25" alt="Loading" />
+        )}
       </div>
 
       <Footer classes={"secBgColor d-none d-sm-block"} />

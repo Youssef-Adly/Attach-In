@@ -17,6 +17,16 @@
   color: black !important;
 }
 
+.mainBgColor {
+  background-color: var(--main-color) !important;
+}
+.secBgColor {
+  background-color: var(--sec-color) !important;
+}
+.offWhiteBgColor {
+  background-color: var(--offWhite-color) !important;
+}
+
 .txtColor {
   color: var(--text-main-color) !important;
 }

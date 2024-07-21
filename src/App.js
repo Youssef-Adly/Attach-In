@@ -33,6 +33,7 @@ import FilePondPluginImageEdit from "filepond-plugin-image-edit";
 import FilePondPluginImageCrop from "filepond-plugin-image-crop";
 // Register the plugins
 import FilePondPluginImageResize from "filepond-plugin-image-resize";
+import OtpAuth from "./pages/OtpAuth";
 registerPlugin(
   FilePondPluginFileValidateType,
   FilePondPluginImageExifOrientation,
@@ -124,6 +125,14 @@ function App() {
         <PrivateRouteLogged>
           <Register />
         </PrivateRouteLogged>
+      ),
+    },
+    {
+      path: "/otp",
+      element: (
+        // <PrivateRouteLogged>
+          <OtpAuth />
+        // </PrivateRouteLogged>
       ),
     },
     {

@@ -9,11 +9,11 @@ import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({ classes }) => {
   const [t] = useTranslation();
 
   return (
-    <footer>
+    <footer className={classes}>
       <div className="d-flex flex-column-reverse flex-lg-row p-3 text-center">
         <div className="gap-3 col-lg-6 col-12 d-flex flex-column flex-sm-row justify-content-center justify-content-lg-around">
           <img
@@ -86,7 +86,7 @@ const Footer = () => {
       </div>
       {/*  */}
       <div>
-        <h6 className="text-center text-lg-start p-4 pt-0">
+        <h6 className="text-center text-lg-start p-4 pt-0 mb-0">
           Attach in Copyright &copy; 2024. All rights reserved.
         </h6>
       </div>

@@ -28,7 +28,7 @@ const InternshipDetails = () => {
     axios
       .get(baseURL + "getInternshipDetailsByInternshipId?internship_id=" + id)
       .then((res) => {
-        // console.log(res);
+        console.log(res.data.data);
         setInternship(res.data.data);
       })
       .catch((err) => {
@@ -345,20 +345,37 @@ const InternshipDetails = () => {
               </div>
             </div>
             {!loading ? (
-              <Link
-                // to={"/login"}
-                onClick={(e) => {
-                  handleSubmit(e);
-                }}
-                style={{
-                  backgroundColor: "var(--main-color)",
-                  height: "100px",
-                  width: "100px",
-                }}
-                className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
-              >
-                {t("Apply")}
-              </Link>
+              <>
+                {!internship.application_link ? (
+                  <Link
+                    // to={"/login"}
+                    onClick={(e) => {
+                      handleSubmit(e);
+                    }}
+                    style={{
+                      backgroundColor: "var(--main-color)",
+                      height: "100px",
+                      width: "100px",
+                    }}
+                    className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+                  >
+                    {t("Apply")}
+                  </Link>
+                ) : (
+                  <Link
+                    to={internship.application_link}
+                    target="_blank"
+                    style={{
+                      backgroundColor: "var(--main-color)",
+                      height: "100px",
+                      width: "100px",
+                    }}
+                    className="mx-auto my-3 text-decoration-none text-light rounded rounded-circle d-flex justify-content-center align-items-center fs-5"
+                  >
+                    {t("Apply")}
+                  </Link>
+                )}
+              </>
             ) : (
               <LoadingSuspese />
             )}

@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { toastError } from "../utils/ToastsFunctions";
+import {
+  showLoadingToast,
+  toastError,
+  updateError,
+  updateSuccess,
+} from "../utils/ToastsFunctions";
 
 const ProfilePage = () => {
   const baseURL = "https://attachin.com/";
@@ -65,6 +70,20 @@ const ProfilePage = () => {
         toastError("Network Error");
       });
   }, [user.token, user.id]);
+
+  const writeTextInClipboard = () => {
+    let toastID = showLoadingToast("Copying");
+    navigator.clipboard
+      .writeText(window.location.href + "/" + user.id)
+      .then(() => {
+        console.log(window.location.href + "/" + user.id);
+        updateSuccess(toastID, "Profile Link Copied");
+      })
+      .catch((err) => {
+        updateError(toastID, "Error Copying");
+        console.error("Failed to copy text: ", err);
+      });
+  };
 
   return (
     <>
@@ -134,7 +153,7 @@ const ProfilePage = () => {
                   aria-labelledby="feedActionShare"
                   style={{ backgroundColor: "var(--offWhite-color)" }}
                 >
-                  <li className="mt-1">
+                  {/* <li className="mt-1">
                     <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
                       <img
                         src="/reportIcon.svg"
@@ -143,11 +162,15 @@ const ProfilePage = () => {
                       />
                       {t("Report this Profile")}
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="mt-2">
-                    <Link className="dropdown-item rounded-4 border border-1 border-dark-subtle">
+                    <Link
+                      onClick={writeTextInClipboard}
+                      className="dropdown-item rounded-4 border border-1 border-dark-subtle"
+                    >
                       <img src="/BlockIcon.svg" alt="block" className="pe-2" />
-                      {t("Block This Person")}
+                      {t("Copy Profile Link")}
+                      {/* {t("Block This Person")} */}
                     </Link>
                   </li>
                   <li>

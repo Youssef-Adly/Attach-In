@@ -18,7 +18,7 @@ export let toastError = (txt, extraConfig = {}) =>
 export let toastInfo = (txt, extraConfig = {}) =>
   toast.info(txt, { ...config, ...extraConfig });
 
-export const showLoadingToast = (txt) => {
+export const showLoadingToast = (txt, conf = {}) => {
   const toastId = toast.loading(txt, {
     position: "bottom-right",
     autoClose: 2000,
@@ -27,6 +27,7 @@ export const showLoadingToast = (txt) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    ...conf,
   });
   return toastId; // Return the toast ID for potential clearing later
 };

@@ -1,8 +1,10 @@
 import React, { memo } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Notification = (props) => {
   const baseImgURL = "https://attachin.com/";
+  const authUser = useSelector((state) => state.Auth.user);
 
   return (
     <>
@@ -10,7 +12,19 @@ const Notification = (props) => {
         <div className="d-flex align-items-center gap-3">
           {/* Avatar */}
           <div className="position-relative ">
-            <Link to={"/profile/" + props.from_user.id}>
+            <Link
+              to={
+                authUser?.id === props.from_user.id
+                  ? `/profile`
+                  : props.from_user.user_type === "student"
+                  ? `/profile/${props.from_user.id}`
+                  : props.from_user.user_type === "university"
+                  ? `/universityProfile/${props.from_user.id}`
+                  : props.from_user.user_type === "company"
+                  ? `/companyProfile/${props.from_user.id}`
+                  : ""
+              }
+            >
               <img
                 className="avatar-img rounded-circle"
                 src={
@@ -28,7 +42,17 @@ const Notification = (props) => {
             <div className="nav nav-divider">
               <h5 className="card-title mb-0">
                 <Link
-                  to={"/profile/" + props.from_user.id}
+                  to={
+                    authUser?.id === props.from_user.id
+                      ? `/profile`
+                      : props.from_user.user_type === "student"
+                      ? `/profile/${props.from_user.id}`
+                      : props.from_user.user_type === "university"
+                      ? `/universityProfile/${props.from_user.id}`
+                      : props.from_user.user_type === "company"
+                      ? `/companyProfile/${props.from_user.id}`
+                      : ""
+                  }
                   className="text-decoration-none"
                   style={{
                     color: "var(--text-main-color)",

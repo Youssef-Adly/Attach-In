@@ -28,7 +28,7 @@ const InternshipDetails = () => {
     axios
       .get(baseURL + "getInternshipDetailsByInternshipId?internship_id=" + id)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setInternship(res.data.data);
       })
       .catch((err) => {

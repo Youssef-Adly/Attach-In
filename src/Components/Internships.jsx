@@ -6,7 +6,6 @@ import {
   faEllipsis,
   faHeart,
   faPaperPlane,
-  faShare,
 } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
@@ -249,33 +248,33 @@ const Internships = ({
     }
   };
 
-  const instantShare = async () => {
-    let toastID = showLoadingToast("Sharing Internship.....");
-    await axios
-      .post(
-        baseURL + "api/addUserRePost",
-        { parent_id: id },
-        {
-          headers: { Authorization: `Bearer ${authUser.token}` },
-        }
-      )
-      .then((res) => {
-        updateSuccess(toastID, "Internship Shared");
-        setTimeout(() => {
-          window.location.reload();
-        }, 500);
-      })
-      .catch((err) => {
-        if (err.response?.data?.errors[0] === "Unauthenticated") {
-          updateError(toastID, err.response?.data?.errors[0]);
-          console.log(err.response?.data?.errors[0]);
-          navigate("/login");
-        } else {
-          updateError(toastID, err.message);
-          console.log("error Sharing Internship" + err);
-        }
-      });
-  };
+  // const instantShare = async () => {
+  //   let toastID = showLoadingToast("Sharing Internship.....");
+  //   await axios
+  //     .post(
+  //       baseURL + "api/addUserRePost",
+  //       { parent_id: id },
+  //       {
+  //         headers: { Authorization: `Bearer ${authUser.token}` },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       updateSuccess(toastID, "Internship Shared");
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 500);
+  //     })
+  //     .catch((err) => {
+  //       if (err.response?.data?.errors[0] === "Unauthenticated") {
+  //         updateError(toastID, err.response?.data?.errors[0]);
+  //         console.log(err.response?.data?.errors[0]);
+  //         navigate("/login");
+  //       } else {
+  //         updateError(toastID, err.message);
+  //         console.log("error Sharing Internship" + err);
+  //       }
+  //     });
+  // };
 
   const shareWithThoughts = async () => {
     let req = requirement.current.value;

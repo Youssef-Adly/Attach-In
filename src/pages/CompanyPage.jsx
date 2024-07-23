@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -34,7 +34,7 @@ const CompanyPage = () => {
       )
       .then((res) => {
         let user = res.data.data;
-        // console.log(user);
+        console.log(user);
         if (user.user_type === "company") {
           setCompany(user);
         } else if (user.user_type === "student") {
@@ -66,7 +66,7 @@ const CompanyPage = () => {
         toastError("Network Error");
         console.log(err);
       });
-  }, [authUser.token, id]);
+  }, [authUser.id, authUser.token, id, navigate]);
 
   // Add Friends
   const addFriend = (e) => {
@@ -316,8 +316,9 @@ const CompanyPage = () => {
           {company?.about
             ? company?.about.split(" ").slice(0, limtWords).join(" ") + "....."
             : t("No Bio Yet")}
-          {company?.about.length >
-            company?.about.split(" ").slice(0, limtWords).join(" ").length && (
+          {company?.about?.length >
+            company?.about?.split(" ").slice(0, limtWords).join(" ")
+              ?.length && (
             <>
               <br />
               <Link
@@ -425,7 +426,7 @@ const CompanyPage = () => {
                         className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
-                        {posts[0]?.title.split(" ").slice(0, 5).join(" ")}
+                        {posts[0]?.title?.split(" ").slice(0, 5).join(" ")}
                       </h6>
                     </Link>
                     {/* Card #2 */}
@@ -468,7 +469,7 @@ const CompanyPage = () => {
                           className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[1]?.title.split(" ").slice(0, 5).join(" ")}
+                          {posts[1]?.title?.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                     )}
@@ -520,7 +521,7 @@ const CompanyPage = () => {
                         className="text-center mt-3"
                         style={{ color: "var(--text-main-color)" }}
                       >
-                        {posts[2]?.title.split(" ").slice(0, 5).join(" ")}
+                        {posts[2]?.title?.split(" ").slice(0, 5).join(" ")}
                       </h6>
                     </Link>
                     {/* Card #2 */}
@@ -563,7 +564,7 @@ const CompanyPage = () => {
                           className="text-center mt-3"
                           style={{ color: "var(--text-main-color)" }}
                         >
-                          {posts[3]?.title.split(" ").slice(0, 5).join(" ")}
+                          {posts[3]?.title?.split(" ").slice(0, 5).join(" ")}
                         </h6>
                       </Link>
                     )}

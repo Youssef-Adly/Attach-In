@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { v4 as uuid } from "uuid";
 import {
   showLoadingToast,
   toastError,
@@ -282,7 +283,8 @@ const ProfilePage = () => {
                       if (skill.type === "certifications") {
                         return (
                           <div
-                            key={skill.id}
+                            key={uuid()}
+                            // key={skill.id}
                             className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                             style={{
                               backgroundColor: "#F2969C",
@@ -364,7 +366,8 @@ const ProfilePage = () => {
                       if (skill.type === "certifications") {
                         return (
                           <div
-                            key={skill.id}
+                            key={uuid()}
+                            // key={skill.id}
                             className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                             style={{
                               backgroundColor: "#F2969C",
@@ -414,7 +417,8 @@ const ProfilePage = () => {
                       } else {
                         return (
                           <div
-                            key={skill.id}
+                            key={uuid()}
+                            // key={skill.id}
                             className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                             style={{
                               backgroundColor: "#98AFDB",

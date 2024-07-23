@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { useTranslation } from "react-i18next";
+import { v4 as uuid } from "uuid";
 import {
   showLoadingToast,
   toastError,
@@ -79,7 +80,7 @@ const UserProfile = () => {
         console.log(err);
         toastError("Network Error");
       });
-  }, [authUser.token, id]);
+  }, [authUser.id, authUser.token, id, navigate]);
 
   // Add Friends
   const addFriend = (e) => {
@@ -101,6 +102,7 @@ const UserProfile = () => {
         console.log(err);
       });
   };
+
   // deleteFriend
   const deleteFriend = (e) => {
     let toastID = showLoadingToast("Deleting Friend.....");
@@ -122,6 +124,7 @@ const UserProfile = () => {
       });
   };
 
+  // BlockFriend
   const blockRequest = () => {
     let toastID = showLoadingToast("Blocking.....");
     axios
@@ -140,6 +143,24 @@ const UserProfile = () => {
       .catch((err) => {
         console.log(err);
         updateError(toastID, "Network Error");
+      });
+  };
+
+  // Open Chat Room With user
+  const chatWithUser = async () => {
+    await axios
+      .post(
+        baseURL + "api/findOrCreateConversation",
+        { user_id_2: id },
+        { headers: { Authorization: `Bearer ${authUser.token}` } }
+      )
+      .then((res) => {
+        // console.log(res.data.data);
+        navigate(`/chat/${res.data.data.id}`);
+      })
+      .catch((err) => {
+        toastError("Network Error");
+        console.log(err);
       });
   };
 
@@ -179,23 +200,6 @@ const UserProfile = () => {
   //       console.log(err);
   //     });
   // };
-
-  const chatWithUser = async () => {
-    await axios
-      .post(
-        baseURL + "api/findOrCreateConversation",
-        { user_id_2: id },
-        { headers: { Authorization: `Bearer ${authUser.token}` } }
-      )
-      .then((res) => {
-        // console.log(res.data.data);
-        navigate(`/chat/${res.data.data.id}`);
-      })
-      .catch((err) => {
-        toastError("Network Error");
-        console.log(err);
-      });
-  };
 
   return (
     <>
@@ -463,7 +467,8 @@ const UserProfile = () => {
                         if (skill.type === "certifications") {
                           return (
                             <div
-                              key={skill.id}
+                              key={uuid()}
+                              // key={skill.id}
                               className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                               style={{
                                 backgroundColor: "#F2969C",
@@ -513,7 +518,8 @@ const UserProfile = () => {
                         } else {
                           return (
                             <div
-                              key={skill.id}
+                              key={uuid()}
+                              // key={skill.id}
                               className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                               style={{
                                 backgroundColor: "#98AFDB",
@@ -547,7 +553,8 @@ const UserProfile = () => {
                         if (skill.type === "certifications") {
                           return (
                             <div
-                              key={skill.id}
+                              key={uuid()}
+                              // key={skill.id}
                               className="position-relative p-3 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                               style={{
                                 backgroundColor: "#F2969C",
@@ -597,7 +604,8 @@ const UserProfile = () => {
                         } else {
                           return (
                             <div
-                              key={skill.id}
+                              key={uuid()}
+                              // key={skill.id}
                               className="p-5 d-flex justify-content-center flex-column align-items-center text-center mx-2"
                               style={{
                                 backgroundColor: "#98AFDB",
@@ -700,17 +708,16 @@ const UserProfile = () => {
                 style={{ marginBottom: "-40px" }}
               >
                 {posts.length > 2 &&
-                  posts
-                    .slice(0, 2)
-                    .map((p, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        data-bs-target="#carouselExampleIndicators2"
-                        data-bs-slide-to={idx}
-                        className="active bg-black"
-                      />
-                    ))}
+                  posts.slice(0, 2).map((p, idx) => (
+                    <button
+                      key={uuid()}
+                      // key={idx}
+                      type="button"
+                      data-bs-target="#carouselExampleIndicators2"
+                      data-bs-slide-to={idx}
+                      className="active bg-black"
+                    />
+                  ))}
               </div>
               <div className="carousel-inner">
                 {/*  */}

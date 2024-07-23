@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ProfilePage.css";
 import axios from "axios";
@@ -47,7 +47,7 @@ const UniversityPage = () => {
         console.log(err);
         toastError("Network Error");
       });
-  }, [authUser.token, id]);
+  }, [authUser.id, authUser.token, id, navigate]);
 
   // get User Posts
   useEffect(() => {
@@ -165,9 +165,9 @@ const UniversityPage = () => {
             {university?.about
               ? university?.about.split(" ").slice(0, limtWords).join(" ")
               : t("No About Yet")}
-            {university?.about.length >
-              university?.about.split(" ").slice(0, limtWords).join(" ")
-                .length && (
+            {university?.about?.length >
+              university?.about?.split(" ").slice(0, limtWords).join(" ")
+                ?.length && (
               <Link
                 className="col-12 d-flex justify-content-end"
                 onClick={() => {

@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LoadingSuspese from "../Components/LoadingSuspense";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { toastError } from "../utils/ToastsFunctions";
+import { v4 as uuid } from "uuid";
 
 const UniversitySchedule = () => {
   const [t] = useTranslation();
@@ -38,7 +39,7 @@ const UniversitySchedule = () => {
         console.log(err);
         toastError("Network Error");
       });
-  }, []);
+  }, [id, user.token]);
 
   const resetPill = () => {
     setLevels(null);
@@ -227,7 +228,8 @@ const UniversitySchedule = () => {
                 {colleges ? (
                   colleges.map((college, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevels(college.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -280,7 +282,8 @@ const UniversitySchedule = () => {
                 {levels ? (
                   levels.map((level, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevelLectures(level.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -334,7 +337,8 @@ const UniversitySchedule = () => {
                 {lectures ? (
                   lectures.map((lecture, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       // onClick={() => getCollegeLevelLectures(lecture.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -396,7 +400,8 @@ const UniversitySchedule = () => {
                 {colleges ? (
                   colleges.map((college, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevels(college.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -449,7 +454,8 @@ const UniversitySchedule = () => {
                 {levels ? (
                   levels.map((level, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevelSections(level.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -502,7 +508,8 @@ const UniversitySchedule = () => {
                 {sections ? (
                   sections.map((section, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       // onClick={() => getCollegeLevelsections(section.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -564,7 +571,8 @@ const UniversitySchedule = () => {
                 {colleges ? (
                   colleges.map((college, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevels(college.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -617,7 +625,8 @@ const UniversitySchedule = () => {
                 {levels ? (
                   levels.map((level, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       onClick={() => getCollegeLevelExams(level.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"
@@ -670,7 +679,8 @@ const UniversitySchedule = () => {
                 {exams ? (
                   exams.map((exam, idx) => (
                     <Link
-                      key={idx}
+                      key={uuid()}
+                      // key={idx}
                       // to={"/courses/" + id}
                       // onClick={() => getCollegeLevelexams(exam.id)}
                       className="mx-auto nav-link d-flex flex-column justify-content-evenly align-items-center gap-2"

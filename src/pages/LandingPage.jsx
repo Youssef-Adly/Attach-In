@@ -187,7 +187,7 @@ const LandingPage = () => {
           <header
             className="landingHeader bgGradiant3"
             style={{
-              minHeight: "80vh",
+              // minHeight: "80vh",
               // backgroundColor: "var(--offWhite-color)",
             }}
           >

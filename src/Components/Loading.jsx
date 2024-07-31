@@ -11,7 +11,7 @@ const Loading = () => {
       <div
         // className="position-absolute"
         style={{
-          // width: "400px",
+          maxWidth: "400px",
           // height: "10rem",
           color: "#ffffff6b",
         }}

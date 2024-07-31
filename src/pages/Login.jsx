@@ -130,8 +130,8 @@ const Login = () => {
       >
         <img
           src="AttachInLogo.svg"
-          alt=""
-          className="img-fluid"
+          alt="logo"
+          className="img-fluid px-3 d-block mx-auto"
           style={{
             marginTop: "880px",
           }}
@@ -290,7 +290,6 @@ const Login = () => {
             <>
               <img
                 src="/Opener Loading.gif"
-                // className="m-auto"
                 style={{ width: "250px" }}
                 alt="Loading"
               />

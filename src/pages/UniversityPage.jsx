@@ -168,14 +168,17 @@ const UniversityPage = () => {
             {university?.about?.length >
               university?.about?.split(" ").slice(0, limtWords).join(" ")
                 ?.length && (
-              <Link
-                className="col-12 d-flex justify-content-end"
-                onClick={() => {
-                  setLimitWords(999999999);
-                }}
-              >
-                See More
-              </Link>
+              <>
+                .....
+                <Link
+                  className="col-12 d-flex justify-content-end"
+                  onClick={() => {
+                    setLimitWords(999999999);
+                  }}
+                >
+                  See More
+                </Link>
+              </>
             )}
           </h4>
 

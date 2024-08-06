@@ -34,7 +34,7 @@ const CompanyPage = () => {
       )
       .then((res) => {
         let user = res.data.data;
-        console.log(user);
+        // console.log(user);
         if (user.user_type === "company") {
           setCompany(user);
         } else if (user.user_type === "student") {
@@ -314,12 +314,13 @@ const CompanyPage = () => {
           }}
         >
           {company?.about
-            ? company?.about.split(" ").slice(0, limtWords).join(" ") + "....."
+            ? company?.about.split(" ").slice(0, limtWords).join(" ")
             : t("No Bio Yet")}
           {company?.about?.length >
             company?.about?.split(" ").slice(0, limtWords).join(" ")
               ?.length && (
             <>
+              .....
               <br />
               <Link
                 className="col-12 d-flex justify-content-end"
@@ -400,7 +401,7 @@ const CompanyPage = () => {
                             width: "220px",
                             height: "220px",
                             background: `url(${
-                              baseURL + posts[0].image
+                              baseImgURL + posts[0].image
                             }) no-repeat center center / contain`,
                           }}
                         ></div>
@@ -443,7 +444,7 @@ const CompanyPage = () => {
                               width: "220px",
                               height: "220px",
                               background: `url(${
-                                baseURL + posts[1].image
+                                baseImgURL + posts[1].image
                               }) no-repeat center center / contain`,
                             }}
                           ></div>
@@ -495,7 +496,7 @@ const CompanyPage = () => {
                             width: "220px",
                             height: "220px",
                             background: `url(${
-                              baseURL + posts[2].image
+                              baseImgURL + posts[2].image
                             }) no-repeat center center / contain`,
                           }}
                         ></div>
@@ -538,7 +539,7 @@ const CompanyPage = () => {
                               width: "220px",
                               height: "220px",
                               background: `url(${
-                                baseURL + posts[3].image
+                                baseImgURL + posts[3].image
                               }) no-repeat center center / contain`,
                             }}
                           ></div>

@@ -254,7 +254,10 @@ const EditProfile = () => {
         console.log("err: ", err);
         // updateError(toastID, err.errors[0]);
         getErrorsFromAPI(err.response.data.errors);
-        updateError(toastID, Object.values(err.response.data.errors)[0].message);
+        updateError(
+          toastID,
+          Object.values(err.response.data.errors)[0].message
+        );
         setLoading(false);
       });
   };
@@ -302,7 +305,7 @@ const EditProfile = () => {
   };
 
   const handleAddCert = async (e) => {
-    if (userCert.length > 0) {
+    if (userCert.trim().length > 0) {
       let toastID = showLoadingToast("Adding Certificate.....");
       setLoadingSkills(true);
       await axios
@@ -383,7 +386,7 @@ const EditProfile = () => {
   };
 
   const handleAddSkill = async (e) => {
-    if (userSkill.length > 0) {
+    if (userSkill.trim().length > 0) {
       let toastID = showLoadingToast("Adding Skill.....");
       setLoadingSkills(true);
       await axios
@@ -463,7 +466,7 @@ const EditProfile = () => {
   };
 
   const handleAddInterest = async (e) => {
-    if (userInterest.length > 0) {
+    if (userInterest.trim().length > 0) {
       let toastID = showLoadingToast("Adding Interest.....");
       setLoadingSkills(true);
       await axios
@@ -542,7 +545,7 @@ const EditProfile = () => {
   };
 
   const handleAddComputerExp = async (e) => {
-    if (userComputerExp.length > 0) {
+    if (userComputerExp.trim().length > 0) {
       let toastID = showLoadingToast("Adding Experiance.....");
       setLoadingSkills(true);
       await axios

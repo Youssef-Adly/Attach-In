@@ -42,7 +42,7 @@ const OurPartnersPage = () => {
               OurPartners.map((partner, idx) => (
                 <Link
                   to={"/companyProfile/" + partner.id}
-                  className="nav-link text-center d-flex flex-column gap-2"
+                  className="nav-link text-center d-flex flex-column gap-2 align-items-center"
                   // style={{ backgroundColor: "unset !important" }}
                   key={uuid()}
                 >
@@ -59,7 +59,9 @@ const OurPartnersPage = () => {
                     }}
                     alt={partner.full_name}
                   />
-                  <small>{partner.full_name}</small>
+                  <small className="w-75 text-main-color">
+                    {partner.full_name}
+                  </small>
                 </Link>
               ))}
           </div>

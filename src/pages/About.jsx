@@ -90,7 +90,12 @@ const About = () => {
                 </div>
               </div>
             ))}
-          <div className="accordion-item">
+          <div
+            className="accordion-item"
+            style={{
+              zIndex: "-1",
+            }}
+          >
             <h2 className="accordion-header">
               <button
                 className="accordion-button collapsed py-2 rounded-5"
@@ -108,21 +113,21 @@ const About = () => {
               className="accordion-collapse collapse"
               // data-bs-parent="#accordionFlushExample"
             >
-              <div className="accordion-body d-flex gap-3">
+              <div className="accordion-body d-flex flex-wrap justify-content-center gap-3">
                 {creators.map((person, idx) => (
                   <Link
                     to={person.link}
                     target="_blank"
                     key={idx}
-                    className="nav-link d-flex flex-column gap-2 text-center"
+                    className="nav-link d-flex flex-column align-items-center justify-content-center gap-2 text-center"
                   >
                     <img
                       src={baseURL + person.photo}
-                      className="rounded-circle"
+                      className="rounded-circle img-thumbnail"
                       alt={person.name}
                       style={{
                         aspectRatio: 1,
-                        width: "200px",
+                        maxWidth: "150px",
                       }}
                     />
                     <small>{person.name}</small>

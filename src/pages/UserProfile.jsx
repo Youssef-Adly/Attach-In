@@ -728,7 +728,7 @@ const UserProfile = () => {
                       <Link
                         to={""}
                         className="nav-link d-flex flex-column justify-content-center align-items-center"
-                        style={{ width: "270px", height: "200px" }}
+                        style={{ width: "270px", height: "200px", gap: "10px" }}
                       >
                         {posts[0].image ? (
                           <div
@@ -772,7 +772,11 @@ const UserProfile = () => {
                         <Link
                           to={""}
                           className="nav-link d-flex flex-column justify-content-center align-items-center"
-                          style={{ width: "270px", height: "200px" }}
+                          style={{
+                            width: "270px",
+                            height: "200px",
+                            gap: "10px",
+                          }}
                         >
                           {posts[1].image ? (
                             <div
@@ -824,7 +828,7 @@ const UserProfile = () => {
                       <Link
                         to={""}
                         className="nav-link d-flex flex-column justify-content-center align-items-center"
-                        style={{ width: "270px", height: "200px" }}
+                        style={{ width: "270px", height: "200px", gap: "10px" }}
                       >
                         {posts[2].image ? (
                           <div
@@ -867,7 +871,7 @@ const UserProfile = () => {
                         <Link
                           to={""}
                           className="nav-link d-flex flex-column justify-content-center align-items-center"
-                          style={{ width: "270px", height: "200px" }}
+                          style={{ width: "270px", height: "200px", gap: "10px" }}
                         >
                           {posts[3].image ? (
                             <div

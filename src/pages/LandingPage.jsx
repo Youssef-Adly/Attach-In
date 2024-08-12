@@ -62,7 +62,7 @@ const LandingPage = () => {
       });
     //Set Universities
     axios
-      .get("https://attachin.com/api/getUsersWithSearch", {
+      .get("https://attachin.com/api/getUsersWithSearch?name=university", {
         search: "university",
       })
       .then((res) => {
@@ -186,10 +186,12 @@ const LandingPage = () => {
         <>
           <header
             className="landingHeader bgGradiant3"
-            style={{
-              // minHeight: "80vh",
-              // backgroundColor: "var(--offWhite-color)",
-            }}
+            style={
+              {
+                // minHeight: "80vh",
+                // backgroundColor: "var(--offWhite-color)",
+              }
+            }
           >
             <nav className="p-4 d-flex flex-column-reverse flex-lg-row justify-content-between align-items-center ">
               <img
@@ -601,7 +603,7 @@ const LandingPage = () => {
                 )}
                 {partners?.length > 3 && (
                   <div className="carousel-item">
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-5">
                       {partners?.slice(3, 6).map((p, idx) => (
                         <img
                           key={uuid()}

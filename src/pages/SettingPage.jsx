@@ -32,7 +32,10 @@ const SettingPage = () => {
       {/* Edit Profile */}
       <Link
         to={"/editprofile"}
-        className="nav-link d-flex gap-3 align-items-center "
+        className="nav-link d-flex gap-3 align-items-center"
+        style={{
+          width: "fit-content",
+        }}
       >
         <img src="/edit.svg" alt="edit" />
         <div style={{ color: "var(--text-main-color)" }}>
@@ -40,8 +43,14 @@ const SettingPage = () => {
         </div>
       </Link>
       <hr />
-      {/* Terms & Conditions */}
-      <Link to={"/reset"} className="nav-link d-flex gap-3 align-items-center ">
+      {/* Rest Password */}
+      <Link
+        to={"/reset"}
+        className="nav-link d-flex gap-3 align-items-center"
+        style={{
+          width: "fit-content",
+        }}
+      >
         <img src="/lock.svg" alt="lock" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Reset Password")}
@@ -93,7 +102,10 @@ const SettingPage = () => {
       {/* Contact Us */}
       <Link
         to={"/contactus"}
-        className="nav-link d-flex gap-3 align-items-center "
+        className="nav-link d-flex gap-3 align-items-center"
+        style={{
+          width: "fit-content",
+        }}
       >
         <img src="/contacts.svg" alt="contact" />
         <div style={{ color: "var(--text-main-color)" }}>{t("Contact Us")}</div>
@@ -101,7 +113,13 @@ const SettingPage = () => {
       <hr />
       {/*  */}
       {/* Terms & Conditions */}
-      <Link to={"/terms"} className="nav-link d-flex gap-3 align-items-center ">
+      <Link
+        to={"/terms"}
+        className="nav-link d-flex gap-3 align-items-center"
+        style={{
+          width: "fit-content",
+        }}
+      >
         <img src="/terms.svg" alt="terms" />
         <div style={{ color: "var(--text-main-color)" }}>
           {t("Terms & Conditions")}

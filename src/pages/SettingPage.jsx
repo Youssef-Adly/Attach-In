@@ -1,10 +1,13 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./SettingPage.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../Redux/slices/themeSlice";
 import { toggleLanguage } from "../Redux/slices/langSlice";
 import { useTranslation } from "react-i18next";
+import { toastInfo } from "../utils/ToastsFunctions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 
 const SettingPage = () => {
   const theme = useSelector((state) => state.theme.value);
@@ -23,6 +26,42 @@ const SettingPage = () => {
       ? dispatch(toggleLanguage("ar"))
       : dispatch(toggleLanguage("en"));
   };
+
+  //#region [PWA Install Button]
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (event) => {
+      // Prevent the default mini-infobar
+      event.preventDefault();
+      setDeferredPrompt(event);
+    });
+
+    return () => {
+      // Cleanup function to remove the event listener on unmount
+      window.removeEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        setDeferredPrompt(event);
+      });
+    };
+  }, []);
+
+  const handleClick = async () => {
+    if (deferredPrompt) {
+      console.log("deferredPrompt: ", deferredPrompt);
+      // Trigger the native installation prompt
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      setDeferredPrompt(null); // Reset for future prompts
+
+      console.log(`User response to install prompt: ${outcome}`);
+      // toastInfo("App installation prompt not available.")
+    } else {
+      console.log("App installation prompt not available.");
+      toastInfo("App installation not available, try changing your browser");
+    }
+  };
+  //#endregion
 
   return (
     <main className="px-3 dir">
@@ -125,6 +164,25 @@ const SettingPage = () => {
           {t("Terms & Conditions")}
         </div>
       </Link>
+      <hr />
+      <div
+        className="nav-item pwaBtn p-2 text-light border rounded"
+        style={{
+          backgroundColor: "var(--main-color)",
+          width: "fit-content",
+          zIndex: "999",
+        }}
+      >
+        <Link
+          onClick={handleClick}
+          className="nav-link fs-6 py-1 fw-bold col-12 px-3"
+          // to="https://play.google.com/store/apps/details?id=com.social.attachin"
+          // target="_blank"
+        >
+          <FontAwesomeIcon icon={faGooglePlay} className="mx-3" />
+          {t("Install Web App As a PWA")}
+        </Link>
+      </div>
       <hr />
       {/*  */}
     </main>

@@ -56,7 +56,7 @@ const Footer = ({ classes }) => {
             </Link>
 
             <Link
-              to={""}
+              to={"https://www.linkedin.com/company/attach-in"}
               target="_blank"
               style={{
                 color: "unset",

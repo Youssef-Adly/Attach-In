@@ -54,7 +54,7 @@ const LandingPage = () => {
     axios
       .get(baseURL + "getOurPartners")
       .then((res) => {
-        setPartners(res.data.data.partners);
+        setPartners(res.data.data.partners.reverse());
       })
       .catch((err) => {
         console.log(err);
@@ -143,39 +143,6 @@ const LandingPage = () => {
     const timer = setTimeout(() => setIsLoading(false), 3500);
     return () => clearTimeout(timer);
   }, []);
-  //#endregion
-
-  //#region [PWA Install Button]
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-
-  useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (event) => {
-      // Prevent the default mini-infobar
-      event.preventDefault();
-      setDeferredPrompt(event);
-    });
-
-    return () => {
-      // Cleanup function to remove the event listener on unmount
-      window.removeEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
-        setDeferredPrompt(event);
-      });
-    };
-  }, []);
-
-  const handleClick = async () => {
-    if (deferredPrompt) {
-      // Trigger the native installation prompt
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      setDeferredPrompt(null); // Reset for future prompts
-
-      console.log(`User response to install prompt: ${outcome}`);
-    } else {
-      console.log("App installation prompt not available.");
-    }
-  };
   //#endregion
 
   return (
@@ -323,9 +290,10 @@ const LandingPage = () => {
                   }}
                 >
                   <Link
-                    onClick={handleClick}
+                    // onClick={handleClick}
                     className="nav-link fs-5 fw-bold col-12"
-                    to=""
+                    to="https://play.google.com/store/apps/details?id=com.social.attachin"
+                    target="_blank"
                   >
                     {t("Download The App")}
                     <FontAwesomeIcon icon={faGooglePlay} className="ms-3" />

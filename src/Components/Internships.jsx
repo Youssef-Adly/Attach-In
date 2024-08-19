@@ -10,7 +10,7 @@ import {
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { formatDateForPost } from "./formatDateForPost";
+import { convertLinksToAnchors, formatDateForPost } from "./formatDateForPost";
 import LoadingSuspese from "./LoadingSuspense";
 import { useTranslation } from "react-i18next";
 import {
@@ -397,7 +397,7 @@ const Internships = ({
                         ? `${baseURL + user.profile_photo}`
                         : "/profile.png"
                     }
-                    alt=""
+                    alt="profile_photo"
                   />
                 </Link>
               </div>
@@ -868,7 +868,14 @@ const Internships = ({
                             {formatDateForPost(comment.created_at)}
                           </small>
                         </div>
-                        <p className="small mb-0">{comment.comment}</p>
+                        <p
+                          className="small mb-0"
+                          dangerouslySetInnerHTML={{
+                            __html: convertLinksToAnchors(comment.comment),
+                          }}
+                        >
+                          {/* {comment.comment} */}
+                        </p>
                       </div>
                       {/* Comment react */}
                       {/* <ul className="nav nav-divider py-2 small">

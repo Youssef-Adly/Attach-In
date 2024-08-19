@@ -8,7 +8,7 @@ import {
   faPaperPlane,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
-import { formatDateForPost } from "./formatDateForPost";
+import { convertLinksToAnchors, formatDateForPost } from "./formatDateForPost";
 import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -502,8 +502,11 @@ const Post = ({
           style={{
             unicodeBidi: "plaintext",
           }}
+          dangerouslySetInnerHTML={{
+            __html: convertLinksToAnchors(title),
+          }}
         >
-          {title}
+          {/* {title} */}
         </p>
         {/* Card img */}
         {image && (
@@ -548,7 +551,7 @@ const Post = ({
                             ? `${baseURL + parent?.user?.profile_photo}`
                             : "/profile.png"
                         }
-                        alt=""
+                        alt="profile_photo"
                       />
                     </Link>
                   </div>
@@ -586,8 +589,11 @@ const Post = ({
                 style={{
                   unicodeBidi: "plaintext",
                 }}
+                dangerouslySetInnerHTML={{
+                  __html: convertLinksToAnchors(parent?.title),
+                }}
               >
-                {parent?.title}
+                {/* {parent?.title} */}
               </p>
               {/* Card img */}
               {parent.image && (
@@ -673,7 +679,6 @@ const Post = ({
                     }}
                   />
                   {t("Share Your thoughts")}
-                  {/* Share Your thoughts */}
                 </Link>
               </li>
               {/* Instant Share */}
@@ -715,7 +720,7 @@ const Post = ({
                     : "/profile.png"
                 }
                 // src="https://social.webestica.com/assets/images/avatar/12.jpg"
-                alt=""
+                alt="profile_photo"
               />
             </Link>
           </div>
@@ -822,7 +827,14 @@ const Post = ({
                           {formatDateForPost(comment.created_at)}
                         </small>
                       </div>
-                      <p className="small mb-0">{comment.comment}</p>
+                      <p
+                        className="small mb-0"
+                        // dangerouslySetInnerHTML={{
+                        //   __html: convertLinksToAnchors(comment.comment),
+                        // }}
+                      >
+                        {convertLinksToAnchors(comment.comment)}
+                      </p>
                     </div>
                     {/* Comment react */}
                     {/* <ul className="nav nav-divider py-2 small">

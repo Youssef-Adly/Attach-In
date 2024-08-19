@@ -97,7 +97,7 @@ const HomeLayout = () => {
             borderColor: "#878787",
           }}
         >
-          <div className="col-7 col-md-3 col-xxl-2 d-flex justify-content-center h-70 logo">
+          <div className="col-7 col-md-3 col-xxxl-2 d-flex justify-content-center h-70 logo">
             <img
               src="/LogowithoutLG.svg"
               className="img-fluid w-75"
@@ -385,7 +385,7 @@ const HomeLayout = () => {
         {/* Container For Posts And Aside */}
         <div className="d-flex">
           <aside
-            className="col-3 col-xxl-2 pe-xxl-5 d-none d-lg-block border-end border-4"
+            className="col-3 col-xxxl-2 pe-xxxl-5 d-none d-lg-block border-end border-4"
             style={{
               borderColor: "#878787",
               boxSizing: "content-box",

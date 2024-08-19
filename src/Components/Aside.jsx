@@ -49,7 +49,7 @@ const Aside = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary aside-scroll"
+      className="col-12 col-xxl- d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary aside-scroll"
       style={{
         position: "sticky",
         top: "0",

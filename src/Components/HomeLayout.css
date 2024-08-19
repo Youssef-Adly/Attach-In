@@ -1,6 +1,6 @@
 /* Layout Container */
 
-@media (min-width: 1920px) {
+@media (min-width: 1420px) {
   .containerLayout {
     max-width: 1320px;
     --bs-gutter-x: 1.5rem;
@@ -10,6 +10,16 @@
     padding-left: calc(var(--bs-gutter-x) * 0.5);
     margin-right: auto;
     margin-left: auto;
+  }
+}
+
+@media (min-width: 1700px) {
+  .col-xxxl-2 {
+    flex: 0 0 auto !important;
+    width: 16.66666667% !important;
+  }
+  .pe-xxxl-5 {
+    padding-right: 3rem !important;
   }
 }
 
@@ -159,7 +169,7 @@
   width: 5px;
 }
 /* .aside-scroll:hover::-webkit-scrollbar { */
-  /* width: 20px; */
+/* width: 20px; */
 /* } */
 
 /* .aside-scroll::-webkit-scrollbar-track {

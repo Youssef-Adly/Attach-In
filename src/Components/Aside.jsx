@@ -49,7 +49,7 @@ const Aside = () => {
 
   return (
     <div
-      className="col-12 col-xxl- d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary aside-scroll"
+      className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary aside-scroll"
       style={{
         position: "sticky",
         top: "0",
@@ -129,7 +129,13 @@ const Aside = () => {
             {/* <svg className="bi pe-none me-2" width={16} height={16}>
               <use xlinkHref="#home" />
             </svg> */}
-            <FontAwesomeIcon icon={faGear} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faGear}
+              className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Setting")}
           </NavLink>
         </li>
@@ -149,7 +155,13 @@ const Aside = () => {
               className="me-2 pe-0"
               width={25}
             /> */}
-            <FontAwesomeIcon icon={faPlay} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faPlay}
+              className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Courses")}
           </NavLink>
         </li>
@@ -164,7 +176,13 @@ const Aside = () => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faComment} className="me-2 pe-0 txtColor" />
+            <FontAwesomeIcon
+              icon={faComment}
+              className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Messages")}
           </NavLink>
         </li>
@@ -184,6 +202,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faPeopleGroup}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("About")}
           </NavLink>
@@ -201,6 +222,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faCircleQuestion}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("FAQ")}
           </NavLink>
@@ -218,6 +242,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faMoneyBill}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("Subscription")}
           </NavLink>
@@ -235,6 +262,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faHandshakeSimple}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("Our Partners")}
           </NavLink>
@@ -252,6 +282,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faQuestionCircle}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("Terms & Conditions")}
           </NavLink>
@@ -269,6 +302,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faAddressCard}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("Contact Us")}
           </NavLink>
@@ -287,6 +323,9 @@ const Aside = () => {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               className="me-2 pe-0 txtColor"
+              style={{
+                width: "20px",
+              }}
             />
             {t("Log Out")}
           </NavLink>

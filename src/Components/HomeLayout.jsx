@@ -396,7 +396,7 @@ const HomeLayout = () => {
           </aside>
           {/* Posts */}
           <div
-            className="col-12 col-lg-9 mx-auto p-1 p-sm-2 p-md-4 d-flex flex-column gap-0"
+            className="col-12 col-lg-9 mx-auto p-1 p-sm-2 p-md-4 d-flex flex-column gap-0 containerLayout"
             style={{
               marginBottom: "65px",
               marginTop: "10px",

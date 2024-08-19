@@ -48,7 +48,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="d-flex flex-column gap-3 containerLayout">
+      <div className="d-flex flex-column gap-3">
         {posts ? (
           <>
             {/* Add Post */}

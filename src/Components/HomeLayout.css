@@ -152,3 +152,31 @@
 .courses .nav-item:hover {
   transform: translate(0, -1px);
 }
+
+/* aside-scroll */
+/* custom scrollbar */
+.aside-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+/* .aside-scroll:hover::-webkit-scrollbar { */
+  /* width: 20px; */
+/* } */
+
+/* .aside-scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.aside-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--sec-color);
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  transition: all 0.3s;
+}
+
+.aside-scroll::-webkit-scrollbar-thumb:hover {
+  width: 20px;
+  background-color: #a8bbbf;
+  transition: all 0.3s;
+} */

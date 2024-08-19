@@ -49,8 +49,13 @@ const Aside = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary"
-      // style={{ width: 280 }}
+      className="d-flex flex-column flex-shrink-0 py-3 px-2 px-lg-3 bg-body-tertiary aside-scroll"
+      style={{
+        position: "sticky",
+        top: "0",
+        maxHeight: "100vh",
+        overflowY: "auto",
+      }}
     >
       <Link
         className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"

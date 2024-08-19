@@ -529,7 +529,11 @@ const Internships = ({
         {/* Card header END */}
         {/* Card body START */}
         <div className="card-body">
-          <p>
+          <p
+            style={{
+              unicodeBidi: "plaintext",
+            }}
+          >
             {description}
             <br />
             <Link

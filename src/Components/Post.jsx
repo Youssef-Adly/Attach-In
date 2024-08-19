@@ -498,7 +498,13 @@ const Post = ({
       {/* Card header END */}
       {/* Card body START */}
       <div className="card-body">
-        <p>{title}</p>
+        <p
+          style={{
+            unicodeBidi: "plaintext",
+          }}
+        >
+          {title}
+        </p>
         {/* Card img */}
         {image && (
           <img
@@ -576,7 +582,13 @@ const Post = ({
               </div>
             </div>
             <div className="card-body">
-              <p>{parent?.title}</p>
+              <p
+                style={{
+                  unicodeBidi: "plaintext",
+                }}
+              >
+                {parent?.title}
+              </p>
               {/* Card img */}
               {parent.image && (
                 <img

@@ -92,7 +92,7 @@ const OtpAuth = () => {
         }}
       >
         <input
-          type="number"
+          type="text"
           className="form-control text-center"
           placeholder="OTP Number"
           max={"9999"}

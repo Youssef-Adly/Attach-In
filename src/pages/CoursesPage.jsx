@@ -34,7 +34,7 @@ const CoursesPage = () => {
         {t("Courses")}
       </h1>
       <hr />
-      <div className="row gy-4 justify-content-around align-items-center ">
+      <div className="row gy-4 gap-2 justify-content-around align-items-center ">
         {AllCourses ? (
           AllCourses.map((crs) => <CourseCard {...crs} key={uuid()} />)
         ) : (

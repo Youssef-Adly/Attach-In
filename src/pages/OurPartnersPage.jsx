@@ -16,7 +16,7 @@ const OurPartnersPage = () => {
       .get("https://attachin.com/api/getOurPartners")
       .then((res) => {
         // console.log(res.data.data.partners);
-        setOurPartners(res.data.data.partners);
+        setOurPartners(res.data.data.partners.reverse());
       })
       .catch((err) => {
         console.log(err);
@@ -35,15 +35,15 @@ const OurPartnersPage = () => {
         {/* Custom Accordion */}
         {OurPartners ? (
           <div
-            className="d-flex flex-wrap justify-content-center align-items-center  gap-3 mx-auto ms-sm-5 col-11"
+            className="d-flex flex-wrap justify-content-center align-items-center gap-5 mx-auto ms-sm-5 col-11"
             id="accordionFlushExample"
           >
             {OurPartners &&
               OurPartners.map((partner, idx) => (
                 <Link
                   to={"/companyProfile/" + partner.id}
-                  className="nav-link text-center d-flex flex-column gap-2 align-items-center"
-                  // style={{ backgroundColor: "unset !important" }}
+                  className="partnerImg nav-link text-center d-flex flex-column gap-2 align-items-center"
+                  style={{ width: "150px", height: "200px" }}
                   key={uuid()}
                 >
                   <img
@@ -51,7 +51,7 @@ const OurPartnersPage = () => {
                       `${baseURL + partner.profile_photo}` || "companylogo.svg"
                     }
                     // src= "companylogo.svg"
-                    className="rounded-circle"
+                    className="rounded-circle img-thumbnail"
                     style={{
                       width: "150px",
                       aspectRatio: 1,

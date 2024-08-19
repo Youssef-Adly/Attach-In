@@ -128,7 +128,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faGear} className="me-2 pe-0 " />
+            <FontAwesomeIcon
+              icon={faGear}
+              className="me-2 pe-0 "
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Setting")}
           </NavLink>
         </li>
@@ -148,7 +154,13 @@ const AsideRight = ({ closeAside }) => {
               className="me-2 pe-0"
               width={25}
             /> */}
-            <FontAwesomeIcon icon={faPlay} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faPlay}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Courses")}
           </NavLink>
         </li>
@@ -162,7 +174,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faComment} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faComment}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Messages")}
           </NavLink>
         </li>
@@ -179,7 +197,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faPeopleGroup} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faPeopleGroup}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("About")}
           </NavLink>
         </li>
@@ -193,7 +217,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faCircleQuestion} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faCircleQuestion}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("FAQ")}
           </NavLink>
         </li>
@@ -207,7 +237,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faMoneyBill} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faMoneyBill}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Subscription")}
           </NavLink>
         </li>
@@ -221,7 +257,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faHandshakeSimple} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faHandshakeSimple}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Our Partners")}
           </NavLink>
         </li>
@@ -235,7 +277,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faQuestionCircle} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Terms & Conditions")}
           </NavLink>
         </li>
@@ -249,7 +297,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faAddressCard} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faAddressCard}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Contact Us")}
           </NavLink>
         </li>
@@ -264,7 +318,13 @@ const AsideRight = ({ closeAside }) => {
               };
             }}
           >
-            <FontAwesomeIcon icon={faRightFromBracket} className="me-2 pe-0" />
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="me-2 pe-0"
+              style={{
+                width: "20px",
+              }}
+            />
             {t("Log Out")}
           </NavLink>
         </li>

@@ -49,3 +49,11 @@
 .chatBox {
   bottom: 20px;
 }
+
+/*  */
+@media only screen and (max-width: 430px) {
+  .partnerImg {
+    width: 100px !important;
+    height: 120px !important;
+  }
+}

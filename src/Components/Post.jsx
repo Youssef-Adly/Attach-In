@@ -829,11 +829,11 @@ const Post = ({
                       </div>
                       <p
                         className="small mb-0"
-                        // dangerouslySetInnerHTML={{
-                        //   __html: convertLinksToAnchors(comment.comment),
-                        // }}
+                        dangerouslySetInnerHTML={{
+                          __html: convertLinksToAnchors(comment.comment),
+                        }}
                       >
-                        {convertLinksToAnchors(comment.comment)}
+                        {/* {convertLinksToAnchors(comment.comment)} */}
                       </p>
                     </div>
                     {/* Comment react */}

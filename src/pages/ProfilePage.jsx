@@ -190,7 +190,7 @@ const ProfilePage = () => {
                 </ul>
                 {/* End of Dropdown Menu */}
               </div>
-              <Link to={"/network"} className="">
+              <Link to={"/friends"} className="">
                 <img
                   src="/peopleIcon.svg"
                   className="img-fluid"

@@ -118,6 +118,7 @@ const HomeLayout = () => {
                 <NavLink
                   className="nav-link"
                   to="/home"
+                  title="Home"
                   style={({ isActive, isPending, isTransitioning }) => {
                     return {
                       borderBottom: isActive
@@ -141,6 +142,7 @@ const HomeLayout = () => {
                 <NavLink
                   className="nav-link"
                   to="/network"
+                  title="Network"
                   style={({ isActive, isPending, isTransitioning }) => {
                     return {
                       borderBottom: isActive
@@ -164,6 +166,7 @@ const HomeLayout = () => {
                 <NavLink
                   className="nav-link"
                   to="/notifications"
+                  title="Notifications"
                   style={({ isActive, isPending, isTransitioning }) => {
                     return {
                       borderBottom: isActive
@@ -187,6 +190,7 @@ const HomeLayout = () => {
                 <NavLink
                   className="nav-link"
                   to="/internships"
+                  title="Internships"
                   style={({ isActive, isPending, isTransitioning }) => {
                     return {
                       borderBottom: isActive
@@ -232,6 +236,7 @@ const HomeLayout = () => {
               <NavLink
                 className="nav-link px-0 active d-flex justify-content-center"
                 to="/home"
+                title="Home"
                 style={({ isActive, isPending, isTransitioning }) => {
                   return {
                     transform: isActive ? "translate(0, -5px)" : "none",
@@ -256,6 +261,7 @@ const HomeLayout = () => {
               <NavLink
                 className="nav-link px-0 d-flex justify-content-center"
                 to="/network"
+                title="Network"
                 style={({ isActive, isPending, isTransitioning }) => {
                   return {
                     transform: isActive ? "translate(0, -5px)" : "none",
@@ -286,6 +292,7 @@ const HomeLayout = () => {
                 to=""
                 data-bs-toggle="modal"
                 data-bs-target="#feedActionPhoto"
+                title="Add Post"
               >
                 <img
                   src="/icon5.svg"
@@ -301,6 +308,7 @@ const HomeLayout = () => {
               <NavLink
                 className="nav-link px-0 d-flex justify-content-center"
                 to="/notifications"
+                title="Notifications"
                 style={({ isActive, isPending, isTransitioning }) => {
                   return {
                     transform: isActive ? "translate(0, -5px)" : "none",
@@ -326,6 +334,7 @@ const HomeLayout = () => {
               <NavLink
                 className="nav-link px-0 d-flex justify-content-center"
                 to="/internships"
+                title="Internships"
                 style={({ isActive, isPending, isTransitioning }) => {
                   return {
                     transform: isActive ? "translate(0, -5px)" : "none",

@@ -84,6 +84,7 @@ const SearchAttachInNetwork = lazy(() =>
 const CompanyInternships = lazy(() => import("./pages/CompanyInternships"));
 const Chat = lazy(() => import("./pages/Chat"));
 const OtpAuth = lazy(() => import("./pages/OtpAuth"));
+const FriendsPage = lazy(() => import("./pages/FriendsPage"));
 
 //#endregion
 /////////////////////////////////
@@ -150,6 +151,14 @@ function App() {
           element: (
             <PrivateGuestRoute>
               <NetworkPage />
+            </PrivateGuestRoute>
+          ),
+        },
+        {
+          path: "friends",
+          element: (
+            <PrivateGuestRoute>
+              <FriendsPage />
             </PrivateGuestRoute>
           ),
         },

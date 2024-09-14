@@ -829,6 +829,11 @@ const Post = ({
                       </div>
                       <p
                         className="small mb-0"
+                        style={{
+                          // overflow-wrap: break-word;
+                          wordBreak: "break-word",
+                          overflowWrap: "break-word",
+                        }}
                         dangerouslySetInnerHTML={{
                           __html: convertLinksToAnchors(comment.comment),
                         }}

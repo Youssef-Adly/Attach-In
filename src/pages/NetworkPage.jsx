@@ -49,7 +49,7 @@ const NetworkPage = () => {
   return (
     <>
       {/* Header Title */}
-      <div className="d-flex align-items-center gap-4 text-light">
+      <div className="d-flex align-items-center gap-4 text-light dir">
         <Link
           // to={""}
           onClick={(e) => {
@@ -65,9 +65,7 @@ const NetworkPage = () => {
             }}
           />
         </Link>
-        <h1 className="dir" style={{ color: "var(--text-main-color)" }}>
-          {t("Connections")}
-        </h1>
+        <h1 style={{ color: "var(--text-main-color)" }}>{t("Connections")}</h1>
       </div>
       <hr />
 

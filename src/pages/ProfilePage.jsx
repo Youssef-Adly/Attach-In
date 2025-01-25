@@ -117,6 +117,8 @@ const ProfilePage = () => {
                 transform: "translateY(-50%)",
                 objectFit: "cover",
                 aspectRatio: "1",
+                width: "100%",
+                // width: "fit-content",
               }}
             />
           </div>

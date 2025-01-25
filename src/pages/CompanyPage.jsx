@@ -156,6 +156,7 @@ const CompanyPage = () => {
                 backgroundColor: "var(--offWhite-color)",
                 objectFit: "cover",
                 aspectRatio: "1",
+                // width: "fit-content",
                 // height: "100%",
                 width: "100%",
               }}

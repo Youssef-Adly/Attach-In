@@ -128,6 +128,8 @@ const About = () => {
                       style={{
                         aspectRatio: 1,
                         maxWidth: "150px",
+                        width: "100%",
+                        // width: "fit-content",
                       }}
                     />
                     <small>{person.name}</small>

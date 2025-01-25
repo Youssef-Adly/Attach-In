@@ -109,7 +109,9 @@ const AsideRight = ({ closeAside }) => {
           style={{
             position: "absolute",
             right: "10px",
-            top: "3px",
+            // top: "3px",
+            top: "50%",
+            transform: "translateY(-50%)",
           }}
           onClick={searchWithQuery}
           data-bs-dismiss="offcanvas"
